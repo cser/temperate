@@ -10,7 +10,9 @@ interface IScrollTextLayout
 		showHScrollBar:Void->DisplayObject,
 		hideHScrollBar:Void->Void,
 		showVScrollBar:Void->DisplayObject,
-		hideVScrollBar:Void->Void):Void;
+		hideVScrollBar:Void->Void,
+		textDeltaX:Int,
+		textDeltaY:Int):Void;
 	
 	var hScrollPolicy:CScrollPolicy;
 	

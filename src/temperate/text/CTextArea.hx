@@ -2,6 +2,7 @@ package temperate.text;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.events.Event;
+import flash.events.TextEvent;
 import flash.text.TextField;
 import flash.text.TextFieldType;
 import temperate.components.CScrollBar;
@@ -50,6 +51,11 @@ class CTextArea extends CSprite
 		
 		updateTextType();
 		updateControlsEnabled();
+		
+		textIndentLeft = 1;
+		textIndentRight = 1;
+		textIndentTop = 0;
+		textIndentBottom = 0;
 		
 		_settedWidth = 100;
 		_settedHeight = 100;
@@ -139,7 +145,9 @@ class CTextArea extends CSprite
 				showHScrollBar,
 				hideHScrollBar,
 				showVScrollBar,
-				hideVScrollBar
+				hideVScrollBar,
+				textIndentLeft + textIndentRight,
+				textIndentTop + textIndentBottom
 			);
 			_width = _layout.width;
 			_height = _layout.height;
@@ -179,7 +187,13 @@ class CTextArea extends CSprite
 			{
 				_hScrollBar.y = _height - _hScrollBar.height;
 			}
-			_bgSkin.setBounds(0, 0, Std.int(_tf.width), Std.int(_tf.height));
+			_tf.x = textIndentLeft;
+			_tf.y = textIndentTop;
+			_bgSkin.setBounds(
+				0,
+				0,
+				Std.int(_tf.width) + textIndentLeft + textIndentRight,
+				Std.int(_tf.height) + textIndentTop + textIndentBottom);
 			_bgSkin.redraw();
 		}
 	}
@@ -423,6 +437,24 @@ class CTextArea extends CSprite
 			}
 		}
 		return _updateOnMove;
+	}
+	
+	public var textIndentLeft(default, null):Int;
+	
+	public var textIndentRight(default, null):Int;
+	
+	public var textIndentTop(default, null):Int;
+	
+	public var textIndentBottom(default, null):Int;
+	
+	public function setTextIndents(left:Int, right:Int, top:Int, bottom:Int)
+	{
+		textIndentLeft = left;
+		textIndentRight = right;
+		textIndentTop = top;
+		textIndentBottom = bottom;
+		_size_valid = false;
+		postponeSize();
 	}
 	
 	//----------------------------------------------------------------------------------------------

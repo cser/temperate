@@ -59,5 +59,6 @@ Was not existed in Minimalcomps:
 	MTween
 
 TODO:
+	CScrollPane
 	CNavBar
 	CTabNavigator

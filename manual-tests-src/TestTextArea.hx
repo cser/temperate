@@ -1,5 +1,6 @@
 package ;
 import flash.display.Sprite;
+import flash.events.Event;
 import flash.text.TextField;
 import flash.text.TextFieldType;
 import helpers.Scaler;
@@ -129,20 +130,29 @@ class TestTextArea extends Sprite
 			
 			new MLabel().setText("Native").addTo(line);
 			
-			var tf = new TextField();
-			tf.type = TextFieldType.INPUT;
-			tf.multiline = true;
-			tf.border = true;
-			line.add(tf);
+			_tf = new TextField();
+			_tf.type = TextFieldType.INPUT;
+			_tf.addEventListener(Event.CHANGE, onTfChange);
+			_tf.multiline = true;
+			_tf.wordWrap = true;
+			_tf.border = true;
+			MFormatFactory.LABEL.applyTo(_tf);
+			line.add(_tf);
 		}
 		
 		//new FPSMonitor().addTo(this);
 		
 		/*
 		TODO
-		Отступы у текста
 		Починить скроллинг при вводе текста (вылазиет за пределы видимости)
 		*/
+	}
+	
+	var _tf:TextField;
+	
+	function onTfChange(event:Event)
+	{
+		_tf.width += Math.random() * 2 - 1;
 	}
 	
 	function newHScrollBar()

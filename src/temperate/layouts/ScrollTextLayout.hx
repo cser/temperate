@@ -16,7 +16,9 @@ class ScrollTextLayout implements IScrollTextLayout
 		showHScrollBar:Void->DisplayObject,
 		hideHScrollBar:Void->Void,
 		showVScrollBar:Void->DisplayObject,
-		hideVScrollBar:Void->Void):Void
+		hideVScrollBar:Void->Void,
+		textDeltaX:Int,
+		textDeltaY:Int):Void
 	{
 		if (width < minWidth || isCompactWidth)
 		{
@@ -26,47 +28,44 @@ class ScrollTextLayout implements IScrollTextLayout
 		{
 			height = minHeight;
 		}
-		tf.width = width;
-		tf.height = height;
+		tf.width =  width - textDeltaX;
+		tf.height = height - textDeltaY;
 		if (tf.wordWrap)
 		{
 			var sb = tryScrollV(tf, showVScrollBar, hideVScrollBar);
 			if (sb != null)
 			{
-				tf.width = width - sb.width;
-				tf.scrollH;
-				tf.scrollV;
+				tf.width = width - sb.width - textDeltaX;
+				tf.maxScrollH;
+				tf.maxScrollV;
 				sb.height = height;
 			}
 		}
 		else
 		{
-			var vScrollBar = tryScrollV(tf, showVScrollBar, hideVScrollBar);
-			var hasV = vScrollBar != null;
-			if (hasV)
-			{
-				tf.width = width - vScrollBar.width;
-			}
-			
-			var max = tf.maxScrollH;
 			var hScrollBar = tryScrollH(tf, showHScrollBar, hideHScrollBar);
 			var hasH = hScrollBar != null;
 			if (hasH)
 			{
-				tf.height = height - hScrollBar.height;
-				if (!hasV)
-				{
-					// Second try
-					vScrollBar = tryScrollV(tf, showVScrollBar, hideVScrollBar);
-					hasV = vScrollBar != null;
-				}
+				tf.height = height - hScrollBar.height - textDeltaY;
+				tf.maxScrollH;
+				tf.maxScrollV;
+			}
+			var vScrollBar = tryScrollV(tf, showVScrollBar, hideVScrollBar);
+			var hasV = vScrollBar != null;
+			if (hasV)
+			{
+				tf.width = width - vScrollBar.width - textDeltaX;
+				tf.maxScrollH;
+				tf.maxScrollV;
+			}
+			if (hasH)
+			{
 				hScrollBar.width = hasV ? width - vScrollBar.width : width;
 			}
-			
 			if (hasV)
 			{
 				vScrollBar.height = hasH ? height - hScrollBar.height : height;
-				//tf.width = width - vScrollBar.width;
 			}
 		}
 	}

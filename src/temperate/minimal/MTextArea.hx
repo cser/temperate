@@ -10,6 +10,7 @@ class MTextArea extends CTextArea
 		minWidth = 51;
 		minHeight = 51;
 		format = MFormatFactory.LABEL;
+		setTextIndents(2, 2, 2, 2);
 	}
 	
 	function newHScrollBar()
