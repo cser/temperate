@@ -401,7 +401,7 @@ class CTextArea extends ACScrollPane
 	
 	public function appendText(text:String)
 	{
-		_text += _text != null ? _text + text : text;
+		_text = _text != null ? _text + text : text;
 		if (_html)
 		{
 			_tf.htmlText = _text != null ? _text : "";
