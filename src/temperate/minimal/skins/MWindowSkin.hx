@@ -18,7 +18,7 @@ class MWindowSkin extends ACWindowSkin
 	static var VINDENT = 4;
 	static var LINE_TOP_INDENT = 2;
 	static var LINE_BOTTOM_INDENT = 4;
-	static var CENTER_TOP_OFFSET = -5;
+	static var CENTER_TOP_OFFSET = -2;
 	
 	public function new() 
 	{
@@ -27,7 +27,7 @@ class MWindowSkin extends ACWindowSkin
 		_drawer = new CVScale12GridDrawer();
 		_drawer.setBitmapData(MWindowBdFactory.getFrame());
 		_drawer.setInsets(
-			10, 12, 10, 12, MWindowBdFactory.FRAME_CENTER_TOP + CENTER_TOP_OFFSET, 10);
+			10, 12, 10, 12, MWindowBdFactory.FRAME_CENTER_TOP + CENTER_TOP_OFFSET, 2);
 		
 		_head = new Sprite();
 		addChild(_head);

@@ -5,6 +5,8 @@ import flash.text.TextField;
 import temperate.components.CButtonState;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
+import temperate.core.CSprite;
+import temperate.docks.CRightDock;
 import temperate.minimal.cursors.MHandCursor;
 import temperate.minimal.MCursorManager;
 import temperate.minimal.MFlatButton;
@@ -86,6 +88,15 @@ class ToolsWindow extends ACWindow
 		
 		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
 		
+		_colorImage = new CSprite();
+		_colorImage.setSize(40, 20);
+		var button = new MFlatImageButton();
+		button.getImage(CButtonState.UP).setImage(_colorImage);
+		button.addEventListener(MouseEvent.CLICK, onColorClick);
+		_main.add(button).setPercents(100);
+		
+		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
+		
 		var button = new MFlatButton();
 		button.text = "New";
 		_main.add(button).setPercents(100);
@@ -103,12 +114,41 @@ class ToolsWindow extends ACWindow
 		dock = new CAbsolutePopUpDock(10, 50);
 		
 		MCursorManager.newHover(0).setTarget(_baseSkin.head).setValue(new MHandCursor(true));
+		
+		setColor(0x00ff00);
 	}
 	
-	var _main:CVBox;
-	var _buttonBox:CHBox;
-	var _title:TextField;
-	var _description:TextField;
+	var _colorImage:CSprite;
+	
+	var _colorsWindow:ColorsWindow;
+	
+	function onColorClick(event:MouseEvent)
+	{
+		if (_colorsWindow == null)
+		{
+			_colorsWindow = new ColorsWindow(_manager);
+		}
+		_colorsWindow.open(false);
+	}
+	
+	var _color:UInt;
+	function setColor(color:UInt)
+	{
+		if (_color != color)
+		{
+			_color = color;
+			var w = _colorImage.width;
+			var h = _colorImage.height;
+			var g = _colorImage.graphics;
+			g.clear();
+			g.beginFill(0x000000);
+			g.drawRect(0, 0, w, h);
+			g.drawRect(1, 1, w - 2, h - 2);
+			g.beginFill(color);
+			g.drawRect(1, 1, w - 2, h - 2);
+			g.endFill();
+		}
+	}
 	
 	function onOpenClick(event:MouseEvent)
 	{
@@ -123,6 +163,8 @@ class ToolsWindow extends ACWindow
 		var window = new SaveWindow(_manager);
 		window.open(true);
 	}
+	
+	var _main:CVBox;
 	
 	override function newContainer():Sprite
 	{

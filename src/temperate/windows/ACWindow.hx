@@ -4,6 +4,7 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
+import flash.events.MouseEvent;
 import temperate.core.CSprite;
 import temperate.skins.CNullWindowSkin;
 import temperate.skins.ICWindowSkin;
@@ -31,6 +32,8 @@ class ACWindow implements ICPopUp
 		{
 			_mover.subscribe(getManager, this, head, get_dock);
 		}
+		
+		view.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 	}
 	
 	var _manager:CPopUpManager;
@@ -92,6 +95,11 @@ class ACWindow implements ICPopUp
 	{
 		_dock = value;
 		return _dock;
+	}
+	
+	function onMouseDown(event:MouseEvent)
+	{
+		_manager.moveToTop(this);
 	}
 	
 	var _baseContainer:Sprite;
