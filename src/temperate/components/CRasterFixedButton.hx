@@ -3,7 +3,7 @@ import flash.display.Bitmap;
 import temperate.docks.ICDock;
 import temperate.docks.CRightDock;
 
-class CRasterFixedButton extends ACRasterButton
+class CRasterFixedButton extends ACRasterTextButton
 {
 	public function new() 
 	{

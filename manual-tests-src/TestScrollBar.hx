@@ -9,6 +9,7 @@ import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
+import temperate.minimal.MScrollBar;
 import temperate.minimal.skins.MFieldRectSkin;
 import temperate.raster.Scale3GridDrawer;
 
@@ -42,6 +43,17 @@ class TestScrollBar extends Sprite
 		
 		newButtonsBlock().addTo(this, 10, 300);
 		newButtonsBlock().addTo(this, 210, 300);
+		
+		var scrollBar = new MScrollBar(true).addTo(this, 300, 100);
+		scrollBar.pageSize = 50;
+		addChild(new Scaler(scrollBar));
+		
+		var scrollBar = new MScrollBar(false).addTo(this, 410, 100);
+		scrollBar.pageSize = 50;
+		addChild(new Scaler(scrollBar));
+		
+		new MScrollBar(true).addTo(this, 500, 100);
+		new MScrollBar(false).addTo(this, 610, 100);
 	}
 	
 	function newButtonsBlock()

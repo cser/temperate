@@ -3,7 +3,7 @@ import flash.display.Shape;
 import temperate.core.CMath;
 import temperate.raster.Scale9GridDrawer;
 
-class CRasterScaledButton extends ACRasterButton
+class CRasterScaledButton extends ACRasterTextButton
 {
 	public function new() 
 	{

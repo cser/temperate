@@ -171,6 +171,8 @@ class CScrollBar extends CSprite
 		_guideSize = _horizontal ?
 			_width - _leftArrow.width - _rightArrow.width :
 			_height - _leftArrow.height - _rightArrow.height;
+		var thumbSize = _horizontal ? _thumb.width : _thumb.height;
+		_thumb.visible = thumbSize < _guideSize;
 	}
 	
 	function setThumbPositionByValue()

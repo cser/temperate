@@ -6,7 +6,7 @@ import temperate.components.CButtonState;
 import temperate.components.parametrization.CRasterParameters;
 import temperate.text.CDefaultFormatFactory;
 
-class ACRasterButton extends ACButton
+class ACRasterTextButton extends ACButton
 {
 	public function new() 
 	{

@@ -436,7 +436,7 @@ class MScrollBarBdFactory
 				switch (state)
 				{
 					case CButtonState.OVER:
-						sourceColors = [ 0xffe0ff80, 0xffc0ee30 ];
+						sourceColors = [ 0xffbfef50, 0xffafcf30 ];
 					case CButtonState.DOWN:
 						sourceColors = [ 0xff80af00, 0xffb0d030 ];
 					case CButtonState.DISABLED:
@@ -459,6 +459,12 @@ class MScrollBarBdFactory
 			g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
 			g.endFill();
 			
+			var color = 0x2e000000;
+			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color) * disabledAlphaRatio);
+			g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
+			g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 4);
+			g.endFill();
+			
 			bd.draw(shape);
 			_bgByState[key] = bd;
 		}
@@ -467,15 +473,17 @@ class MScrollBarBdFactory
 	
 	static function newThumbCenter(horizontal:Bool)
 	{
-		var bd = new BitmapData(10, 10, true, 0x00000000);
+		var bd;
 		var rect = new Rectangle();
 		if (horizontal)
 		{
+			bd = new BitmapData(8, 10, true, 0x00000000);
 			rect.width = 1;
 			rect.height = 8;
 		}
 		else
 		{
+			bd = new BitmapData(10, 8, true, 0x00000000);
 			rect.height = 1;
 			rect.width = 8;
 		}
