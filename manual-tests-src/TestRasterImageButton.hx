@@ -20,6 +20,9 @@ import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MImageButton;
 import temperate.minimal.MToolButton;
+import temperate.minimal.windows.MCloseButton;
+import temperate.minimal.windows.MMaximizeButton;
+import temperate.minimal.windows.MMinimizeButton;
 
 class TestRasterImageButton extends Sprite
 {
@@ -143,7 +146,7 @@ class TestRasterImageButton extends Sprite
 			
 			var g = bg.graphics;
 			g.beginBitmapFill(MWindowBdFactory.getActiveTop(), new Matrix(1, 0, 0, 1, 0, -4));
-			g.drawRect( -2, -4, 500, 30);
+			g.drawRect( -2, -4, 600, 30);
 			g.endFill();
 			
 			line.add(new Bitmap(MToolBdFactory.getBgUp()));
@@ -157,10 +160,10 @@ class TestRasterImageButton extends Sprite
 			
 			line.add(new Bitmap(MWindowBdFactory.getFrame())).setFixedSize(0, 0).setOffsets(-2, -4);
 			line.add(new CSpacer()).setFixedSize(22);
-			line.add(new Bitmap(MWindowBdFactory.getImageMinimize()));
-			line.add(new Bitmap(MWindowBdFactory.getImageMaximize()));
-			line.add(new Bitmap(MWindowBdFactory.getImageClose()));
-			line.add(new Bitmap(MWindowBdFactory.getImageCollapse()));
+			line.add(new Bitmap(MWindowBdFactory.getImageMinimize(CButtonState.UP)));
+			line.add(new Bitmap(MWindowBdFactory.getImageMaximize(CButtonState.UP)));
+			line.add(new Bitmap(MWindowBdFactory.getImageClose(CButtonState.UP)));
+			line.add(new Bitmap(MWindowBdFactory.getImageCollapse(CButtonState.UP)));
 			
 			line.add(new CSpacer()).setFixedSize(10);
 			
@@ -192,6 +195,14 @@ class TestRasterImageButton extends Sprite
 			button.isEnabled = false;
 			button.selected = true;
 			line.add(button);
+			
+			line.add(new MMinimizeButton());
+			
+			var button = new MMaximizeButton();
+			button.toggle = true;
+			line.add(button);
+			
+			line.add(new MCloseButton());
 		}
 	}
 	

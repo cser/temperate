@@ -210,12 +210,18 @@ class MWindowBdFactory
 		return new Matrix(1, 0, 0, 1, imageHorizontalIndent, imageVerticalIndent);
 	}
 	
-	static var _imageClose:BitmapData;
-	public static function getImageClose():BitmapData
+	static var _imageClose:Array<BitmapData>;
+	public static function getImageClose(state:CButtonState):BitmapData
 	{
 		if (_imageClose == null)
 		{
-			_imageClose = newImageBitmapData();
+			_imageClose = [];
+		}
+		var image = _imageClose[state.index];
+		if (image == null)
+		{
+			image = newImageBitmapData();
+			_imageClose[state.index] = image;
 			var shape = MBdFactoryUtil.getShape();
 			var g = shape.graphics;
 			g.clear();
@@ -239,21 +245,25 @@ class MWindowBdFactory
 			g.lineTo(imageSize, 0);
 			g.endFill();
 			MBdFactoryUtil.qualityOn();
-			_imageClose.draw(shape, getImageOffsetMatrix());
-			_imageClose.applyFilter(
-				_imageClose, _imageClose.rect, new Point(),
-				new GlowFilter(0x000000, 1, 2, 2));
+			image.draw(shape, getImageOffsetMatrix());
+			image.applyFilter(image, image.rect, new Point(), new GlowFilter(0x000000, 1, 2, 2));
 			MBdFactoryUtil.qualityOff();
 		}
-		return _imageClose;
+		return image;
 	}
 	
-	static var _imageMinimize:BitmapData;
-	public static function getImageMinimize():BitmapData
+	static var _imageMinimize:Array<BitmapData>;
+	public static function getImageMinimize(state:CButtonState):BitmapData
 	{
 		if (_imageMinimize == null)
 		{
-			_imageMinimize = newImageBitmapData();
+			_imageMinimize = [];
+		}
+		var image = _imageMinimize[state.index];
+		if (image == null)
+		{
+			image = newImageBitmapData();
+			_imageMinimize[state.index] = image;
 			var shape = MBdFactoryUtil.getShape();
 			var g = shape.graphics;
 			g.clear();
@@ -261,21 +271,25 @@ class MWindowBdFactory
 			g.drawRect(0, imageSize - 3, imageSize, 3);
 			g.endFill();
 			MBdFactoryUtil.qualityOn();
-			_imageMinimize.draw(shape, getImageOffsetMatrix());
-			_imageMinimize.applyFilter(
-				_imageMinimize, _imageMinimize.rect, new Point(),
-				new GlowFilter(0x000000, 1, 2, 2));
+			image.draw(shape, getImageOffsetMatrix());
+			image.applyFilter(image, image.rect, new Point(), new GlowFilter(0x000000, 1, 2, 2));
 			MBdFactoryUtil.qualityOff();
 		}
-		return _imageMinimize;
+		return image;
 	}
 	
-	static var _imageMaximize:BitmapData;
-	public static function getImageMaximize():BitmapData
+	static var _imageMaximize:Array<BitmapData>;
+	public static function getImageMaximize(state:CButtonState):BitmapData
 	{
 		if (_imageMaximize == null)
 		{
-			_imageMaximize = newImageBitmapData();
+			_imageMaximize = [];
+		}
+		var image = _imageMaximize[state.index];
+		if (image == null)
+		{
+			image = newImageBitmapData();
+			_imageMaximize[state.index] = image;
 			var shape = MBdFactoryUtil.getShape();
 			var g = shape.graphics;
 			g.clear();
@@ -284,21 +298,25 @@ class MWindowBdFactory
 			g.drawRect(2, 3, imageSize - 4, imageSize - 5);
 			g.endFill();
 			MBdFactoryUtil.qualityOn();
-			_imageMaximize.draw(shape, getImageOffsetMatrix());
-			_imageMaximize.applyFilter(
-				_imageMaximize, _imageMaximize.rect, new Point(),
-				new GlowFilter(0x000000, 1, 2, 2));
+			image.draw(shape, getImageOffsetMatrix());
+			image.applyFilter(image, image.rect, new Point(), new GlowFilter(0x000000, 1, 2, 2));
 			MBdFactoryUtil.qualityOff();
 		}
-		return _imageMaximize;
+		return image;
 	}
 	
-	static var _imageCollapse:BitmapData;
-	public static function getImageCollapse():BitmapData
+	static var _imageCollapse:Array<BitmapData>;
+	public static function getImageCollapse(state:CButtonState):BitmapData
 	{
 		if (_imageCollapse == null)
 		{
-			_imageCollapse = newImageBitmapData();
+			_imageCollapse = [];
+		}
+		var image = _imageCollapse[state.index];
+		if (image == null)
+		{
+			image = newImageBitmapData();
+			_imageCollapse[state.index] = image;
 			var shape = MBdFactoryUtil.getShape();
 			var g = shape.graphics;
 			g.clear();
@@ -311,12 +329,10 @@ class MWindowBdFactory
 			g.drawRect(2, 7, imageSize - 7, imageSize - 9);
 			g.endFill();
 			MBdFactoryUtil.qualityOn();
-			_imageCollapse.draw(shape, getImageOffsetMatrix());
-			_imageCollapse.applyFilter(
-				_imageCollapse, _imageCollapse.rect, new Point(),
-				new GlowFilter(0x000000, 1, 2, 2));
+			image.draw(shape, getImageOffsetMatrix());
+			image.applyFilter(image, image.rect, new Point(), new GlowFilter(0x000000, 1, 2, 2));
 			MBdFactoryUtil.qualityOff();
 		}
-		return _imageCollapse;
+		return image;
 	}
 }
