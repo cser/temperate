@@ -58,6 +58,18 @@ class CSimpleButtonWrapper implements ICButton
 		return simpleButton.enabled;
 	}
 	
+	public var selected(get_selected, set_selected):Bool;
+	var _selected:Bool;
+	function get_selected()
+	{
+		return _selected;
+	}
+	function set_selected(value:Bool)
+	{
+		_selected = value;
+		return _selected;
+	}
+	
 	public function setUseHandCursor(value:Bool)
 	{
 		simpleButton.useHandCursor = value;

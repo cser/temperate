@@ -86,10 +86,3 @@ class TestSimpleButtonWrapper extends Sprite
 		);
 	}
 }
-/*
-TODO
-Заменть ACButton на ICButton в:
-	CButtonSelector
-	CScrollBar
-	CSlider
-*/

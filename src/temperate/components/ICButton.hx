@@ -11,6 +11,8 @@ interface ICButton implements IEventDispatcher
 	 */
 	var isEnabled(get_isEnabled, set_isEnabled):Bool;
 	
+	var selected(get_selected, set_selected):Bool;
+	
 	/**
 	 * For easear implementaion
 	 * (HaXe getters/setters ideology is so stern to communicate with flashplayer9 API >_<)
