@@ -6,14 +6,13 @@ import flash.text.TextField;
 import flash.ui.Keyboard;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
+import temperate.minimal.AMWindow;
 import temperate.minimal.MButton;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.MSeparator;
-import temperate.minimal.MWindow;
-import temperate.windows.CWindowManager;
 
-class OpenWindow extends MWindow
+class OpenWindow extends AMWindow<Dynamic>
 {
 	public function new() 
 	{
@@ -62,12 +61,12 @@ class OpenWindow extends MWindow
 	
 	function onOpenClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 	
 	function onCancelClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 	
 	function onMaximizeChange(event:Event)
@@ -79,7 +78,7 @@ class OpenWindow extends MWindow
 	{
 		if (event.keyCode == Keyboard.ESCAPE)
 		{
-			close();
+			close(null);
 		}
 	}
 }

@@ -10,9 +10,9 @@ import temperate.minimal.windows.MWindowScaleAnimator;
 import temperate.windows.ACWindow;
 import temperate.windows.skins.ICWindowSkin;
 
-class MWindow extends ACWindow
+class AMWindow< TData > extends ACWindow<TData>
 {
-	public function new()
+	function new()
 	{
 		super();
 		animator = new MWindowScaleAnimator();
@@ -65,7 +65,7 @@ class MWindow extends ACWindow
 	
 	function onHelpedCloseClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 	
 	function onHelpedMaximizeChange(event:Event)

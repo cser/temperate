@@ -1,25 +1,23 @@
 package windowApplication;
+import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.geom.Point;
 import temperate.containers.CHBox;
 import temperate.extra.CSignal;
 import temperate.minimal.MButton;
 import temperate.minimal.MLabel;
 import temperate.minimal.MNumericStepper;
 import temperate.minimal.MSeparator;
-import temperate.minimal.MWindow;
+import temperate.minimal.AMWindow;
 
-class NewWindow extends MWindow
-{
-	public var signalOk(default, null):CSignal < Int->Int->Void > ;
-	
+class NewWindow extends AMWindow<Point>
+{	
 	var _widthNs:MNumericStepper;
 	var _heightNs:MNumericStepper;
 	
 	public function new() 
 	{
 		super();
-		
-		signalOk = new CSignal();
 		
 		title = "New";
 		
@@ -58,17 +56,16 @@ class NewWindow extends MWindow
 	
 	function onCloseClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 	
 	function onOkClick(event:MouseEvent)
 	{
-		signalOk.dispatch(_widthNs.value, _heightNs.value);
-		close();
+		close(new Point(_widthNs.value, _heightNs.value));
 	}
 	
 	function onCancelClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 }

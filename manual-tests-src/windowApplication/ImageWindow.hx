@@ -3,9 +3,9 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 import temperate.core.CSprite;
 import temperate.minimal.MScrollPane;
-import temperate.minimal.MWindow;
+import temperate.minimal.AMWindow;
 
-class ImageWindow extends MWindow
+class ImageWindow extends AMWindow<Dynamic>
 {
 	public function new(name:String) 
 	{
@@ -45,6 +45,6 @@ class ImageWindow extends MWindow
 	
 	function onCloseClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 }

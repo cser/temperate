@@ -1,12 +1,14 @@
 package ;
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.geom.Point;
 import flash.Lib;
 import temperate.core.CSprite;
 import temperate.debug.FPSMonitor;
 import temperate.minimal.MWindowManager;
 import temperate.windows.CWindowManager;
 import temperate.windows.docks.CWindowAbsoluteDock;
+import temperate.windows.events.CWindowEvent;
 import windowApplication.ColorsWindow;
 import windowApplication.ImageWindow;
 import windowApplication.NewWindow;
@@ -91,15 +93,21 @@ class TestWindowApplication extends Sprite
 	public function doNew()
 	{
 		var window = new NewWindow();
-		window.signalOk.add(onNewWindowOk);
+		window.addTypedListener(CWindowEvent.CLOSE, onNewWindowClose);
 		MWindowManager.add(window, true);
 	}
 	
-	function onNewWindowOk(width:Int, height:Int)
+	function onNewWindowClose(event:CWindowEvent<Point>)
 	{
+		var data = event.data;
+		if (data == null)
+		{
+			return;
+		}
+		
 		var window = new ImageWindow("No name");
 		window.setSize(640, 480);
-		window.setImageSize(width, height);
+		window.setImageSize(Std.int(data.x), Std.int(data.y));
 		window.dock = new CWindowAbsoluteDock(10, 10);
 		var top = _imageManager.topWindow;
 		_imageManager.add(window, false);

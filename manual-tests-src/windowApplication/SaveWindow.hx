@@ -4,14 +4,13 @@ import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.ui.Keyboard;
 import temperate.containers.CHBox;
+import temperate.minimal.AMWindow;
 import temperate.minimal.MButton;
 import temperate.minimal.MInputField;
 import temperate.minimal.MLabel;
 import temperate.minimal.MSeparator;
-import temperate.minimal.MWindow;
-import temperate.windows.CWindowManager;
 
-class SaveWindow extends MWindow 
+class SaveWindow extends AMWindow<Dynamic>
 {
 	public function new() 
 	{
@@ -51,19 +50,19 @@ class SaveWindow extends MWindow
 	
 	function onSaveClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 	
 	function onCancelClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 	
 	function onKeyDown(event:KeyboardEvent)
 	{
 		if (event.keyCode == Keyboard.ESCAPE)
 		{
-			close();
+			close(null);
 		}
 	}
 }

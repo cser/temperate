@@ -10,7 +10,8 @@ import temperate.minimal.MFlatButton;
 import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MSeparator;
 import temperate.minimal.MToolButton;
-import temperate.minimal.MWindow;
+import temperate.minimal.AMWindow;
+import temperate.windows.events.CWindowEvent;
 import windowApplication.assets.Ellipse;
 import windowApplication.assets.Figure;
 import windowApplication.assets.Line;
@@ -25,7 +26,7 @@ import windowApplication.states.PencilDrawState;
 import windowApplication.states.RectDrawState;
 import windowApplication.states.TextDrawState;
 
-class ToolsWindow extends MWindow
+class ToolsWindow extends AMWindow<Dynamic>
 {
 	var _application:TestWindowApplication;
 	var _states:CButtonSelector<ADrawState>;

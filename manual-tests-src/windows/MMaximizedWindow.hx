@@ -1,8 +1,9 @@
 package windows;
+import flash.events.Event;
 import flash.events.MouseEvent;
-import temperate.minimal.MWindow;
+import temperate.minimal.AMWindow;
 
-class MMaximizedWindow extends MWindow
+class MMaximizedWindow extends AMWindow<Dynamic>
 {
 	public function new() 
 	{

@@ -1,11 +1,12 @@
 package temperate.minimal;
 import flash.display.Sprite;
+import flash.events.Event;
 
-class MWindowedContainer< T:Sprite > extends MWindow
+class MWindowedContainer< TData > extends AMWindow<TData>
 {
-	public function new(container:T, title:String = null)
+	public function new(container:Sprite, title:String = null)
 	{
-		this.container = container;
+		_container = container;
 		super();
 		if (title != null)
 		{
@@ -13,10 +14,10 @@ class MWindowedContainer< T:Sprite > extends MWindow
 		}
 	}
 	
-	public var container(default, null):T;
+	var _container:Sprite;
 	
 	override function newContainer():Sprite
 	{
-		return container;
+		return _container;
 	}
 }

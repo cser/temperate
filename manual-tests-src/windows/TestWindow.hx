@@ -11,7 +11,7 @@ import temperate.windows.ACWindow;
 import temperate.windows.skins.CWindowDefaultSkin;
 import temperate.windows.skins.ICWindowSkin;
 
-class TestWindow extends ACWindow
+class TestWindow extends ACWindow<Dynamic>
 {
 	public function new() 
 	{
@@ -71,19 +71,19 @@ class TestWindow extends ACWindow
 	
 	function onOKClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 	
 	function onCancelClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 	
 	function onKeyDown(event:KeyboardEvent)
 	{
 		if (event.keyCode == Keyboard.ESCAPE)
 		{
-			close();
+			close(null);
 		}
 	}
 }

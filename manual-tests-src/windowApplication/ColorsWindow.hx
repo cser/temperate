@@ -1,10 +1,11 @@
 package windowApplication;
+import flash.events.Event;
 import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.ui.Keyboard;
-import temperate.minimal.MWindow;
+import temperate.minimal.AMWindow;
 
-class ColorsWindow extends MWindow
+class ColorsWindow extends AMWindow<Dynamic>
 {
 	public function new() 
 	{
@@ -17,14 +18,14 @@ class ColorsWindow extends MWindow
 	
 	function onCloseClick(event:MouseEvent)
 	{
-		close();
+		close(null);
 	}
 	
 	function onKeyDown(event:KeyboardEvent)
 	{
 		if (event.keyCode == Keyboard.ESCAPE)
 		{
-			close();
+			close(null);
 		}
 	}
 }

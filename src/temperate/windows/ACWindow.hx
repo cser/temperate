@@ -8,6 +8,7 @@ import flash.events.MouseEvent;
 import temperate.collections.CPriorityList;
 import temperate.collections.ICValueSwitcher;
 import temperate.core.CGeomUtil;
+import temperate.core.CTypedDispatcher;
 import temperate.windows.components.ACWindowComponent;
 import temperate.windows.components.CWindowBaseComponent;
 import temperate.windows.components.CWindowConstraintsComponent;
@@ -16,12 +17,15 @@ import temperate.windows.components.CWindowMoveComponent;
 import temperate.windows.components.CWindowResizeComponent;
 import temperate.windows.docks.CWindowAlignedDock;
 import temperate.windows.docks.ICWindowDock;
+import temperate.windows.events.CWindowEvent;
 import temperate.windows.skins.ICWindowSkin;
 
-class ACWindow implements ICWindow
+class ACWindow< TData > extends CTypedDispatcher<CWindowEvent<TData>>, implements ICWindow
 {
 	function new() 
 	{
+		super(new EventDispatcher());
+		
 		isOpened = false;
 		innerDispatcher = new EventDispatcher();
 		dock = new CWindowAlignedDock();
@@ -351,11 +355,14 @@ class ACWindow implements ICWindow
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	public function close(fast:Bool = false):Void
+	public function close(data:TData, fast:Bool = false):Void
 	{
 		if (manager != null)
 		{
-			manager.remove(this, fast);
+			if (dispatchTyped(new CWindowEvent(CWindowEvent.CLOSE, data)))
+			{
+				manager.remove(this, fast);
+			}
 		}
 	}
 }

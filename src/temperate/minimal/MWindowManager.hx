@@ -8,25 +8,26 @@ import temperate.windows.ICWindow;
 
 class MWindowManager
 {
-	static var _instance:CWindowManager;
+	static var _manager:CWindowManager;
 	
-	static function getInstance():CWindowManager
+	static function getManager():CWindowManager
 	{
-		if (_instance == null)
+		if (_manager == null)
 		{
 			_stage = Lib.current.stage;
-			_instance = new CWindowManager(_stage);
-			_lockArea = new MLockArea().setManager(_instance);
+			_manager = new CWindowManager(_stage);
+			_manager.keyboardDispatcher = _stage;
+			_lockArea = new MLockArea().setManager(_manager);
 			_stage.addEventListener(Event.RESIZE, onStageResize);
 			onStageResize();
 		}
-		return _instance;
+		return _manager;
 	}
 	
 	public static function add(popUp:ICWindow, modal:Bool, fast:Bool = false):Void
 	{
-		getInstance().add(popUp, modal, fast);
-		var index = _stage.getChildIndex(_instance.getWindowAt(0).view);
+		getManager().add(popUp, modal, fast);
+		var index = _stage.getChildIndex(_manager.getWindowAt(0).view);
 		var lockView = _lockArea.container;
 		if (lockView.parent != _stage)
 		{
@@ -44,17 +45,17 @@ class MWindowManager
 	
 	public static function moveToTop(popUp:ICWindow):Void
 	{
-		getInstance().moveToTop(popUp);
+		getManager().moveToTop(popUp);
 	}
 	
 	public static function moveTo(popUp:ICWindow, index:Int):Void
 	{
-		getInstance().moveTo(popUp, index);
+		getManager().moveTo(popUp, index);
 	}
 	
 	public static function remove(popUp:ICWindow, fast:Bool = false):Void
 	{
-		getInstance().remove(popUp, fast);
+		getManager().remove(popUp, fast);
 	}
 	
 	static var _stage:Stage;
@@ -62,8 +63,7 @@ class MWindowManager
 	
 	static function onStageResize(event:Event = null)
 	{
-		_instance.setArea(0, 0, Std.int(_stage.stageWidth), Std.int(_stage.stageHeight));
-		_lockArea.setArea(
-			_instance.areaX, _instance.areaY, _instance.areaWidth, _instance.areaHeight);
+		_manager.setArea(0, 0, Std.int(_stage.stageWidth), Std.int(_stage.stageHeight));
+		_lockArea.setArea(_manager.areaX, _manager.areaY, _manager.areaWidth, _manager.areaHeight);
 	}
 }
