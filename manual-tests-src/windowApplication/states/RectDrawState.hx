@@ -1,5 +1,5 @@
 package windowApplication.states;
-import windowApplication.assets.Rect;
+import windowApplication.BdFactory;
 import windowApplication.Primitive;
 
 class RectDrawState extends ADrawState
@@ -8,7 +8,7 @@ class RectDrawState extends ADrawState
 	{
 		super();
 		
-		icon = Rect;
+		icon = BdFactory.getRect();
 	}
 	
 	var _x:Float;

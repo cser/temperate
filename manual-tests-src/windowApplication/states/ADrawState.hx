@@ -23,7 +23,7 @@ class ADrawState
 		_editorState = editorState;
 	}
 	
-	public var icon(default, null):Class<BitmapData>;
+	public var icon(default, null):BitmapData;
 	
 	var _image:CSprite;
 	var _graphics:Graphics;

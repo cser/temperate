@@ -162,7 +162,7 @@ class ImageWindow extends AMWindow<Dynamic>
 		var state = _editorState.tool;
 		if (state != null)
 		{
-			var cursorView = new Bitmap(Type.createInstance(state.icon, []));
+			var cursorView = new Bitmap(state.icon);
 			var cursor = new CCursor();
 			if (Std.is(state, PencilDrawState))
 			{
