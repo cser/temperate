@@ -4,7 +4,7 @@ import flash.events.Event;
 import flash.events.KeyboardEvent;
 import temperate.containers.CVBox;
 import temperate.core.CMath;
-import temperate.extra.Key;
+import temperate.extra.CKey;
 import temperate.minimal.MButton;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MTextArea;
@@ -16,12 +16,12 @@ class TestKey extends Sprite
 		super();
 	}
 	
-	var _key:Key;
+	var _key:CKey;
 	var _log:MTextArea;
 	
 	public function init()
 	{
-		_key = Key.getInstance();
+		_key = CKey.getInstance();
 		
 		var main = new CVBox().addTo(this, 20, 15);
 		new MButton().setText("Check space down").addClickHandler(onCheckSpaceDownClick)

@@ -46,9 +46,9 @@ class TestMain
 		var test = new TestSimpleButtonWrapper();
 		var test = new TestSignalPerformance();
 		var test = new TestScrollPane();
-		
 		var test = new TestKey();
-		//var test = new TestWindows();
+		
+		var test = new TestWindows();
 		Lib.current.addChild(test);
 		test.init();
 	}

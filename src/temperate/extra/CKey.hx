@@ -3,17 +3,21 @@ import flash.events.IEventDispatcher;
 import flash.events.KeyboardEvent;
 import flash.Lib;
 
-class Key 
+/**
+ * Uses for checking key downed in concrete moment
+ * (ActionScript3 API is not provide it, insteard of ActionScript1/2 API)
+ */
+class CKey 
 {
 	private static inline var INT_MAX_VALUE:Int = 0x7fffffff;
 	
-	private static var _instance:Key;
+	private static var _instance:CKey;
 	
-	public static function getInstance():Key
+	public static function getInstance():CKey
 	{
 		if (_instance == null)
 		{
-			_instance = new Key();
+			_instance = new CKey();
 		}
 		return _instance;
 	}
