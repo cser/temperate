@@ -1,6 +1,5 @@
 package temperate.components;
 import flash.display.DisplayObjectContainer;
-import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -8,8 +7,6 @@ import flash.geom.Rectangle;
 import temperate.components.helpers.CChangingTimerHelper;
 import temperate.core.CMath;
 import temperate.core.CSprite;
-import temperate.skins.CScrollSkinState;
-import temperate.skins.ICRectSkin;
 import temperate.skins.ICScrollSkin;
 
 class CScrollBar extends CSprite
@@ -160,7 +157,7 @@ class CScrollBar extends CSprite
 		{
 			_pageTimerHelper.increaseDown();
 		}
-		updateBgDown();
+		redrawBg();
 		stage.addEventListener(MouseEvent.MOUSE_UP, onStagePageMouseUp);
 	}
 	
@@ -190,6 +187,7 @@ class CScrollBar extends CSprite
 		else
 		{
 			value += isIncrease ? pageScrollSize : -pageScrollSize;
+			redrawBg();
 		}
 	}
 	
@@ -202,23 +200,7 @@ class CScrollBar extends CSprite
 	function doPageUp()
 	{
 		_isBgDown = false;
-		updateBgDown();
-	}
-	
-	function updateBgDown()
-	{
-		_bgSkin.state = if (_isBgDown)
-		{
-			CScrollSkinState.DOWN(
-				_isBgDownLeft,
-				Std.int(_horizontal ? _thumb.x + _thumb.width * .5 : _thumb.y + _thumb.height * .5)
-			);
-		}
-		else
-		{
-			CScrollSkinState.UP;
-		}
-		_bgSkin.redraw();
+		redrawBg();
 	}
 	
 	function onThumbMouseDown(event:MouseEvent)
@@ -397,7 +379,22 @@ class CScrollBar extends CSprite
 	function updateBg()
 	{
 		_bgSkin.setSize(_guideDirectOffset, _guideSize, Std.int(_horizontal ? _width : _height));
-		_bgSkin.redraw();
+		redrawBg();
+	}
+	
+	function redrawBg()
+	{
+		if (_isBgDown)
+		{
+			_bgSkin.redrawDown(
+				_isBgDownLeft,
+				Std.int(_horizontal ? _thumb.x + _thumb.width * .5 : _thumb.y + _thumb.height * .5)
+			);
+		}
+		else
+		{
+			_bgSkin.redrawUp();
+		}
 	}
 	
 	function updateThumbSize()

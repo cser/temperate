@@ -11,9 +11,9 @@ interface ICScrollSkin
 	
 	function unlink():Void;
 	
-	var state:CScrollSkinState;
-	
 	function setSize(scrollLeft:Int, scrollSize:Int, size:Int):Void;
 	
-	function redraw():Void;
+	function redrawUp():Void;
+	
+	function redrawDown(isLeft:Bool, thumbCenter:Int):Void;
 }

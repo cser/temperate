@@ -6,7 +6,6 @@ import temperate.components.CScrollBar;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.skins.CNullRectSkin;
 import temperate.skins.CRasterScrollSkin;
-import temperate.skins.CScrollSkinState;
 
 class MScrollBar extends CScrollBar
 {
@@ -51,8 +50,6 @@ class MScrollBar extends CScrollBar
 		}
 		thumb.setGrid3Insets(5, 5);
 		thumb.setMinSizeParams(10, 16);
-		var bg = CNullRectSkin.getInstance();
-		
 		var bg = new CRasterScrollSkin(
 			MScrollBarBdFactory.getHBgUp(), MScrollBarBdFactory.getVBgUp(),
 			MScrollBarBdFactory.getHBgDown(), MScrollBarBdFactory.getVBgDown()
