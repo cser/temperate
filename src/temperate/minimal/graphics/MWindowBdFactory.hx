@@ -7,9 +7,17 @@ using temperate.core.CMath;
 class MWindowBdFactory 
 {
 	static var DEFAULT_STRIAE_SIZE = 20;
+	static var MAX_HEAD_HEIGHT = 50;
 	
+	public static inline var FRAME_CENTER_TOP = 30;
+	
+	public static var gradientHeight = 24;
 	public static var color:UInt = 0x80ffffff;
 	public static var bgColor:UInt = 0x00ffffff;
+	public static var headTopColor:UInt = 0xf8508000;
+	public static var headBottomColor:UInt = 0xe0a0e020;
+	public static var headTopLockedColor:UInt = 0xf0808080;
+	public static var headBottomLockedColor:UInt = 0xf0cccccc;
 	
 	static function newStriae(color:UInt, bgColor:UInt, space:Int, size:Int)
 	{
@@ -86,7 +94,7 @@ class MWindowBdFactory
 		return bd;
 	}
 	
-	static function newTop(striae:BitmapData, height:Int, gradientHeight:Int)
+	static function newTop(striae:BitmapData, topColor:UInt, bottomColor:UInt)
 	{
 		MBdFactoryUtil.qualityOn();
 		var shape = MBdFactoryUtil.getShape();
@@ -99,15 +107,18 @@ class MWindowBdFactory
 		var matrix = new Matrix();
 		matrix.createGradientBox(10, gradientHeight, Math.PI * .5);
 		g.beginGradientFill(
-			GradientType.LINEAR, [0x508000, 0xa0e020], [.9, .9], [0, 255], matrix);
-		g.drawRect(0, 0, width, height);
+			GradientType.LINEAR,
+			[topColor.colorPart(), bottomColor.colorPart()],
+			[topColor.alphaPart(), bottomColor.alphaPart()],
+			[0, 255], matrix);
+		g.drawRect(0, 0, width, MAX_HEAD_HEIGHT);
 		g.endFill();
 		
 		g.beginBitmapFill(striae);
-		g.drawRect(0, 0, width, height);
+		g.drawRect(0, 0, width, MAX_HEAD_HEIGHT);
 		g.endFill();
 		
-		var bd = new BitmapData(width, height, true, 0x000000);
+		var bd = new BitmapData(width, MAX_HEAD_HEIGHT, true, 0x000000);
 		bd.draw(shape);
 		MBdFactoryUtil.qualityOff();
 		return bd;
@@ -130,7 +141,7 @@ class MWindowBdFactory
 	{
 		if (_frame == null)
 		{
-			_frame = newFrame(100, 100, 30);
+			_frame = newFrame(100, 100, FRAME_CENTER_TOP);
 		}
 		return _frame;
 	}
@@ -141,8 +152,19 @@ class MWindowBdFactory
 	{
 		if (_defaultTop == null)
 		{
-			_defaultTop = newTop(getDefaultStriae(), 50, 24);
+			_defaultTop = newTop(getDefaultStriae(), headTopColor, headBottomColor);
 		}
 		return _defaultTop;
+	}
+	
+	static var _lockedTop:BitmapData;
+	
+	public static function getLockedTop():BitmapData
+	{
+		if (_lockedTop == null)
+		{
+			_lockedTop = newTop(getDefaultStriae(), headTopLockedColor, headBottomLockedColor);
+		}
+		return _lockedTop;
 	}
 }

@@ -44,4 +44,5 @@ class MFormatFactory
 	public static var WINDOW_TITLE:CTextFormat = new CTextFormat(DEFAULT_FONT, 14)
 		.setBold(true)
 		.setFilters([new GlowFilter(0xffffff, .5, 4, 4, 10)]);
+	public static var WINDOW_TITLE_DISABLED:CTextFormat = WINDOW_TITLE.clone().setAlpha(.7);
 }

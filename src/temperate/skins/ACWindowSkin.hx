@@ -1,5 +1,6 @@
 package temperate.skins;
 import flash.display.DisplayObject;
+import flash.display.InteractiveObject;
 import flash.display.Sprite;
 import temperate.core.CSprite;
 
@@ -15,6 +16,8 @@ class ACWindowSkin extends CSprite, implements ICWindowSkin
 	}
 	
 	public var view(default, null):DisplayObject;
+	
+	public var head(default, null):InteractiveObject;
 	
 	var _container:Sprite;
 	

@@ -18,26 +18,26 @@ class MWindowSkin extends ACWindowSkin
 	static var VINDENT = 4;
 	static var LINE_TOP_INDENT = 2;
 	static var LINE_BOTTOM_INDENT = 4;
+	static var CENTER_TOP_OFFSET = -5;
 	
 	public function new() 
 	{
 		super();
 		
-		var bitmap = new Bitmap(MWindowBdFactory.getFrame());
-		bitmap.x = 300;
-		/*bitmap.filters = [new ColorMatrixFilter([
-			1, 0, 0, 0, 0,
-			0, 1, 0, 0, 0,
-			0, 0, 1, 0, 0,
-			0, 0, 0, 0, 255])];*/
-		addChild(bitmap);
-		
-		_drawer = new CVScale12GridDrawer(graphics);
+		_drawer = new CVScale12GridDrawer();
 		_drawer.setBitmapData(MWindowBdFactory.getFrame());
+		_drawer.setInsets(
+			10, 12, 10, 12, MWindowBdFactory.FRAME_CENTER_TOP + CENTER_TOP_OFFSET, 10);
+		
+		_head = new Sprite();
+		addChild(_head);
+		
+		head = _head;
 	}
 	
 	var _titleTF:TextField;
 	var _drawer:CVScale12GridDrawer;
+	var _head:Sprite;
 	
 	override public function link(container:Sprite):Void 
 	{
@@ -83,53 +83,27 @@ class MWindowSkin extends ACWindowSkin
 		{
 			_view_valid = true;
 			
-			var g = graphics;
+			var format = _isLocked ?
+				MFormatFactory.WINDOW_TITLE_DISABLED : MFormatFactory.WINDOW_TITLE;
+			format.applyTo(_titleTF);
 			
+			var g = graphics;
 			g.clear();
 			
-			g.beginFill(0x000000, .2);
-			g.drawRoundRect(3, 3, width, height, 12);
-			g.drawRoundRect(3, 3, width - 3, height - 3, 12);
-			g.endFill();
-			
-			g.lineStyle(2, 0x505050);
-			g.drawRoundRect(0, 0, width, height, 10);
-			
 			g.lineStyle();
-			
-			g.beginFill(0xeeeeee);
-			g.drawRoundRect(0, 0, width, height, 10);
-			g.endFill();
-			
-			g.lineStyle();
-			g.beginFill(0xffffff);
-			g.drawRoundRect(0, 0, width, height, 10);
-			g.drawRoundRect(0, 0, width - 1, height - 1, 10);
-			g.endFill();
-			
-			g.lineStyle();
-			g.beginBitmapFill(MWindowBdFactory.getDefaultTop());
-			g.drawRoundRectComplex(0, 0, width, _lineTop, 5, 5, 0, 0);
-			g.endFill();
-			
-			var matrix = new Matrix();
-			g.lineStyle();
-			g.beginGradientFill(
-				GradientType.LINEAR, [0xffffff, 0xffffff], [.5, 1], [0, 255], matrix);
-			g.drawRoundRectComplex(0, 0, width, _lineTop, 5, 5, 0, 0);
+			g.beginBitmapFill(
+				_isLocked ? MWindowBdFactory.getLockedTop() : MWindowBdFactory.getDefaultTop());
 			g.drawRoundRectComplex(1, 1, width - 2, _lineTop - 1, 5, 5, 0, 0);
 			g.endFill();
 			
-			g.lineStyle();
-			g.beginFill(0xffffff, .6);
-			g.drawRect(1, _lineTop - 2, width - 2, 1);
-			g.endFill();
+			_drawer.setBounds(
+				0, 0, Std.int(_width + 2), Std.int(_height + 2), _lineTop + CENTER_TOP_OFFSET);
+			_drawer.draw(g);
 			
-			// For debug
-			
-			g.lineStyle();
-			g.beginBitmapFill(MWindowBdFactory.getDefaultTop());
-			g.drawRoundRectComplex(300 + 1, 1, 100 - 2, 30 - 1, 5, 5, 0, 0);
+			var g = _head.graphics;
+			g.clear();
+			g.beginFill(0xffffff, 0);
+			g.drawRect(0, 0, width, _lineTop);
 			g.endFill();
 		}
 	}
@@ -141,5 +115,12 @@ class MWindowSkin extends ACWindowSkin
 		_size_valid = false;
 		postponeSize();
 		return _title;
+	}
+	
+	override function updateIsLocked()
+	{
+		super.updateIsLocked();
+		_view_valid = false;
+		postponeView();
 	}
 }

@@ -6,14 +6,12 @@ import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MButton;
 import temperate.minimal.MFlatButton;
-import temperate.minimal.MFormatFactory;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.MSeparator;
 import temperate.minimal.skins.MWindowSkin;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
-import temperate.windows.CPopUpMover;
 
 class OpenWindow extends ACWindow
 {
@@ -50,8 +48,6 @@ class OpenWindow extends ACWindow
 		button.text = "Cancel";
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
-		
-		new CPopUpMover().subscribe(getManager, this, view, get_dock);
 	}
 	
 	var _main:CVBox;

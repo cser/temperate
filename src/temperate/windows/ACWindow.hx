@@ -24,6 +24,13 @@ class ACWindow implements ICPopUp
 		_baseSkin = newSkin();
 		_baseSkin.link(_baseContainer);
 		view = _baseSkin.view;
+		
+		_mover = newMover();
+		var head = _baseSkin.head;
+		if (head != null)
+		{
+			_mover.subscribe(getManager, this, head, get_dock);
+		}
 	}
 	
 	var _manager:CPopUpManager;
@@ -99,6 +106,13 @@ class ACWindow implements ICPopUp
 	function newSkin():ICWindowSkin
 	{
 		return CNullWindowSkin.getInstance();
+	}
+	
+	var _mover:CPopUpMover;
+	
+	function newMover()
+	{
+		return new CPopUpMover();
 	}
 	
 	public var width(get_width, set_width):Float;

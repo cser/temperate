@@ -5,7 +5,6 @@ import flash.text.TextField;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MButton;
-import temperate.minimal.MFormatFactory;
 import temperate.minimal.MInputField;
 import temperate.minimal.MLabel;
 import temperate.minimal.MSeparator;
@@ -13,7 +12,6 @@ import temperate.minimal.skins.MWindowSkin;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
-import temperate.windows.CPopUpMover;
 
 class SaveWindow extends ACWindow 
 {
@@ -45,8 +43,6 @@ class SaveWindow extends ACWindow
 		button.text = "Cancel";
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
-		
-		new CPopUpMover().subscribe(getManager, this, view, get_dock);
 	}
 	
 	var _main:CVBox;

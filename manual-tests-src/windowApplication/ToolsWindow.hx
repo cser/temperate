@@ -7,13 +7,11 @@ import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFlatImageButton;
-import temperate.minimal.MFormatFactory;
 import temperate.minimal.MSeparator;
 import temperate.minimal.skins.MWindowSkin;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
-import temperate.windows.CPopUpMover;
 import temperate.windows.docks.CAbsolutePopUpDock;
 
 @:bitmap("manual-tests-src/windowApplication/arrow.png")
@@ -101,8 +99,6 @@ class ToolsWindow extends ACWindow
 		_main.add(button).setPercents(100);
 		
 		dock = new CAbsolutePopUpDock(10, 50);
-		
-		new CPopUpMover().subscribe(getManager, this, view, get_dock);
 	}
 	
 	var _main:CVBox;
@@ -130,7 +126,7 @@ class ToolsWindow extends ACWindow
 		return _main;
 	}
 	
-	override function newSkin():ICWindowSkin 
+	override function newSkin():ICWindowSkin
 	{
 		return new MWindowSkin();
 	}

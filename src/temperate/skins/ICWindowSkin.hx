@@ -1,10 +1,13 @@
 package temperate.skins;
 import flash.display.DisplayObject;
+import flash.display.InteractiveObject;
 import flash.display.Sprite;
 
 interface ICWindowSkin 
 {
 	var view(default, null):DisplayObject;
+	
+	var head(default, null):InteractiveObject;
 	
 	function link(container:Sprite):Void;
 	
