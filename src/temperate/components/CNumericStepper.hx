@@ -12,6 +12,7 @@ import flash.ui.Keyboard;
 import temperate.components.helpers.CSmoothTimerChanger;
 import temperate.components.helpers.ICTimerChanger;
 import temperate.core.CMath;
+import temperate.core.CMouseWheelUtil;
 import temperate.core.CSprite;
 import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
@@ -30,6 +31,7 @@ class CNumericStepper extends CSprite
 		_minValue = 0;
 		_maxValue = 100;
 		_value = 0;
+		_mouseWheelDimRatio = 1;
 		
 		valueRestrict = "\\-0-9";
 		valueTranslator = Std.string;
@@ -390,6 +392,18 @@ class CNumericStepper extends CSprite
 		_down.setUseHandCursor(_useHandCursor);
 	}
 	
+	public var mouseWheelDimRatio(get_mouseWheelDimRatio, set_mouseWheelDimRatio):Int;
+	var _mouseWheelDimRatio:Int;
+	function get_mouseWheelDimRatio()
+	{
+		return _mouseWheelDimRatio;
+	}
+	function set_mouseWheelDimRatio(value:Int)
+	{
+		_mouseWheelDimRatio = value;
+		return _mouseWheelDimRatio;
+	}
+	
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Changing
@@ -503,9 +517,7 @@ class CNumericStepper extends CSprite
 	
 	function onMouseWheel(event:MouseEvent)
 	{
-		var delta = event.delta;
-		var sign = delta > 0 ? 1 : -1;
-		value += sign * _step * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3));
+		value -= _step * CMouseWheelUtil.getDimDelta(event.delta, _mouseWheelDimRatio); 
 	}
 	
 	function onKeyDown(event:KeyboardEvent)

@@ -6,6 +6,7 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import temperate.core.CMath;
+import temperate.core.CMouseWheelUtil;
 import temperate.core.CSprite;
 import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
@@ -38,7 +39,7 @@ class CSlider extends CSprite, implements ICSlider
 		_value = 0;
 		
 		_step = 0;
-		_mouseWheelStep = 10;
+		_mouseWheelStep = 1;
 		
 		_bg = new Sprite();
 		addChild(_bg);
@@ -50,6 +51,7 @@ class CSlider extends CSprite, implements ICSlider
 		_bgSkin.link(addChildToBg, _bg.removeChild, _bg.graphics);
 		
 		updateOnMove = false;
+		mouseWheelDimRatio = 1;
 		
 		updateEnabled();
 		
@@ -212,7 +214,7 @@ class CSlider extends CSprite, implements ICSlider
 		var delta = event.delta;
 		var sign = delta > 0 ? -1 : 1;
 		setValue(
-			_value + sign * _mouseWheelStep * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3)),
+			_value - _mouseWheelStep * CMouseWheelUtil.getDimDelta(event.delta, mouseWheelDimRatio),
 			true);
 	}
 	
@@ -335,6 +337,8 @@ class CSlider extends CSprite, implements ICSlider
 	//----------------------------------------------------------------------------------------------
 	
 	public var updateOnMove:Bool;
+	
+	public var mouseWheelDimRatio:Int;
 	
 	public var value(get_value, set_value):Float;
 	var _value:Float;

@@ -19,6 +19,7 @@ class MainTestSuite extends TestSuite
 		add(temperate.containers.CVContainerChangeLayoutByChildManagmentTest);
 		add(temperate.containers.CVContainerTest);
 		add(temperate.core.CMathTest);
+		add(temperate.core.CMouseWheelUtilTest);
 		add(temperate.docks.RightDockTest);
 		add(temperate.minimal.charts.MChartTest);
 		add(temperate.text.CInputFieldTest);

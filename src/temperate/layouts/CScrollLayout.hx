@@ -26,9 +26,17 @@ class CScrollLayout implements ICScrollLayout
 			{
 				hsb = showHScrollBar();
 			}
+			else
+			{
+				hideHScrollBar();
+			}
 			if (wrapper.getHeight() > height)
 			{
 				vsb = showVScrollBar();
+			}
+			else
+			{
+				hideVScrollBar();
 			}
 		}
 		else

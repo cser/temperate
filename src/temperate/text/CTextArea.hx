@@ -3,12 +3,12 @@ import flash.display.DisplayObjectContainer;
 import flash.events.Event;
 import flash.text.TextField;
 import flash.text.TextFieldType;
-import temperate.components.ACScrollPane;
 import temperate.components.CScrollBar;
 import temperate.components.CScrollPolicy;
+import temperate.containers.ACScrollPane;
 import temperate.core.CMath;
-import temperate.layouts.ICScrollTextLayout;
 import temperate.layouts.CScrollTextLayout;
+import temperate.layouts.ICScrollTextLayout;
 import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
 
@@ -179,18 +179,16 @@ class CTextArea extends ACScrollPane
 	
 	function updateTextType()
 	{
-		_tf.type = _isEnabled && _editable ?
-			_tf.type = TextFieldType.INPUT :
-			_tf.type = TextFieldType.DYNAMIC;
+		_tf.type = _isEnabled && _editable ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
 	}
 	
 	function updateControlsEnabled()
 	{
-		if (_hScrollAvailable)
+		if (_hScrollBar != null)
 		{
 			_hScrollBar.isEnabled = _isEnabled;
 		}
-		if (_vScrollAvailable)
+		if (_vScrollBar != null)
 		{
 			_vScrollBar.isEnabled = _isEnabled;
 		}
@@ -213,6 +211,9 @@ class CTextArea extends ACScrollPane
 			_editable = value;
 			updateTextType();
 			updateControlsEnabled();
+			
+			_view_valid = false;
+			postponeView();
 		}
 		return _editable;
 	}
@@ -267,26 +268,22 @@ class CTextArea extends ACScrollPane
 		return _tf.scrollV;
 	}
 	
-	public var hMaxScrollValue(get_hMaxScrollValue, null):Int;
-	function get_hMaxScrollValue()
+	override function get_hMaxScrollValue()
 	{
 		return _tf.maxScrollH;
 	}
 	
-	public var vMaxScrollValue(get_vMaxScrollValue, null):Int;
-	function get_vMaxScrollValue()
+	override function get_vMaxScrollValue()
 	{
 		return _tf.maxScrollV;
 	}
 	
-	public var hMinScrollValue(get_hMinScrollValue, null):Int;
-	function get_hMinScrollValue()
+	override function get_hMinScrollValue()
 	{
 		return 0;
 	}
 	
-	public var vMinScrollValue(get_vMinScrollValue, null):Int;
-	function get_vMinScrollValue()
+	override function get_vMinScrollValue()
 	{
 		return 1;
 	}

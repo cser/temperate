@@ -1,6 +1,7 @@
-package temperate.components;
+package temperate.containers;
 import flash.display.DisplayObject;
 import flash.events.Event;
+import temperate.components.CScrollBar;
 import temperate.core.CSprite;
 import temperate.skins.ICRectSkin;
 
@@ -22,6 +23,7 @@ class ACScrollPane extends CSprite
 		
 		_hScrollStep = 1;
 		_vScrollStep = 1;
+		_mouseWheelDimRatio = 1;
 		
 		_settedWidth = 100;
 		_settedHeight = 100;
@@ -40,6 +42,7 @@ class ACScrollPane extends CSprite
 			_hScrollBar.isEnabled = _isEnabled;
 			_hScrollBar.step = _hScrollStep;
 			_hScrollBar.updateOnMove = _updateOnMove;
+			_hScrollBar.mouseWheelDimRatio = _mouseWheelDimRatio;
 			_hScrollBar.addEventListener(Event.CHANGE, onHScroll);
 		}
 		if (_hScrollBar.parent != this)
@@ -67,6 +70,7 @@ class ACScrollPane extends CSprite
 			_vScrollBar.isEnabled = _isEnabled;
 			_vScrollBar.step = _vScrollStep;
 			_vScrollBar.updateOnMove = _updateOnMove;
+			_vScrollBar.mouseWheelDimRatio = _mouseWheelDimRatio;
 			_vScrollBar.addEventListener(Event.CHANGE, onVScroll);
 		}
 		if (_vScrollBar.parent != this)
@@ -102,11 +106,11 @@ class ACScrollPane extends CSprite
 		if (_updateOnMove != value)
 		{
 			_updateOnMove = value;
-			if (_vScrollAvailable)
+			if (_vScrollBar != null)
 			{
 				_vScrollBar.updateOnMove = _updateOnMove;
 			}
-			if (_hScrollAvailable)
+			if (_hScrollBar != null)
 			{
 				_hScrollBar.updateOnMove = _updateOnMove;
 			}
@@ -178,5 +182,52 @@ class ACScrollPane extends CSprite
 	function set_vScrollValue(value:Int)
 	{
 		return 0;
+	}
+	
+	public var hMaxScrollValue(get_hMaxScrollValue, null):Int;
+	function get_hMaxScrollValue()
+	{
+		return 0;
+	}
+	
+	public var vMaxScrollValue(get_vMaxScrollValue, null):Int;
+	function get_vMaxScrollValue()
+	{
+		return 0;
+	}
+	
+	public var hMinScrollValue(get_hMinScrollValue, null):Int;
+	function get_hMinScrollValue()
+	{
+		return 0;
+	}
+	
+	public var vMinScrollValue(get_vMinScrollValue, null):Int;
+	function get_vMinScrollValue()
+	{
+		return 0;
+	}
+	
+	public var mouseWheelDimRatio(get_mouseWheelDimRatio, set_mouseWheelDimRatio):Int;
+	var _mouseWheelDimRatio:Int;
+	function get_mouseWheelDimRatio()
+	{
+		return _mouseWheelDimRatio;
+	}
+	function set_mouseWheelDimRatio(value:Int)
+	{
+		if (_mouseWheelDimRatio != value)
+		{
+			_mouseWheelDimRatio = value;
+			if (_hScrollAvailable)
+			{
+				_hScrollBar.mouseWheelDimRatio = value;
+			}
+			if (_vScrollAvailable)
+			{
+				_vScrollBar.mouseWheelDimRatio = value;
+			}
+		}
+		return _mouseWheelDimRatio;
 	}
 }
