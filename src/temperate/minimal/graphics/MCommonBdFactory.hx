@@ -552,7 +552,7 @@ class MCommonBdFactory
 		
 		var alphas = [];
 		var finalColors = [];
-		getColorsAndAlphas(colors, finalColors, alphas);
+		MBdFactoryUtil.getColorsAndAlphas(colors, finalColors, alphas);
 		
 		g.beginGradientFill(GradientType.LINEAR, finalColors, alphas, ratios, matrix);
 		g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 8);
@@ -584,7 +584,7 @@ class MCommonBdFactory
 		
 		var colors = [];
 		var alphas = [];
-		getColorsAndAlphas(roundBorderColors, colors, alphas);
+		MBdFactoryUtil.getColorsAndAlphas(roundBorderColors, colors, alphas);
 		
 		{
 			var width = BOX_WIDTH;
@@ -604,7 +604,7 @@ class MCommonBdFactory
 		var ratios = down ? roundRatiosDown : roundRatiosUp;
 		var alphas = [];
 		var finalColors = [];
-		getColorsAndAlphas(colors, finalColors, alphas);
+		MBdFactoryUtil.getColorsAndAlphas(colors, finalColors, alphas);
 		
 		if (selected)
 		{
@@ -662,7 +662,7 @@ class MCommonBdFactory
 			
 			var colors = [];
 			var alphas = [];
-			getColorsAndAlphas(roundBorderColors, colors, alphas);
+			MBdFactoryUtil.getColorsAndAlphas(roundBorderColors, colors, alphas);
 			
 			g.beginGradientFill(GradientType.LINEAR, colors, alphas, roundBorderRatios, matrix);
 			g.drawEllipse(1, 1, width - 2, height - 2);
@@ -687,7 +687,8 @@ class MCommonBdFactory
 		{
 			var alphas = [];
 			var colors = [];
-			getColorsAndAlphas(down ? roundColorsDown : roundColorsUp, colors, alphas);
+			MBdFactoryUtil.getColorsAndAlphas(
+				down ? roundColorsDown : roundColorsUp, colors, alphas);
 			var ratios = down ? roundRatiosDown : roundRatiosUp;
 		
 			g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
@@ -706,22 +707,5 @@ class MCommonBdFactory
 		
 		MBdFactoryUtil.qualityOff();
 		return bitmapData;
-	}
-	
-	//----------------------------------------------------------------------------------------------
-	//
-	//  Helped
-	//
-	//----------------------------------------------------------------------------------------------
-	
-	inline static function getColorsAndAlphas(
-		source:Array<UInt>, outColors:Array<UInt>, outAlphas:Array<Float>)
-	{
-		for (i in 0 ... source.length)
-		{
-			var color = source[i];
-			outColors[i] = CMath.colorPart(color);
-			outAlphas[i] = CMath.alphaPart(color);
-		}
 	}
 }

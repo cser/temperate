@@ -1,6 +1,7 @@
 package ;
 import flash.display.Bitmap;
 import flash.display.Sprite;
+import flash.display.StageQuality;
 import helpers.Scaler;
 import temperate.components.CScrollBar;
 import temperate.containers.CVBox;
@@ -17,6 +18,8 @@ class TestScrollBar extends Sprite
 	
 	public function init()
 	{
+		stage.quality = StageQuality.LOW;
+		
 		newScrollBar(true).addTo(this);
 		newScrollBar(false).addTo(this, 100, 0);
 		
@@ -29,8 +32,21 @@ class TestScrollBar extends Sprite
 		scrollBar.pageSize = 50;
 		addChild(new Scaler(scrollBar));
 		
-		var column = new CVBox().addTo(this, 0, 300);
+		var g = graphics;
+		g.beginFill(0xeeeeee);
+		g.drawRect(0, 290, 200, 200);
+		g.endFill();
+		
+		newButtonsBlock().addTo(this, 10, 300);
+		newButtonsBlock().addTo(this, 210, 300);
+	}
+	
+	function newButtonsBlock()
+	{
+		var column = new CVBox();
 		column.add(new Bitmap(MScrollBarBdFactory.getScrollLeftUp()));
+		column.add(new Bitmap(MScrollBarBdFactory.getScrollLeftOver()));
+		return column;
 	}
 	
 	function newScrollBar(horizontal)

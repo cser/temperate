@@ -1,13 +1,14 @@
 package temperate.minimal.graphics;
 import flash.display.BitmapData;
+import flash.display.GradientType;
 import flash.display.Graphics;
 import flash.geom.Matrix;
+import temperate.components.CButtonState;
 import temperate.core.CMath;
 
 class MScrollBarBdFactory 
 {
-	public static var arrowWidth = 17;
-	public static var arrowHeight = 17;
+	public static var arrowSize = 17;
 	public static var arrowColor:UInt = 0xff508000;
 	public static var bgColor:UInt = 0xff80f000;
 	
@@ -17,26 +18,37 @@ class MScrollBarBdFactory
 	{
 		if (_scrollLeftUp == null)
 		{
-			_scrollLeftUp = newScrollUp(true, true);
+			_scrollLeftUp = newScrollUp(true, true, CButtonState.UP);
 		}
 		return _scrollLeftUp;
 	}
 	
-	static function newScrollUp(horizontal:Bool, left:Bool)
+	static var _scrollLeftOver:BitmapData;
+	
+	public static function getScrollLeftOver()
+	{
+		if (_scrollLeftOver == null)
+		{
+			_scrollLeftOver = newScrollUp(true, true, CButtonState.OVER);
+		}
+		return _scrollLeftOver;
+	}
+	
+	static function newScrollUp(horizontal:Bool, left:Bool, state:CButtonState)
 	{
 		MBdFactoryUtil.qualityOn();
 		var shape = MBdFactoryUtil.getShape();
 		
-		var width = horizontal ? arrowWidth : arrowHeight;
-		var height = horizontal ? arrowHeight : arrowWidth;
-		var bitmapData = new BitmapData(width, height, true, 0x00000000);
-		
+		var bitmapData = getBg(state).clone();
 		var g = shape.graphics;
-		drawBg(g, width, height);
-		bitmapData.draw(shape);
 		
+		var color = arrowColor;
+		if (state == CButtonState.OVER)
+		{
+			color = 0xffe0ff00;
+		}
 		g.clear();
-		g.beginFill(CMath.colorPart(arrowColor), CMath.alphaPart(arrowColor));
+		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
 		g.moveTo(-1, -5);
 		g.lineTo(4, 1);
 		g.lineTo(-1, 7);
@@ -46,8 +58,8 @@ class MScrollBarBdFactory
 		g.endFill();
 		
 		var innerStrength = 1.7;
-		var offsetX = width >> 1;
-		var offsetY = height >> 1;
+		var offsetX = arrowSize >> 1;
+		var offsetY = arrowSize >> 1;
 		
 		if (horizontal && !left)
 		{
@@ -55,37 +67,82 @@ class MScrollBarBdFactory
 		}
 		else if (horizontal && left)
 		{
-			bitmapData.draw(shape, new Matrix(-1, 0, 0, 1, width - offsetX, offsetY));
+			bitmapData.draw(shape, new Matrix(-1, 0, 0, 1, arrowSize - offsetX, offsetY));
 		}
 		else if (!horizontal && !left)
 		{
-			bitmapData.draw(shape, new Matrix(0, 1, -1, 0, width - offsetX, offsetY));
+			bitmapData.draw(shape, new Matrix(0, 1, -1, 0, arrowSize - offsetX, offsetY));
 		}
 		else
 		{
-			bitmapData.draw(shape, new Matrix(0, -1, 1, 0, offsetX, height - offsetY));
+			bitmapData.draw(shape, new Matrix(0, -1, 1, 0, offsetX, arrowSize - offsetY));
 		}
 		
 		MBdFactoryUtil.qualityOff();
 		return bitmapData;
 	}
 	
-	static function drawBg(g:Graphics, width:Int, height:Int)
+	static var _bgByState:Array<BitmapData> = [];
+	
+	static function getBg(state:CButtonState)
 	{
-		g.clear();
-		
-		g.beginFill(CMath.colorPart(bgColor), CMath.alphaPart(bgColor));
-		g.drawRoundRect(0, 0, width, height, 4);
-		g.endFill();
-		
-		var color = 0xffffffff;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(1, 1, width - 2, height - 2, 4);
-		g.endFill();
-		
-		var color = 0xff80cc00;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(2, 2, width - 4, height - 4, 2);
-		g.endFill();
+		var bd = _bgByState[state.index];
+		if (bd == null)
+		{
+			bd = new BitmapData(arrowSize, arrowSize, true, 0x00000000);
+			var shape = MBdFactoryUtil.getShape();
+			var g = shape.graphics;
+			
+			g.clear();
+			
+			var color = 0xff50a030;
+			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+			g.drawRoundRect(0, 0, arrowSize, arrowSize, 4);
+			g.drawRoundRect(0, 0, arrowSize - 1, arrowSize - 1, 4);
+			g.endFill();
+			
+			var color = 0xffc0e0a0;
+			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+			g.drawRoundRect(0, 0, arrowSize, arrowSize, 4);
+			g.drawRoundRect(1, 1, arrowSize - 1, arrowSize - 1, 4);
+			g.endFill();
+			
+			var color = 0xffffffff;
+			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+			g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 2);
+			g.endFill();
+			
+			{
+				var boxHeight = 15;
+				var matrix = new Matrix();
+				matrix.createGradientBox(boxHeight, boxHeight, Math.PI / 4);
+				
+				var colors = [];
+				var alphas = [];
+				MBdFactoryUtil.getColorsAndAlphas([ 0xffc0ff50, 0xff80cc00 ], colors, alphas);
+				
+				var ratios = [ 0, 255 ];
+				
+				g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
+				g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 2);
+				g.endFill();
+			}
+			
+			var color = 0x8050a030;
+			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+			g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 4);
+			g.drawRoundRect(3, 3, arrowSize - 6, arrowSize - 6, 4);
+			g.endFill();
+			
+			var color = 0x8050a030;
+			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+			g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 2);
+			g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 2);
+			g.endFill();
+			
+			bd.draw(shape);
+			_bgByState[state.index] = bd;
+		}
+		return bd;
 	}
 }

@@ -2,6 +2,7 @@ package temperate.minimal.graphics;
 import flash.display.Shape;
 import flash.display.StageQuality;
 import flash.Lib;
+import temperate.core.CMath;
 
 class MBdFactoryUtil 
 {
@@ -34,6 +35,17 @@ class MBdFactoryUtil
 		if (stage.quality != _oldQuality)
 		{
 			stage.quality = _oldQuality;
+		}
+	}
+	
+	public static function getColorsAndAlphas(
+		source:Array<UInt>, outColors:Array<UInt>, outAlphas:Array<Float>)
+	{
+		for (i in 0 ... source.length)
+		{
+			var color = source[i];
+			outColors[i] = CMath.colorPart(color);
+			outAlphas[i] = CMath.alphaPart(color);
 		}
 	}
 }
