@@ -90,10 +90,12 @@ class CRasterPressCursor implements ICCursor
 		{
 			Mouse.hide();
 		}
+		#if flash_10
 		if (_system != null)
 		{
 			Mouse.cursor = _system;
 		}
+		#end
 		_bitmap.bitmapData = _up;
 		mouseEventSource.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		mouseEventSource.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -105,10 +107,12 @@ class CRasterPressCursor implements ICCursor
 		{
 			Mouse.show();
 		}
+		#if flash_10
 		if (_system != null)
 		{
 			Mouse.cursor = MouseCursor.AUTO;
 		}
+		#end
 		mouseEventSource.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		mouseEventSource.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 	}

@@ -91,10 +91,12 @@ class CCursor implements ICCursor
 		{
 			Mouse.hide();
 		}
+		#if flash10
 		if (_system != null)
 		{
 			Mouse.cursor = _system;
 		}
+		#end
 	}
 	
 	public function unsubscribe(mouseEventSource:IEventDispatcher = null)
@@ -103,9 +105,11 @@ class CCursor implements ICCursor
 		{
 			Mouse.show();
 		}
+		#if flash10
 		if (_system != null)
 		{
 			Mouse.cursor = MouseCursor.AUTO;
 		}
+		#end
 	}
 }

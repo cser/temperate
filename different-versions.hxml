@@ -1,0 +1,30 @@
+-cp manual-tests-src
+-cp src
+--no-inline
+-swf-version 9
+-main TestMain
+-swf bin/temperate-9.swf
+
+--next
+-cp manual-tests-src
+-cp src
+--no-inline
+-swf-version 10
+-main TestMain
+-swf bin/temperate-10.swf
+
+--next
+-cp manual-tests-src
+-cp src
+--no-inline
+-swf-version 10.1
+-main TestMain
+-swf bin/temperate-10.1.swf
+
+--next
+-cp manual-tests-src
+-cp src
+--no-inline
+-swf-version 10.2
+-main TestMain
+-swf bin/temperate-10.2.swf
