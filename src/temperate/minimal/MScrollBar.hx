@@ -5,6 +5,8 @@ import temperate.components.CRasterThumb;
 import temperate.components.CScrollBar;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.skins.CNullRectSkin;
+import temperate.skins.CRasterScrollSkin;
+import temperate.skins.CScrollSkinState;
 
 class MScrollBar extends CScrollBar
 {
@@ -50,24 +52,11 @@ class MScrollBar extends CScrollBar
 		thumb.setGrid3Insets(5, 5);
 		thumb.setMinSizeParams(10, 16);
 		var bg = CNullRectSkin.getInstance();
+		
+		var bg = new CRasterScrollSkin(
+			MScrollBarBdFactory.getHBgUp(), MScrollBarBdFactory.getVBgUp(),
+			MScrollBarBdFactory.getHBgDown(), MScrollBarBdFactory.getVBgDown()
+		);
 		super(horizontal, leftArrow, rightArrow, thumb, bg);
-	}
-	
-	override function updateBg()
-	{
-		var bd = _horizontal ? MScrollBarBdFactory.getHBgUp() : MScrollBarBdFactory.getVBgUp();
-		var g = _bg.graphics;
-		var indent = 3;
-		g.clear();
-		g.beginBitmapFill(bd);
-		if (_horizontal)
-		{
-			g.drawRect(indent, 0, _width - indent * 2, _height);
-		}
-		else
-		{
-			g.drawRect(0, indent, _width, _height - indent * 2);
-		}
-		g.endFill();
 	}
 }

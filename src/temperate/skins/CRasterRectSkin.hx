@@ -24,6 +24,7 @@ class CRasterRectSkin implements ICRectSkin
 		addChildAt0:DisplayObject->Dynamic, removeChild:DisplayObject->Dynamic, graphics:Graphics
 	):Void
 	{
+		_removeChild = removeChild;
 		addChildAt0(_shape);
 	}
 	

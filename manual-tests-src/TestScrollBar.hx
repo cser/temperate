@@ -9,13 +9,14 @@ import helpers.Scaler;
 import temperate.components.CScrollBar;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
+import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MLabel;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.MTooltipFactory;
-import temperate.minimal.skins.MFieldRectSkin;
 import temperate.raster.Scale3GridDrawer;
+import temperate.skins.CRasterScrollSkin;
 import temperate.text.CLabel;
 
 class TestScrollBar extends Sprite
@@ -127,7 +128,7 @@ class TestScrollBar extends Sprite
 			horizontal, new MButton().setText("-"),
 			new MButton().setText("+"),
 			new MButton().setText("::"),
-			new MFieldRectSkin()
+			new CRasterScrollSkin(MCommonBdFactory.getTextBg(), MCommonBdFactory.getTextBg())
 		);
 	}
 	
@@ -177,6 +178,7 @@ class TestScrollBar extends Sprite
 TODO
 Подсветка клика по линии
 Продолжение скроллинга при повторном наведении нажатой мышки на стрелку
+Продолжение скроллинга при повторном наведении нажатой мышки на линию
 Параметризация цветов
-Протестировать настройка значения скроллинга по странице (при несовпадении с размером страницы)
+Протестировать настройку значения скроллинга по странице (при несовпадении с размером страницы)
 */

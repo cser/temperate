@@ -1,5 +1,6 @@
 package temperate.components;
 import flash.display.DisplayObjectContainer;
+import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -7,7 +8,9 @@ import flash.geom.Rectangle;
 import temperate.components.helpers.CChangingTimerHelper;
 import temperate.core.CMath;
 import temperate.core.CSprite;
+import temperate.skins.CScrollSkinState;
 import temperate.skins.ICRectSkin;
+import temperate.skins.ICScrollSkin;
 
 class CScrollBar extends CSprite
 {
@@ -16,11 +19,11 @@ class CScrollBar extends CSprite
 	var _rightArrow:ACButton;
 	var _thumb:ACButton;
 	var _bg:Sprite;
-	var _bgSkin:ICRectSkin;
+	var _bgSkin:ICScrollSkin;
 	
 	public function new(
-		horizontal:Bool, leftArrow:ACButton, rightArrow:ACButton, thumb:ACButton, bgSkin:ICRectSkin
-	) 
+		horizontal:Bool, leftArrow:ACButton, rightArrow:ACButton, thumb:ACButton,
+		bgSkin:ICScrollSkin) 
 	{
 		_horizontal = horizontal;
 		_leftArrow = leftArrow;
@@ -60,12 +63,14 @@ class CScrollBar extends CSprite
 		_bg = new Sprite();
 		addChild(_bg);
 		
-		_bgSkin.link(_bg.addChild, _bg.removeChild, _bg.graphics);
+		_bgSkin.link(_horizontal, _bg.addChild, _bg.removeChild, _bg.graphics);
 		addChild(_thumb);
 		addChild(_leftArrow);
 		addChild(_rightArrow);
 		
 		updateOnMove = false;
+		_isBgDown = false;
+		_isBgDownLeft = false;
 		
 		_timerHelper = new CChangingTimerHelper();
 		_timerHelper.onIncrease = onIncrease;
@@ -136,13 +141,18 @@ class CScrollBar extends CSprite
 		checkPageMouseAndChange(true);
 	}
 	
+	var _isBgDown:Bool;
+	var _isBgDownLeft:Bool;
+	
 	function onBgMouseDown(event:MouseEvent)
 	{
 		var mousePosition = _horizontal ? _bg.mouseX : _bg.mouseY;
 		var thumbCenter = _horizontal ?
 			_thumb.x + _thumb.width * .5 :
 			_thumb.y + _thumb.height * .5;
-		if (mousePosition < thumbCenter)
+		_isBgDown = true;
+		_isBgDownLeft = mousePosition < thumbCenter;
+		if (_isBgDownLeft)
 		{
 			_pageTimerHelper.decreaseDown();
 		}
@@ -150,6 +160,7 @@ class CScrollBar extends CSprite
 		{
 			_pageTimerHelper.increaseDown();
 		}
+		updateBgDown();
 		stage.addEventListener(MouseEvent.MOUSE_UP, onStagePageMouseUp);
 	}
 	
@@ -174,6 +185,7 @@ class CScrollBar extends CSprite
 			!isIncrease && mousePosition > thumbPosition)
 		{
 			_pageTimerHelper.up();
+			doPageUp();
 		}
 		else
 		{
@@ -184,6 +196,29 @@ class CScrollBar extends CSprite
 	function onStagePageMouseUp(event:MouseEvent)
 	{
 		_pageTimerHelper.up();
+		doPageUp();
+	}
+	
+	function doPageUp()
+	{
+		_isBgDown = false;
+		updateBgDown();
+	}
+	
+	function updateBgDown()
+	{
+		_bgSkin.state = if (_isBgDown)
+		{
+			CScrollSkinState.DOWN(
+				_isBgDownLeft,
+				Std.int(_horizontal ? _thumb.x + _thumb.width * .5 : _thumb.y + _thumb.height * .5)
+			);
+		}
+		else
+		{
+			CScrollSkinState.UP;
+		}
+		_bgSkin.redraw();
 	}
 	
 	function onThumbMouseDown(event:MouseEvent)
@@ -361,7 +396,7 @@ class CScrollBar extends CSprite
 	
 	function updateBg()
 	{
-		_bgSkin.setBounds(0, 0, Std.int(_width), Std.int(_height));
+		_bgSkin.setSize(_guideDirectOffset, _guideSize, Std.int(_horizontal ? _width : _height));
 		_bgSkin.redraw();
 	}
 	
