@@ -236,7 +236,7 @@ class ACButton extends CSprite, implements ICButton
 			_toggle = value;
 			if (_toggle)
 			{
-				addEventListener(MouseEvent.CLICK, onClick, false, CMath.INT_MAX_VALUE);
+				addEventListener(MouseEvent.CLICK, onClick, false, CMath.INT_MAX_VALUE - 1);
 			}
 			else
 			{
