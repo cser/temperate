@@ -1,11 +1,15 @@
 package temperate.minimal.skins;
+import flash.display.Bitmap;
 import flash.display.GradientType;
 import flash.display.Sprite;
+import flash.filters.ColorMatrixFilter;
 import flash.geom.Matrix;
 import flash.text.TextField;
 import temperate.core.CMath;
 import temperate.minimal.graphics.MWindowBdFactory;
+import temperate.minimal.MButton;
 import temperate.minimal.MFormatFactory;
+import temperate.raster.CVScale12GridDrawer;
 import temperate.skins.ACWindowSkin;
 
 class MWindowSkin extends ACWindowSkin
@@ -18,9 +22,22 @@ class MWindowSkin extends ACWindowSkin
 	public function new() 
 	{
 		super();
+		
+		var bitmap = new Bitmap(MWindowBdFactory.getFrame());
+		bitmap.x = 300;
+		/*bitmap.filters = [new ColorMatrixFilter([
+			1, 0, 0, 0, 0,
+			0, 1, 0, 0, 0,
+			0, 0, 1, 0, 0,
+			0, 0, 0, 0, 255])];*/
+		addChild(bitmap);
+		
+		_drawer = new CVScale12GridDrawer(graphics);
+		_drawer.setBitmapData(MWindowBdFactory.getFrame());
 	}
 	
 	var _titleTF:TextField;
+	var _drawer:CVScale12GridDrawer;
 	
 	override public function link(container:Sprite):Void 
 	{
@@ -90,19 +107,12 @@ class MWindowSkin extends ACWindowSkin
 			g.drawRoundRect(0, 0, width - 1, height - 1, 10);
 			g.endFill();
 			
-			var matrix = new Matrix();
-			matrix.createGradientBox(10, _lineTop, Math.PI * .5);
 			g.lineStyle();
-			g.beginGradientFill(
-				GradientType.LINEAR, [0x508000, 0xa0e020], [1, 1], [0, 255], matrix);
+			g.beginBitmapFill(MWindowBdFactory.getDefaultTop());
 			g.drawRoundRectComplex(0, 0, width, _lineTop, 5, 5, 0, 0);
 			g.endFill();
 			
-			g.lineStyle();
-			g.beginBitmapFill(MWindowBdFactory.getDefaultStriae());
-			g.drawRoundRectComplex(0, 0, width, _lineTop - 2, 5, 5, 0, 0);
-			g.endFill();
-			
+			var matrix = new Matrix();
 			g.lineStyle();
 			g.beginGradientFill(
 				GradientType.LINEAR, [0xffffff, 0xffffff], [.5, 1], [0, 255], matrix);
@@ -113,6 +123,13 @@ class MWindowSkin extends ACWindowSkin
 			g.lineStyle();
 			g.beginFill(0xffffff, .6);
 			g.drawRect(1, _lineTop - 2, width - 2, 1);
+			g.endFill();
+			
+			// For debug
+			
+			g.lineStyle();
+			g.beginBitmapFill(MWindowBdFactory.getDefaultTop());
+			g.drawRoundRectComplex(300 + 1, 1, 100 - 2, 30 - 1, 5, 5, 0, 0);
 			g.endFill();
 		}
 	}
