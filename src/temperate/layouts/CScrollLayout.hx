@@ -25,39 +25,42 @@ class CScrollLayout implements ICScrollLayout
 	{
 		width = isCompactWidth ? 0 : width;
 		height = isCompactHeight ? 0 : height;
-		if (hScrollPolicy != CScrollPolicy.AUTO && vScrollPolicy != CScrollPolicy.AUTO)
+		
+		var isHOn = hScrollPolicy == CScrollPolicy.ON;
+		var isHAuto = hScrollPolicy == CScrollPolicy.AUTO;
+		var hsb = null;
+		var hsbWidth = 0.;
+		var hsbHeight = 0.;
+		if (isHOn || isHAuto)
 		{
-			var hOn = hScrollPolicy == CScrollPolicy.ON;
-			var hsb = null;
-			var hsbWidth = 0.;
-			var hsbHeight = 0.;
-			if (hOn)
-			{
-				hsb = showHScrollBar();
-				hsb.width = 0;
-				hsbWidth = hsb.width;
-				hsbHeight = hsb.height;
-			}
-			else
-			{
-				hideHScrollBar();
-			}
-			var vOn = vScrollPolicy == CScrollPolicy.ON;
-			var vsb = null;
-			var vsbWidth = 0.;
-			var vsbHeight = 0.;
-			if (vOn)
-			{
-				var vsb = showVScrollBar();
-				vsb.height = 0;
-				vsbWidth = vsb.width;
-				vsbHeight = vsb.height;
-			}
-			else
-			{
-				hideVScrollBar();
-			}
-			
+			hsb = showHScrollBar();
+			hsb.width = 0;
+			hsbWidth = hsb.width;
+			hsbHeight = hsb.height;
+		}
+		else
+		{
+			hideHScrollBar();
+		}
+		var isVOn = vScrollPolicy == CScrollPolicy.ON;
+		var isVAuto = vScrollPolicy == CScrollPolicy.AUTO;
+		var vsb = null;
+		var vsbWidth = 0.;
+		var vsbHeight = 0.;
+		if (isVOn || isVAuto)
+		{
+			var vsb = showVScrollBar();
+			vsb.height = 0;
+			vsbWidth = vsb.width;
+			vsbHeight = vsb.height;
+		}
+		else
+		{
+			hideVScrollBar();
+		}
+		
+		if (!isHAuto && !isVAuto)
+		{
 			if (width < hsbWidth + vsbWidth)
 			{
 				width = hsbWidth + vsbWidth;
@@ -66,7 +69,6 @@ class CScrollLayout implements ICScrollLayout
 			{
 				height = hsbHeight + vsbHeight;
 			}
-			
 			if (wrapper != null)
 			{
 				if (!Math.isNaN(wrapper.widthPortion))
@@ -77,20 +79,40 @@ class CScrollLayout implements ICScrollLayout
 				{
 					wrapper.setHeight(height - hsbHeight);
 				}
-				if (!hOn)
+				if (!isHOn)
 				{
 					width = wrapper.getWidth() + vsbWidth;
 				}
-				if (!vOn)
+				if (!isVOn)
 				{
 					height = wrapper.getHeight() + hsbHeight;
 				}
 			}
 		}
+		else if (isHAuto && !isVAuto)
+		{
+			if (width < hsbWidth + vsbWidth)
+			{
+				width = hsbWidth + vsbWidth;
+			}
+			if (!isVOn)
+			{				
+				if (wrapper.getWidth() <= width)
+				{
+					hideHScrollBar();
+					height = wrapper.getHeight();
+				}
+				else
+				{
+					height = wrapper.getHeight() + hsbHeight;
+				}
+			}
+		}
+		else if (!isHAuto && isVAuto)
+		{
+		}
 		else
 		{
-			hideHScrollBar();
-			hideVScrollBar();
 		}
 	}
 		

@@ -296,11 +296,12 @@ class CTextArea extends ACScrollPane
 	function set_hScrollPolicy(value)
 	{
 		_layout.hScrollPolicy = value;
+		_view_valid = false;
+		postponeView();
 		return value;
 	}
 	
 	public var vScrollPolicy(get_vScrollPolicy, set_vScrollPolicy):CScrollPolicy;
-	var _vScrollPolicy:CScrollPolicy;
 	function get_vScrollPolicy()
 	{
 		return _layout.vScrollPolicy;
@@ -308,6 +309,8 @@ class CTextArea extends ACScrollPane
 	function set_vScrollPolicy(value)
 	{
 		_layout.vScrollPolicy = value;
+		_view_valid = false;
+		postponeView();
 		return value;
 	}
 	

@@ -42,14 +42,15 @@ class CScrollLayoutTest
 	{
 		_hScrollBar = null;
 		_vScrollBar = null;
-		_hideHCalled = false;
-		_hideVCalled = false;
+		_hidedH = false;
+		_hidedV = false;
 	}
 	
 	var _hScrollBar:H;
 	
 	function showH()
 	{
+		_hidedH = false;
 		if (_hScrollBar == null)
 		{
 			_hScrollBar = new H();
@@ -61,6 +62,7 @@ class CScrollLayoutTest
 	
 	function showV()
 	{
+		_hidedV = false;
 		if (_vScrollBar == null)
 		{
 			_vScrollBar = new V();
@@ -68,18 +70,18 @@ class CScrollLayoutTest
 		return _vScrollBar;
 	}
 	
-	var _hideHCalled:Bool;
+	var _hidedH:Bool;
 	
 	function hideH()
 	{
-		_hideHCalled = true;
+		_hidedH = true;
 	}
 	
-	var _hideVCalled:Bool;
+	var _hidedV:Bool;
 	
 	function hideV()
 	{
-		_hideVCalled = true;
+		_hidedV = true;
 	}
 	
 	function setLayoutSize(width:Int, height:Int)
@@ -110,8 +112,28 @@ class CScrollLayoutTest
 	{
 		Assert.areEqual(_hScrollBar != null, hShowed, info);
 		Assert.areEqual(_vScrollBar != null, vShowed, info);
-		Assert.areEqual(_hideHCalled, !hShowed, info);
-		Assert.areEqual(_hideVCalled, !vShowed, info);
+		Assert.areEqual(!_hidedH, hShowed, info);
+		Assert.areEqual(!_hidedV, vShowed, info);
+	}
+	
+	function assertScrollBarsShowedSoft(hShowed:Bool, vShowed:Bool, ?info:PosInfos)
+	{
+		if (hShowed)
+		{
+			Assert.isTrue(!_hidedH && _hScrollBar != null, info);
+		}
+		else
+		{
+			Assert.isFalse(!_hidedH, info);
+		}
+		if (vShowed)
+		{
+			Assert.isTrue(!_hidedV && _vScrollBar != null, info);
+		}
+		else
+		{
+			Assert.isFalse(!_hidedV, info);
+		}
 	}
 	
 	/*
@@ -602,8 +624,49 @@ class CScrollLayoutTest
 		
 		assertScrollBarsShowed(false, true);
 	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  CScrollPolicy.AUTO, CScrollPolicy.OFF
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	@Test
+	public function hAutoVOff_noScale_cases()
+	{
+		_layout.wrapper = _wrapper;
+		setLayoutScrollPolicy(CScrollPolicy.AUTO, CScrollPolicy.OFF);
+		
+		resetScrollBars();
+		_wrapper.setWidth(5);
+		_wrapper.setHeight(8);
+		setLayoutSize(H.MIN_WIDTH - 1, 8 - 1);
+		_layout.arrange();
+		assertLayoutSize(H.MIN_WIDTH, 8);
+		assertWrapperSize(5, 8);
+		assertScrollBarsShowedSoft(false, false);
+		
+		resetScrollBars();
+		_wrapper.setWidth(5);
+		_wrapper.setHeight(8);
+		setLayoutSize(H.MIN_WIDTH + 1, 8 - 1);
+		_layout.arrange();
+		assertLayoutSize(H.MIN_WIDTH + 1, 8);
+		assertWrapperSize(5, 8);
+		assertScrollBarsShowedSoft(false, false);
+		
+		resetScrollBars();
+		_wrapper.setWidth(H.MIN_WIDTH + 2);
+		_wrapper.setHeight(8);
+		setLayoutSize(H.MIN_WIDTH + 1, 8 - 1);
+		_layout.arrange();
+		assertLayoutSize(H.MIN_WIDTH + 1, 8 + H.MIN_HEIGHT);
+		assertWrapperSize(H.MIN_WIDTH + 2, 8);
+		assertScrollBarsShowedSoft(true, false);
+	}
 }
 /*
+Автоматический режим при отсутствии контента
 Растяжка с ограничениями
 
 AUTO: Если контент вписывается в общую область скроллирования, скроллеры не должны появляться

@@ -5,6 +5,7 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Rectangle;
 import temperate.components.CScrollBar;
+import temperate.components.CScrollPolicy;
 import temperate.containers.ICInvalidateClient;
 import temperate.core.CMath;
 import temperate.core.CMouseWheelUtil;
@@ -30,6 +31,8 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		_layout.hideHScrollBar = hideHScrollBar;
 		_layout.showVScrollBar = showVScrollBar;
 		_layout.hideVScrollBar = hideVScrollBar;
+		_layout.hScrollPolicy = CScrollPolicy.AUTO;
+		_layout.vScrollPolicy = CScrollPolicy.AUTO;
 		
 		_hScrollStep = 10;
 		_vScrollStep = 10;
@@ -329,6 +332,32 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		}
 		_scrollRect.y = _vScrollValue;
 		_container.scrollRect = _scrollRect;
+	}
+	
+	public var hScrollPolicy(get_hScrollPolicy, set_hScrollPolicy):CScrollPolicy;
+	function get_hScrollPolicy()
+	{
+		return _layout.hScrollPolicy;
+	}
+	function set_hScrollPolicy(value)
+	{
+		_layout.hScrollPolicy = value;
+		_size_valid = false;
+		postponeSize();
+		return value;
+	}
+	
+	public var vScrollPolicy(get_vScrollPolicy, set_vScrollPolicy):CScrollPolicy;
+	function get_vScrollPolicy()
+	{
+		return _layout.vScrollPolicy;
+	}
+	function set_vScrollPolicy(value)
+	{
+		_layout.vScrollPolicy = value;
+		_size_valid = false;
+		postponeSize();
+		return value;
 	}
 }
 /*
