@@ -45,6 +45,11 @@ class MScrollBarBdFactory
 	public static var thumbCenterLightColor:UInt = 0xccffffff;
 	public static var thumbCenterDarkColor:UInt = 0x80305010;
 	
+	public static var scrollBgDownColor:UInt = 0xffcccccc;
+	public static var scrollBgUpColor:UInt = 0xffeeeeee;
+	public static var scrollBgDarkColor:UInt = 0xffd0d0d0;
+	public static var scrollBgLightColor:UInt = 0xffffffff;
+	
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Getters
@@ -569,7 +574,7 @@ class MScrollBarBdFactory
 	
 	static function newScrollBg(horizontal:Bool, down:Bool)
 	{
-		var bgColor = down ? 0xffcccccc : 0xffeeeeee;
+		var bgColor = down ? scrollBgDownColor : scrollBgUpColor;
 
 		var bd = new BitmapData(arrowSize, arrowSize, true, bgColor);
 		var rect = new Rectangle();
@@ -584,29 +589,27 @@ class MScrollBarBdFactory
 			rect.height = arrowSize;
 		}
 		
-		var darkColor = 0xffd0d0d0;
-		var lightColor = 0xffffffff;
 		if (horizontal)
 		{
 			rect.y = 0;
-			bd.fillRect(rect, darkColor);
+			bd.fillRect(rect, scrollBgDarkColor);
 			rect.y = 1;
-			bd.fillRect(rect, lightColor);
+			bd.fillRect(rect, scrollBgLightColor);
 			rect.y = arrowSize - 2;
-			bd.fillRect(rect, lightColor);
+			bd.fillRect(rect, scrollBgLightColor);
 			rect.y = arrowSize - 1;
-			bd.fillRect(rect, darkColor);
+			bd.fillRect(rect, scrollBgDarkColor);
 		}
 		else
 		{
 			rect.x = 0;
-			bd.fillRect(rect, darkColor);
+			bd.fillRect(rect, scrollBgDarkColor);
 			rect.x = 1;
-			bd.fillRect(rect, lightColor);
+			bd.fillRect(rect, scrollBgLightColor);
 			rect.x = arrowSize - 2;
-			bd.fillRect(rect, lightColor);
+			bd.fillRect(rect, scrollBgLightColor);
 			rect.x = arrowSize - 1;
-			bd.fillRect(rect, darkColor);
+			bd.fillRect(rect, scrollBgDarkColor);
 		}
 		
 		return bd;
