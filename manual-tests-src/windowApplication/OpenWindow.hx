@@ -11,6 +11,7 @@ import temperate.minimal.MFlatButton;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.MSeparator;
 import temperate.minimal.skins.MWindowSkin;
+import temperate.minimal.windows.MPopUpScaleAnimator;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
@@ -52,6 +53,8 @@ class OpenWindow extends ACWindow
 		buttonBox.add(button);
 		
 		MCursorManager.newHover(0).setTarget(_baseSkin.head).setValue(new MHandCursor(true));
+		
+		animator = new MPopUpScaleAnimator();
 	}
 	
 	var _main:CVBox;

@@ -1,17 +1,19 @@
-package temperate.minimal.animators;
+package temperate.minimal.windows;
 import flash.display.DisplayObject;
 import temperate.minimal.easing.MBack;
 import temperate.minimal.MTween;
-import temperate.windows.animators.ICPopUpAnimator;
+import temperate.windows.components.ACWindowComponent;
 import temperate.windows.ICPopUp;
 
-class MPopUpScaleAnimator implements ICPopUpAnimator
+class MPopUpScaleAnimator extends ACWindowComponent
 {
 	var _showDuration:Int;
 	var _hideDuration:Int;
 	
 	public function new(showDuration:Int = 300, hideDuration:Int = 500)
 	{
+		super();
+		
 		_showDuration = showDuration;
 		_hideDuration = hideDuration;
 		
@@ -30,21 +32,10 @@ class MPopUpScaleAnimator implements ICPopUpAnimator
 	var _showVars:Dynamic;
 	var _tween:MTween<DisplayObject>;
 	
-	public function setPopUp(popUp:ICPopUp):Void
+	override public function animateShow(fast:Bool):Void
 	{
-		this.popUp = popUp;
-	}
-	
-	public var popUp:ICPopUp;
-	
-	public function initBeforeShow()
-	{
-		MTween.apply(popUp.view, _hideVars);
-	}
-	
-	public function show(fast:Bool):Void
-	{
-		var view = popUp.view;
+		MTween.apply(_view, _hideVars);
+		var view = _view;
 		if (fast)
 		{
 			MTween.apply(view, _showVars);
@@ -57,25 +48,26 @@ class MPopUpScaleAnimator implements ICPopUpAnimator
 		}
 	}
 	
-	public function hide(fast:Bool):Void
+	override public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
 	{
-		var view = popUp.view;
+		var view = _view;
 		if (fast)
 		{
 			MTween.apply(view, _hideVars);
-			if (onHideComplete != null)
+			if (onComplete != null)
 			{
-				onHideComplete(this);
+				onComplete(_popUp);
 			}
 		}
 		else
 		{
+			_onHideComplete = onComplete;
 			_tween = MTween.to(view, _hideDuration, _hideVars)
 				.setVoidOnComplete(onTweenHideComplete);
 		}
 	}
 	
-	public var onHideComplete:ICPopUpAnimator->Void;
+	var _onHideComplete:ICPopUp->Void;
 	
 	function onTweenShowComplete()
 	{
@@ -85,9 +77,11 @@ class MPopUpScaleAnimator implements ICPopUpAnimator
 	function onTweenHideComplete()
 	{
 		_tween = null;
-		if (onHideComplete != null)
+		var onComplete = _onHideComplete;
+		_onHideComplete = null;
+		if (onComplete != null)
 		{
-			onHideComplete(this);
+			onComplete(_popUp);
 		}
 	}
 }

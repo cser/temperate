@@ -5,9 +5,6 @@ import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.utils.TypedDictionary;
 import temperate.core.ICArea;
-import temperate.core.ArrayUtil;
-import temperate.windows.animators.CNullPopUpAnimator;
-import temperate.windows.animators.ICPopUpAnimator;
 using temperate.core.ArrayUtil;
 
 class CPopUpManager extends EventDispatcher, implements ICArea
@@ -26,7 +23,6 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		_isModal = new TypedDictionary();
 		modal = false;
 		updateOnMove = false;
-		_defaultAnimator = new CNullPopUpAnimator();
 	}
 	
 	public var updateOnMove:Bool;
@@ -70,11 +66,7 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		_popUps.push(popUp);
 		_isModal.set(popUp, modal);
 		updateModal();
-		
-		var animator = getAnimator(popUp);
-		animator.setPopUp(popUp);
-		animator.initBeforeShow();
-		animator.show(fast);
+		popUp.animateShow(fast);
 	}
 	
 	public function moveToTop(popUp:ICPopUp)
@@ -95,16 +87,13 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		{
 			_isModal.delete(popUp);
 			updateModal();
-			var animator = getAnimator(popUp);
-			animator.setPopUp(popUp);
-			animator.onHideComplete = onAnimatorHideComplete;
-			animator.hide(fast);
+			popUp.animateHide(fast, onAnimateCloseComplete);
 		}
 	}
 	
-	function onAnimatorHideComplete(animator:ICPopUpAnimator)
+	function onAnimateCloseComplete(popUp:ICPopUp)
 	{
-		container.removeChild(animator.popUp.view);
+		container.removeChild(popUp.view);
 	}
 	
 	function updateModal()
@@ -127,32 +116,4 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 	}
 	
 	public var modal(default, null):Bool;
-	
-	var _defaultAnimator:ICPopUpAnimator;
-	
-	function getAnimator(popUp:ICPopUp)
-	{
-		var animator = popUp.animator;
-		if (animator == null)
-		{
-			animator = _animator;
-			if (animator == null)
-			{
-				animator = _defaultAnimator;
-			}
-		}
-		return animator;
-	}
-	
-	public var animator(get_animator, set_animator):ICPopUpAnimator;
-	var _animator:ICPopUpAnimator;
-	function get_animator()
-	{
-		return _animator;
-	}
-	function set_animator(value)
-	{
-		_animator = value;
-		return _animator;
-	}
 }

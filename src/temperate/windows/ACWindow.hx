@@ -7,8 +7,8 @@ import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import temperate.skins.CNullWindowSkin;
 import temperate.skins.ICWindowSkin;
-import temperate.windows.animators.CNullPopUpAnimator;
-import temperate.windows.animators.ICPopUpAnimator;
+import temperate.windows.components.ACWindowComponent;
+import temperate.windows.components.CBaseWindowComponent;
 import temperate.windows.docks.CAlignedPopUpDock;
 import temperate.windows.docks.ICPopUpDock;
 
@@ -35,6 +35,8 @@ class ACWindow implements ICPopUp
 		}
 		
 		view.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		
+		initComponents();
 	}
 	
 	var _manager:CPopUpManager;
@@ -186,15 +188,83 @@ class ACWindow implements ICPopUp
 		view.y = y;
 	}
 	
-	public var animator(get_animator, set_animator):ICPopUpAnimator;
-	var _animator:ICPopUpAnimator;
+	public var animator(get_animator, set_animator):ACWindowComponent;
+	var _animator:ACWindowComponent;
 	function get_animator()
 	{
 		return _animator;
 	}
 	function set_animator(value)
 	{
+		if (_animator != null)
+		{
+			removeComponent(_animator);
+		}
 		_animator = value;
+		if (_animator != null)
+		{
+			addComponent(_animator);
+		}
 		return _animator;
+	}
+	
+	public function animateShow(fast:Bool):Void
+	{
+		_top.animateShow(fast);
+	}
+	
+	public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
+	{
+		_top.animateHide(fast, onComplete);
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Component manager
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	function initComponents()
+	{
+		_base = new CBaseWindowComponent();
+		addComponent(_base);
+	}
+	
+	var _top:ACWindowComponent;
+	var _base:ACWindowComponent;
+	
+	function addComponent(component:ACWindowComponent)
+	{
+		if (_top == null)
+		{
+			_top = component;
+			_top.next = null;
+		}
+		else
+		{
+			component.next = _top;
+			_top = component;
+		}
+		component.subscribe(this);
+	}
+	
+	function removeComponent(component:ACWindowComponent)
+	{
+		if (_top == component)
+		{
+			_top = component.next;
+		}
+		var current = _top;
+		while (current != null)
+		{
+			if (current.next == component)
+			{
+				current.next = component.next;
+				break;
+			}
+			current = current.next;
+		}
+		component.unsubscribe(this);
+		component.next = null;
 	}
 }
