@@ -6,13 +6,15 @@ import temperate.components.CScrollPolicy;
 interface IScrollTextLayout
 {
 	function arrange(
-		tf:TextField,
 		showHScrollBar:Void->DisplayObject,
 		hideHScrollBar:Void->Void,
 		showVScrollBar:Void->DisplayObject,
 		hideVScrollBar:Void->Void,
 		textDeltaX:Int,
-		textDeltaY:Int):Void;
+		textDeltaY:Int,
+		isFirst:Bool):Void;
+		
+	var tf:TextField;
 	
 	var hScrollPolicy:CScrollPolicy;
 	

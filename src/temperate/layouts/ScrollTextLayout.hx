@@ -11,14 +11,16 @@ class ScrollTextLayout implements IScrollTextLayout
 		minHeight = 50;
 	}
 	
+	public var tf:TextField;
+	
 	public function arrange(
-		tf:TextField,
 		showHScrollBar:Void->DisplayObject,
 		hideHScrollBar:Void->Void,
 		showVScrollBar:Void->DisplayObject,
 		hideVScrollBar:Void->Void,
 		textDeltaX:Int,
-		textDeltaY:Int):Void
+		textDeltaY:Int,
+		isFirst:Bool):Void
 	{
 		if (width < minWidth || isCompactWidth)
 		{
@@ -28,37 +30,50 @@ class ScrollTextLayout implements IScrollTextLayout
 		{
 			height = minHeight;
 		}
-		tf.width =  width - textDeltaX;
-		tf.height = height - textDeltaY;
+		var fictiveWidth = Std.int(width) - textDeltaX;
+		var fictiveHeight = Std.int(height) - textDeltaY;
+		if (isFirst)
+		{
+			tf.width = fictiveWidth;
+			tf.height = fictiveHeight;
+		}
 		if (tf.wordWrap)
 		{
-			var sb = tryScrollV(tf, showVScrollBar, hideVScrollBar);
+			var sb = tryScrollV(showVScrollBar, hideVScrollBar);
 			if (sb != null)
 			{
-				tf.width = width - sb.width - textDeltaX;
-				tf.maxScrollH;
-				tf.maxScrollV;
+				setTextSize(Std.int(fictiveWidth - sb.width), fictiveHeight);
 				sb.height = height;
+			}
+			else
+			{
+				setTextSize(fictiveWidth, fictiveHeight);
 			}
 		}
 		else
 		{
-			var hScrollBar = tryScrollH(tf, showHScrollBar, hideHScrollBar);
+			var vScrollBar = tryScrollV(showVScrollBar, hideVScrollBar);
+			var hScrollBar = tryScrollH(showHScrollBar, hideHScrollBar);
+			setTextSize(
+				fictiveWidth - (vScrollBar != null ? Std.int(vScrollBar.width) : 0),
+				fictiveHeight - (hScrollBar != null ? Std.int(hScrollBar.height) : 0)
+			);
+			
+			// catch the edge case of the horizontal scroll bar necessitating a vertical one:
+			if (hScrollBar != null && vScrollBar == null)
+			{
+				vScrollBar = tryScrollV(showVScrollBar, hideVScrollBar);
+				if (vScrollBar != null)
+				{
+					setTextSize(
+						fictiveWidth - (vScrollBar != null ? Std.int(vScrollBar.width) : 0),
+						fictiveHeight - (hScrollBar != null ? Std.int(hScrollBar.height) : 0)
+					);
+				}
+			}
+			
 			var hasH = hScrollBar != null;
-			if (hasH)
-			{
-				tf.height = height - hScrollBar.height - textDeltaY;
-				tf.maxScrollH;
-				tf.maxScrollV;
-			}
-			var vScrollBar = tryScrollV(tf, showVScrollBar, hideVScrollBar);
 			var hasV = vScrollBar != null;
-			if (hasV)
-			{
-				tf.width = width - vScrollBar.width - textDeltaX;
-				tf.maxScrollH;
-				tf.maxScrollV;
-			}
 			if (hasH)
 			{
 				hScrollBar.width = hasV ? width - vScrollBar.width : width;
@@ -70,8 +85,7 @@ class ScrollTextLayout implements IScrollTextLayout
 		}
 	}
 	
-	function tryScrollH(
-		tf:TextField, showHScrollBar:Void->DisplayObject, hideHScrollBar:Void->Void)
+	function tryScrollH(showHScrollBar:Void->DisplayObject, hideHScrollBar:Void->Void)
 	{
 		switch (hScrollPolicy)
 		{
@@ -95,8 +109,7 @@ class ScrollTextLayout implements IScrollTextLayout
 		}
 	}
 	
-	function tryScrollV(
-		tf:TextField, showVScrollBar:Void->DisplayObject, hideVScrollBar:Void->Void)
+	function tryScrollV(showVScrollBar:Void->DisplayObject, hideVScrollBar:Void->Void)
 	{
 		switch (vScrollPolicy)
 		{
@@ -117,6 +130,18 @@ class ScrollTextLayout implements IScrollTextLayout
 					hideVScrollBar();
 					return null;
 				}
+		}
+	}
+	
+	function setTextSize(width:Int, height:Int)
+	{
+		if (width != tf.width)
+		{
+			tf.width = width;
+		}
+		if (height != tf.height)
+		{
+			tf.height = height;
 		}
 	}
 	

@@ -30,6 +30,7 @@ class TestTextArea extends Sprite
 			
 			var area = new CTextArea(newHScrollBar, newVScrollBar, new MFieldRectSkin())
 				.addTo(line);
+			area.height = 200;
 			area.text = "Line 1\nLine 2\nLine 3\nLine 4\nLine 5\nLine 6\nLine 7\nLine 8\nLine 9" +
 				"\nLine10\nlines11";
 			
@@ -41,10 +42,11 @@ class TestTextArea extends Sprite
 			var area = new CTextArea(newHScrollBar, newVScrollBar, new MFieldRectSkin());
 			area.editable = true;
 			area.updateOnMove = true;
+			area.height = 250;
 			area.text = "updateOnMove = true\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
 				"\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3";
 			var scaler = new Scaler(area);
-			line.add(scaler).setIndents(0, 50, 0, 50);
+			line.add(scaler).setIndents(0, 50, 0, 0);
 			
 			new MLabel().setText("Scroll bar\nbug checking").addTo(line);
 			new TestScrollBarBug(true).addTo(line);
@@ -91,6 +93,15 @@ class TestTextArea extends Sprite
 			area.text = "Line 1 text text\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
 				"\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3";
 			area.vScrollPolicy = CScrollPolicy.OFF;
+			var scaler = new Scaler(area);
+			line.add(scaler).setIndents(0, 50, 0, 50);
+			
+			var area = new CTextArea(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+			area.editable = true;
+			area.text = "Line 1 text text\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
+				"\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3";
+			area.worldWrap = true;
+			area.vScrollPolicy = CScrollPolicy.ON;
 			var scaler = new Scaler(area);
 			line.add(scaler).setIndents(0, 50, 0, 50);
 		}
@@ -144,7 +155,8 @@ class TestTextArea extends Sprite
 		
 		/*
 		TODO
-		Починить скроллинг при вводе текста (вылазиет за пределы видимости)
+		Починить расчет размеров в HBox
+		Сделать чтобы событие скроллинга происходило только при скроллинге пользователем
 		*/
 	}
 	

@@ -33,13 +33,14 @@ class CTextArea extends CSprite
 		_editable = false;
 		_updateOnMove = false;
 		
-		_layout = new ScrollTextLayout();
-		
 		_tf = new TextField();
 		_tf.multiline = true;
 		_tf.addEventListener(Event.SCROLL, onTfScroll);
 		_tf.addEventListener(Event.CHANGE, onTfChange);
 		addChild(_tf);
+		
+		_layout = new ScrollTextLayout();
+		_layout.tf = _tf;
 		
 		_bgSkin.link(addChildAt0, removeChild, graphics);
 		
@@ -62,6 +63,8 @@ class CTextArea extends CSprite
 		_size_valid = false;
 		postponeSize();
 	}
+	
+	var _size_firstValid:Bool;
 	
 	var _layout:IScrollTextLayout;
 	var _tf:TextField;
@@ -140,14 +143,15 @@ class CTextArea extends CSprite
 			_layout.width = _settedWidth;
 			_layout.height = _settedHeight;
 			_layout.arrange(
-				_tf,
 				showHScrollBar,
 				hideHScrollBar,
 				showVScrollBar,
 				hideVScrollBar,
 				textIndentLeft + textIndentRight,
-				textIndentTop + textIndentBottom
+				textIndentTop + textIndentBottom,
+				!_size_firstValid
 			);
+			_size_firstValid = true;
 			_width = _layout.width;
 			_height = _layout.height;
 			if (_vScrollAvailable)
