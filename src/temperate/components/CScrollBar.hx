@@ -556,8 +556,9 @@ class CScrollBar extends CSprite
 	{
 		return _value;
 	}
-	function set_value(value)
+	function set_value(value:Float)
 	{
+		trace("set_value(" + value + ")");
 		var newValue = fixedValue(value);
 		if (_value != newValue)
 		{
@@ -574,8 +575,9 @@ class CScrollBar extends CSprite
 	{
 		return _minValue;
 	}
-	function set_minValue(value)
+	function set_minValue(value:Float)
 	{
+		trace("set_minValue(" + value + ")");
 		if (_minValue != value)
 		{
 			_minValue = value;
@@ -593,8 +595,9 @@ class CScrollBar extends CSprite
 	{
 		return _maxValue;
 	}
-	function set_maxValue(value)
+	function set_maxValue(value:Float)
 	{
+		trace("set_maxValue(" + value + ")");
 		if (_maxValue != value)
 		{
 			_maxValue = value;
@@ -612,8 +615,9 @@ class CScrollBar extends CSprite
 	{
 		return Math.isFinite(_pageSize) ? _pageSize : _lineScrollSize;
 	}
-	function set_pageSize(value)
+	function set_pageSize(value:Float)
 	{
+		trace("set_pageSize(" + value + ")");
 		if (_pageSize != value)
 		{
 			if (value <= 0)
