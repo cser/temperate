@@ -5,7 +5,7 @@ import flash.events.Event;
 import temperate.core.CSprite;
 import temperate.skins.ICRectSkin;
 
-class CSlider extends CSprite
+class CSlider extends CSprite, implements ICSlider
 {
 	var _horizontal:Bool;
 	var _thumb:ACButton;
@@ -14,6 +14,8 @@ class CSlider extends CSprite
 	public function new(horizontal:Bool, thumb:ACButton, bgSkin:ICRectSkin) 
 	{
 		super();
+		
+		view = this;
 		
 		_horizontal = horizontal;
 		_thumb = thumb;
@@ -28,6 +30,8 @@ class CSlider extends CSprite
 		_view_valid = false;
 		postponeSize();
 	}
+	
+	public var view(default, null):DisplayObject;
 	
 	function addChildAt0(child:DisplayObject)
 	{

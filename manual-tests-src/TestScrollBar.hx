@@ -164,9 +164,9 @@ class TestScrollBar extends Sprite
 		_scrollBar.width = 200;
 		_scrollBar.minValue = 2;
 		_scrollBar.maxValue = 12;
-		_scrollBar.lineScrollSize = .5;
+		_scrollBar.step = .5;
 		_scrollBar.pageSize = 2;
-		_scrollBar.addEventListener(Event.SCROLL, onScroll);
+		_scrollBar.addEventListener(Event.CHANGE, onScroll);
 		
 		_scrollBarInput = new MInputField().addTo(box);
 		_scrollBarInput.addEventListener(Event.CHANGE, onScrollBarInputChange);

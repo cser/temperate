@@ -1,4 +1,5 @@
 package temperate.components;
+import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.events.Event;
@@ -11,7 +12,10 @@ import temperate.core.CSprite;
 import temperate.errors.CArgumentError;
 import temperate.skins.ICScrollSkin;
 
-class CScrollBar extends CSprite
+/**
+ * @dispatch flash.events.Event.CHANGE
+ */
+class CScrollBar extends CSprite, implements ICSlider
 {
 	var _horizontal:Bool;
 	var _leftArrow:ACButton;
@@ -46,13 +50,15 @@ class CScrollBar extends CSprite
 		
 		super();
 		
+		view = this;
+		
 		_minValue = 0;
 		_maxValue = 100;
 		_value = 0;
 		
-		_lineScrollSize = 1;
+		_step = 1;
 		_pageSize = Math.NaN;
-		_pageScrollSize = Math.NaN;
+		_pageStep = Math.NaN;
 		
 		updateOnMove = false;
 		
@@ -92,6 +98,8 @@ class CScrollBar extends CSprite
 		postponeSize();
 	}
 	
+	public var view(default, null):DisplayObject;
+	
 	function newTimerChanger():ICTimerChanger
 	{
 		return new CTimerChanger();
@@ -104,12 +112,12 @@ class CScrollBar extends CSprite
 	
 	function onIncrease()
 	{
-		setValue(_value + _lineScrollSize, true);
+		setValue(_value + _step, true);
 	}
 	
 	function onDecrease()
 	{
-		setValue(_value - _lineScrollSize, true);
+		setValue(_value - _step, true);
 	}
 	
 	function onLeftMouseDown(event:MouseEvent)
@@ -214,7 +222,7 @@ class CScrollBar extends CSprite
 		}
 		else
 		{
-			setValue(_value + (isIncrease ? pageScrollSize : -pageScrollSize), true);
+			setValue(_value + (isIncrease ? pageStep : -pageStep), true);
 			redrawBg();
 		}
 	}
@@ -318,7 +326,7 @@ class CScrollBar extends CSprite
 		var delta = event.delta;
 		var sign = delta > 0 ? -1 : 1;
 		setValue(
-			_value + sign * _lineScrollSize * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3)),
+			_value + sign * _step * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3)),
 			true);
 	}
 	
@@ -468,7 +476,7 @@ class CScrollBar extends CSprite
 		if (_value != newValue)
 		{
 			_value = newValue;
-			dispatchEvent(new Event(Event.SCROLL));
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 	}
 	
@@ -519,7 +527,7 @@ class CScrollBar extends CSprite
 		{
 			return _maxValue;
 		}
-		value = Math.round(value / _lineScrollSize) * _lineScrollSize;
+		value = Math.round(value / _step) * _step;
 		if (value < _minValue)
 		{
 			return _minValue;
@@ -598,7 +606,7 @@ class CScrollBar extends CSprite
 			setThumbPositionByValue();
 			if (needDispatch)
 			{
-				dispatchEvent(new Event(Event.SCROLL));
+				dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 	}
@@ -645,7 +653,7 @@ class CScrollBar extends CSprite
 	var _pageSize:Float;
 	function get_pageSize()
 	{
-		return Math.isFinite(_pageSize) ? _pageSize : _lineScrollSize;
+		return Math.isFinite(_pageSize) ? _pageSize : _step;
 	}
 	function set_pageSize(value:Float)
 	{
@@ -663,52 +671,52 @@ class CScrollBar extends CSprite
 		return _pageSize;
 	}
 	
-	public var pageScrollSize(get_pageScrollSize, set_pageScrollSize):Float;
-	var _pageScrollSize:Float;
-	function get_pageScrollSize()
+	public var pageStep(get_pageStep, set_pageStep):Float;
+	var _pageStep:Float;
+	function get_pageStep()
 	{
-		return Math.isFinite(_pageScrollSize) ? _pageScrollSize : pageSize;
+		return Math.isFinite(_pageStep) ? _pageStep : pageSize;
 	}
-	function set_pageScrollSize(value)
+	function set_pageStep(value)
 	{
-		if (_pageScrollSize != value)
+		if (_pageStep != value)
 		{
 			if (value <= 0)
 			{
 				throw new CArgumentError("pageScrollSize mast be positive or NaN");
 			}
-			_pageScrollSize = value;
+			_pageStep = value;
 			_size_pageValid = false;
 			_view_positionValid = false;
 			postponeSize();
 		}
-		return _pageScrollSize;
+		return _pageStep;
 	}
 	
-	public var lineScrollSize(get_lineScrollSize, set_lineScrollSize):Float;
-	var _lineScrollSize:Float;
-	function get_lineScrollSize()
+	public var step(get_step, set_step):Float;
+	var _step:Float;
+	function get_step()
 	{
-		return _lineScrollSize;
+		return _step;
 	}
-	function set_lineScrollSize(value)
+	function set_step(value)
 	{
 		if (!Math.isFinite(value))
 		{
-			throw new CArgumentError("lineScrollSize mast be finite");
+			throw new CArgumentError("step mast be finite");
 		}
-		if (_lineScrollSize != value)
+		if (_step != value)
 		{
 			if (value <= 0)
 			{
-				throw new CArgumentError("lineScrollSize mast be positive");
+				throw new CArgumentError("step mast be positive");
 			}
-			_lineScrollSize = value;
+			_step = value;
 			_size_pageValid = false;
 			_view_positionValid = false;
 			postponeSize();
 		}
-		return _lineScrollSize;
+		return _step;
 	}
 	
 	//----------------------------------------------------------------------------------------------
@@ -739,7 +747,3 @@ class CScrollBar extends CSprite
 		return this;
 	}
 }
-/*
-TODO
-Вынести настройку таймеров
-*/

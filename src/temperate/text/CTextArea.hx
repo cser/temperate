@@ -29,7 +29,7 @@ class CTextArea extends CSprite
 		_bgSkin = bgSkin;
 		
 		_html = false;
-		_hLineScrollSize = 5;
+		_hScrollStep = 5;
 		_editable = false;
 		_updateOnMove = false;
 		
@@ -79,9 +79,9 @@ class CTextArea extends CSprite
 		{
 			_hScrollBar = _newHScrollBar();
 			_hScrollBar.enabled = _enabled;
-			_hScrollBar.lineScrollSize = _hLineScrollSize;
+			_hScrollBar.step = _hScrollStep;
 			_hScrollBar.updateOnMove = _updateOnMove;
-			_hScrollBar.addEventListener(Event.SCROLL, onHScroll);
+			_hScrollBar.addEventListener(Event.CHANGE, onHScroll);
 		}
 		if (_hScrollBar.parent != this)
 		{
@@ -107,7 +107,7 @@ class CTextArea extends CSprite
 			_vScrollBar = _newVScrollBar();
 			_vScrollBar.enabled = _enabled;
 			_vScrollBar.updateOnMove = _updateOnMove;
-			_vScrollBar.addEventListener(Event.SCROLL, onVScroll);
+			_vScrollBar.addEventListener(Event.CHANGE, onVScroll);
 		}
 		if (_vScrollBar.parent != this)
 		{
@@ -344,23 +344,23 @@ class CTextArea extends CSprite
 		return _tf.scrollV;
 	}
 	
-	public var hLineScrollSize(get_hLineScrollSize, set_hLineScrollSize):Int;
-	var _hLineScrollSize:Int;
-	function get_hLineScrollSize()
+	public var hScrollStep(get_hScrollStep, set_hScrollStep):Int;
+	var _hScrollStep:Int;
+	function get_hScrollStep()
 	{
-		return _hLineScrollSize;
+		return _hScrollStep;
 	}
-	function set_hLineScrollSize(value:Int)
+	function set_hScrollStep(value:Int)
 	{
-		if (_hLineScrollSize != value)
+		if (_hScrollStep != value)
 		{
-			_hLineScrollSize = value;
+			_hScrollStep = value;
 			if (_hScrollBar != null)
 			{
-				_hScrollBar.lineScrollSize = _hLineScrollSize;
+				_hScrollBar.step = _hScrollStep;
 			}
 		}
-		return _hLineScrollSize;
+		return _hScrollStep;
 	}
 	
 	public var hMaxScrollValue(get_hMaxScrollValue, null):Int;
@@ -622,7 +622,3 @@ class CTextArea extends CSprite
 		return this;
 	}
 }
-/*
-TODO
-Сделат скроллирование
-*/
