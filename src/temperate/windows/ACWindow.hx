@@ -6,21 +6,21 @@ import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import temperate.collections.CPriorityList;
-import temperate.skins.ICWindowSkin;
 import temperate.windows.components.ACWindowComponent;
 import temperate.windows.components.CWindowBaseComponent;
 import temperate.windows.components.CWindowConstraintsComponent;
 import temperate.windows.components.CWindowMaximizeComponent;
 import temperate.windows.components.CWindowMoveComponent;
-import temperate.windows.docks.CAlignedPopUpDock;
+import temperate.windows.docks.CPopUpAlignedDock;
 import temperate.windows.docks.ICPopUpDock;
+import temperate.windows.skins.ICWindowSkin;
 
 class ACWindow implements ICPopUp
 {
 	function new() 
 	{
 		innerDispatcher = new EventDispatcher();
-		dock = new CAlignedPopUpDock();
+		dock = new CPopUpAlignedDock();
 		
 		innerDispatcher.addEventListener(Event.RESIZE, onManagerResize);
 		

@@ -15,6 +15,7 @@ class FakePopUp implements ICPopUp
 	
 	public var view(default, null):DisplayObject;
 	public var innerDispatcher(default, null):IEventDispatcher;
+	public var manager:CPopUpManager;
 	
 	public var isLocked(get_isLocked, set_isLocked):Bool;
 	var _isLocked:Bool;

@@ -15,10 +15,10 @@ import temperate.minimal.MSeparator;
 import temperate.minimal.MToolButton;
 import temperate.minimal.MWindow;
 import temperate.minimal.skins.MWindowSkin;
-import temperate.skins.ICWindowSkin;
+import temperate.windows.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
-import temperate.windows.docks.CAbsolutePopUpDock;
+import temperate.windows.docks.CPopUpAbsoluteDock;
 
 @:bitmap("manual-tests-src/windowApplication/arrow.png")
 class Arrow extends flash.display.BitmapData { public function new() { super(0, 0); }}
@@ -113,7 +113,7 @@ class ToolsWindow extends MWindow
 		button.addEventListener(MouseEvent.CLICK, onSaveClick);
 		_main.add(button).setPercents(100);
 		
-		dock = new CAbsolutePopUpDock(10, 50);
+		dock = new CPopUpAbsoluteDock(10, 50);
 		
 		setColor(0x00ff00);
 	}

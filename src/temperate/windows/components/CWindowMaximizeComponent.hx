@@ -1,11 +1,6 @@
 package temperate.windows.components;
 import flash.events.Event;
 
-/**
- * ...
- * @author 
- */
-
 class CWindowMaximizeComponent extends ACWindowComponent
 {
 	public function new() 

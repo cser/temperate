@@ -1,7 +1,7 @@
 package temperate.windows.components;
 import flash.display.DisplayObject;
 import temperate.collections.ACPriorityListNode;
-import temperate.skins.ICWindowSkin;
+import temperate.windows.skins.ICWindowSkin;
 import temperate.windows.CPopUpManager;
 import temperate.windows.ICPopUp;
 

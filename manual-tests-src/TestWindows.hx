@@ -1,7 +1,9 @@
 package ;
 import flash.display.Sprite;
 import flash.events.Event;
+import temperate.minimal.MSlider;
 import temperate.windows.CPopUpManager;
+import temperate.windows.docks.CPopUpAbsoluteDock;
 import windows.TestWindow;
 
 class TestWindows extends Sprite
@@ -12,27 +14,54 @@ class TestWindows extends Sprite
 	}
 	
 	var _manager:CPopUpManager;
+	var _slider:MSlider;
 	
 	public function init()
 	{
+		_slider = new MSlider(true);
+		_slider.value = 50;
+		_slider.mouseWheelStep = 10;
+		_slider.addEventListener(Event.CHANGE, onStageResize);
+		addChild(_slider);
+		
 		_manager = new CPopUpManager(this);
 		stage.addEventListener(Event.RESIZE, onStageResize);
 		onStageResize();
 		
 		var window = new TestWindow();
-		_manager.add(window, true);
+		window.dock = new CPopUpAbsoluteDock();
+		_manager.add(window, false);
+		window.move(100, 100);
 		
 		var window = new TestWindow();
-		window.move(15, 20);
-		_manager.add(window, true);
+		_manager.add(window, false);
+		
+		var window = new TestWindow();
+		_manager.add(window, false);
+		window.move(100, 100);
 	}
 	
 	function onStageResize(event:Event = null)
 	{
-		_manager.setArea(10, 10, stage.stageWidth - 10, stage.stageHeight - 10);
+		_manager.setArea(Std.int(_slider.value), 10, stage.stageWidth - 60, stage.stageHeight - 10);
+		
+		var g = graphics;
+		g.clear();
+		g.lineStyle(0, 0xcccccc);
+		g.drawRect(0, 0, 100, 100);
+		var x = _manager.areaX;
+		var y = _manager.areaY;
+		var width = _manager.areaWidth;
+		var height = _manager.areaHeight;
+		g.drawRect(x, y, width, height);
+		g.moveTo(x, y);
+		g.lineTo(x + width, y + height);
+		g.moveTo(x + width, y);
+		g.lineTo(x, y + height);
 	}
 }
 /*
+Починить дрейф выравнивания при изменении размеров границ
 Окно-контейнер
 Скинование окон с целью отвязать внешний вид окна от иерархии наследования
 Возможность добавления отображаемых объектов, не являющихся окнами

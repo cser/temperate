@@ -13,7 +13,7 @@ import temperate.minimal.MFormatFactory;
 import temperate.minimal.windows.MCloseButton;
 import temperate.minimal.windows.MMaximizeButton;
 import temperate.raster.CVScale12GridDrawer;
-import temperate.skins.ACWindowSkin;
+import temperate.windows.skins.ACWindowSkin;
 
 class MWindowSkin extends ACWindowSkin
 {

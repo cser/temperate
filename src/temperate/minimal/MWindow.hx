@@ -3,7 +3,7 @@ import flash.display.Sprite;
 import temperate.containers.CVBox;
 import temperate.minimal.skins.MWindowSkin;
 import temperate.minimal.windows.MWindowScaleAnimator;
-import temperate.skins.ICWindowSkin;
+import temperate.windows.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
 

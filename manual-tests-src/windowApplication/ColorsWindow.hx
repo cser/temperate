@@ -4,7 +4,7 @@ import flash.events.MouseEvent;
 import temperate.containers.CVBox;
 import temperate.minimal.MWindow;
 import temperate.minimal.skins.MWindowSkin;
-import temperate.skins.ICWindowSkin;
+import temperate.windows.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
 

@@ -1,6 +1,6 @@
 package temperate.windows.docks;
 
-class CAlignedPopUpDock extends ACPopUpDock
+class CPopUpAlignedDock extends ACPopUpDock
 {
 	public function new(alignX:Float = .5, alignY:Float = .5)
 	{

@@ -5,9 +5,9 @@ import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFormatFactory;
-import temperate.skins.CDefaultWindowSkin;
-import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
+import temperate.windows.skins.CWindowDefaultSkin;
+import temperate.windows.skins.ICWindowSkin;
 
 class TestWindow extends ACWindow
 {
@@ -57,11 +57,11 @@ class TestWindow extends ACWindow
 	var _buttonBox:CHBox;
 	var _title:TextField;
 	var _description:TextField;
-	var _skin:CDefaultWindowSkin;
+	var _skin:CWindowDefaultSkin;
 	
 	override function newSkin():ICWindowSkin
 	{
-		_skin = new CDefaultWindowSkin();
+		_skin = new CWindowDefaultSkin();
 		return _skin;
 	}
 	
