@@ -2,9 +2,9 @@ package temperate.windows;
 import flash.display.DisplayObject;
 import temperate.core.CSprite;
 
-class ACWindow extends CSprite, implements ICWindow
+class ACWindow extends CSprite, implements ICPopUp
 {
-	public function new() 
+	function new() 
 	{
 		super();
 		view = this;
@@ -51,14 +51,6 @@ class ACWindow extends CSprite, implements ICWindow
 	}
 	
 	function updateIsActive()
-	{
-	}
-	
-	public function subscribe(owner:ICWindowOwner):Void
-	{
-	}
-	
-	public function unsubscribe(owner:ICWindowOwner):Void
 	{
 	}
 }

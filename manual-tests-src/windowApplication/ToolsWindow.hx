@@ -1,41 +1,37 @@
-package windows;
-import flash.events.Event;
-import flash.events.MouseEvent;
+package windowApplication;
 import flash.text.TextField;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFormatFactory;
+import temperate.minimal.MSeparator;
 import temperate.windows.ACWindow;
 
-class TestWindow extends ACWindow
+class ToolsWindow extends ACWindow
 {
 	public function new() 
 	{
 		super();
+		
 		_main = new CVBox();
 		_main.setIndents(10, 10, 10, 10);
 		addChild(_main);
 		
 		_title = MFormatFactory.WINDOW_TITLE.newAutoSized();
-		_title.text = "Test window";
+		_title.text = "Tools";
 		_main.add(_title);
 		
-		_description = MFormatFactory.LABEL.newAutoSized();
-		_description.wordWrap = true;
-		_description.text = "Description text text text text text text text text text text text";
-		_main.add(_description).setPercents(100).setContingencies(150, 300);
+		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
 		
-		_buttonBox = new CHBox();
-		_main.add(_buttonBox).setPercents(100);
+		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
 		
 		var button = new MFlatButton();
-		button.text = "OK";
-		_buttonBox.add(button).setAlign(.5);
+		button.text = "Open";
+		_main.add(button).setPercents(100);
 		
 		var button = new MFlatButton();
-		button.text = "Cancel";
-		_buttonBox.add(button).setAlign(.5);
+		button.text = "Save";
+		_main.add(button).setPercents(100);
 		
 		_size_valid = false;
 		postponeSize();
@@ -76,26 +72,4 @@ class TestWindow extends ACWindow
 			g.endFill();
 		}
 	}
-	
-	/*var _owner:ICWindowOwner;
-	
-	override public function subscribe(owner:ICWindowOwner):Void 
-	{
-		super.subscribe(owner);
-		_owner = owner;
-		addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-	}
-	
-	override public function unsubscribe(owner:ICWindowOwner):Void 
-	{
-		super.unsubscribe(owner);
-		_owner = null;
-		removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-	}
-	
-	function onMouseDown(event:Event)
-	{
-		_owner.windowStartDrag(this, true);
-	}
-	*/
 }

@@ -49,6 +49,7 @@ class TestMain
 		var test = new TestKey();
 		
 		var test = new TestWindows();
+		var test = new TestWindowApplication();
 		Lib.current.addChild(test);
 		test.init();
 	}

@@ -1,7 +1,6 @@
 package ;
 import flash.display.Sprite;
 import flash.events.Event;
-import temperate.windows.CWindowManager;
 import windows.TestWindow;
 
 class TestWindows extends Sprite
@@ -11,7 +10,7 @@ class TestWindows extends Sprite
 		super();
 	}
 	
-	var _manager:CWindowManager;
+	/*var _manager:CWindowManager;
 	
 	public function init()
 	{
@@ -31,7 +30,7 @@ class TestWindows extends Sprite
 	function onStageResize(event:Event = null)
 	{
 		_manager.setBounds(10, stage.stageWidth - 10, 10, stage.stageHeight - 10);
-	}
+	}*/
 }
 /*
 Окно-контейнер
