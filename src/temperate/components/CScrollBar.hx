@@ -93,12 +93,12 @@ class CScrollBar extends CSprite
 	
 	function onIncrease()
 	{
-		value += _lineScrollSize;
+		setValue(_value + _lineScrollSize, true);
 	}
 	
 	function onDecrease()
 	{
-		value -= _lineScrollSize;
+		setValue(_value - _lineScrollSize, true);
 	}
 	
 	function onLeftMouseDown(event:MouseEvent)
@@ -203,7 +203,7 @@ class CScrollBar extends CSprite
 		}
 		else
 		{
-			value += isIncrease ? pageScrollSize : -pageScrollSize;
+			setValue(_value + (isIncrease ? pageScrollSize : -pageScrollSize), true);
 			redrawBg();
 		}
 	}
@@ -306,7 +306,9 @@ class CScrollBar extends CSprite
 	{
 		var delta = event.delta;
 		var sign = delta > 0 ? -1 : 1;
-		value += sign * _lineScrollSize * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3));
+		setValue(
+			_value + sign * _lineScrollSize * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3)),
+			true);
 	}
 	
 	override function doValidateSize()
@@ -572,7 +574,7 @@ class CScrollBar extends CSprite
 	}
 	function set_value(value:Float)
 	{
-		setValue(value, true);
+		setValue(value, false);
 		return _value;
 	}
 	
@@ -588,14 +590,6 @@ class CScrollBar extends CSprite
 				dispatchEvent(new Event(Event.SCROLL));
 			}
 		}
-	}
-	
-	/**
-	 * Equals to value setter, but dont't dispatch event
-	 */
-	public function initValue(value:Float)
-	{
-		setValue(value, false);
 	}
 	
 	public var minValue(get_minValue, set_minValue):Float;
@@ -736,5 +730,5 @@ class CScrollBar extends CSprite
 }
 /*
 TODO
-Починить баги с валидацией отображения размеров движка (вылазиет при дописывании текста);
+Вынести настройку таймеров
 */

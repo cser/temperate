@@ -1,8 +1,20 @@
 package temperate.components;
 
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.DisplayObject;
+import flash.display.Sprite;
+import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.geom.Point;
+import flash.Lib;
 import massive.munit.Assert;
 import temperate.errors.CArgumentError;
+import temperate.raster.Scale3GridDrawer;
 import temperate.skins.CNullScrollSkin;
+import temperate.skins.CRasterRectSkin;
+import temperate.skins.CRasterScrollDrawedSkin;
+import temperate.skins.CSkinState;
 
 class CScrollBarScrollParamsTest
 {
@@ -10,10 +22,12 @@ class CScrollBarScrollParamsTest
 	{
 	}
 	
+	var _log:Array<String>;
+	
 	@Before
 	public function setUp():Void
 	{
-		
+		_log = [];
 	}
 	
 	@After
@@ -193,5 +207,112 @@ class CScrollBarScrollParamsTest
 				}
 			}
 		}
+	}
+	
+	@Test
+	public function whenValueSetted_eventIsNotDispatched()
+	{
+		for (sb in [newScrollBar(true), newScrollBar(false)])
+		{
+			_log = [];
+			
+			sb.addEventListener(Event.SCROLL, onScroll);
+			sb.minValue = 10;
+			sb.maxValue = 100;
+			Assert.areEqual(10, sb.value);
+			
+			sb.value = 20;
+			Assert.areEqual(20, sb.value);
+			ArrayAssert.areEqual([], _log);
+			
+			sb.minValue = 21;
+			Assert.areEqual(21, sb.value);
+			ArrayAssert.areEqual([], _log);
+			
+			sb.value = 100;
+			sb.maxValue = 80;
+			Assert.areEqual(80, sb.value);
+			ArrayAssert.areEqual([], _log);
+		}
+	}
+	
+	function newVisualScrollBar(horizontal:Bool)
+	{
+		var bd = new BitmapData(10, 10, true, 0xff808080);
+		
+		var left = new CRasterFixedButton();
+		left.getState(CButtonState.UP).setBitmapData(bd);
+		
+		var right = new CRasterFixedButton();
+		right.getState(CButtonState.UP).setBitmapData(bd);
+		
+		var thumb = new CRasterFixedButton();
+		thumb.getState(CButtonState.UP).setBitmapData(bd);
+		
+		var skin = new CRasterScrollDrawedSkin(bd, new Scale3GridDrawer(horizontal), 10);
+		return new CScrollBar(horizontal, left, right, thumb, skin);
+	}
+	
+	function getTopObject(globalX:Float, globalY:Float)
+	{
+		var objects = Lib.current.getObjectsUnderPoint(new Point(globalX, globalY));
+		return objects[objects.length - 1];
+	}
+	
+	@Test
+	
+	/*
+	All user's action is dificult to test, paticulary testing
+	*/
+	public function whenValueChangedByUser_eventIsDispatched()
+	{
+		for (horizontal in [ true, false ])
+		{
+			var sb = newVisualScrollBar(horizontal);
+			
+			Lib.current.addChild(sb);
+			
+			sb.minValue = 10;
+			sb.maxValue = 100;
+			sb.value = 45;
+			sb.validate();
+			
+			sb.addEventListener(Event.SCROLL, onScroll);
+			_log = [];
+			{
+				var object =
+					Lib.current.getObjectsUnderPoint(new Point(sb.width * .5, sb.height * .5))[0];
+				
+				object.dispatchEvent(
+					new MouseEvent(
+						MouseEvent.MOUSE_WHEEL, true, false, 0, 0, null, false, false, false, false, 3
+					)
+				);
+				ArrayAssert.areEqual(["scroll"], _log);
+			}
+			{
+				// Left button point
+				var object = getTopObject(5, 5);
+				object.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true));
+				object.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP, true));
+				ArrayAssert.areEqual(["scroll", "scroll"], _log);
+			}
+			{
+				// Right button point
+				var object = horizontal ?
+					getTopObject(sb.width - 5, 5) :
+					getTopObject(5, sb.height - 5);
+				object.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true));
+				object.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP, true));
+				ArrayAssert.areEqual(["scroll", "scroll", "scroll"], _log);
+			}
+			
+			Lib.current.removeChild(sb);
+		}
+	}
+	
+	function onScroll(event:Event)
+	{
+		_log.push("scroll");
 	}
 }

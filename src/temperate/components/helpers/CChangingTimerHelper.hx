@@ -6,7 +6,7 @@ class CChangingTimerHelper
 {
 	public function new()
 	{
-		firstDelay = 300;
+		firstDelay = 200;
 		secondDelay = 50;
 		
 		_timer = new Timer(1000);

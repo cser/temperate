@@ -85,6 +85,8 @@ class TestTextArea extends Sprite
 			area.text = "Line 1 text text\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
 				"\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3";
 			area.vScrollPolicy = CScrollPolicy.ON;
+			//area.vScrollValue = 2;
+			//area.hScrollValue = 10;
 			var scaler = new Scaler(area);
 			line.add(scaler).setIndents(0, 50, 0, 50);
 			

@@ -12,13 +12,13 @@ import temperate.containers.CVBox;
 import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
-import temperate.minimal.MLabel;
+import temperate.minimal.MInputField;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.MTooltipFactory;
 import temperate.raster.Scale3GridDrawer;
 import temperate.raster.Scale9GridDrawer;
 import temperate.skins.CRasterScrollDrawedSkin;
-import temperate.text.CLabel;
+import temperate.text.CInputField;
 
 class TestScrollBar extends Sprite
 {
@@ -155,7 +155,7 @@ class TestScrollBar extends Sprite
 	}
 	
 	var _scrollBar:CScrollBar;
-	var _scrollBarLabel:CLabel;
+	var _scrollBarInput:CInputField;
 	
 	function initChangingBlock()
 	{
@@ -167,12 +167,26 @@ class TestScrollBar extends Sprite
 		_scrollBar.lineScrollSize = .5;
 		_scrollBar.pageSize = 2;
 		_scrollBar.addEventListener(Event.SCROLL, onScroll);
-		_scrollBarLabel = new MLabel().addTo(box);
+		
+		_scrollBarInput = new MInputField().addTo(box);
+		_scrollBarInput.addEventListener(Event.CHANGE, onScrollBarInputChange);
 		onScroll();
 	}
 	
 	function onScroll(event:Event = null)
 	{
-		_scrollBarLabel.text = Std.string(_scrollBar.value);
+		_scrollBarInput.text = Std.string(_scrollBar.value);
+		updateScrollBarInputState();
+	}
+	
+	function onScrollBarInputChange(event:Event)
+	{
+		_scrollBar.value = Std.parseFloat(_scrollBarInput.text);
+		updateScrollBarInputState();
+	}
+	
+	function updateScrollBarInputState()
+	{
+		_scrollBarInput.isCorrect = Std.parseFloat(_scrollBarInput.text) == _scrollBar.value;
 	}
 }

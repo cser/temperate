@@ -195,13 +195,13 @@ class CTextArea extends CSprite
 			if (_vScrollAvailable)
 			{
 				_vScrollBar.x = _width - _vScrollBar.width;
-				_vScrollBar.initValue(_tf.scrollV);
+				_vScrollBar.value = _tf.scrollV;
 				_vScrollBar.validate();// Not clean, but size validated in view tick
 			}
 			if (_hScrollAvailable)
 			{
 				_hScrollBar.y = _height - _hScrollBar.height;
-				_hScrollBar.initValue(_tf.scrollH);
+				_hScrollBar.value = _tf.scrollH;
 				_hScrollBar.validate();// Not clean, but size validated in view tick
 			}
 			
@@ -237,11 +237,11 @@ class CTextArea extends CSprite
 		
 		if (_vScrollAvailable)
 		{
-			_vScrollBar.initValue(_tf.scrollV);
+			_vScrollBar.value = _tf.scrollV;
 		}
 		if (_hScrollAvailable)
 		{
-			_hScrollBar.initValue(_tf.scrollH);
+			_hScrollBar.value = _tf.scrollH;
 		}
 	}
 	
@@ -320,6 +320,7 @@ class CTextArea extends CSprite
 		return value;
 	}
 	
+	/*
 	public var hScrollValue(get_hScrollValue, set_hScrollValue):Int;
 	function get_hScrollValue()
 	{
@@ -341,6 +342,7 @@ class CTextArea extends CSprite
 		_vScrollBar.value = value;
 		return value;
 	}
+	*/
 	
 	public var hLineScrollSize(get_hLineScrollSize, set_hLineScrollSize):Int;
 	var _hLineScrollSize:Int;
@@ -620,3 +622,7 @@ class CTextArea extends CSprite
 		return this;
 	}
 }
+/*
+TODO
+Сделат скроллирование
+*/
