@@ -13,6 +13,7 @@ class MainTestSuite extends TestSuite
 		add(temperate.components.CNumericStepperTest);
 		add(temperate.components.CRasterScaledButtonTest);
 		add(temperate.components.CScrollBarScrollParamsTest);
+		add(temperate.components.CScrollBarTest);
 		add(temperate.containers.CHContainerChildManagmentTest);
 		add(temperate.containers.CVContainerChangeLayoutByChildManagmentTest);
 		add(temperate.containers.CVContainerTest);

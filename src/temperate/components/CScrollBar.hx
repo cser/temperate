@@ -45,7 +45,6 @@ class CScrollBar extends CSprite
 		
 		super();
 		
-		_useHandCursor = true;
 		_minValue = 0;
 		_maxValue = 100;
 		_value = 0;
@@ -81,6 +80,8 @@ class CScrollBar extends CSprite
 		_pageTimerHelper.onDecrease = onPageDecrease;
 		
 		updateEnabledListeners();
+		
+		setUseHandCursor(false);
 		
 		_settedWidth = _horizontal ? 100 : 0;
 		_settedHeight = _horizontal ? 0 : 100;
@@ -322,6 +323,7 @@ class CScrollBar extends CSprite
 		{
 			_size_pageValid = true;
 			updateThumbSize();
+			updateThumbVisible();
 		}
 		if (!oldSize_valid)
 		{
@@ -401,8 +403,6 @@ class CScrollBar extends CSprite
 			_guideDirectOffset = Std.int(_leftArrow.height);
 			_guideSize = Std.int(_height - _leftArrow.height - _rightArrow.height);
 		}
-		
-		updateThumbVisible();
 	}
 	
 	function updateThumbVisible()
@@ -530,11 +530,16 @@ class CScrollBar extends CSprite
 	{
 		if (_useHandCursor != value)
 		{
-			_useHandCursor = value;
-			_leftArrow.useHandCursor = _useHandCursor;
-			_rightArrow.useHandCursor = _useHandCursor;
-			_thumb.useHandCursor = _useHandCursor;
+			setUseHandCursor(value);
 		}
+	}
+	
+	function setUseHandCursor(value:Bool)
+	{
+		_useHandCursor = value;
+		_leftArrow.useHandCursor = _useHandCursor;
+		_rightArrow.useHandCursor = _useHandCursor;
+		_thumb.useHandCursor = _useHandCursor;
 	}
 	
 	//----------------------------------------------------------------------------------------------
