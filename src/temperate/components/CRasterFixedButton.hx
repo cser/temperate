@@ -45,11 +45,11 @@ class CRasterFixedButton extends ACRasterTextButton
 		{
 			_size_upValid = true;
 			
-			var upParameters = _parameters[CButtonState.UP.index];
+			var upParams = _params[CButtonState.UP.index];
 			var upBitmapData = null;
-			if (upParameters != null)
+			if (upParams != null)
 			{
-				upBitmapData = upParameters.bitmapData;
+				upBitmapData = upParams.bitmapData;
 			}
 			if (upBitmapData != null)
 			{
@@ -92,21 +92,21 @@ class CRasterFixedButton extends ACRasterTextButton
 			g.drawRect(0, 0, _width, _height);
 			g.endFill();
 			
-			var upParameters = _parameters[CButtonState.UP.index];
-			var parameters = _parameters[_state.index];
-			if (parameters == null)
+			var upParams = _params[CButtonState.UP.index];
+			var params = _params[_state.index];
+			if (params == null)
 			{
-				parameters = upParameters;
+				params = upParams;
 			}
 			
-			var format = getCurrentFormat(parameters, upParameters);
+			var format = getCurrentFormat(params, upParams);
 			format.applyTo(_tf);
 			
-			if (parameters != null)
+			if (params != null)
 			{
-				_bitmap.bitmapData = parameters.bitmapData;
-				_bitmap.filters = parameters.filters;
-				_bitmap.alpha = Math.isNaN(parameters.alpha) ? 1 : parameters.alpha;
+				_bitmap.bitmapData = params.bitmapData;
+				_bitmap.filters = params.filters;
+				_bitmap.alpha = Math.isNaN(params.alpha) ? 1 : params.alpha;
 			}
 			else
 			{
@@ -115,10 +115,10 @@ class CRasterFixedButton extends ACRasterTextButton
 				_bitmap.alpha = 1;
 			}
 			
-			_bitmap.x = _textDock.mainX + (parameters != null ? parameters.bgOffsetLeft : 0);
-			_bitmap.y = _textDock.mainY + (parameters != null ? parameters.bgOffsetTop : 0);
-			_tf.x = _textDock.targetX + (parameters != null ? parameters.textOffsetX : 0);
-			_tf.y = _textDock.targetY + (parameters != null ? parameters.textOffsetY : 0);
+			_bitmap.x = _textDock.mainX + (params != null ? params.bgOffsetLeft : 0);
+			_bitmap.y = _textDock.mainY + (params != null ? params.bgOffsetTop : 0);
+			_tf.x = _textDock.targetX + (params != null ? params.textOffsetX : 0);
+			_tf.y = _textDock.targetY + (params != null ? params.textOffsetY : 0);
 		}
 	}
 }

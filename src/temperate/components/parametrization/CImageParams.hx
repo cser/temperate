@@ -1,7 +1,7 @@
 package temperate.components.parametrization;
 import flash.display.DisplayObject;
 
-class CImageParameters 
+class CImageParams 
 {
 	public function new() 
 	{
@@ -9,7 +9,7 @@ class CImageParameters
 	
 	public var image:DisplayObject;
 	
-	public function setImage(image:DisplayObject):CImageParameters
+	public function setImage(image:DisplayObject):CImageParams
 	{
 		this.image = image;
 		return this;
@@ -17,7 +17,7 @@ class CImageParameters
 	
 	public var filters:Array<Dynamic>;
 	
-	public function setFilters(filters:Array<Dynamic>):CImageParameters
+	public function setFilters(filters:Array<Dynamic>):CImageParams
 	{
 		this.filters = filters;
 		return this;
@@ -26,7 +26,7 @@ class CImageParameters
 	public var offsetX:Int;
 	public var offsetY:Int;
 	
-	public function setOffset(offsetX:Int, offsetY:Int):CImageParameters
+	public function setOffset(offsetX:Int, offsetY:Int):CImageParams
 	{
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
@@ -35,7 +35,7 @@ class CImageParameters
 	
 	public var alpha:Float;
 	
-	public function setAlpha(alpha:Float):CImageParameters
+	public function setAlpha(alpha:Float):CImageParams
 	{
 		this.alpha = alpha;
 		return this;

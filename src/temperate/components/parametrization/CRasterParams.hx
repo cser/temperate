@@ -2,7 +2,7 @@ package temperate.components.parametrization;
 import flash.display.BitmapData;
 import temperate.text.CTextFormat;
 
-class CRasterParameters 
+class CRasterParams 
 {
 	public function new() 
 	{
@@ -10,7 +10,7 @@ class CRasterParameters
 	
 	public var bitmapData:BitmapData;
 		
-	public function setBitmapData(bitmapData:BitmapData):CRasterParameters
+	public function setBitmapData(bitmapData:BitmapData):CRasterParams
 	{
 		this.bitmapData = bitmapData;
 		return this;
@@ -18,7 +18,7 @@ class CRasterParameters
 	
 	public var format:CTextFormat;
 	
-	public function setFormat(format:CTextFormat):CRasterParameters
+	public function setFormat(format:CTextFormat):CRasterParams
 	{
 		this.format = format;
 		return this;
@@ -26,7 +26,7 @@ class CRasterParameters
 	
 	public var filters:Array<Dynamic>;
 	
-	public function setFilters(filters:Array<Dynamic>):CRasterParameters
+	public function setFilters(filters:Array<Dynamic>):CRasterParams
 	{
 		this.filters = filters;
 		return this;
@@ -37,7 +37,7 @@ class CRasterParameters
 	public var bgOffsetTop:Int;
 	public var bgOffsetBottom:Int;
 	
-	public function setBgOffset(left:Int, right:Int, top:Int, bottom:Int):CRasterParameters
+	public function setBgOffset(left:Int, right:Int, top:Int, bottom:Int):CRasterParams
 	{
 		bgOffsetLeft = left;
 		bgOffsetRight = right;
@@ -49,7 +49,7 @@ class CRasterParameters
 	public var textOffsetX:Int;
 	public var textOffsetY:Int;
 	
-	public function setTextOffset(textOffsetX:Int, textOffsetY:Int):CRasterParameters
+	public function setTextOffset(textOffsetX:Int, textOffsetY:Int):CRasterParams
 	{
 		this.textOffsetX = textOffsetX;
 		this.textOffsetY = textOffsetY;
@@ -58,7 +58,7 @@ class CRasterParameters
 	
 	public var alpha:Float;
 	
-	public function setAlpha(alpha:Float):CRasterParameters
+	public function setAlpha(alpha:Float):CRasterParams
 	{
 		this.alpha = alpha;
 		return this;

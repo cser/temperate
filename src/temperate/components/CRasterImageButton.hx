@@ -1,7 +1,7 @@
 package temperate.components;
 import flash.display.DisplayObject;
 import flash.display.Shape;
-import temperate.components.parametrization.CImageParameters;
+import temperate.components.parametrization.CImageParams;
 import temperate.core.CMath;
 import temperate.docks.CRightDock;
 import temperate.docks.ICDock;
@@ -24,7 +24,7 @@ class CRasterImageButton extends ACRasterTextButton
 		
 		super.init();
 		
-		_imageParameters = [];
+		_imageParams = [];
 		_drawer = new CScale9GridDrawer(_bg.graphics);
 		textIndentLeft = 5;
 		textIndentRight = 5;
@@ -53,10 +53,10 @@ class CRasterImageButton extends ACRasterTextButton
 			_textDock.noTargetMode = _text == null;
 			var imageWidth = 0;
 			var imageHeight = 0;
-			var upImageParameters = _imageParameters[CButtonState.UP.index];
-			if (upImageParameters != null)
+			var upImageParams = _imageParams[CButtonState.UP.index];
+			if (upImageParams != null)
 			{
-				var upImage = upImageParameters.image;
+				var upImage = upImageParams.image;
 				if (upImage != null)
 				{
 					imageWidth = Std.int(upImage.width);
@@ -82,27 +82,27 @@ class CRasterImageButton extends ACRasterTextButton
 		{
 			_view_valid = true;
 			
-			var upParameters = _parameters[CButtonState.UP.index];
-			var parameters = _parameters[_state.index];
-			if (parameters == null)
+			var upParams = _params[CButtonState.UP.index];
+			var params = _params[_state.index];
+			if (params == null)
 			{
-				parameters = upParameters;
+				params = upParams;
 			}
 			
-			var format = getCurrentFormat(parameters, upParameters);
+			var format = getCurrentFormat(params, upParams);
 			format.applyTo(_tf);
 			
-			if (parameters != null)
+			if (params != null)
 			{
 				_drawer.setBounds(
-					parameters.bgOffsetLeft,
-					parameters.bgOffsetTop,
-					Std.int(_width) - parameters.bgOffsetLeft + parameters.bgOffsetRight,
-					Std.int(_height) - parameters.bgOffsetTop + parameters.bgOffsetBottom)
-					.setBitmapData(parameters.bitmapData)
+					params.bgOffsetLeft,
+					params.bgOffsetTop,
+					Std.int(_width) - params.bgOffsetLeft + params.bgOffsetRight,
+					Std.int(_height) - params.bgOffsetTop + params.bgOffsetBottom)
+					.setBitmapData(params.bitmapData)
 					.redraw();
-				_bg.filters = parameters.filters;
-				_bg.alpha = Math.isNaN(parameters.alpha) ? 1 : parameters.alpha;
+				_bg.filters = params.filters;
+				_bg.alpha = Math.isNaN(params.alpha) ? 1 : params.alpha;
 			}
 			else
 			{
@@ -126,32 +126,32 @@ class CRasterImageButton extends ACRasterTextButton
 			}
 			var imageOffsetX = 0;
 			var imageOffsetY = 0;
-			var imageParameters = _imageParameters[_state.index];
-			if (imageParameters == null)
+			var imageParams = _imageParams[_state.index];
+			if (imageParams == null)
 			{
-				imageParameters = _imageParameters[CButtonState.UP_SELECTED.index];
+				imageParams = _imageParams[CButtonState.UP_SELECTED.index];
 			}
-			if (imageParameters != null)
+			if (imageParams != null)
 			{
-				_currentImage.filters = imageParameters.filters;
-				_currentImage.alpha = Math.isNaN(imageParameters.alpha) ?
-					1 : imageParameters.alpha;
-				imageOffsetX = imageParameters.offsetX;
-				imageOffsetY = imageParameters.offsetY;
+				_currentImage.filters = imageParams.filters;
+				_currentImage.alpha = Math.isNaN(imageParams.alpha) ?
+					1 : imageParams.alpha;
+				imageOffsetX = imageParams.offsetX;
+				imageOffsetY = imageParams.offsetY;
 			}
 			
 			if (_currentImage != null)
 			{
 				_currentImage.x = _textDock.mainX +
-					(parameters != null ? parameters.textOffsetX : 0) +
+					(params != null ? params.textOffsetX : 0) +
 					textIndentLeft + imageOffsetX;
 				_currentImage.y = _textDock.mainY +
-					(parameters != null ? parameters.textOffsetY : 0) +
+					(params != null ? params.textOffsetY : 0) +
 					textIndentTop + imageOffsetY;
 			}
-			_tf.x = _textDock.targetX + (parameters != null ? parameters.textOffsetX : 0) +
+			_tf.x = _textDock.targetX + (params != null ? params.textOffsetX : 0) +
 				textIndentLeft;
-			_tf.y = _textDock.targetY + (parameters != null ? parameters.textOffsetY : 0) +
+			_tf.y = _textDock.targetY + (params != null ? params.textOffsetY : 0) +
 				textIndentTop;
 		}
 	}
@@ -195,16 +195,16 @@ class CRasterImageButton extends ACRasterTextButton
 		return _textDock;
 	}
 	
-	var _imageParameters:Array<CImageParameters>;
+	var _imageParams:Array<CImageParams>;
 	var _currentImage:DisplayObject;
 		
-	public function getImage(state:CButtonState):CImageParameters
+	public function getImage(state:CButtonState):CImageParams
 	{
-		var parameters = _imageParameters[state.index];
-		if (parameters == null)
+		var params = _imageParams[state.index];
+		if (params == null)
 		{
-			parameters = new CImageParameters();
-			_imageParameters[state.index] = parameters;
+			params = new CImageParams();
+			_imageParams[state.index] = params;
 		}
 		if (state == CButtonState.UP)
 		{
@@ -218,31 +218,31 @@ class CRasterImageButton extends ACRasterTextButton
 			_view_valid = false;
 			postponeView();
 		}
-		return parameters;
+		return params;
 	}
 	
 	function getStateImage()
 	{
 		var image = null;
-		var imageParameters = _imageParameters[_state.index];
-		if (imageParameters != null)
+		var imageParams = _imageParams[_state.index];
+		if (imageParams != null)
 		{
-			image = imageParameters.image;
+			image = imageParams.image;
 		}
 		if (image == null && _state.selected)
 		{
-			var parameters = _imageParameters[CButtonState.UP_SELECTED.index];
-			if (parameters != null)
+			var params = _imageParams[CButtonState.UP_SELECTED.index];
+			if (params != null)
 			{
-				image = parameters.image;
+				image = params.image;
 			}
 		}
 		if (image == null)
 		{
-			var parameters = _imageParameters[CButtonState.UP.index];
-			if (parameters != null)
+			var params = _imageParams[CButtonState.UP.index];
+			if (params != null)
 			{
-				image = parameters.image;
+				image = params.image;
 			}
 		}
 		return image;

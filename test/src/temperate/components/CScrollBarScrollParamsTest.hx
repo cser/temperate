@@ -39,7 +39,7 @@ class CScrollBarScrollParamsTest
 	}
 	
 	@Test
-	public function defaultScrollParameters()
+	public function defaultScrollParams()
 	{
 		for (sb in [newScrollBar(true), newScrollBar(false)])
 		{

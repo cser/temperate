@@ -2,7 +2,7 @@ package temperate.skins;
 import flash.display.DisplayObject;
 import flash.display.Graphics;
 import flash.display.Shape;
-import temperate.components.parametrization.CRasterParameters;
+import temperate.components.parametrization.CRasterParams;
 import temperate.raster.CScale9GridDrawer;
 
 class CRaster9GridRectSkin implements ICRectSkin
@@ -10,7 +10,7 @@ class CRaster9GridRectSkin implements ICRectSkin
 	public function new() 
 	{
 		state = CSkinState.NORMAL;
-		_parameters = [];
+		_params = [];
 		
 		_shape = new Shape();
 		_drawer = new CScale9GridDrawer(_shape.graphics);
@@ -52,17 +52,17 @@ class CRaster9GridRectSkin implements ICRectSkin
 		{
 			_oldState = state;
 			
-			var parameters = _parameters[state.index];
-			var defaultParameters = _parameters[CSkinState.NORMAL.index];
-			if (parameters == null)
+			var params = _params[state.index];
+			var defaultParams = _params[CSkinState.NORMAL.index];
+			if (params == null)
 			{
-				parameters = defaultParameters;
+				params = defaultParams;
 			}
-			if (parameters != null)
+			if (params != null)
 			{
-				_shape.filters = parameters.filters;
-				_shape.alpha = Math.isNaN(parameters.alpha) ? 1 : parameters.alpha;
-				_drawer.setBitmapData(parameters.bitmapData);
+				_shape.filters = params.filters;
+				_shape.alpha = Math.isNaN(params.alpha) ? 1 : params.alpha;
+				_drawer.setBitmapData(params.bitmapData);
 			}
 			else
 			{
@@ -102,16 +102,16 @@ class CRaster9GridRectSkin implements ICRectSkin
 		_drawer.setInsets(left, right, top, bottom);
 	}
 	
-	var _parameters:Array<CRasterParameters>;
+	var _params:Array<CRasterParams>;
 	
-	public function getState(state:CSkinState):CRasterParameters
+	public function getState(state:CSkinState):CRasterParams
 	{
-		var parameters = _parameters[state.index];
-		if (parameters == null)
+		var params = _params[state.index];
+		if (params == null)
 		{
-			parameters = new CRasterParameters();
-			_parameters[state.index] = parameters;
+			params = new CRasterParams();
+			_params[state.index] = params;
 		}
-		return parameters;
+		return params;
 	}
 }

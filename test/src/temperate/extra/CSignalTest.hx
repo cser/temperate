@@ -68,7 +68,7 @@ class CSignalTest
 	}
 	
 	@Test
-	public function severalParametersCases()
+	public function severalParamsCases()
 	{
 		_log = [];
 		var signal = new CSignal < String->Void > ();

@@ -63,28 +63,28 @@ class CRasterScaledButton extends ACRasterTextButton
 		{
 			_view_valid = true;
 			
-			var upParameters = _parameters[CButtonState.UP.index];
-			var parameters = _parameters[_state.index];
-			if (parameters == null)
+			var upParams = _params[CButtonState.UP.index];
+			var params = _params[_state.index];
+			if (params == null)
 			{
-				parameters = upParameters;
+				params = upParams;
 			}
 			
-			var format = getCurrentFormat(parameters, upParameters);
+			var format = getCurrentFormat(params, upParams);
 			format.applyTo(_tf);
 			
-			if (parameters != null)
+			if (params != null)
 			{
 				_drawer.setBounds(
-					parameters.bgOffsetLeft,
-					parameters.bgOffsetTop,
-					Std.int(_width) - parameters.bgOffsetLeft + parameters.bgOffsetRight,
-					Std.int(_height) - parameters.bgOffsetTop + parameters.bgOffsetBottom
+					params.bgOffsetLeft,
+					params.bgOffsetTop,
+					Std.int(_width) - params.bgOffsetLeft + params.bgOffsetRight,
+					Std.int(_height) - params.bgOffsetTop + params.bgOffsetBottom
 				)
-					.setBitmapData(parameters.bitmapData)
+					.setBitmapData(params.bitmapData)
 					.redraw();
-				_bg.filters = parameters.filters;
-				_bg.alpha = Math.isNaN(parameters.alpha) ? 1 : parameters.alpha;
+				_bg.filters = params.filters;
+				_bg.alpha = Math.isNaN(params.alpha) ? 1 : params.alpha;
 			}
 			else
 			{
@@ -97,12 +97,12 @@ class CRasterScaledButton extends ACRasterTextButton
 				_textAlignX * 
 				(_width - _measuringTf.width - textIndentLeft - textIndentRight) +
 				textIndentLeft
-			) + (parameters != null ? parameters.textOffsetX : 0);
+			) + (params != null ? params.textOffsetX : 0);
 			_tf.y = Std.int(
 				_textAlignY * 
 				(_height - _measuringTf.height - textIndentTop - textIndentBottom) +
 				textIndentTop
-			) + (parameters != null ? parameters.textOffsetY : 0);
+			) + (params != null ? params.textOffsetY : 0);
 		}
 	}
 	
