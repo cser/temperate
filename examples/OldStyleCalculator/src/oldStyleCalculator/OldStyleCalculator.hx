@@ -12,9 +12,11 @@ import temperate.components.CSpacer;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MButton;
+import temperate.minimal.MFlatButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MInputField;
 import temperate.minimal.MTooltipFactory;
+import temperate.text.CTextFormat;
 
 class OldStyleCalculator extends Sprite
 {
@@ -44,7 +46,7 @@ class OldStyleCalculator extends Sprite
 		addChild(_mainContainer);
 		
 		{
-			var format = MFormatFactory.LABEL.clone();
+			var format = new CTextFormat("Verdana", 20, 0x505050, true, true);
 			format.align = TextFormatAlign.RIGHT;
 			
 			_screen = new MInputField();
@@ -64,12 +66,14 @@ class OldStyleCalculator extends Sprite
 		
 		var button = new MButton();
 		button.text = "CE";
+		button.selected = true;
 		button.addEventListener(MouseEvent.CLICK, onCEClick);
 		MTooltipFactory.newText(button, "Clear current number\nwithout clear other operations");
 		line.add(button).setPercents(100);
 		
 		var button = new MButton();
 		button.text = "C";
+		button.selected = true;
 		button.addEventListener(MouseEvent.CLICK, onCClick);
 		MTooltipFactory.newText(button, "Reset calculator");
 		line.add(button).setPercents(100);
@@ -111,8 +115,9 @@ class OldStyleCalculator extends Sprite
 			line.add(newSymbolButton(".")).setPercents(100);
 			line.add(newSymbolButton("0")).setPercents(100);
 			
-			var button = new MButton();
+			var button = new MFlatButton();
 			button.text = "=";
+			button.selected = true;
 			button.addEventListener(MouseEvent.CLICK, onCalculateClick);
 			line.add(button).setPercents(100);
 			
@@ -137,7 +142,7 @@ class OldStyleCalculator extends Sprite
 	
 	function newSymbolButton(symbol:String):ACButton
 	{
-		var button = new MButton();
+		var button = new MFlatButton();
 		button.text = symbol;
 		button.addEventListener(MouseEvent.CLICK, callback(onSymbolClick, symbol));
 		return button;
@@ -145,8 +150,9 @@ class OldStyleCalculator extends Sprite
 	
 	function newOperationButton(operation:Operation):ACButton
 	{
-		var button = new MButton();
+		var button = new MFlatButton();
 		button.text = operation.sign;
+		button.selected = true;
 		button.addEventListener(MouseEvent.CLICK, callback(onOperationClick, operation));
 		return button;
 	}

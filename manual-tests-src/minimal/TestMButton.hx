@@ -2,8 +2,10 @@ package minimal;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 import temperate.components.ACButton;
+import temperate.containers.CVBox;
 import temperate.core.CValidator;
 import temperate.minimal.MButton;
+import temperate.minimal.MFlatButton;
 
 class TestMButton extends Sprite
 {
@@ -41,6 +43,22 @@ class TestMButton extends Sprite
 		g.beginFill(0x00ff00);
 		g.drawRect(0, 50, 100, 100);
 		g.endFill();
+		
+		{
+			var box = new CVBox().addTo(this, 350, 200);
+			var button = new MFlatButton().setText("MFlatButton normal");
+			box.add(button).setPercents(100);
+			var button = new MFlatButton().setText("MFlatButton selected");
+			button.selected = true;
+			box.add(button).setPercents(100);
+			var button = new MFlatButton().setText("MFlatButton disabled");
+			button.isEnabled = false;
+			box.add(button).setPercents(100);
+			var button = new MFlatButton().setText("MFlatButton selected disabled");
+			button.selected = true;
+			button.isEnabled = false;
+			box.add(button).setPercents(100);
+		}
 	}
 	
 	function onSelectedButtonClick(event:MouseEvent)
