@@ -152,14 +152,14 @@ class CSprite extends Sprite
 		return _isEnabled;
 	}
 	
-	inline function getNeededWidth():Float
+	inline function getNeededWidth():Int
 	{
-		return _isCompactWidth ? 0 : _settedWidth;
+		return _isCompactWidth ? 0 : Std.int(_settedWidth);
 	}
 	
-	inline function getNeededHeight():Float
+	inline function getNeededHeight():Int
 	{
-		return _isCompactHeight ? 0 : _settedHeight;
+		return _isCompactHeight ? 0 : Std.int(_settedHeight);
 	}
 	
 	//----------------------------------------------------------------------------------------------

@@ -50,6 +50,7 @@ class TestMain
 		
 		var test = new TestWindows();
 		var test = new TestWindowApplication();
+		var test = new TestRasterImageButton();
 		Lib.current.addChild(test);
 		test.init();
 	}
