@@ -1,11 +1,32 @@
 package windowApplication;
+import flash.events.MouseEvent;
 import flash.text.TextField;
+import temperate.components.CButtonState;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MFlatButton;
+import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MSeparator;
 import temperate.windows.ACWindow;
+
+@:bitmap("manual-tests-src/windowApplication/arrow.png")
+class Arrow extends flash.display.BitmapData { public function new() { super(0, 0); }}
+
+@:bitmap("manual-tests-src/windowApplication/ellipse.png")
+class Ellipse extends flash.display.BitmapData { public function new() { super(0, 0); }}
+
+@:bitmap("manual-tests-src/windowApplication/figure.png")
+class Figure extends flash.display.BitmapData { public function new() { super(0, 0); }}
+
+@:bitmap("manual-tests-src/windowApplication/line.png")
+class Line extends flash.display.BitmapData { public function new() { super(0, 0); }}
+
+@:bitmap("manual-tests-src/windowApplication/pencil.png")
+class Pencil extends flash.display.BitmapData { public function new() { super(0, 0); }}
+
+@:bitmap("manual-tests-src/windowApplication/rect.png")
+class Rect extends flash.display.BitmapData { public function new() { super(0, 0); }}
 
 class ToolsWindow extends ACWindow
 {
@@ -23,14 +44,55 @@ class ToolsWindow extends ACWindow
 		
 		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
 		
+		{
+			var line = new CHBox();
+			_main.add(line).setPercents(100);
+			
+			var button = new MFlatImageButton();
+			button.getImage(CButtonState.UP).setBitmapData(new Arrow());
+			line.add(button).setPercents(100, 100);
+			
+			var button = new MFlatImageButton();
+			button.getImage(CButtonState.UP).setBitmapData(new Ellipse());
+			line.add(button).setPercents(100, 100);
+			
+			var line = new CHBox();
+			_main.add(line).setPercents(100);
+			
+			var button = new MFlatImageButton();
+			button.getImage(CButtonState.UP).setBitmapData(new Figure());
+			line.add(button).setPercents(100, 100);
+			
+			var button = new MFlatImageButton();
+			button.getImage(CButtonState.UP).setBitmapData(new Line());
+			line.add(button).setPercents(100, 100);
+			
+			var line = new CHBox();
+			_main.add(line).setPercents(100);
+			
+			var button = new MFlatImageButton();
+			button.getImage(CButtonState.UP).setBitmapData(new Pencil());
+			line.add(button).setPercents(100, 100);
+			
+			var button = new MFlatImageButton();
+			button.getImage(CButtonState.UP).setBitmapData(new Rect());
+			line.add(button).setPercents(100, 100);
+		}
+		
 		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
 		
 		var button = new MFlatButton();
+		button.text = "New";
+		_main.add(button).setPercents(100);
+		
+		var button = new MFlatButton();
 		button.text = "Open";
+		button.addEventListener(MouseEvent.CLICK, onOpenClick);
 		_main.add(button).setPercents(100);
 		
 		var button = new MFlatButton();
 		button.text = "Save";
+		button.addEventListener(MouseEvent.CLICK, onSaveClick);
 		_main.add(button).setPercents(100);
 		
 		_size_valid = false;
@@ -71,5 +133,15 @@ class ToolsWindow extends ACWindow
 			g.drawRoundRect(0, 0, _width, _height, 10);
 			g.endFill();
 		}
+	}
+	
+	function onOpenClick(event:MouseEvent)
+	{
+		addChild(new OpenWindow());
+	}
+	
+	function onSaveClick(event:MouseEvent)
+	{
+		addChild(new SaveWindow());
 	}
 }

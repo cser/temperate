@@ -1,4 +1,6 @@
 package temperate.components.parametrization;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
 import flash.display.DisplayObject;
 
 class CImageParams 
@@ -12,6 +14,12 @@ class CImageParams
 	public function setImage(image:DisplayObject):CImageParams
 	{
 		this.image = image;
+		return this;
+	}
+	
+	public function setBitmapData(bitmapData:BitmapData):CImageParams
+	{
+		this.image = new Bitmap(bitmapData);
 		return this;
 	}
 	

@@ -39,6 +39,8 @@ class TestRasterImageButton extends Sprite
 			button.getImage(CButtonState.UP).setImage(newImage(50, 30, 0xa0a0a0));
 			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT);
 			button.getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.OVER_SELECTED).setFilters(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.DOWN_SELECTED).setFilters(MFilterFactory.LIGHT);
 			button.selected = true;
 			line.add(button);
 			
