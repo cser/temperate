@@ -11,17 +11,12 @@ import flash.text.TextFormat;
 class FPSMonitor extends Sprite
 {
 	static var TEXT_SIZE = 10;
-	
 	static var TEXT_HEIGHT = 18;
-	
 	static var UPDATE_DELAY = 100;
-	
 	static var MEMORY_MULTIPLIER = 1 / (1024 * 1024);
-	
 	static var MAX_MEMORY_STOCK:UInt = 100 * 1024;
 	
 	var _width:Int;
-	
 	var _height:Int;
 	
 	public function new(width:Int = 200, height:Int = 100)
@@ -58,19 +53,12 @@ class FPSMonitor extends Sprite
 	}
 	
 	var _ininialized:Bool;
-	
 	var _tfMemory:TextField;
-	
 	var _tfFps:TextField;
-	
 	var _memoryPlot:PlotBitmap;
-	
 	var _fpsPlot:PlotBitmap;
-	
 	var _bgColor:UInt;
-	
 	var _memoryColor:UInt;
-	
 	var _fpsColor:UInt;
 	
 	public function setColors(bgColor:UInt, memoryColor:UInt, fpsColor:UInt)
@@ -90,7 +78,6 @@ class FPSMonitor extends Sprite
 	}
 	
 	var _fpsPlotBase:Int;
-	
 	var _fpsDigitBase:Int;
 	
 	public function setFpsBase(numPlotFrames:Int = 2, numDigitFrames:Int = 8)
@@ -172,9 +159,7 @@ class FPSMonitor extends Sprite
 	}
 	
 	var _framePlotTimes:Array<Int>;
-	
 	var _frameDigitTimes:Array<Int>;
-	
 	var _maxMemory:UInt;
 	
 	function calculateFps(time:Int, times:Array<Int>, framesBase:Int)
