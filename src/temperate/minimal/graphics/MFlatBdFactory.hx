@@ -3,7 +3,7 @@ import flash.display.BitmapData;
 import flash.display.GradientType;
 import flash.geom.Matrix;
 import temperate.components.CButtonState;
-import temperate.core.CMath;
+using temperate.core.CMath;
 
 class MFlatBdFactory 
 {
@@ -101,13 +101,13 @@ class MFlatBdFactory
 		var enabled = state != CButtonState.DISABLED;
 		
 		var color = enabled ? params.bgBottomRightColor : params.bgBottomRightDisabledColor;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(0, 0, size, size, 6);
 		g.drawRoundRect(0, 0, size - 1, size - 1, 6);
 		g.endFill();
 		
 		var color = enabled ? params.bgTopLeftColor : params.bgTopLeftDisabledColor;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(0, 0, size, size, 6);
 		g.drawRoundRect(1, 1, size - 1, size - 1, 6);
 		g.endFill();
@@ -144,13 +144,13 @@ class MFlatBdFactory
 		}
 		
 		var color = params.bgInnerTopLeftColor;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(1, 1, size - 2, size - 2, 4);
 		g.drawRoundRect(2, 2, size - 3, size - 3, 4);
 		g.endFill();
 		
 		var color = params.bgInnerBottomRightColor;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(1, 1, size - 2, size - 2, 4);
 		g.drawRoundRect(1, 1, size - 3, size - 3, 4);
 		g.endFill();
@@ -158,7 +158,7 @@ class MFlatBdFactory
 		if (state == CButtonState.DOWN)
 		{
 			var color = params.bgInnerDownColor;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+			g.beginFill(color.getColor(), color.getAlpha());
 			g.drawRoundRect(2, 2, size - 4, size - 4, 4);
 			g.drawRoundRect(3, 3, size - 6, size - 6, 4);
 			g.endFill();

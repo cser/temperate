@@ -4,7 +4,7 @@ import flash.display.GradientType;
 import flash.geom.Matrix;
 import flash.geom.Rectangle;
 import temperate.components.CButtonState;
-import temperate.core.CMath;
+using temperate.core.CMath;
 
 class MScrollBarBdFactory 
 {
@@ -479,13 +479,13 @@ class MScrollBarBdFactory
 			var enabled = state != CButtonState.DISABLED;
 			
 			var color = enabled ? params.bgBottomRightColor : params.bgBottomRightDisabledColor;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+			g.beginFill(color.getColor(), color.getAlpha());
 			g.drawRoundRect(0, 0, arrowSize, arrowSize, 6);
 			g.drawRoundRect(0, 0, arrowSize - 1, arrowSize - 1, 6);
 			g.endFill();
 			
 			var color = enabled ? params.bgTopLeftColor : params.bgTopLeftDisabledColor;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+			g.beginFill(color.getColor(), color.getAlpha());
 			g.drawRoundRect(0, 0, arrowSize, arrowSize, 6);
 			g.drawRoundRect(1, 1, arrowSize - 1, arrowSize - 1, 6);
 			g.endFill();
@@ -523,13 +523,13 @@ class MScrollBarBdFactory
 			}
 			
 			var color = params.bgInnerTopLeftColor;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+			g.beginFill(color.getColor(), color.getAlpha());
 			g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 4);
 			g.drawRoundRect(2, 2, arrowSize - 3, arrowSize - 3, 4);
 			g.endFill();
 			
 			var color = params.bgInnerBottomRightColor;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+			g.beginFill(color.getColor(), color.getAlpha());
 			g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 4);
 			g.drawRoundRect(1, 1, arrowSize - 3, arrowSize - 3, 4);
 			g.endFill();
@@ -537,7 +537,7 @@ class MScrollBarBdFactory
 			if (state == CButtonState.DOWN)
 			{
 				var color = params.bgInnerDownColor;
-				g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+				g.beginFill(color.getColor(), color.getAlpha());
 				g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
 				g.drawRoundRect(3, 3, arrowSize - 6, arrowSize - 6, 4);
 				g.endFill();
@@ -781,13 +781,13 @@ class MScrollBarBdFactory
 		var diameter2 = 6;
 		
 		var color = enabled ? params.bgBottomRightColor : params.bgBottomRightDisabledColor;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(downOffsetX, downOffsetY, width, height, diameter1);
 		g.drawRoundRect(downOffsetX, downOffsetY, width - 1, height - 1, diameter1);
 		g.endFill();
 		
 		var color = enabled ? params.bgTopLeftColor : params.bgTopLeftDisabledColor;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(downOffsetX, downOffsetY, width, height, diameter1);
 		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 1, height - 1, diameter1);
 		g.endFill();
@@ -822,13 +822,13 @@ class MScrollBarBdFactory
 		}
 		
 		var color = params.bgInnerTopLeftColor;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2);
 		g.drawRoundRect(downOffsetX + 2, downOffsetY + 2, width - 3, height - 3, diameter2);
 		g.endFill();
 		
 		var color = params.bgInnerBottomRightColor;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2);
 		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 3, height - 3, diameter2);
 		g.endFill();

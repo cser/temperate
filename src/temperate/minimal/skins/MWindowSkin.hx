@@ -78,6 +78,7 @@ class MWindowSkin extends ACWindowSkin
 			_lineTop = top - LINE_BOTTOM_INDENT;
 			
 			_view_valid = false;
+			_view_headButtonsValid = false;
 			postponeView();
 		}
 	}
@@ -96,8 +97,16 @@ class MWindowSkin extends ACWindowSkin
 			g.clear();
 			
 			g.lineStyle();
-			g.beginBitmapFill(
-				_isLocked ? MWindowBdFactory.getLockedTop() : MWindowBdFactory.getDefaultTop());
+			var bd;
+			if (_isLocked)
+			{
+				bd = MWindowBdFactory.getLockedTop();
+			}
+			else
+			{
+				bd = _isActive ? MWindowBdFactory.getActiveTop() : MWindowBdFactory.getDefaultTop();
+			}
+			g.beginBitmapFill(bd);
 			g.drawRoundRectComplex(1, 1, width - 2, _lineTop - 1, 5, 5, 0, 0);
 			g.endFill();
 			
@@ -139,6 +148,13 @@ class MWindowSkin extends ACWindowSkin
 	override function updateIsLocked()
 	{
 		super.updateIsLocked();
+		_view_valid = false;
+		postponeView();
+	}
+	
+	override function updateIsActive()
+	{
+		super.updateIsActive();
 		_view_valid = false;
 		postponeView();
 	}

@@ -28,7 +28,7 @@ class TestMain
 		var test = new TestMButton();
 		var test = new TestFrameEvent();
 		var test = new TestContainer();
-		var test = new TestContainerSpace();		
+		var test = new TestContainerSpace();
 		var test = new TestRecursiveContainer();
 		var test = new TestMCheckBox();
 		var test = new TestTooltipsOld();

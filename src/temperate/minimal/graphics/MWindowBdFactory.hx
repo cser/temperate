@@ -14,8 +14,10 @@ class MWindowBdFactory
 	public static var gradientHeight = 24;
 	public static var color:UInt = 0x80ffffff;
 	public static var bgColor:UInt = 0x00ffffff;
-	public static var headTopColor:UInt = 0xf8508000;
-	public static var headBottomColor:UInt = 0xe0a0e020;
+	public static var headTopColor:UInt = 0xf8407015;
+	public static var headBottomColor:UInt = 0xe080c030;
+	public static var headTopActiveColor:UInt = 0xf8508000;
+	public static var headBottomActiveColor:UInt = 0xe0a0e020;
 	public static var headTopLockedColor:UInt = 0xf0808080;
 	public static var headBottomLockedColor:UInt = 0xf0cccccc;
 	
@@ -27,7 +29,7 @@ class MWindowBdFactory
 		var g = shape.graphics;
 		g.clear();
 		
-		g.lineStyle(size, color.colorPart(), color.alphaPart());
+		g.lineStyle(size, color.getColor(), color.getAlpha());
 		var x = -DEFAULT_STRIAE_SIZE;
 		while (x < DEFAULT_STRIAE_SIZE)
 		{
@@ -108,8 +110,8 @@ class MWindowBdFactory
 		matrix.createGradientBox(10, gradientHeight, Math.PI * .5);
 		g.beginGradientFill(
 			GradientType.LINEAR,
-			[topColor.colorPart(), bottomColor.colorPart()],
-			[topColor.alphaPart(), bottomColor.alphaPart()],
+			[topColor.getColor(), bottomColor.getColor()],
+			[topColor.getAlpha(), bottomColor.getAlpha()],
 			[0, 255], matrix);
 		g.drawRect(0, 0, width, MAX_HEAD_HEIGHT);
 		g.endFill();
@@ -166,5 +168,16 @@ class MWindowBdFactory
 			_lockedTop = newTop(getDefaultStriae(), headTopLockedColor, headBottomLockedColor);
 		}
 		return _lockedTop;
+	}
+	
+	static var _activeTop:BitmapData;
+	
+	public static function getActiveTop():BitmapData
+	{
+		if (_activeTop == null)
+		{
+			_activeTop = newTop(getDefaultStriae(), headTopActiveColor, headBottomActiveColor);
+		}
+		return _activeTop;
 	}
 }

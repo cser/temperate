@@ -4,8 +4,8 @@ import flash.display.Graphics;
 import flash.display.Shape;
 import flash.display.Sprite;
 import flash.geom.Rectangle;
-import temperate.core.CMath;
 import temperate.tooltips.CGeomUtil;
+using temperate.core.CMath;
 
 class MTooltipBg extends Sprite
 {
@@ -93,7 +93,7 @@ class MTooltipBg extends Sprite
 		drawShape(graphics, graphics, borderColor, true, true);
 		drawShape(_mask.graphics, _mask.graphics, 0xffffff, false, false);
 		drawShape(_topRect.graphics, _topTail.graphics, fillColor, false, false);
-		_top.alpha = CMath.alphaPart(fillColor);
+		_top.alpha = fillColor.getAlpha();
 	}
 	
 	function drawShape(rect:Graphics, tail:Graphics, color:UInt, needDrawBorder:Bool, useAlpha:Bool)
@@ -102,7 +102,7 @@ class MTooltipBg extends Sprite
 		if (needDrawBorder)
 		{
 			tail.lineStyle(
-				borderThickness * 2, CMath.colorPart(color), CMath.alphaPart(color));
+				borderThickness * 2, color.getColor(), color.getAlpha());
 		}
 		
 		var dx = _tailEndX - _tailBeginX;
@@ -114,7 +114,7 @@ class MTooltipBg extends Sprite
 			var cos = dx / a;
 			var sin = dy / a;
 			tail.moveTo(_tailBeginX - tailHalfWidth * sin, _tailBeginY + tailHalfWidth * cos);
-			tail.beginFill(CMath.colorPart(color), useAlpha ? CMath.alphaPart(color) : 1);
+			tail.beginFill(color.getColor(), useAlpha ? color.getAlpha() : 1);
 			tail.lineTo(_tailEndX, _tailEndY);
 			tail.lineTo(_tailBeginX + tailHalfWidth * sin, _tailBeginY - tailHalfWidth * cos);
 			tail.endFill();
@@ -125,11 +125,10 @@ class MTooltipBg extends Sprite
 			rect.clear();
 			if (needDrawBorder)
 			{
-				rect.lineStyle(
-					borderThickness * 2, CMath.colorPart(color), CMath.alphaPart(color));
+				rect.lineStyle(borderThickness * 2, color.getColor(), color.getAlpha());
 			}
 		}
-		rect.beginFill(CMath.colorPart(color), useAlpha ? CMath.alphaPart(color) : 1);
+		rect.beginFill(color.getColor(), useAlpha ? color.getAlpha() : 1);
 		rect.drawRoundRect(
 			borderThickness, borderThickness,
 			_width - borderThickness * 2,_height - borderThickness * 2,
