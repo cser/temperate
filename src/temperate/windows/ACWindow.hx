@@ -7,6 +7,8 @@ import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import temperate.skins.CNullWindowSkin;
 import temperate.skins.ICWindowSkin;
+import temperate.windows.animators.CNullPopUpAnimator;
+import temperate.windows.animators.ICPopUpAnimator;
 import temperate.windows.docks.CAlignedPopUpDock;
 import temperate.windows.docks.ICPopUpDock;
 
@@ -182,5 +184,17 @@ class ACWindow implements ICPopUp
 		}
 		view.x = x;
 		view.y = y;
+	}
+	
+	public var animator(get_animator, set_animator):ICPopUpAnimator;
+	var _animator:ICPopUpAnimator;
+	function get_animator()
+	{
+		return _animator;
+	}
+	function set_animator(value)
+	{
+		_animator = value;
+		return _animator;
 	}
 }

@@ -2,6 +2,7 @@ package ;
 import flash.display.Sprite;
 import flash.events.Event;
 import temperate.core.ICArea;
+import temperate.minimal.animators.MPopUpScaleAnimator;
 import temperate.minimal.windows.MLockArea;
 import temperate.windows.CPopUpManager;
 import windowApplication.ToolsWindow;
@@ -19,6 +20,7 @@ class TestWindowApplication extends Sprite
 	public function init()
 	{
 		_windowManager = new CPopUpManager(this);
+		_windowManager.animator = new MPopUpScaleAnimator();
 		_windowManager.updateOnMove = true;
 		
 		_lockArea = new MLockArea().setManager(_windowManager);
