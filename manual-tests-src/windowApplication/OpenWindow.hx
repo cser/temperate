@@ -1,4 +1,5 @@
 package windowApplication;
+import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import temperate.containers.CHBox;
@@ -8,6 +9,8 @@ import temperate.minimal.MFlatButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.MSeparator;
+import temperate.minimal.skins.MWindowSkin;
+import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
 import temperate.windows.CPopUpMover;
@@ -18,9 +21,7 @@ class OpenWindow extends ACWindow
 	{
 		super(manager);
 		
-		_main = new CVBox();
 		_main.setIndents(10, 10, 10, 10);
-		addChild(_main);
 		
 		_title = MFormatFactory.WINDOW_TITLE.newAutoSized();
 		_title.text = "Open file";
@@ -56,47 +57,13 @@ class OpenWindow extends ACWindow
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
 		
-		_size_valid = false;
-		postponeSize();
-		
-		new CPopUpMover().subscribe(getManager, this, this, get_dock);
+		new CPopUpMover().subscribe(getManager, this, view, get_dock);
 	}
 	
 	var _main:CVBox;
 	var _buttonBox:CHBox;
 	var _title:TextField;
 	var _description:TextField;
-	
-	override function doValidateSize()
-	{
-		if (!_size_valid)
-		{
-			_size_valid = true;
-			
-			_main.width = getNeededWidth();
-			_main.height = getNeededHeight();
-			_width = _main.width;
-			_height = _main.height;
-			
-			_view_valid = false;
-			postponeView();
-		}
-	}
-	
-	override function doValidateView()
-	{
-		if (!_view_valid)
-		{
-			_view_valid = true;
-			
-			var g = graphics;
-			g.clear();
-			g.lineStyle(2, 0x000000);
-			g.beginFill(0xeeeeee);
-			g.drawRoundRect(0, 0, _width, _height, 10);
-			g.endFill();
-		}
-	}
 	
 	function onOpenClick(event:MouseEvent)
 	{
@@ -106,5 +73,16 @@ class OpenWindow extends ACWindow
 	function onCancelClick(event:MouseEvent)
 	{
 		close();
+	}
+	
+	override function newSkin():ICWindowSkin
+	{
+		return new MWindowSkin();
+	}
+	
+	override function newContainer():Sprite
+	{
+		_main = new CVBox();
+		return _main;
 	}
 }

@@ -10,24 +10,20 @@ import temperate.skins.ICWindowSkin;
 import temperate.windows.docks.CAlignedPopUpDock;
 import temperate.windows.docks.ICPopUpDock;
 
-class ACWindow extends CSprite, implements ICPopUp
+class ACWindow implements ICPopUp
 {
 	function new(manager:CPopUpManager) 
 	{
-		super();
 		_manager = manager;
-		view = this;
 		innerDispatcher = new EventDispatcher();
 		dock = new CAlignedPopUpDock();
-		
-		updateIsLocked();
-		updateIsActive();
 		
 		innerDispatcher.addEventListener(Event.RESIZE, onManagerResize);
 		
 		_baseContainer = newContainer();
 		_baseSkin = newSkin();
-		_baseSkin.link(this, _baseContainer);
+		_baseSkin.link(_baseContainer);
+		view = _baseSkin.view;
 	}
 	
 	var _manager:CPopUpManager;
@@ -42,45 +38,23 @@ class ACWindow extends CSprite, implements ICPopUp
 	public var innerDispatcher(default, null):IEventDispatcher;
 	
 	public var isLocked(get_isLocked, set_isLocked):Bool;
-	var _isLocked:Bool;
 	function get_isLocked()
 	{
-		return _isLocked;
+		return _baseSkin.isLocked;
 	}
 	function set_isLocked(value)
 	{
-		if (_isLocked != value)
-		{
-			_isLocked = value;
-			updateIsLocked();
-		}
-		return _isLocked;
+		return _baseSkin.isLocked = value;
 	}
 	
 	public var isActive(get_isActive, set_isActive):Bool;
-	var _isActive:Bool;
 	function get_isActive()
 	{
-		return _isActive;
+		return _baseSkin.isActive;
 	}
 	function set_isActive(value)
 	{
-		if (_isActive != value)
-		{
-			_isActive = value;
-			updateIsActive();
-		}
-		return _isActive;
-	}
-	
-	function updateIsLocked()
-	{
-		mouseEnabled = !_isLocked;
-		mouseChildren = !_isLocked;
-	}
-	
-	function updateIsActive()
-	{
+		return _baseSkin.isActive = value;
 	}
 	
 	public function open(modal:Bool)
@@ -97,8 +71,8 @@ class ACWindow extends CSprite, implements ICPopUp
 	function onManagerResize(event:Event = null)
 	{
 		dock.arrange(Std.int(width), Std.int(height), _manager.areaWidth, _manager.areaHeight);
-		x = _manager.areaX + dock.x;
-		y = _manager.areaY + dock.y;
+		view.x = _manager.areaX + dock.x;
+		view.y = _manager.areaY + dock.y;
 	}
 	
 	public var dock(get_dock, set_dock):ICPopUpDock;
@@ -125,5 +99,25 @@ class ACWindow extends CSprite, implements ICPopUp
 	function newSkin():ICWindowSkin
 	{
 		return CNullWindowSkin.getInstance();
+	}
+	
+	public var width(get_width, set_width):Float;
+	function get_width()
+	{
+		return view.width;
+	}
+	function set_width(value)
+	{
+		return view.width = value;
+	}
+	
+	public var height(get_height, set_height):Float;
+	function get_height()
+	{
+		return view.height;
+	}
+	function set_height(value)
+	{
+		return view.height = value;
 	}
 }

@@ -1,4 +1,5 @@
 package windowApplication;
+import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import temperate.components.CButtonState;
@@ -8,6 +9,8 @@ import temperate.minimal.MFlatButton;
 import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MSeparator;
+import temperate.minimal.skins.MWindowSkin;
+import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
 import temperate.windows.CPopUpMover;
@@ -37,13 +40,9 @@ class ToolsWindow extends ACWindow
 	{
 		super(manager);
 		
-		_main = new CVBox();
 		_main.setIndents(10, 10, 10, 10);
-		addChild(_main);
 		
-		_title = MFormatFactory.WINDOW_TITLE.newAutoSized();
-		_title.text = "Tools";
-		_main.add(_title);
+		_baseSkin.title = "Tools";
 		
 		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
 		
@@ -105,49 +104,15 @@ class ToolsWindow extends ACWindow
 		button.addEventListener(MouseEvent.CLICK, onSaveClick);
 		_main.add(button).setPercents(100);
 		
-		_size_valid = false;
-		postponeSize();
-		
 		dock = new CAbsolutePopUpDock(10, 50);
 		
-		new CPopUpMover().subscribe(getManager, this, this, get_dock);
+		new CPopUpMover().subscribe(getManager, this, view, get_dock);
 	}
 	
 	var _main:CVBox;
 	var _buttonBox:CHBox;
 	var _title:TextField;
 	var _description:TextField;
-	
-	override function doValidateSize()
-	{
-		if (!_size_valid)
-		{
-			_size_valid = true;
-			
-			_main.width = getNeededWidth();
-			_main.height = getNeededHeight();
-			_width = _main.width;
-			_height = _main.height;
-			
-			_view_valid = false;
-			postponeView();
-		}
-	}
-	
-	override function doValidateView()
-	{
-		if (!_view_valid)
-		{
-			_view_valid = true;
-			
-			var g = graphics;
-			g.clear();
-			g.lineStyle(2, 0x000000);
-			g.beginFill(0xeeeeee);
-			g.drawRoundRect(0, 0, _width, _height, 10);
-			g.endFill();
-		}
-	}
 	
 	function onOpenClick(event:MouseEvent)
 	{
@@ -159,11 +124,18 @@ class ToolsWindow extends ACWindow
 	
 	function onSaveClick(event:MouseEvent)
 	{
-		new SaveWindow(_manager).open(true);
+		var window = new SaveWindow(_manager);
+		window.open(true);
 	}
 	
-	override function updateIsLocked() 
+	override function newContainer():Sprite
 	{
-		super.updateIsLocked();
+		_main = new CVBox();
+		return _main;
+	}
+	
+	override function newSkin():ICWindowSkin 
+	{
+		return new MWindowSkin();
 	}
 }

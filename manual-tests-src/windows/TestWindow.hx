@@ -14,7 +14,7 @@ class TestWindow extends ACWindow
 	public function new(manager:CPopUpManager) 
 	{
 		super(manager);
-		_main = new CVBox();
+		/*
 		_main.setIndents(10, 10, 10, 10);
 		addChild(_main);
 		
@@ -39,10 +39,10 @@ class TestWindow extends ACWindow
 		_buttonBox.add(button).setAlign(.5);
 		
 		_size_valid = false;
-		postponeSize();
+		postponeSize();*/
 	}
 	
-	var _main:CVBox;
+	/*var _main:CVBox;
 	var _buttonBox:CHBox;
 	var _title:TextField;
 	var _description:TextField;
@@ -76,7 +76,7 @@ class TestWindow extends ACWindow
 			g.drawRoundRect(0, 0, _width, _height, 10);
 			g.endFill();
 		}
-	}
+	}*/
 	
 	/*var _owner:ICWindowOwner;
 	

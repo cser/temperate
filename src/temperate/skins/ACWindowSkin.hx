@@ -1,29 +1,86 @@
 package temperate.skins;
+import flash.display.DisplayObject;
 import flash.display.Sprite;
+import temperate.core.CSprite;
 
-class ACWindowSkin implements ICWindowSkin
+class ACWindowSkin extends CSprite, implements ICWindowSkin
 {
 	function new() 
 	{
+		super();
+		view = this;
 		
+		_isLocked = false;
+		_isActive = false;
 	}
 	
-	public function link(owner:Sprite, container:Sprite):Void
+	public var view(default, null):DisplayObject;
+	
+	var _container:Sprite;
+	
+	public function link(container:Sprite):Void
 	{
-		owner.addChild(container);
+		_container = container;
+		addChild(_container);
+		
+		_size_valid = false;
+		postponeSize();
+		
+		updateIsLocked();
+		updateIsActive();
 	}
 	
-	public function validateSize(width:Int, height:Int):Void
+	public var isLocked(get_isLocked, set_isLocked):Bool;
+	var _isLocked:Bool;
+	function get_isLocked()
 	{
-		this.width = width;
-		this.height = height;
+		return _isLocked;
+	}
+	function set_isLocked(value)
+	{
+		if (_isLocked != value)
+		{
+			_isLocked = value;
+			updateIsLocked();
+		}
+		return _isLocked;
 	}
 	
-	public var width(default, null):Int;
-	
-	public var height(default, null):Int;
-	
-	public function validateView():Void
+	function updateIsLocked()
 	{
+		mouseEnabled = !_isLocked;
+		mouseChildren = !_isLocked;
+	}
+	
+	public var isActive(get_isActive, set_isActive):Bool;
+	var _isActive:Bool;
+	function get_isActive()
+	{
+		return _isActive;
+	}
+	function set_isActive(value)
+	{
+		if (_isActive != value)
+		{
+			_isActive = value;
+			updateIsActive();
+		}
+		return _isActive;
+	}
+	
+	function updateIsActive()
+	{
+	}
+	
+	public var title(get_title, set_title):String;
+	var _title:String;
+	function get_title()
+	{
+		return _title;
+	}
+	function set_title(value:String)
+	{
+		_title = value;
+		return _title;
 	}
 }

@@ -1,15 +1,16 @@
 package temperate.skins;
+import flash.display.DisplayObject;
 import flash.display.Sprite;
 
 interface ICWindowSkin 
 {
-	function link(owner:Sprite, container:Sprite):Void;
+	var view(default, null):DisplayObject;
 	
-	function validateSize(width:Int, height:Int):Void;
+	function link(container:Sprite):Void;
 	
-	var width(default, null):Int;
+	var isLocked(get_isLocked, set_isLocked):Bool;
 	
-	var height(default, null):Int;
+	var isActive(get_isActive, set_isActive):Bool;
 	
-	function validateView():Void;
+	var title(get_title, set_title):String;
 }
