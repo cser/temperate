@@ -79,7 +79,8 @@ class ACWindow implements ICPopUp
 	function onManagerResize(event:Event = null)
 	{
 		dock.arrange(Std.int(width), Std.int(height), manager.areaWidth, manager.areaHeight);
-		move(manager.areaX + dock.x, manager.areaY + dock.y);
+		_head.move(manager.areaX + dock.x, manager.areaY + dock.y, false);
+		//move(manager.areaX + dock.x, manager.areaY + dock.y);
 	}
 	
 	public var dock(get_dock, set_dock):ICPopUpDock;
@@ -134,7 +135,7 @@ class ACWindow implements ICPopUp
 	
 	public function move(x:Float, y:Float)
 	{
-		_head.move(Std.int(x), Std.int(y));
+		_head.move(Std.int(x), Std.int(y), true);
 	}
 	
 	public var width(get_width, null):Int;

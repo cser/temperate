@@ -17,7 +17,8 @@ class ACWindowComponent extends ACPriorityListNode<ACWindowComponent>
 	var _getManager:Void->CPopUpManager;
 	var _skin:ICWindowSkin;
 	
-	public function subscribe(popUp:ICPopUp, getManager:Void->CPopUpManager, skin:ICWindowSkin):Void
+	public function subscribe(
+		popUp:ICPopUp, getManager:Void->CPopUpManager, skin:ICWindowSkin):Void
 	{
 		_popUp = popUp;
 		_view = popUp.view;
@@ -51,11 +52,11 @@ class ACWindowComponent extends ACPriorityListNode<ACWindowComponent>
 		return next != null ? next.getY() : 0;
 	}
 	
-	public function move(x:Int, y:Int):Void
+	public function move(x:Int, y:Int, needSave:Bool):Void
 	{
 		if (next != null)
 		{
-			next.move(x, y);
+			next.move(x, y, needSave);
 		}
 	}
 	

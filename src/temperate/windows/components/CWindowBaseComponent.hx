@@ -46,7 +46,7 @@ class CWindowBaseComponent extends ACWindowComponent
 		return Std.int(_view.y);
 	}
 	
-	override public function move(x:Int, y:Int):Void
+	override public function move(x:Int, y:Int, needSave:Bool):Void
 	{
 		_view.x = x;
 		_view.y = y;

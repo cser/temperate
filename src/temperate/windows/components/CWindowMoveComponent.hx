@@ -46,7 +46,7 @@ class CWindowMoveComponent extends ACWindowComponent
 		var parent = _popUp.view.parent;
 		var x = Std.int(parent.mouseX) - _mouseX;
 		var y = Std.int(parent.mouseY) - _mouseY;
-		move(x, y);
+		move(x, y, true);
 		var manager = _getManager();
 		if (manager.updateOnMove)
 		{
@@ -69,11 +69,11 @@ class CWindowMoveComponent extends ACWindowComponent
 		var manager = _getManager();
 		dock.arrange(
 			width, height, manager.areaWidth, manager.areaHeight);
-		super.move(dock.x + manager.areaX, dock.y + manager.areaY);
+		super.move(dock.x + manager.areaX, dock.y + manager.areaY, false);
 		super.animateShow(fast);
 	}
 	
-	override public function move(x:Int, y:Int):Void
+	override public function move(x:Int, y:Int, needSave:Bool):Void
 	{
 		var manager = _getManager();
 		if (manager != null)
@@ -83,9 +83,9 @@ class CWindowMoveComponent extends ACWindowComponent
 			var dock = _getDock();
 			dock.move(
 				width, height, manager.areaWidth, manager.areaHeight,
-				x - manager.areaX, y - manager.areaY
+				x - manager.areaX, y - manager.areaY, needSave
 			);
 		}
-		super.move(x, y);
+		super.move(x, y, needSave);
 	}
 }

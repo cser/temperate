@@ -7,7 +7,7 @@ class CWindowConstraintsComponent extends ACWindowComponent
 		super();
 	}
 	
-	override public function move(x:Int, y:Int):Void
+	override public function move(x:Int, y:Int, needSave:Bool):Void
 	{
 		var manager = _getManager();
 		if (manager != null)
@@ -31,6 +31,6 @@ class CWindowConstraintsComponent extends ACWindowComponent
 				y = Std.int(manager.areaY + manager.areaHeight - _skin.headHeight);
 			}
 		}
-		super.move(x, y);
+		super.move(x, y, needSave);
 	}
 }

@@ -10,7 +10,7 @@ class CPopUpAbsoluteDock extends ACPopUpDock
 	}
 	
 	override public function move(
-		width:Int, height:Int, mainWidth:Int, mainHeight:Int, x:Int, y:Int
+		width:Int, height:Int, mainWidth:Int, mainHeight:Int, x:Int, y:Int, needSave:Bool
 	):Void
 	{
 		this.x = x;

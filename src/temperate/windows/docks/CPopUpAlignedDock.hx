@@ -19,10 +19,14 @@ class CPopUpAlignedDock extends ACPopUpDock
 	}
 	
 	override public function move(
-		width:Int, height:Int, mainWidth:Int, mainHeight:Int, x:Int, y:Int
-	):Void
+		width:Int, height:Int, mainWidth:Int, mainHeight:Int, x:Int, y:Int, needSave:Bool):Void
 	{
-		alignX = x / (mainWidth - width);
-		alignY = y / (mainHeight - height);
+		if (needSave)
+		{
+			alignX = x / (mainWidth - width);
+			alignY = y / (mainHeight - height);
+		}
+		this.x = x;
+		this.y = y;
 	}
 }
