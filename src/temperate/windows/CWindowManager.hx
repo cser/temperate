@@ -133,7 +133,7 @@ class CWindowManager extends EventDispatcher, implements ICArea
 		{
 			var popUp = _popUps[i];
 			popUp.isActive = i == length - 1;
-			popUp.isLocked = newModal;
+			popUp.isEnabled = !newModal;
 			newModal = newModal || _isModal.get(popUp);
 		}
 		if (modal != newModal)

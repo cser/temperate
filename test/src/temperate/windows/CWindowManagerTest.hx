@@ -3,7 +3,6 @@ package temperate.windows;
 import flash.display.Sprite;
 import flash.errors.ArgumentError;
 import flash.events.Event;
-import flash.utils.RegExp;
 import haxe.PosInfos;
 import massive.munit.Assert;
 using massive.munit.Assert;
@@ -91,13 +90,13 @@ class CWindowManagerTest
 		_manager.add(popUp0, false);
 		_manager.add(popUp1, true);
 		
-		popUp0.isLocked.isTrue();
-		popUp1.isLocked.isFalse();
+		popUp0.isEnabled.isFalse();
+		popUp1.isEnabled.isTrue();
 		
 		_manager.remove(popUp1);
 		
-		popUp0.isLocked.isFalse();
-		popUp1.isLocked.isFalse();
+		popUp0.isEnabled.isTrue();
+		popUp1.isEnabled.isTrue();
 	}
 	
 	@Test
@@ -111,15 +110,15 @@ class CWindowManagerTest
 		_manager.add(popUp1, true);
 		_manager.add(popUp2, false);
 		
-		popUp0.isLocked.isTrue();
-		popUp1.isLocked.isFalse();
-		popUp2.isLocked.isFalse();
+		popUp0.isEnabled.isFalse();
+		popUp1.isEnabled.isTrue();
+		popUp2.isEnabled.isTrue();
 		
 		var popUp3 = new FakeWindow();
 		_manager.add(popUp3, true);
-		popUp2.isLocked.isTrue();
+		popUp2.isEnabled.isFalse();
 		_manager.remove(popUp3);
-		popUp2.isLocked.isFalse();
+		popUp2.isEnabled.isTrue();
 	}
 	
 	@Test
@@ -134,8 +133,8 @@ class CWindowManagerTest
 		_manager.add(popUp2, false);
 		_manager.remove(popUp1);
 		
-		popUp0.isLocked.isFalse();
-		popUp2.isLocked.isFalse();
+		popUp0.isEnabled.isTrue();
+		popUp2.isEnabled.isTrue();
 	}
 	
 	@Test
@@ -213,21 +212,21 @@ class CWindowManagerTest
 		
 		_container.getChildAt(0).areEqual(popUp0.view);
 		[popUp0].equalToArray(getWindows());
-		popUp0.isLocked.isFalse();
+		popUp0.isEnabled.isTrue();
 		
 		_manager.add(popUp1, true);
 		_container.getChildAt(0).areEqual(popUp0.view);
 		_container.getChildAt(1).areEqual(popUp1.view);
 		[popUp0, popUp1].equalToArray(getWindows());
-		popUp0.isLocked.isTrue();
-		popUp1.isLocked.isFalse();
+		popUp0.isEnabled.isFalse();
+		popUp1.isEnabled.isTrue();
 		
 		_manager.add(popUp0, true);
 		_container.getChildAt(0).areEqual(popUp1.view);
 		_container.getChildAt(1).areEqual(popUp0.view);
 		[popUp1, popUp0].equalToArray(getWindows());
-		popUp1.isLocked.isTrue();
-		popUp0.isLocked.isFalse();
+		popUp1.isEnabled.isFalse();
+		popUp0.isEnabled.isTrue();
 	}
 	
 	@Test
@@ -250,7 +249,7 @@ class CWindowManagerTest
 		_container.numChildren.areEqual(1);
 		_container.getChildAt(0).areEqual(popUp0.view);
 		[popUp0].equalToArray(getWindows());
-		popUp0.isLocked.isFalse();
+		popUp0.isEnabled.isTrue();
 	}
 	
 	@Test

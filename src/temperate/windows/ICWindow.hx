@@ -8,7 +8,7 @@ interface ICWindow
 	
 	var innerDispatcher(default, null):IEventDispatcher;
 	
-	var isLocked(get_isLocked, set_isLocked):Bool;
+	var isEnabled(get_isEnabled, set_isEnabled):Bool;
 	
 	var isActive(get_isActive, set_isActive):Bool;
 	

@@ -15,7 +15,7 @@ interface ICWindowSkin
 	
 	function setMouseEnabled(value:Bool):Void;
 	
-	var isLocked(get_isLocked, set_isLocked):Bool;
+	var isEnabled(get_isEnabled, set_isEnabled):Bool;
 	
 	var isActive(get_isActive, set_isActive):Bool;
 	

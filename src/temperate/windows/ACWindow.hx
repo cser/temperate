@@ -86,14 +86,14 @@ class ACWindow< TData > extends CTypedDispatcher<CWindowEvent<TData>>, implement
 		return value;
 	}
 	
-	public var isLocked(get_isLocked, set_isLocked):Bool;
-	function get_isLocked()
+	public var isEnabled(get_isEnabled, set_isEnabled):Bool;
+	function get_isEnabled()
 	{
-		return _baseSkin.isLocked;
+		return _baseSkin.isEnabled;
 	}
-	function set_isLocked(value)
+	function set_isEnabled(value)
 	{
-		return _baseSkin.isLocked = value;
+		return _baseSkin.isEnabled = value;
 	}
 	
 	public var isActive(get_isActive, set_isActive):Bool;
@@ -210,14 +210,24 @@ class ACWindow< TData > extends CTypedDispatcher<CWindowEvent<TData>>, implement
 	
 	public function animateShow(fast:Bool):Void
 	{
+		doOnShow();
 		_baseSkin.setMouseEnabled(true);
 		_head.animateShow(fast);
 	}
 	
 	public function animateHide(fast:Bool, onComplete:ICWindow->Void):Void
 	{
+		doOnHide();
 		_baseSkin.setMouseEnabled(false);
 		_head.animateHide(fast, onComplete);
+	}
+	
+	function doOnShow()
+	{
+	}
+	
+	function doOnHide()
+	{
 	}
 	
 	public var maximized(get_maximized, set_maximized):Bool;

@@ -8,7 +8,7 @@ class CWindowEvent< T > extends Event
 	
 	public function new(type:String, window:ACWindow<T>, data:T)
 	{
-		super(type);
+		super(type, false, true);
 		this.window = window;
 		this.data = data;
 	}

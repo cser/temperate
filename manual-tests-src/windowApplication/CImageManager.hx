@@ -10,21 +10,21 @@ import temperate.windows.docks.CWindowAbsoluteDock;
 
 class CImageManager
 {
-	public function new(container:DisplayObjectContainer) 
+	public function new(container:DisplayObjectContainer, editorState:EditorState) 
 	{
 		_container = container;
+		_editorState = editorState;
 		_manager = new CWindowManager(container);
 		_manager.addEventListener(Event.SELECT, onManagerImageSelect);
 		_container.stage.addEventListener(Event.RESIZE, onStageResize);
 		onStageResize();
-		toolCursor = MCursorManager.newHover(-1);
 	}
 	
 	public var onImageSelect:Void->Void;
-	public var toolCursor(default, null):CHoverSwitcher<ICCursor>;
 	
 	var _manager:CWindowManager;
 	var _container:DisplayObjectContainer;
+	var _editorState:EditorState;
 	
 	function onManagerImageSelect(event:Event)
 	{
@@ -61,7 +61,7 @@ class CImageManager
 		{
 			throw new Error("Window already exists");
 		}
-		var window = new ImageWindow(name);
+		var window = new ImageWindow(name, _editorState);
 		window.setSize(640, 480);
 		window.setImageSize(width, height);
 		window.dock = new CWindowAbsoluteDock(10, 10);

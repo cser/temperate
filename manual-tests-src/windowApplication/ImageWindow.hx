@@ -1,18 +1,25 @@
 package windowApplication;
+import flash.display.Bitmap;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import temperate.core.CSprite;
+import temperate.cursors.CCursor;
+import temperate.cursors.CHoverSwitcher;
+import temperate.cursors.ICCursor;
+import temperate.minimal.MCursorManager;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.windows.AMWindow;
+import windowApplication.states.PencilDrawState;
 
 class ImageWindow extends AMWindow<Dynamic>
 {
-	public function new(name:String) 
+	public function new(name:String, editorState:EditorState) 
 	{
 		super();
 		
 		title = name;
+		_editorState = editorState;
 		
 		_skin.addHeadButton(_skin.maximizeButton).addEventListener(Event.CHANGE, onMaximizeChange);
 		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
@@ -23,9 +30,13 @@ class ImageWindow extends AMWindow<Dynamic>
 		_pane = new MScrollPane();
 		_pane.set(image);
 		_main.add(_pane).setPercents(100, 100);
+		
+		_toolCursor = MCursorManager.newHover(-1).setTarget(image);
 	}
 	
+	var _editorState:EditorState;
 	var _pane:MScrollPane;
+	var _toolCursor:CHoverSwitcher<ICCursor>;
 	
 	public var image(default, null):CSprite;
 	
@@ -88,5 +99,40 @@ class ImageWindow extends AMWindow<Dynamic>
 	function onCloseClick(event:MouseEvent)
 	{
 		close(null);
+	}
+	
+	override function doOnShow()
+	{
+		_editorState.toolChanged.add(onToolChanged);
+		onToolChanged();
+	}
+	
+	override function doOnHide()
+	{
+		_editorState.toolChanged.remove(onToolChanged);
+	}
+	
+	function onToolChanged()
+	{
+		var state = _editorState.tool;
+		if (state != null)
+		{
+			var cursorView = new Bitmap(Type.createInstance(state.icon, []));
+			var cursor = new CCursor();
+			if (Std.is(state, PencilDrawState))
+			{
+				cursor.setView(cursorView, true, 0, -Std.int(cursorView.height));
+				cursor.setHideSystem(true);
+			}
+			else
+			{
+				cursor.setView(cursorView, true, 10, 14);
+			}
+			_toolCursor.value = cursor;
+		}
+		else
+		{
+			_toolCursor.value = null;
+		}
 	}
 }

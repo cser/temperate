@@ -17,7 +17,7 @@ import windowApplication.states.ADrawState;
 class ToolsWindow extends AMWindow<Dynamic>
 {
 	var _application:TestWindowApplication;
-	var _states:CButtonSelector<ADrawState>;
+	var _tools:CButtonSelector<ADrawState>;
 	var _editorState:EditorState;
 	
 	public function new(
@@ -29,8 +29,8 @@ class ToolsWindow extends AMWindow<Dynamic>
 		_application = application;
 		_editorState = editorState;
 		_baseSkin.title = "Tools";
-		_states = new CButtonSelector(null);
-		_states.addEventListener(Event.CHANGE, onStatesChange);
+		_tools = new CButtonSelector(null);
+		_tools.addEventListener(Event.CHANGE, onStatesChange);
 		
 		{
 			var toolBox = new CVBox();
@@ -56,12 +56,12 @@ class ToolsWindow extends AMWindow<Dynamic>
 				var button = new MToolButton();
 				button.getImage(CButtonState.UP).setBitmapData(Type.createInstance(state.icon, []));
 				line.add(button);
-				_states.add(button, state);
+				_tools.add(button, state);
 				i++;
 			}
 		}
 		
-		_states.value = selectedState;
+		_tools.value = selectedState;
 		
 		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
 		
@@ -103,7 +103,7 @@ class ToolsWindow extends AMWindow<Dynamic>
 	
 	function onStatesChange(event:Event)
 	{
-		_application.setState(_states.value);
+		_editorState.tool = _tools.value;
 	}
 	
 	var _colorImage:CSprite;

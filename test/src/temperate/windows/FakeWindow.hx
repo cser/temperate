@@ -19,16 +19,16 @@ class FakeWindow implements ICWindow
 	public var innerDispatcher(default, null):IEventDispatcher;
 	public var manager:CWindowManager;
 	
-	public var isLocked(get_isLocked, set_isLocked):Bool;
-	var _isLocked:Bool;
-	function get_isLocked()
+	public var isEnabled(get_isEnabled, set_isEnabled):Bool;
+	var _isEnabled:Bool;
+	function get_isEnabled()
 	{
-		return _isLocked;
+		return _isEnabled;
 	}
-	function set_isLocked(value)
+	function set_isEnabled(value)
 	{
-		_isLocked = value;
-		return _isLocked;
+		_isEnabled = value;
+		return _isEnabled;
 	}
 	
 	public var isActive(get_isActive, set_isActive):Bool;
