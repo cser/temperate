@@ -1,7 +1,10 @@
 package ;
+import flash.display.Bitmap;
 import flash.display.Sprite;
 import helpers.Scaler;
 import temperate.components.CScrollBar;
+import temperate.containers.CVBox;
+import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.skins.MFieldRectSkin;
 
@@ -25,6 +28,9 @@ class TestScrollBar extends Sprite
 		var scrollBar = newScrollBar(false).addTo(this, 200, 120);
 		scrollBar.pageSize = 50;
 		addChild(new Scaler(scrollBar));
+		
+		var column = new CVBox().addTo(this, 0, 300);
+		column.add(new Bitmap(MScrollBarBdFactory.getScrollLeftUp()));
 	}
 	
 	function newScrollBar(horizontal)

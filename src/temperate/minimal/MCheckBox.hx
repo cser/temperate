@@ -1,6 +1,7 @@
 package temperate.minimal;
 import temperate.components.CButtonState;
 import temperate.components.CRasterFixedButton;
+import temperate.minimal.graphics.MCommonBdFactory;
 
 class MCheckBox extends CRasterFixedButton
 {
@@ -9,35 +10,35 @@ class MCheckBox extends CRasterFixedButton
 		super();
 			
 		getState(CButtonState.UP)
-			.setBitmapData(MBitmapDataFactory.getCheckBoxBgUp())
+			.setBitmapData(MCommonBdFactory.getCheckBoxBgUp())
 			.setFormat(MFormatFactory.LABEL)
 			;
 		getState(CButtonState.OVER)
-			.setBitmapData(MBitmapDataFactory.getCheckBoxBgUp())
+			.setBitmapData(MCommonBdFactory.getCheckBoxBgUp())
 			.setFilters(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DOWN)
-			.setBitmapData(MBitmapDataFactory.getCheckBoxBgDown())
+			.setBitmapData(MCommonBdFactory.getCheckBoxBgDown())
 			.setFilters(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DISABLED)
-			.setBitmapData(MBitmapDataFactory.getCheckBoxBgUp())
+			.setBitmapData(MCommonBdFactory.getCheckBoxBgUp())
 			.setAlpha(.5)
 			.setFormat(MFormatFactory.LABEL_DISABLED)
 			;
 		getState(CButtonState.UP_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getCheckBoxBgUpSelected())
+			.setBitmapData(MCommonBdFactory.getCheckBoxBgUpSelected())
 			;
 		getState(CButtonState.OVER_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getCheckBoxBgUpSelected())
+			.setBitmapData(MCommonBdFactory.getCheckBoxBgUpSelected())
 			.setFilters(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DOWN_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getCheckBoxBgDownSelected())
+			.setBitmapData(MCommonBdFactory.getCheckBoxBgDownSelected())
 			.setFilters(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DISABLED_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getCheckBoxBgUpSelected())
+			.setBitmapData(MCommonBdFactory.getCheckBoxBgUpSelected())
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setAlpha(.5)
 			.setFormat(MFormatFactory.LABEL_DISABLED)

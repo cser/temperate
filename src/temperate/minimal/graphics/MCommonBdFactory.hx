@@ -1,16 +1,8 @@
-package temperate.minimal;
+package temperate.minimal.graphics;
 
 import flash.display.BitmapData;
 import flash.display.GradientType;
-import flash.display.Graphics;
-import flash.display.Shape;
-import flash.display.StageQuality;
-import flash.filters.BitmapFilterQuality;
-import flash.filters.DropShadowFilter;
-import flash.filters.GlowFilter;
 import flash.geom.Matrix;
-import flash.geom.Point;
-import flash.Lib;
 import temperate.core.CMath;
 
 /**
@@ -20,7 +12,7 @@ import temperate.core.CMath;
  * This is don't meen, that you mast write your release skins in code.
  * (In this case just incluse swf with you BitmapData's and customize components by they)
  */
-class MBitmapDataFactory 
+class MCommonBdFactory 
 {	
 	/*
 	static var _knockoutShape:BitmapData;
@@ -32,7 +24,7 @@ class MBitmapDataFactory
 			var innerStrength = 1.7;
 			var outerStrength = 1.5;
 			
-			var g = _shape.graphics;
+			var g = shape.graphics;
 			g.clear();
 			
 			g.beginFill(outerGlowColor, .1);
@@ -51,14 +43,14 @@ class MBitmapDataFactory
 			g.endFill();
 			
 			_knockoutShape = new BitmapData(DEFAULT_WIDTH, DEFAULT_HEIGHT, true, 0x0);
-			_knockoutShape.draw(_shape);
+			_knockoutShape.draw(shape);
 		}
 		return _knockoutShape;
 	}
 
 	static function newStriae(color:UInt, backgroundColor:UInt, space:Int, size:Int)
 	{
-		var g = _shape.graphics;
+		var g = shape.graphics;
 		g.clear();
 		
 		g.lineStyle(size, color);
@@ -72,7 +64,7 @@ class MBitmapDataFactory
 		
 		var bitmapData = new BitmapData(
 			DEFAULT_STRIAE_SIZE, DEFAULT_STRIAE_SIZE, false, backgroundColor);
-		bitmapData.draw(_shape);
+		bitmapData.draw(shape);
 		return bitmapData;
 	}
 	
@@ -88,7 +80,7 @@ class MBitmapDataFactory
 		var innerStrength = 1.7;
 		var outerStrength = .5;
 
-		var g = _shape.graphics;
+		var g = shape.graphics;
 		g.clear();
 		
 		var halfRoundSize = ROUND_SIZE >> 1;
@@ -105,7 +97,7 @@ class MBitmapDataFactory
 		g.endFill();
 		
 		var bitmapData:BitmapData = new BitmapData(ROUND_SIZE, ROUND_SIZE, true, 0x0);
-		bitmapData.draw(_shape);
+		bitmapData.draw(shape);
 		bitmapData.applyFilter(
 			bitmapData, bitmapData.rect, new Point(),
 			new GlowFilter(
@@ -121,7 +113,7 @@ class MBitmapDataFactory
 	{
 		var defaultScrollThickness = 18;
 		
-		var g = _shape.graphics;
+		var g = shape.graphics;
 		g.clear();
 		
 		g.beginFill(down ? 0xc0c0c0 : 0xa1a1a1);
@@ -137,7 +129,7 @@ class MBitmapDataFactory
 		}
 		
 		var bitmapData = new BitmapData(DEFAULT_WIDTH, defaultScrollThickness, true, 0x00efefef);
-		bitmapData.draw(_shape);
+		bitmapData.draw(shape);
 		return bitmapData;
 	}
 	
@@ -171,7 +163,7 @@ class MBitmapDataFactory
 		{
 			var defaultScrollThickness = 18;
 			
-			var g = _shape.graphics;
+			var g = shape.graphics;
 			g.clear();
 			
 			for (i in 0 ... 4)
@@ -185,7 +177,7 @@ class MBitmapDataFactory
 			
 			_thumbIcon = new BitmapData(
 				defaultScrollThickness - 4, defaultScrollThickness - 2, true, 0x00efefef);
-			_thumbIcon.draw(_shape);
+			_thumbIcon.draw(shape);
 			_thumbIcon.applyFilter(
 				_thumbIcon, _thumbIcon.rect, new Point(),
 				new GlowFilter(0xffffff, 1, 2, 2, innerStrength, BitmapFilterQuality.HIGH)
@@ -461,54 +453,6 @@ class MBitmapDataFactory
 	}
 	
 	//----------------------------------------------------------------------------------------------
-	// Cursors
-	//----------------------------------------------------------------------------------------------
-	
-	static var _handUp:BitmapData;
-	
-	public static function getHandUp()
-	{
-		if (_handUp == null)
-		{
-			_handUp = newHand(false);
-		}
-		return _handUp;
-	}
-	
-	static var _handDown:BitmapData;
-	
-	public static function getHandDown()
-	{
-		if (_handDown == null)
-		{
-			_handDown = newHand(true);
-		}
-		return _handDown;
-	}
-	
-	static var _forbidden:BitmapData;
-	
-	public static function getForbidden()
-	{
-		if (_forbidden == null)
-		{
-			_forbidden = newForbidden();
-		}
-		return _forbidden;
-	}
-	
-	static var _wait:BitmapData;
-	
-	public static function getWait()
-	{
-		if (_wait == null)
-		{
-			_wait = newWait();
-		}
-		return _wait;
-	}
-	
-	//----------------------------------------------------------------------------------------------
 	//
 	//  Bitmap data customized generators
 	//
@@ -516,9 +460,10 @@ class MBitmapDataFactory
 	
 	static function newArrow(horizontal:Bool, left:Bool, color:UInt)
 	{
-		qualityOn();
+		MBdFactoryUtil.qualityOn();
+		var shape = MBdFactoryUtil.getShape();
 		
-		var g = _shape.graphics;
+		var g = shape.graphics;
 		g.clear();
 		
 		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
@@ -537,30 +482,31 @@ class MBitmapDataFactory
 		var bitmapData = new BitmapData(width, height, true, 0x00000000);
 		if (horizontal && !left)
 		{
-			bitmapData.draw(_shape);
+			bitmapData.draw(shape);
 		}
 		else if (horizontal && left)
 		{
-			bitmapData.draw(_shape, new Matrix(-1, 0, 0, 1, width, 0));
+			bitmapData.draw(shape, new Matrix(-1, 0, 0, 1, width, 0));
 		}
 		else if (!horizontal && !left)
 		{
-			bitmapData.draw(_shape, new Matrix(0, 1, -1, 0, width, 0));
+			bitmapData.draw(shape, new Matrix(0, 1, -1, 0, width, 0));
 		}
 		else
 		{
-			bitmapData.draw(_shape, new Matrix(0, -1, 1, 0, 0, height));
+			bitmapData.draw(shape, new Matrix(0, -1, 1, 0, 0, height));
 		}
 		
-		qualityOff();
+		MBdFactoryUtil.qualityOff();
 		return bitmapData;
 	}
 	
 	static function newSimpleBg(fillColor:UInt, borderColor:UInt)
 	{
-		qualityOn();
+		MBdFactoryUtil.qualityOn();
+		var shape = MBdFactoryUtil.getShape();
 		
-		var g = _shape.graphics;
+		var g = shape.graphics;
 		g.clear();
 
 		g.beginFill(CMath.colorPart(borderColor), CMath.alphaPart(borderColor));
@@ -572,17 +518,18 @@ class MBitmapDataFactory
 		g.endFill();
 
 		var bitmapData = new BitmapData(DEFAULT_WIDTH, DEFAULT_HEIGHT, true, 0x0);
-		bitmapData.draw(_shape);
+		bitmapData.draw(shape);
 		
-		qualityOff();
+		MBdFactoryUtil.qualityOff();
 		return bitmapData;
 	}
 	
 	static function newGradientBg(colors:Array<UInt>, ratios:Array<Int>, shadow:Bool)
 	{
-		qualityOn();
+		MBdFactoryUtil.qualityOn();
+		var shape = MBdFactoryUtil.getShape();
 		
-		var g = _shape.graphics;
+		var g = shape.graphics;
 		g.clear();
 
 		var matrix = new Matrix();
@@ -618,20 +565,21 @@ class MBitmapDataFactory
 		g.endFill();
 
 		var bitmapData = new BitmapData(DEFAULT_WIDTH, DEFAULT_HEIGHT, true, 0x00000000);
-		bitmapData.draw(_shape);
+		bitmapData.draw(shape);
 			
-		qualityOff();
+		MBdFactoryUtil.qualityOff();
 		return bitmapData;
 	}
 	
 	static function newEllipseBg(selected:Bool, down:Bool)
 	{
-		qualityOn();
+		MBdFactoryUtil.qualityOn();
+		var shape = MBdFactoryUtil.getShape();
 		
 		var matrix = new Matrix();
 		matrix.createGradientBox(BOX_HEIGHT, BOX_HEIGHT, Math.PI / 2);
 
-		var g = _shape.graphics;
+		var g = shape.graphics;
 		g.clear();
 		
 		var colors = [];
@@ -689,20 +637,21 @@ class MBitmapDataFactory
 		g.endFill();
 		
 		var bitmapData = new BitmapData(BOX_WIDTH, BOX_HEIGHT, true, 0x00000000);
-		bitmapData.draw(_shape);
+		bitmapData.draw(shape);
 		
-		qualityOff();
+		MBdFactoryUtil.qualityOff();
 		return bitmapData;
 	}
 	
 	static function newRoundBg(selected:Bool, down:Bool)
 	{
-		qualityOn();
+		MBdFactoryUtil.qualityOn();
+		var shape = MBdFactoryUtil.getShape();
 		
 		var matrix = new Matrix();
 		matrix.createGradientBox(BOX_HEIGHT, BOX_HEIGHT, Math.PI / 2);
 
-		var g = _shape.graphics;
+		var g = shape.graphics;
 		g.clear();
 		
 		var indent = down ? 3 : 4;
@@ -753,127 +702,9 @@ class MBitmapDataFactory
 		}
 		
 		var bitmapData = new BitmapData(BOX_HEIGHT, BOX_HEIGHT, true, 0x00000000);
-		bitmapData.draw(_shape);
+		bitmapData.draw(shape);
 		
-		qualityOff();
-		return bitmapData;
-	}
-	
-	static function newHand(down:Bool)
-	{
-		qualityOn();
-		
-		var g = _shape.graphics;
-		g.clear();
-		if (down)
-		{
-			drawHandDown(g, true);
-			drawHandDown(g, false);
-		}
-		else
-		{
-			drawHandUp(g, true);
-			drawHandUp(g, false);
-		}
-		
-		var bitmapData = new BitmapData(20, 24, true, 0x00000000);
-		bitmapData.draw(_shape);
-		
-		qualityOff();
-		return bitmapData;
-	}
-	
-	static function newForbidden()
-	{
-		qualityOn();
-		
-		var borderColor = 0x000000;
-		var fillColor = 0x808080;
-		var r = 8;
-		var x0 = r + 2;
-		var y0 = r + 2;
-		
-		var g = _shape.graphics;
-		g.clear();
-		
-		g.lineStyle(4, borderColor);
-		g.drawCircle(x0, y0, r);
-		
-		var sin = Math.sin(Math.PI * .25);
-		var cos = Math.cos(Math.PI * .25);
-		
-		g.moveTo(x0 + sin * r, y0 + cos * r);
-		g.lineTo(x0 - sin * r, y0 - cos * r);
-		
-		g.lineStyle(2, fillColor);
-		g.drawCircle(x0, y0, r);
-		
-		g.moveTo(x0 + sin * r, y0 + cos * r);
-		g.lineTo(x0 - sin * r, y0 - cos * r);
-		
-		var bitmapData = new BitmapData(x0 * 2 + 4, y0 * 2 + 4, true, 0x00000000);
-		bitmapData.draw(_shape);
-		bitmapData.applyFilter(
-			bitmapData, bitmapData.rect, new Point(),
-			new DropShadowFilter(2, 45, 0x000000, .5, 2, 2)
-		);
-		
-		qualityOff();
-		return bitmapData;
-	}
-	
-	static function newWait()
-	{
-		qualityOn();
-		
-		var borderColor = 0x000000;
-		var fillColor = 0x808080;
-		var color = 0xffffff;
-		var r = 10;
-		var x0 = r + 2;
-		var y0 = r + 2;
-		
-		var g = _shape.graphics;
-		g.clear();
-		
-		g.beginFill(color);
-		g.drawCircle(x0, y0, r);
-		g.endFill();
-		
-		g.beginFill(fillColor);
-		g.drawCircle(x0, y0, r + 1);
-		g.drawCircle(x0, y0, r);
-		g.endFill();
-		
-		g.beginFill(borderColor);
-		g.drawCircle(x0, y0, r - 1);
-		g.drawCircle(x0, y0, r - 3);
-		g.endFill();
-		
-		g.lineStyle(1, borderColor);
-		
-		g.moveTo(x0 - r + 1, y0);
-		g.lineTo(x0 - r + 5, y0);
-		g.moveTo(x0 + r - 1, y0);
-		g.lineTo(x0 + r - 5, y0);
-		g.moveTo(x0, y0 + r - 1);
-		g.lineTo(x0, y0 + r - 5);
-		g.moveTo(x0, y0 - r + 1);
-		g.lineTo(x0, y0 - r + 5);
-		
-		g.moveTo(x0, y0);
-		g.lineTo(x0 + 3, y0 - 5);
-		g.moveTo(x0, y0);
-		g.lineTo(x0 + 4, y0 + 3);
-		
-		var bitmapData = new BitmapData(x0 * 2 + 4, y0 * 2 + 4, true, 0x00000000);
-		bitmapData.draw(_shape);
-		bitmapData.applyFilter(
-			bitmapData, bitmapData.rect, new Point(),
-			new DropShadowFilter(2, 45, 0x000000, .5, 2, 2)
-		);
-		
-		qualityOff();
+		MBdFactoryUtil.qualityOff();
 		return bitmapData;
 	}
 	
@@ -883,91 +714,6 @@ class MBitmapDataFactory
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	static function drawHandBegin(g:Graphics, drawBorder:Bool)
-	{
-		if (drawBorder)
-		{
-			g.lineStyle(2, 0x000000);
-		}
-		else
-		{
-			g.lineStyle();
-			g.beginFill(0xffffff);
-		}
-	}
-	
-	static function drawHandEnd(g:Graphics, drawBorder:Bool)
-	{
-		if (!drawBorder)
-		{
-			g.endFill();
-		}
-	}
-	
-	static function drawHandUp(g:Graphics, drawBorder:Bool)
-	{
-		var x0 = 11;
-		var y0 = 12;
-		
-		drawHandBegin(g, drawBorder);
-		g.drawRoundRect(x0 - 6, y0, 11, 10, 6);
-		drawHandEnd(g, drawBorder);
-		drawHandBegin(g, drawBorder);
-		g.drawRoundRect(x0 - 6, y0 - 9, 2, 14, 4);
-		drawHandEnd(g, drawBorder);
-		drawHandBegin(g, drawBorder);
-		g.drawRoundRect(x0 - 3, y0 - 10, 2, 14, 4);
-		drawHandEnd(g, drawBorder);
-		drawHandBegin(g, drawBorder);
-		g.drawRoundRect(x0, y0 - 10, 2, 14, 4);
-		drawHandEnd(g, drawBorder);
-		drawHandBegin(g, drawBorder);
-		g.drawRoundRect(x0 + 3, y0 - 8, 2, 14, 4);
-		drawHandEnd(g, drawBorder);
-		
-		g.moveTo(x0 - 4, y0 + 10);
-		drawHandBegin(g, drawBorder);
-		g.lineTo(x0 - 10, y0 + 5);
-		g.lineTo(x0 - 10, y0 - 1);
-		g.lineTo(x0 - 8, y0);
-		g.lineTo(x0 - 8, y0 + 2);
-		g.lineTo(x0 - 7, y0 + 3);
-		g.moveTo(x0 - 4, y0 + 3);
-		drawHandEnd(g, drawBorder);
-	}
-	
-	static function drawHandDown(g:Graphics, drawBorder:Bool)
-	{
-		var x0 = 11;
-		var y0 = 12;
-		
-		drawHandBegin(g, drawBorder);
-		g.drawRoundRect(x0 - 6, y0, 11, 10, 6);
-		drawHandEnd(g, drawBorder);
-		drawHandBegin(g, drawBorder);
-		g.drawRoundRect(x0 - 6, y0 - 4, 2, 10, 4);
-		drawHandEnd(g, drawBorder);
-		drawHandBegin(g, drawBorder);
-		g.drawRoundRect(x0 - 3, y0 - 5, 2, 10, 4);
-		drawHandEnd(g, drawBorder);
-		drawHandBegin(g, drawBorder);
-		g.drawRoundRect(x0, y0 - 5, 2, 10, 4);
-		drawHandEnd(g, drawBorder);
-		drawHandBegin(g, drawBorder);
-		g.drawRoundRect(x0 + 3, y0 - 4, 2, 10, 4);
-		drawHandEnd(g, drawBorder);
-		
-		g.moveTo(x0 - 4, y0 + 10);
-		drawHandBegin(g, drawBorder);
-		g.lineTo(x0 - 10, y0 + 4);
-		g.lineTo(x0 - 8, y0);
-		g.lineTo(x0 - 8, y0);
-		g.lineTo(x0 - 7, y0 + 2);
-		g.lineTo(x0 - 7, y0 + 3);
-		g.moveTo(x0 - 4, y0 + 3);
-		drawHandEnd(g, drawBorder);
-	}
-	
 	inline static function getColorsAndAlphas(
 		source:Array<UInt>, outColors:Array<UInt>, outAlphas:Array<Float>)
 	{
@@ -976,29 +722,6 @@ class MBitmapDataFactory
 			var color = source[i];
 			outColors[i] = CMath.colorPart(color);
 			outAlphas[i] = CMath.alphaPart(color);
-		}
-	}
-	
-	static var _shape = new Shape();
-	
-	static var _oldQuality:StageQuality;
-	
-	static function qualityOn()
-	{
-		var stage = Lib.current.stage;
-		_oldQuality = stage.quality;
-		if (_oldQuality != StageQuality.BEST && _oldQuality != StageQuality.HIGH)
-		{
-			stage.quality = StageQuality.HIGH;
-		}
-	}
-	
-	static function qualityOff()
-	{
-		var stage = Lib.current.stage;
-		if (stage.quality != _oldQuality)
-		{
-			stage.quality = _oldQuality;
 		}
 	}
 }

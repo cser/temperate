@@ -1,6 +1,7 @@
 package temperate.minimal;
 import temperate.components.CButtonState;
 import temperate.components.CRasterScaledButton;
+import temperate.minimal.graphics.MCommonBdFactory;
 
 class MButton extends CRasterScaledButton
 {
@@ -9,43 +10,43 @@ class MButton extends CRasterScaledButton
 		super();
 		
 		getState(CButtonState.UP)
-			.setBitmapData(MBitmapDataFactory.getButtonBgUp())
+			.setBitmapData(MCommonBdFactory.getButtonBgUp())
 			.setFormat(MFormatFactory.BUTTON_UP)
 			;
 		getState(CButtonState.OVER)
-			.setBitmapData(MBitmapDataFactory.getButtonBgUp())
+			.setBitmapData(MCommonBdFactory.getButtonBgUp())
 			.setFilters(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			;
 		getState(CButtonState.DOWN)
-			.setBitmapData(MBitmapDataFactory.getButtonBgDown())
+			.setBitmapData(MCommonBdFactory.getButtonBgDown())
 			.setFilters(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setTextOffset(1, 1)
 			.setBgOffset(1, 1, 1, 1)
 			;
 		getState(CButtonState.DISABLED)
-			.setBitmapData(MBitmapDataFactory.getButtonBgDown())
+			.setBitmapData(MCommonBdFactory.getButtonBgDown())
 			.setAlpha(.5)
 			.setFormat(MFormatFactory.BUTTON_DISABLED)
 			;
 		getState(CButtonState.UP_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getButtonBgUpSelected())
+			.setBitmapData(MCommonBdFactory.getButtonBgUpSelected())
 			;
 		getState(CButtonState.OVER_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getButtonBgUpSelected())
+			.setBitmapData(MCommonBdFactory.getButtonBgUpSelected())
 			.setFilters(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			;
 		getState(CButtonState.DOWN_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getButtonBgDownSelected())
+			.setBitmapData(MCommonBdFactory.getButtonBgDownSelected())
 			.setFilters(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setTextOffset(1, 1)
 			.setBgOffset(1, 1, 1, 1)
 			;
 		getState(CButtonState.DISABLED_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getButtonBgDownSelected())
+			.setBitmapData(MCommonBdFactory.getButtonBgDownSelected())
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setAlpha(.5)
 			.setFormat(MFormatFactory.BUTTON_DISABLED)

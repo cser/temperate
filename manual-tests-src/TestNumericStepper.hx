@@ -4,7 +4,7 @@ import flash.events.Event;
 import temperate.components.CNumericStepper;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
-import temperate.minimal.MBitmapDataFactory;
+import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MLabel;
@@ -102,7 +102,7 @@ class TestNumericStepper extends Sprite
 	function newNumericStepper()
 	{
 		var bg = new CRasterRectSkin();
-		bg.getState(CSkinState.NORMAL).setBitmapData(MBitmapDataFactory.getTextBg());
+		bg.getState(CSkinState.NORMAL).setBitmapData(MCommonBdFactory.getTextBg());
 		
 		var up = new MButton();
 		up.setText("+").setSize(30, 10);

@@ -1,5 +1,5 @@
 package temperate.minimal.skins;
-import temperate.minimal.MBitmapDataFactory;
+import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.skins.CRasterRectSkin;
 import temperate.skins.CSkinState;
 
@@ -9,9 +9,9 @@ class MFieldRectSkin extends CRasterRectSkin
 	{
 		super();
 		
-		getState(CSkinState.NORMAL).setBitmapData(MBitmapDataFactory.getTextBg());
-		getState(CSkinState.INACTIVE).setBitmapData(MBitmapDataFactory.getTextBgInactive());
-		getState(CSkinState.DISABLED).setBitmapData(MBitmapDataFactory.getTextBgInactive())
+		getState(CSkinState.NORMAL).setBitmapData(MCommonBdFactory.getTextBg());
+		getState(CSkinState.INACTIVE).setBitmapData(MCommonBdFactory.getTextBgInactive());
+		getState(CSkinState.DISABLED).setBitmapData(MCommonBdFactory.getTextBgInactive())
 			.setAlpha(.35);
 	}
 }

@@ -3,6 +3,7 @@ import temperate.components.CButtonState;
 import temperate.components.CNumericStepper;
 import temperate.components.CRasterFixedButton;
 import temperate.core.CMath;
+import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.skins.MFieldRectSkin;
 
 class MNumericStepper extends CNumericStepper
@@ -10,19 +11,19 @@ class MNumericStepper extends CNumericStepper
 	public function new() 
 	{
 		var up = new CRasterFixedButton();
-		up.getState(CButtonState.UP).setBitmapData(MBitmapDataFactory.getUpArrowUp());
-		up.getState(CButtonState.OVER).setBitmapData(MBitmapDataFactory.getUpArrowOver());
-		up.getState(CButtonState.DOWN).setBitmapData(MBitmapDataFactory.getUpArrowOver())
+		up.getState(CButtonState.UP).setBitmapData(MCommonBdFactory.getUpArrowUp());
+		up.getState(CButtonState.OVER).setBitmapData(MCommonBdFactory.getUpArrowOver());
+		up.getState(CButtonState.DOWN).setBitmapData(MCommonBdFactory.getUpArrowOver())
 			.setBgOffset(0, 0, -1, 0);
-		up.getState(CButtonState.DISABLED).setBitmapData(MBitmapDataFactory.getUpArrowUp())
+		up.getState(CButtonState.DISABLED).setBitmapData(MCommonBdFactory.getUpArrowUp())
 			.setAlpha(.4);
 		
 		var down = new CRasterFixedButton();
-		down.getState(CButtonState.UP).setBitmapData(MBitmapDataFactory.getDownArrowUp());
-		down.getState(CButtonState.OVER).setBitmapData(MBitmapDataFactory.getDownArrowOver());
-		down.getState(CButtonState.DOWN).setBitmapData(MBitmapDataFactory.getDownArrowOver())
+		down.getState(CButtonState.UP).setBitmapData(MCommonBdFactory.getDownArrowUp());
+		down.getState(CButtonState.OVER).setBitmapData(MCommonBdFactory.getDownArrowOver());
+		down.getState(CButtonState.DOWN).setBitmapData(MCommonBdFactory.getDownArrowOver())
 			.setBgOffset(0, 0, 1, 0);
-		down.getState(CButtonState.DISABLED).setBitmapData(MBitmapDataFactory.getDownArrowUp())
+		down.getState(CButtonState.DISABLED).setBitmapData(MCommonBdFactory.getDownArrowUp())
 			.setAlpha(.4);
 		
 		_buttonsWidth = Std.int(up.width + 2);

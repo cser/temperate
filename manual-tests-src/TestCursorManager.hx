@@ -9,7 +9,8 @@ import flash.Vector;
 import temperate.containers.CVBox;
 import temperate.cursors.CCursor;
 import temperate.cursors.CCursorManager;
-import temperate.minimal.MBitmapDataFactory;
+import temperate.minimal.graphics.MCommonBdFactory;
+import temperate.minimal.graphics.MCursorBdFactory;
 import temperate.minimal.MButton;
 
 class TestCursorManager extends Sprite
@@ -35,7 +36,7 @@ class TestCursorManager extends Sprite
 			.addClickHandler(callback(onChangeCursorClick, cursor)));
 		
 		var cursor = new CCursor()
-			.setView(new Bitmap(MBitmapDataFactory.getButtonBgDown()), true, -10, -10)
+			.setView(new Bitmap(MCommonBdFactory.getButtonBgDown()), true, -10, -10)
 			.setHideSystem(false);
 		box.add(new MButton().setText("Set display object cursor")
 			.addClickHandler(callback(onChangeCursorClick, cursor)));
@@ -63,7 +64,7 @@ class TestCursorManager extends Sprite
 			#if flash10_2
 			
 			var data = new Vector();
-			data[0] = MBitmapDataFactory.getWait();
+			data[0] = MCursorBdFactory.getWait();
 			_manager.addNative("native", data, 1, new Point(10, 10));
 			
 			var button = new MButton();
