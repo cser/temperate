@@ -1,4 +1,5 @@
 package ;
+import bitmaps.BitmapDataInlineSuite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.Lib;
@@ -55,6 +56,7 @@ class TestMain
 		var test = new TestWindowApplication();
 		var test = new TestGeomUtil();
 		var test = new TestMBdFactory();
+		var test = new BitmapDataInlineSuite();
 		Lib.current.addChild(test);
 		test.init();
 	}
