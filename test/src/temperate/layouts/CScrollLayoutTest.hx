@@ -136,13 +136,13 @@ class CScrollLayoutTest
 	{
 		setLayoutScrollPolicy(CScrollPolicy.OFF, CScrollPolicy.OFF);
 		
-		setLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT + 1, H.MIN_HEIGHT + V.MIN_HEIGHT + 1);
+		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 1, H.MIN_HEIGHT + V.MIN_HEIGHT + 1);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT + 1, H.MIN_HEIGHT + V.MIN_HEIGHT + 1);
+		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 1, H.MIN_HEIGHT + V.MIN_HEIGHT + 1);
 		
-		setLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT - 1, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
+		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT - 1, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
+		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
 		
 		setLayoutSize(10, 0);
 		_layout.arrange();
@@ -262,7 +262,7 @@ class CScrollLayoutTest
 	public function vAndHOn_noWrapper_ifSizeMoreThanMinimal_applySettedSize()
 	{
 		setLayoutScrollPolicy(CScrollPolicy.ON, CScrollPolicy.ON);
-		var settedWidth = H.MIN_WIDHT + V.MIN_WIDHT + 1;
+		var settedWidth = H.MIN_WIDTH + V.MIN_WIDTH + 1;
 		var settedHeight = H.MIN_HEIGHT + V.MIN_HEIGHT + 1;
 		setLayoutSize(settedWidth, settedHeight);
 		_layout.arrange();
@@ -276,21 +276,21 @@ class CScrollLayoutTest
 		setLayoutScrollPolicy(CScrollPolicy.ON, CScrollPolicy.ON);
 		
 		resetScrollBars();
-		setLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT - 1, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
+		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT, H.MIN_HEIGHT + V.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, H.MIN_HEIGHT + V.MIN_HEIGHT);
 		assertScrollBarsShowed(true, true);
 		
 		resetScrollBars();
-		setLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT + 10, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
+		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 10, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT + 10, H.MIN_HEIGHT + V.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 10, H.MIN_HEIGHT + V.MIN_HEIGHT);
 		assertScrollBarsShowed(true, true);
 		
 		resetScrollBars();
-		setLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT - 1, H.MIN_HEIGHT + V.MIN_HEIGHT + 20);
+		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, H.MIN_HEIGHT + V.MIN_HEIGHT + 20);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT, H.MIN_HEIGHT + V.MIN_HEIGHT + 20);
+		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, H.MIN_HEIGHT + V.MIN_HEIGHT + 20);
 		assertScrollBarsShowed(true, true);
 	}
 	
@@ -300,12 +300,12 @@ class CScrollLayoutTest
 		_wrapper.setPercents(100, 100);
 		_layout.wrapper = _wrapper;
 		setLayoutScrollPolicy(CScrollPolicy.ON, CScrollPolicy.ON);
-		var settedWidth = H.MIN_WIDHT + V.MIN_WIDHT + 1;
+		var settedWidth = H.MIN_WIDTH + V.MIN_WIDTH + 1;
 		var settedHeight = H.MIN_HEIGHT + V.MIN_HEIGHT + 1;
 		setLayoutSize(settedWidth, settedHeight);
 		_layout.arrange();
 		assertLayoutSize(settedWidth, settedHeight);
-		assertWrapperSize(settedWidth - V.MIN_WIDHT, settedHeight - H.MIN_HEIGHT);
+		assertWrapperSize(settedWidth - V.MIN_WIDTH, settedHeight - H.MIN_HEIGHT);
 		assertScrollBarsShowed(true, true);
 	}
 	
@@ -315,10 +315,10 @@ class CScrollLayoutTest
 		_wrapper.setPercents(100, 100);
 		_layout.wrapper = _wrapper;
 		setLayoutScrollPolicy(CScrollPolicy.ON, CScrollPolicy.ON);
-		setLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT - 1, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
+		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT, H.MIN_HEIGHT + V.MIN_HEIGHT);
-		assertWrapperSize(H.MIN_WIDHT, V.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, H.MIN_HEIGHT + V.MIN_HEIGHT);
+		assertWrapperSize(H.MIN_WIDTH, V.MIN_HEIGHT);
 		assertScrollBarsShowed(true, true);
 	}
 	
@@ -329,9 +329,9 @@ class CScrollLayoutTest
 		_wrapper.setHeight(10);
 		_layout.wrapper = _wrapper;
 		setLayoutScrollPolicy(CScrollPolicy.ON, CScrollPolicy.ON);
-		setLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT - 1, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
+		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, H.MIN_HEIGHT + V.MIN_HEIGHT - 1);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + V.MIN_WIDHT, H.MIN_HEIGHT + V.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, H.MIN_HEIGHT + V.MIN_HEIGHT);
 		assertWrapperSize(5, 10);
 		assertScrollBarsShowed(true, true);
 	}
@@ -343,9 +343,9 @@ class CScrollLayoutTest
 		_layout.wrapper = _wrapper;
 		setLayoutScrollPolicy(CScrollPolicy.ON, CScrollPolicy.ON);
 		
-		setLayoutSize(300 + V.MIN_WIDHT, 500);
+		setLayoutSize(300 + V.MIN_WIDTH, 500);
 		_layout.arrange();
-		assertLayoutSize(300 + V.MIN_WIDHT, 500);
+		assertLayoutSize(300 + V.MIN_WIDTH, 500);
 		assertWrapperSize(300, HeightByWidthSprite.getHeight(300));
 		
 		assertScrollBarsShowed(true, true);
@@ -366,28 +366,27 @@ class CScrollLayoutTest
 		resetScrollBars();
 		_wrapper.setWidth(5);
 		_wrapper.setHeight(10);
-		setLayoutSize(H.MIN_WIDHT - 1, 4);
-		
+		setLayoutSize(H.MIN_WIDTH - 1, 4);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT, 10 + H.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH, 10 + H.MIN_HEIGHT);
 		assertWrapperSize(5, 10);
 		assertScrollBarsShowed(true, false);
 		
 		resetScrollBars();
 		_wrapper.setWidth(5);
 		_wrapper.setHeight(10);
-		setLayoutSize(H.MIN_WIDHT + 1, 4);
+		setLayoutSize(H.MIN_WIDTH + 1, 4);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + 1, 10 + H.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH + 1, 10 + H.MIN_HEIGHT);
 		assertWrapperSize(5, 10);
 		assertScrollBarsShowed(true, false);
 		
 		resetScrollBars();
 		_wrapper.setWidth(200);
 		_wrapper.setHeight(100);
-		setLayoutSize(H.MIN_WIDHT + 10, 500);
+		setLayoutSize(H.MIN_WIDTH + 10, 500);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + 10, 100 + H.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH + 10, 100 + H.MIN_HEIGHT);
 		assertWrapperSize(200, 100);
 		assertScrollBarsShowed(true, false);
 	}
@@ -400,24 +399,24 @@ class CScrollLayoutTest
 		setLayoutScrollPolicy(CScrollPolicy.ON, CScrollPolicy.OFF);
 		
 		resetScrollBars();
-		setLayoutSize(H.MIN_WIDHT - 1, 2);
+		setLayoutSize(H.MIN_WIDTH - 1, 2);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT, H.MIN_HEIGHT);
-		assertWrapperSize(H.MIN_WIDHT, 0);
+		assertLayoutSize(H.MIN_WIDTH, H.MIN_HEIGHT);
+		assertWrapperSize(H.MIN_WIDTH, 0);
 		assertScrollBarsShowed(true, false);
 		
 		resetScrollBars();
-		setLayoutSize(H.MIN_WIDHT - 10, 200);
+		setLayoutSize(H.MIN_WIDTH - 10, 200);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT, 200);
-		assertWrapperSize(H.MIN_WIDHT, 200 - H.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH, 200);
+		assertWrapperSize(H.MIN_WIDTH, 200 - H.MIN_HEIGHT);
 		assertScrollBarsShowed(true, false);
 		
 		resetScrollBars();
-		setLayoutSize(H.MIN_WIDHT + 1, 200);
+		setLayoutSize(H.MIN_WIDTH + 1, 200);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + 1, 200);
-		assertWrapperSize(H.MIN_WIDHT + 1, 200 - H.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH + 1, 200);
+		assertWrapperSize(H.MIN_WIDTH + 1, 200 - H.MIN_HEIGHT);
 		assertScrollBarsShowed(true, false);
 	}
 	
@@ -429,16 +428,16 @@ class CScrollLayoutTest
 		setLayoutScrollPolicy(CScrollPolicy.ON, CScrollPolicy.OFF);
 		
 		resetScrollBars();
-		setLayoutSize(H.MIN_WIDHT - 1, 200 + H.MIN_HEIGHT - 1);
+		setLayoutSize(H.MIN_WIDTH - 1, 200 + H.MIN_HEIGHT - 1);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT, 200 + H.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH, 200 + H.MIN_HEIGHT);
 		assertWrapperSize(100, 200);
 		assertScrollBarsShowed(true, false);
 		
 		resetScrollBars();
-		setLayoutSize(H.MIN_WIDHT - 1, 200 + H.MIN_HEIGHT + 10);
+		setLayoutSize(H.MIN_WIDTH - 1, 200 + H.MIN_HEIGHT + 10);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT, 200 + H.MIN_HEIGHT + 10);
+		assertLayoutSize(H.MIN_WIDTH, 200 + H.MIN_HEIGHT + 10);
 		assertWrapperSize(100, 200 + 10);
 		assertScrollBarsShowed(true, false);
 		
@@ -477,23 +476,131 @@ class CScrollLayoutTest
 	{
 		setLayoutScrollPolicy(CScrollPolicy.ON, CScrollPolicy.OFF);
 		
-		setLayoutSize(H.MIN_WIDHT - 1, H.MIN_HEIGHT - 1);
+		setLayoutSize(H.MIN_WIDTH - 1, H.MIN_HEIGHT - 1);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT, H.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH, H.MIN_HEIGHT);
 		
-		setLayoutSize(H.MIN_WIDHT, H.MIN_HEIGHT);
+		setLayoutSize(H.MIN_WIDTH, H.MIN_HEIGHT);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT, H.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH, H.MIN_HEIGHT);
 		
-		setLayoutSize(H.MIN_WIDHT + 1, H.MIN_HEIGHT);
+		setLayoutSize(H.MIN_WIDTH + 1, H.MIN_HEIGHT);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT + 1, H.MIN_HEIGHT);
+		assertLayoutSize(H.MIN_WIDTH + 1, H.MIN_HEIGHT);
 		
-		setLayoutSize(H.MIN_WIDHT, H.MIN_HEIGHT + 1);
+		setLayoutSize(H.MIN_WIDTH, H.MIN_HEIGHT + 1);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDHT, H.MIN_HEIGHT + 1);
+		assertLayoutSize(H.MIN_WIDTH, H.MIN_HEIGHT + 1);
 		
 		assertScrollBarsShowed(true, false);
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  CScrollPolicy.OFF, CScrollPolicy.ON
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	@Test
+	public function hOffVOn_noScale_cases()
+	{
+		_layout.wrapper = _wrapper;
+		setLayoutScrollPolicy(CScrollPolicy.OFF, CScrollPolicy.ON);
+		
+		resetScrollBars();
+		_wrapper.setWidth(5);
+		_wrapper.setHeight(10);
+		setLayoutSize(2, V.MIN_HEIGHT - 1);
+		_layout.arrange();
+		assertLayoutSize(5 + V.MIN_WIDTH, V.MIN_HEIGHT);
+		assertWrapperSize(5, 10);
+		assertScrollBarsShowed(false, true);
+		
+		resetScrollBars();
+		_wrapper.setWidth(5);
+		_wrapper.setHeight(10);
+		setLayoutSize(2, V.MIN_HEIGHT + 1);
+		_layout.arrange();
+		assertLayoutSize(5 + V.MIN_WIDTH, V.MIN_HEIGHT + 1);
+		assertWrapperSize(5, 10);
+		assertScrollBarsShowed(false, true);
+		
+		resetScrollBars();
+		_wrapper.setWidth(200);
+		_wrapper.setHeight(100);
+		setLayoutSize(500, V.MIN_HEIGHT + 10);
+		_layout.arrange();
+		assertLayoutSize(200 + V.MIN_WIDTH, V.MIN_HEIGHT + 10);
+		assertWrapperSize(200, 100);
+		assertScrollBarsShowed(false, true);
+	}
+	
+	@Test
+	public function hOffVOn_scale_cases()
+	{
+		_wrapper.setPercents(100, 100);
+		_layout.wrapper = _wrapper;
+		setLayoutScrollPolicy(CScrollPolicy.OFF, CScrollPolicy.ON);
+		
+		resetScrollBars();
+		setLayoutSize(2, V.MIN_HEIGHT - 1);
+		_layout.arrange();
+		assertLayoutSize(V.MIN_WIDTH, V.MIN_HEIGHT);
+		assertWrapperSize(0, V.MIN_HEIGHT);
+		assertScrollBarsShowed(false, true);
+		
+		resetScrollBars();
+		setLayoutSize(200, V.MIN_HEIGHT - 10);
+		_layout.arrange();
+		assertLayoutSize(200, V.MIN_HEIGHT);
+		assertWrapperSize(200 - V.MIN_WIDTH, V.MIN_HEIGHT);
+		assertScrollBarsShowed(false, true);
+		
+		resetScrollBars();
+		setLayoutSize(200, V.MIN_HEIGHT + 1);
+		_layout.arrange();
+		assertLayoutSize(200, V.MIN_HEIGHT + 1);
+		assertWrapperSize(200 - V.MIN_WIDTH, V.MIN_HEIGHT + 1);
+		assertScrollBarsShowed(false, true);
+	}
+	
+	@Test
+	public function hOffVOn_scale_heightIsDependentByWidth()
+	{
+		_wrapper = new CChildWrapper(new HeightByWidthSprite()).setPercents(100, 100);
+		_layout.wrapper = _wrapper;
+		setLayoutScrollPolicy(CScrollPolicy.OFF, CScrollPolicy.ON);
+		
+		setLayoutSize(250 + V.MIN_WIDTH, 300);
+		_layout.arrange();
+		assertLayoutSize(250 + V.MIN_WIDTH, 300);
+		assertWrapperSize(250, HeightByWidthSprite.getHeight(250));
+		
+		assertScrollBarsShowed(false, true);
+	}
+	
+	@Test
+	public function hOffVOn_noWrapper_cases()
+	{
+		setLayoutScrollPolicy(CScrollPolicy.OFF, CScrollPolicy.ON);
+		
+		setLayoutSize(V.MIN_WIDTH - 1, V.MIN_HEIGHT - 1);
+		_layout.arrange();
+		assertLayoutSize(V.MIN_WIDTH, V.MIN_HEIGHT);
+		
+		setLayoutSize(V.MIN_WIDTH, V.MIN_HEIGHT);
+		_layout.arrange();
+		assertLayoutSize(V.MIN_WIDTH, V.MIN_HEIGHT);
+		
+		setLayoutSize(V.MIN_WIDTH + 1, V.MIN_HEIGHT);
+		_layout.arrange();
+		assertLayoutSize(V.MIN_WIDTH + 1, V.MIN_HEIGHT);
+		
+		setLayoutSize(V.MIN_WIDTH, V.MIN_HEIGHT + 1);
+		_layout.arrange();
+		assertLayoutSize(V.MIN_WIDTH, V.MIN_HEIGHT + 1);
+		
+		assertScrollBarsShowed(false, true);
 	}
 }
 /*
@@ -508,7 +615,7 @@ AUTO: Если контент вписывается в общую област�
 
 class H extends CSprite
 {
-	public static var MIN_WIDHT = 22;
+	public static var MIN_WIDTH = 22;
 	public static var MIN_HEIGHT = 10;
 	
 	public function new()
@@ -522,7 +629,7 @@ class H extends CSprite
 		{
 			_size_valid = true;
 			
-			_width = CMath.max(MIN_WIDHT, _settedWidth);
+			_width = CMath.max(MIN_WIDTH, _settedWidth);
 			_height = MIN_HEIGHT;
 		}
 	}
@@ -530,7 +637,7 @@ class H extends CSprite
 
 class V extends CSprite
 {
-	public static var MIN_WIDHT = 14;
+	public static var MIN_WIDTH = 14;
 	public static var MIN_HEIGHT = 20;
 	
 	public function new()
@@ -544,8 +651,8 @@ class V extends CSprite
 		{
 			_size_valid = true;
 			
-			_width = MIN_WIDHT;
-			_height = CMath.max(MIN_HEIGHT, _settedWidth);
+			_width = MIN_WIDTH;
+			_height = CMath.max(MIN_HEIGHT, _settedHeight);
 		}
 	}
 }
