@@ -8,10 +8,7 @@ class CPopUpMover
 {
 	public function new() 
 	{
-		updateOnMove = false;
 	}
-	
-	public var updateOnMove:Bool;
 	
 	var _popUp:ICPopUp;
 	var _target:DisplayObject;
@@ -68,7 +65,7 @@ class CPopUpMover
 			Std.int(view.width), Std.int(view.height), manager.areaWidth, manager.areaHeight,
 			x - manager.areaX, y - manager.areaY
 		);
-		if (updateOnMove)
+		if (manager.updateOnMove)
 		{
 			event.updateAfterEvent();
 		}

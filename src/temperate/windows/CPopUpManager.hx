@@ -22,7 +22,11 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		_popUps = [];
 		_isModal = new TypedDictionary();
 		modal = false;
+		
+		updateOnMove = false;
 	}
+	
+	public var updateOnMove:Bool;
 	
 	public var container(default, null):DisplayObjectContainer;
 	

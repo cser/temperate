@@ -1,9 +1,12 @@
 package temperate.windows;
 import flash.display.DisplayObject;
+import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
 import temperate.core.CSprite;
+import temperate.skins.CNullWindowSkin;
+import temperate.skins.ICWindowSkin;
 import temperate.windows.docks.CAlignedPopUpDock;
 import temperate.windows.docks.ICPopUpDock;
 
@@ -21,6 +24,10 @@ class ACWindow extends CSprite, implements ICPopUp
 		updateIsActive();
 		
 		innerDispatcher.addEventListener(Event.RESIZE, onManagerResize);
+		
+		_baseContainer = newContainer();
+		_baseSkin = newSkin();
+		_baseSkin.link(this, _baseContainer);
 	}
 	
 	var _manager:CPopUpManager;
@@ -104,5 +111,19 @@ class ACWindow extends CSprite, implements ICPopUp
 	{
 		_dock = value;
 		return _dock;
+	}
+	
+	var _baseContainer:Sprite;
+	
+	function newContainer():Sprite
+	{
+		return new Sprite();
+	}
+	
+	var _baseSkin:ICWindowSkin;
+	
+	function newSkin():ICWindowSkin
+	{
+		return CNullWindowSkin.getInstance();
 	}
 }

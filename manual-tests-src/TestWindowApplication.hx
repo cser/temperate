@@ -16,6 +16,7 @@ class TestWindowApplication extends Sprite
 	public function init()
 	{
 		_windowManager = new CPopUpManager(this);
+		_windowManager.updateOnMove = true;
 		
 		stage.addEventListener(Event.RESIZE, onStageResize);
 		onStageResize();

@@ -54,9 +54,7 @@ class SaveWindow extends ACWindow
 		_size_valid = false;
 		postponeSize();
 		
-		var mover = new CPopUpMover();
-		mover.updateOnMove = true;
-		mover.subscribe(getManager, this, this, get_dock);
+		new CPopUpMover().subscribe(getManager, this, this, get_dock);
 	}
 	
 	var _main:CVBox;
