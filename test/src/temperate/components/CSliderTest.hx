@@ -202,7 +202,7 @@ class TestSlider extends CSlider
 {
 	public function new(horizontal:Bool)
 	{
-		thumb = new ACButton();
+		thumb = new FakeEmptyButton();
 		thumb.setSize(10, 20);
 		super(horizontal, thumb, CNullRectSkin.getInstance());
 	}

@@ -4,10 +4,10 @@ import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
-import flash.geom.Rectangle;
 import temperate.components.helpers.CTimerChanger;
 import temperate.components.helpers.ICTimerChanger;
 import temperate.core.CMath;
+import temperate.core.CMouseWheelUtil;
 import temperate.core.CSprite;
 import temperate.errors.CArgumentError;
 import temperate.skins.ICScrollSkin;
@@ -64,6 +64,7 @@ class CScrollBar extends CSprite, implements ICSlider
 		_pageStep = Math.NaN;
 		
 		updateOnMove = false;
+		mouseWheelDimRatio = 1;
 		
 		_isBgDown = false;
 		_isBgDownLeft = false;
@@ -351,11 +352,8 @@ class CScrollBar extends CSprite, implements ICSlider
 	
 	function onMouseWheel(event:MouseEvent)
 	{
-		var delta = event.delta;
-		var sign = delta > 0 ? -1 : 1;
 		setValue(
-			_value + sign * _step * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3)),
-			true);
+			_value - _step * CMouseWheelUtil.getDimDelta(event.delta, mouseWheelDimRatio), true);
 	}
 	
 	override function doValidateSize()
@@ -621,6 +619,8 @@ class CScrollBar extends CSprite, implements ICSlider
 	//----------------------------------------------------------------------------------------------
 	
 	public var updateOnMove:Bool;
+	
+	public var mouseWheelDimRatio:Int;
 	
 	public var value(get_value, set_value):Float;
 	var _value:Float;

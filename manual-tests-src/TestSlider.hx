@@ -117,6 +117,11 @@ class TestSlider extends Sprite
 			new MLabel().setText("Compact").addTo(column);
 			new MSlider(true).addTo(column).setCompact(true, true);
 			new MSlider(false).addTo(column).setCompact(true, true);
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("mouseWheelDimRatio =\n3").addTo(column);
+			new MSlider(true).addTo(column).mouseWheelDimRatio = 3;
+			new MSlider(false).addTo(column).mouseWheelDimRatio = 3;
 		}
 	}
 }

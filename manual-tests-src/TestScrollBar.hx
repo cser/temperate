@@ -15,8 +15,8 @@ import temperate.minimal.MButton;
 import temperate.minimal.MInputField;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.MTooltipFactory;
-import temperate.raster.Scale3GridDrawer;
-import temperate.raster.Scale9GridDrawer;
+import temperate.raster.CScale3GridDrawer;
+import temperate.raster.CScale9GridDrawer;
 import temperate.skins.CRasterScrollDrawedSkin;
 import temperate.text.CInputField;
 
@@ -130,7 +130,7 @@ class TestScrollBar extends Sprite
 			new MButton().setText("+"),
 			new MButton().setText("::"),
 			new CRasterScrollDrawedSkin(
-				MCommonBdFactory.getTextBg(), new Scale9GridDrawer(), 18).setIndents(0, 0, 2)
+				MCommonBdFactory.getTextBg(), new CScale9GridDrawer(), 18).setIndents(0, 0, 2)
 		);
 	}
 	
@@ -139,7 +139,7 @@ class TestScrollBar extends Sprite
 		var width = horizontal ? 100 : bd.width;
 		var height = horizontal ? bd.height : 100;
 		var sprite = new Sprite();
-		var drawer = new Scale3GridDrawer(horizontal, sprite.graphics);
+		var drawer = new CScale3GridDrawer(horizontal, sprite.graphics);
 		drawer.setBitmapData(bd);
 		drawer.setBounds(0, 0, width, height);
 		drawer.redraw();

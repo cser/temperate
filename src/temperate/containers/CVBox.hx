@@ -1,18 +1,18 @@
 package temperate.containers;
-import temperate.layouts.ExcessSpaceMode;
-import temperate.layouts.VLayout;
+import temperate.layouts.parametrization.CExcessSpaceMode;
+import temperate.layouts.CVLayout;
 
 class CVBox extends ACLineBox
 {
-	var _vLayaut:VLayout;
+	var _vLayaut:CVLayout;
 	
 	public function new() 
 	{
-		_vLayaut = new VLayout();
+		_vLayaut = new CVLayout();
 		super(_vLayaut);
 	}
 	
-	public var excessSpaceMode(get_excessSpaceMode, set_excessSpaceMode):ExcessSpaceMode;
+	public var excessSpaceMode(get_excessSpaceMode, set_excessSpaceMode):CExcessSpaceMode;
 	function get_excessSpaceMode()
 	{
 		return _vLayaut.excessSpaceMode;

@@ -3,7 +3,7 @@ import flash.display.Sprite;
 import flash.events.Event;
 import temperate.containers.CVBox;
 import temperate.debug.DebugMonitor;
-import temperate.layouts.ExcessSpaceMode;
+import temperate.layouts.parametrization.CExcessSpaceMode;
 import temperate.minimal.MButton;
 
 class TestContainerSpace extends Sprite
@@ -20,7 +20,7 @@ class TestContainerSpace extends Sprite
 		new DebugMonitor().addTo(this, 0, 200);
 		
 		_main = new CVBox();
-		_main.excessSpaceMode = ExcessSpaceMode.UNIFORM;
+		_main.excessSpaceMode = CExcessSpaceMode.UNIFORM;
 		addChild(_main);
 		
 		_main.add(new MButton().setText("Button text"));

@@ -1,20 +1,17 @@
 package temperate.layouts;
 import flash.display.DisplayObject;
-import flash.text.TextField;
 import temperate.components.CScrollPolicy;
+import temperate.layouts.parametrization.CChildWrapper;
 
-interface IScrollTextLayout
+interface ICScrollLayout 
 {
 	function arrange(
 		showHScrollBar:Void->DisplayObject,
 		hideHScrollBar:Void->Void,
 		showVScrollBar:Void->DisplayObject,
-		hideVScrollBar:Void->Void,
-		textDeltaX:Int,
-		textDeltaY:Int,
-		isFirst:Bool):Void;
+		hideVScrollBar:Void->Void):Void;
 		
-	var tf:TextField;
+	var wrapper:CChildWrapper;
 	
 	var hScrollPolicy:CScrollPolicy;
 	
@@ -23,10 +20,6 @@ interface IScrollTextLayout
 	var isCompactWidth:Bool;
 	
 	var isCompactHeight:Bool;
-	
-	var minWidth:Int;
-	
-	var minHeight:Int;
 	
 	var width:Float;
 	

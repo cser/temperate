@@ -1,7 +1,7 @@
 package temperate.components;
 import flash.display.Shape;
 import temperate.core.CMath;
-import temperate.raster.Scale9GridDrawer;
+import temperate.raster.CScale9GridDrawer;
 
 class CRasterScaledButton extends ACRasterTextButton
 {
@@ -10,7 +10,7 @@ class CRasterScaledButton extends ACRasterTextButton
 		super();
 	}
 	
-	var _drawer:Scale9GridDrawer;
+	var _drawer:CScale9GridDrawer;
 	var _bg:Shape;
 	
 	override function init()
@@ -22,7 +22,7 @@ class CRasterScaledButton extends ACRasterTextButton
 		
 		_textAlignX = .5;
 		_textAlignY = .5;
-		_drawer = new Scale9GridDrawer(_bg.graphics);
+		_drawer = new CScale9GridDrawer(_bg.graphics);
 		textIndentLeft = 5;
 		textIndentRight = 5;
 		textIndentTop = 3;

@@ -3,7 +3,7 @@ package temperate.containers;
 import flash.display.DisplayObject;
 import massive.munit.Assert;
 import temperate.core.CSprite;
-import temperate.layouts.ExcessSpaceMode;
+import temperate.layouts.parametrization.CExcessSpaceMode;
 
 class CVContainerTest
 {
@@ -75,7 +75,7 @@ class CVContainerTest
 	@Test
 	public function sizeOfContainerWithIndentsIsCorrect_notCompactWidth()
 	{
-		_container.excessSpaceMode = ExcessSpaceMode.UNIFORM;
+		_container.excessSpaceMode = CExcessSpaceMode.UNIFORM;
 		_container.setCompact(false, true);
 		_container.setIndents(5, 6, 7, 8);
 		
@@ -96,9 +96,9 @@ class CVContainerTest
 	@Test
 	public function sizeOfContainerWithIndentsIsCorrect_notCompactHeight()
 	{
-		var nonCompactModes:Array<ExcessSpaceMode> = [
-			ExcessSpaceMode.UNIFORM, ExcessSpaceMode.INCREASE_GAPS,
-			ExcessSpaceMode.MOVE_TO_EDGES(.5) ];
+		var nonCompactModes:Array<CExcessSpaceMode> = [
+			CExcessSpaceMode.UNIFORM, CExcessSpaceMode.INCREASE_GAPS,
+			CExcessSpaceMode.MOVE_TO_EDGES(.5) ];
 		for (excessSpaceMode in nonCompactModes)
 		{
 			_container = new CVBox();
@@ -132,9 +132,9 @@ class CVContainerTest
 	@Test
 	public function isSizeLessThanGapY_and_notCompactHeight_sizeAreEqualToSetted()
 	{
-		var nonCompactModes:Array<ExcessSpaceMode> = [
-			ExcessSpaceMode.UNIFORM, ExcessSpaceMode.INCREASE_GAPS,
-			ExcessSpaceMode.MOVE_TO_EDGES(.5) ];
+		var nonCompactModes:Array<CExcessSpaceMode> = [
+			CExcessSpaceMode.UNIFORM, CExcessSpaceMode.INCREASE_GAPS,
+			CExcessSpaceMode.MOVE_TO_EDGES(.5) ];
 		for (excessSpaceMode in nonCompactModes)
 		{
 			_container = new CVBox();
@@ -170,7 +170,7 @@ class CVContainerTest
 		_container.setIndents(0, 0, 0, 0);
 		_container.gapX = 0;
 		_container.gapY = 0;
-		_container.excessSpaceMode = ExcessSpaceMode.UNIFORM;
+		_container.excessSpaceMode = CExcessSpaceMode.UNIFORM;
 		
 		var child = newSprite(200, 300);
 		

@@ -15,7 +15,7 @@ class LayoutUtil
 				break;
 			}
 			
-			var invalidateClient = Lib.as(current, IInvalidateClient);
+			var invalidateClient = Lib.as(current, ICInvalidateClient);
 			if (invalidateClient != null)
 			{
 				invalidateClient.invalidate();

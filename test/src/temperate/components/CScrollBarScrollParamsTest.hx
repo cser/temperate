@@ -10,7 +10,7 @@ import flash.geom.Point;
 import flash.Lib;
 import massive.munit.Assert;
 import temperate.errors.CArgumentError;
-import temperate.raster.Scale3GridDrawer;
+import temperate.raster.CScale3GridDrawer;
 import temperate.skins.CNullScrollSkin;
 import temperate.skins.CRasterScrollDrawedSkin;
 import temperate.skins.CSkinState;
@@ -38,7 +38,7 @@ class CScrollBarScrollParamsTest
 	function newScrollBar(horizontal:Bool)
 	{
 		return new CScrollBar(
-			horizontal, new ACButton(), new ACButton(), new ACButton(),
+			horizontal, new FakeEmptyButton(), new FakeEmptyButton(), new FakeEmptyButton(),
 			CNullScrollSkin.getInstance());
 	}
 	
@@ -248,7 +248,7 @@ class CScrollBarScrollParamsTest
 		var thumb = new CRasterFixedButton();
 		thumb.getState(CButtonState.UP).setBitmapData(bd);
 		
-		var skin = new CRasterScrollDrawedSkin(bd, new Scale3GridDrawer(horizontal), 10);
+		var skin = new CRasterScrollDrawedSkin(bd, new CScale3GridDrawer(horizontal), 10);
 		return new CScrollBar(horizontal, left, right, thumb, skin);
 	}
 	

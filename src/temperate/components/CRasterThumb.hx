@@ -4,7 +4,7 @@ import flash.display.BitmapData;
 import flash.display.Shape;
 import temperate.components.parametrization.CRasterParameters;
 import temperate.core.CMath;
-import temperate.raster.Scale3GridDrawer;
+import temperate.raster.CScale3GridDrawer;
 
 class CRasterThumb extends ACButton
 {
@@ -19,7 +19,7 @@ class CRasterThumb extends ACButton
 	
 	var _size_upValid:Bool;
 	
-	var _drawer:Scale3GridDrawer;
+	var _drawer:CScale3GridDrawer;
 	var _bg:Shape;
 	
 	override function init()
@@ -37,7 +37,7 @@ class CRasterThumb extends ACButton
 		_iconBitmap = new Bitmap();
 		addChild(_iconBitmap);
 		
-		_drawer = new Scale3GridDrawer(_horizontal, _bg.graphics);
+		_drawer = new CScale3GridDrawer(_horizontal, _bg.graphics);
 	}
 	
 	var _parameters:Array<CRasterParameters>;

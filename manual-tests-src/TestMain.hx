@@ -42,8 +42,9 @@ class TestMain
 		var test = new TestScrollBar();
 		var test = new TestTextArea();
 		var test = new TestSlider();
-		
 		var test = new TestSimpleButtonWrapper();
+		
+		var test = new TestScrollPane();
 		Lib.current.addChild(test);
 		test.init();
 	}
