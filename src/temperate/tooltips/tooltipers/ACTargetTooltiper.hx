@@ -102,7 +102,6 @@ class ACTargetTooltiper< TSelf, T > implements ICTooltiper
 	
 	public function setData(data:T)
 	{
-		trace("setData: " + data);
 		if (_data != data)
 		{
 			var tooltip = _animator.tooltip;

@@ -56,7 +56,7 @@ class MScrollBar extends CScrollBar
 	override function updateBg()
 	{
 		var bd = _horizontal ? MScrollBarBdFactory.getHBgUp() : MScrollBarBdFactory.getVBgUp();
-		var g = graphics;
+		var g = _bg.graphics;
 		var indent = 3;
 		g.clear();
 		g.beginBitmapFill(bd);

@@ -1,11 +1,10 @@
 package temperate.components;
 import flash.display.DisplayObjectContainer;
-import flash.display.Shape;
+import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
-import flash.events.TimerEvent;
 import flash.geom.Rectangle;
-import flash.utils.Timer;
+import temperate.components.helpers.CChangingTimerHelper;
 import temperate.core.CMath;
 import temperate.core.CSprite;
 import temperate.skins.ICRectSkin;
@@ -16,21 +15,20 @@ class CScrollBar extends CSprite
 	var _leftArrow:ACButton;
 	var _rightArrow:ACButton;
 	var _thumb:ACButton;
-	var _bg:ICRectSkin;
-	
-	var _debug:Shape;
+	var _bg:Sprite;
+	var _bgSkin:ICRectSkin;
 	
 	public function new(
-		horizontal:Bool, leftArrow:ACButton, rightArrow:ACButton, thumb:ACButton, bg:ICRectSkin
+		horizontal:Bool, leftArrow:ACButton, rightArrow:ACButton, thumb:ACButton, bgSkin:ICRectSkin
 	) 
 	{
-		super();
-		
 		_horizontal = horizontal;
 		_leftArrow = leftArrow;
 		_rightArrow = rightArrow;
 		_thumb = thumb;
-		_bg = bg;
+		_bgSkin = bgSkin;
+		
+		super();
 		
 		_useHandCursor = true;
 		_minValue = 0;
@@ -54,33 +52,138 @@ class CScrollBar extends CSprite
 	var _size_pageValid:Bool;
 	var _view_positionValid:Bool;
 	
+	var _timerHelper:CChangingTimerHelper;
+	var _pageTimerHelper:CChangingTimerHelper;
+	
 	function init()
 	{
-		_bg.link(addChild, removeChild, graphics);
+		_bg = new Sprite();
+		addChild(_bg);
+		
+		_bgSkin.link(_bg.addChild, _bg.removeChild, _bg.graphics);
 		addChild(_thumb);
 		addChild(_leftArrow);
 		addChild(_rightArrow);
 		
 		updateOnMove = false;
 		
-		_firstDelay = 300;
-		_secondDelay = 50;
-		_timer = new Timer(1000);
+		_timerHelper = new CChangingTimerHelper();
+		_timerHelper.onIncrease = onIncrease;
+		_timerHelper.onDecrease = onDecrease;
 		
 		_leftArrow.addEventListener(MouseEvent.MOUSE_DOWN, onLeftMouseDown);
-		_leftArrow.addEventListener(MouseEvent.MOUSE_UP, buttonStopTimerHandler);
-		_leftArrow.addEventListener(MouseEvent.MOUSE_OUT, buttonStopTimerHandler);
+		_leftArrow.addEventListener(MouseEvent.MOUSE_UP, buttonStopScrollHandler);
+		_leftArrow.addEventListener(MouseEvent.MOUSE_OUT, buttonStopScrollHandler);
 		
 		_rightArrow.addEventListener(MouseEvent.MOUSE_DOWN, onRightMouseDown);
-		_rightArrow.addEventListener(MouseEvent.MOUSE_UP, buttonStopTimerHandler);
-		_rightArrow.addEventListener(MouseEvent.MOUSE_OUT, buttonStopTimerHandler);
+		_rightArrow.addEventListener(MouseEvent.MOUSE_UP, buttonStopScrollHandler);
+		_rightArrow.addEventListener(MouseEvent.MOUSE_OUT, buttonStopScrollHandler);
 		
 		_thumb.addEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		
-		updateEnabled();
-		
-		_debug = new Shape();
-		addChild(_debug);
+		_pageTimerHelper = new CChangingTimerHelper();
+		_pageTimerHelper.onIncrease = onPageIncrease;
+		_pageTimerHelper.onDecrease = onPageDecrease;
+		updateEnabledListeners();
+	}
+	
+	function onIncrease()
+	{
+		value += _lineScrollSize;
+	}
+	
+	function onDecrease()
+	{
+		value -= _lineScrollSize;
+	}
+	
+	function onLeftMouseDown(event:MouseEvent)
+	{
+		_timerHelper.decreaseDown();
+	}
+	
+	function onRightMouseDown(event:MouseEvent)
+	{
+		_timerHelper.increaseDown();
+	}
+	
+	function buttonStopScrollHandler(event:MouseEvent = null)
+	{
+		_timerHelper.up();
+	}
+	
+	function updateEnabledListeners()
+	{
+		if (_enabled)
+		{
+			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+			_bg.addEventListener(MouseEvent.MOUSE_DOWN, onBgMouseDown);
+		}
+		else
+		{
+			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+			_bg.removeEventListener(MouseEvent.MOUSE_DOWN, onBgMouseDown);
+		}
+	}
+	
+	function onPageDecrease()
+	{
+		checkPageMouseAndChange(false);
+	}
+	
+	function onPageIncrease()
+	{
+		checkPageMouseAndChange(true);
+	}
+	
+	function onBgMouseDown(event:MouseEvent)
+	{
+		var mousePosition = _horizontal ? _bg.mouseX : _bg.mouseY;
+		var thumbCenter = _horizontal ?
+			_thumb.x + _thumb.width * .5 :
+			_thumb.y + _thumb.height * .5;
+		if (mousePosition < thumbCenter)
+		{
+			_pageTimerHelper.decreaseDown();
+		}
+		else
+		{
+			_pageTimerHelper.increaseDown();
+		}
+		stage.addEventListener(MouseEvent.MOUSE_UP, onStagePageMouseUp);
+	}
+	
+	function checkPageMouseAndChange(isIncrease:Bool)
+	{
+		var mousePosition;
+		var thumbPosition;
+		var thumbSize;
+		if (_horizontal)
+		{
+			mousePosition = _bg.mouseX;
+			thumbPosition = _thumb.x;
+			thumbSize = _thumb.width;
+		}
+		else
+		{
+			mousePosition = _bg.mouseY;
+			thumbPosition = _thumb.y;
+			thumbSize = _thumb.height;
+		}
+		if (isIncrease && mousePosition < thumbPosition + thumbSize ||
+			!isIncrease && mousePosition > thumbPosition)
+		{
+			_pageTimerHelper.up();
+		}
+		else
+		{
+			value += isIncrease ? pageScrollSize : -pageScrollSize;
+		}
+	}
+	
+	function onStagePageMouseUp(event:MouseEvent)
+	{
+		_pageTimerHelper.up();
 	}
 	
 	function onThumbMouseDown(event:MouseEvent)
@@ -110,6 +213,13 @@ class CScrollBar extends CSprite
 			event.updateAfterEvent();
 		}
 		setValueByThumbPosition();
+	}
+	
+	function onMouseWheel(event:MouseEvent)
+	{
+		var delta = event.delta;
+		var sign = delta > 0 ? -1 : 1;
+		value += sign * _lineScrollSize * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3));
 	}
 	
 	override function doValidateSize()
@@ -251,8 +361,8 @@ class CScrollBar extends CSprite
 	
 	function updateBg()
 	{
-		_bg.setBounds(0, 0, Std.int(_width), Std.int(_height));
-		_bg.redraw();
+		_bgSkin.setBounds(0, 0, Std.int(_width), Std.int(_height));
+		_bgSkin.redraw();
 	}
 	
 	function updateThumbSize()
@@ -292,96 +402,17 @@ class CScrollBar extends CSprite
 		return value;
 	}
 	
-	function onMouseWheel(event:MouseEvent)
-	{
-		var delta = event.delta;
-		var sign = delta > 0 ? -1 : 1;
-		value += sign * _lineScrollSize * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3));
-	}
-	
-	//----------------------------------------------------------------------------------------------
-	//
-	//  Scrolling by arrow
-	//
-	//----------------------------------------------------------------------------------------------
-	
-	var _firstDelay:Int;
-	var _secondDelay:Int;
-	
-	function onLeftMouseDown(event:MouseEvent)
-	{
-		doLeftMouseDown();
-	}
-	
-	function onRightMouseDown(event:MouseEvent)
-	{
-		doRightMouseDown();
-	}
-	
-	function doLeftMouseDown()
-	{
-		value -= _lineScrollSize;
-		_timer.addEventListener(TimerEvent.TIMER, decreaseValueHandler);
-		startTimer();
-	}
-	
-	function doRightMouseDown()
-	{
-		value += _lineScrollSize;
-		_timer.addEventListener(TimerEvent.TIMER, increaseValueHandler);
-		startTimer();
-	}
-	
-	var _timer:Timer;
-	
-	function startTimer()
-	{
-		_timer.delay = _firstDelay;
-		_timer.start();
-	}
-	
-	function increaseValueHandler(event:TimerEvent)
-	{
-		value += _lineScrollSize;
-		_timer.delay = _secondDelay;
-	}
-	
-	function decreaseValueHandler(event:TimerEvent)
-	{
-		value -= _lineScrollSize;
-		_timer.delay = _secondDelay;
-	}
-	
-	function buttonStopTimerHandler(event:MouseEvent = null)
-	{
-		_timer.stop();
-		_timer.removeEventListener(TimerEvent.TIMER, increaseValueHandler);
-		_timer.removeEventListener(TimerEvent.TIMER, decreaseValueHandler);
-	}
-	
 	override function set_enabled(value)
 	{
 		if (_enabled != value)
 		{
 			_enabled = value;
-			_leftArrow.enabled = value;
-			_rightArrow.enabled = value;
+			_leftArrow.enabled = _enabled;
+			_rightArrow.enabled = _enabled;
 			updateThumbVisible();
-			updateEnabled();
+			updateEnabledListeners();
 		}
 		return _enabled;
-	}
-	
-	function updateEnabled()
-	{
-		if (_enabled)
-		{
-			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-		}
-		else
-		{
-			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-		}
 	}
 	
 	var _useHandCursor:Bool;

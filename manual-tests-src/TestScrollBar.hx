@@ -34,6 +34,8 @@ class TestScrollBar extends Sprite
 		
 		var scrollBar = newScrollBar(true).addTo(this, 0, 120);
 		scrollBar.pageSize = 50;
+		scrollBar.useHandCursor = false;
+		MTooltipFactory.newText(scrollBar, "useHandCursor = false");
 		var scrollBar = newScrollBar(false).addTo(this, 100, 120);
 		scrollBar.pageSize = 50;
 		
@@ -173,6 +175,8 @@ class TestScrollBar extends Sprite
 }
 /*
 TODO
-Обработка клика по линии
+Подсветка клика по линии
+Продолжение скроллинга при повторном наведении нажатой мышки на стрелку
 Параметризация цветов
+Протестировать настройка значения скроллинга по странице (при несовпадении с размером страницы)
 */
