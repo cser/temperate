@@ -144,10 +144,45 @@ class CScrollLayout implements ICScrollLayout
 			{
 				height = vsbHeight;
 			}
+			if (width < vsbWidth)
+			{
+				width = vsbWidth;
+			}
 			if (!isHOn)
 			{
-				width = wrapper.getWidth() + vsbWidth;
-				if (wrapper.getHeight() <= height)
+				if (wrapper != null)
+				{
+					var minWrapperWidth = if (!Math.isNaN(wrapper.widthPortion))
+					{
+						wrapper.setWidth(width - vsbWidth);
+						wrapper.getWidth();
+					}
+					else
+					{
+						wrapper.getWidth();
+					}
+					width = minWrapperWidth + vsbWidth;
+					if (!Math.isNaN(wrapper.widthPortion))
+					{
+						wrapper.setWidth(width);
+					}
+					if (!Math.isNaN(wrapper.heightPortion))
+					{
+						wrapper.setHeight(height);
+					}
+					if (wrapper.getHeight() <= height)
+					{
+						hideVScrollBar();
+					}
+					else
+					{
+						if (!Math.isNaN(wrapper.widthPortion))
+						{
+							wrapper.setWidth(width - vsbWidth);
+						}
+					}
+				}
+				else
 				{
 					hideVScrollBar();
 				}
