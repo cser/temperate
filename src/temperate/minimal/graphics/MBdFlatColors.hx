@@ -54,10 +54,10 @@ class MBdFlatColors
 			color.bgRatiosDown = [ 0, 250 ];
 			color.bgRatiosDisabled = [ 0, 250 ];
 
-			color.bgColorsUp = [ 0xffb5b5b5, 0xff757575, 0xff555555, 0xff757575 ];
-			color.bgColorsOver = [ 0xffaaaaaa, 0xff909090, 0xff707070, 0xff8f8f8f ];
-			color.bgColorsDown = [ 0xff404040, 0xffa5a5a5 ];
-			color.bgColorsDisabled = [ 0xffcccccc, 0xff828282 ];
+			color.bgColorsUp = [ 0xffe0fe00, 0xffe0c000, 0xffc0a000, 0xffe3c300 ];
+			color.bgColorsOver = [ 0xfffffe00, 0xffead000, 0xffdab700, 0xffeae000 ];
+			color.bgColorsDown = [ 0xffaa8000, 0xfffffe00 ];
+			color.bgColorsDisabled = [ 0xffeeeecc, 0xffcccc82 ];
 
 			color.bgBottomRightColor = 0xff202020;
 
