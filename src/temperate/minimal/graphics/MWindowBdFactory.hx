@@ -1,6 +1,7 @@
 package temperate.minimal.graphics;
 import flash.display.BitmapData;
 import flash.display.GradientType;
+import flash.display.Graphics;
 import flash.geom.Matrix;
 import temperate.components.CButtonState;
 using temperate.core.CMath;
@@ -40,8 +41,7 @@ class MWindowBdFactory
 			x += space + size;
 		}
 		
-		var bitmapData = new BitmapData(
-			DEFAULT_STRIAE_SIZE, DEFAULT_STRIAE_SIZE, true, bgColor);
+		var bitmapData = new BitmapData(DEFAULT_STRIAE_SIZE, DEFAULT_STRIAE_SIZE, true, bgColor);
 		bitmapData.draw(shape);
 		
 		MBdFactoryUtil.qualityOff();
@@ -56,38 +56,28 @@ class MWindowBdFactory
 		var g = shape.graphics;
 		g.clear();
 		
-		g.beginFill(0x000000, .2);
-		g.drawRoundRect(2, 2, width, height, 12);
-		g.drawRoundRect(2, 2, width - 2, height - 2, 12);
-		g.endFill();
-		
-		g.beginFill(0x505050);
-		g.drawRoundRect(0, 0, width, height, 12);
-		g.drawRoundRect(1, 1, width - 2, height - 2, 10);
-		
-		g.lineStyle();
+		g.drawBottomRightBorder(2, 2, width, height, 8, 0x000000, .2, 2, false);
+		g.drawRoundRectBorder(0, 0, width, height, 6, 0x505050, 1, 1);
 		
 		g.beginFill(0xeeeeee);
 		g.drawRoundRectComplexStepByStep(1, lineTop, width - 2, height - lineTop - 1, 0, 0, 5, 5);
 		g.endFill();
 		
 		g.beginFill(0xffffff);
-		g.drawRoundRectComplexStepByStep(1, lineTop, width - 2, height - lineTop - 1, 0, 0, 5, 5);
-		g.drawRoundRectComplexStepByStep(1, lineTop, width - 3, height - lineTop - 2, 0, 0, 5, 5);
+		drawShortedBottomRightBorder(g, 1, lineTop, width - 2, height - lineTop - 1, 5, 1);
 		g.endFill();
 		
 		var matrix = new Matrix();
 		matrix.createGradientBox(10, lineTop, Math.PI * .5);
 		
-		g.beginGradientFill(
-			GradientType.LINEAR, [0xffffff, 0xffffff], [.5, 1], [0, 255], matrix);
-		g.drawRoundRectComplexStepByStep(1, 1, width - 2, lineTop - 1, 5, 5, 0, 0);
-		g.drawRoundRectComplexStepByStep(2, 2, width - 4, lineTop - 2, 5, 5, 0, 0);
+		g.beginGradientFill(GradientType.LINEAR, [0xffffff, 0xffffff], [.5, 1], [0, 255], matrix);
+		g.drawTopRoundRectBorder(1, 1, width - 2, lineTop - 1, 5, 1);
 		g.endFill();
 		
 		g.beginFill(0xffffff, .6);
 		g.drawRect(2, lineTop - 2, width - 4, 1);
 		g.endFill();
+		
 		g.beginFill(0x000000, .2);
 		g.drawRect(2, lineTop - 1, width - 4, 1);
 		g.endFill();
@@ -126,6 +116,25 @@ class MWindowBdFactory
 		bd.draw(shape);
 		MBdFactoryUtil.qualityOff();
 		return bd;
+	}
+	
+	static function drawShortedBottomRightBorder(
+		g:Graphics,
+		x:Float, y:Float, width:Float, height:Float, radius:Int, thickness:Int):Void
+	{
+		var x1 = x + width;
+		var y1 = y + height;
+		
+		g.moveTo(x1 - thickness, y);
+		g.lineTo(x1, y);
+		g.lineTo(x1, y1 - radius);
+		g.curveTo(x1, y1, x1 - radius, y1);
+		g.lineTo(x + radius, y1);
+		g.curveTo(x, y1, x, y1 - radius);
+		g.curveTo(x, y1 - thickness, x + radius, y1 - thickness);
+		g.lineTo(x1 - radius, y1 - thickness);
+		g.curveTo(x1 - thickness, y1 - thickness, x1 - thickness, y1 - radius);
+		g.lineTo(x1 - thickness, y);
 	}
 	
 	static var _defaultStriae:BitmapData;

@@ -1,5 +1,6 @@
 package minimal;
 import flash.display.Bitmap;
+import flash.display.Graphics;
 import flash.display.Shape;
 import flash.display.Sprite;
 import temperate.containers.CHBox;
@@ -64,6 +65,8 @@ class TestMBdFactory extends Sprite
 		g.lineTo(100, 0);
 		CGraphicsUtil.drawArc(g, 100, 50, 50, 1.5 * Math.PI, .5 * Math.PI);
 		g.lineTo(50, 100);
+		g.lineStyle();
+		g.beginFill(0x808080);
 		
 		var shape = new Shape();
 		shape.x = 300;
