@@ -47,10 +47,10 @@ class TestMain
 		var test = new TestSignalPerformance();
 		var test = new TestScrollPane();
 		var test = new TestKey();
-		var test = new TestRasterImageButton();
 		
 		var test = new TestWindows();
 		var test = new TestWindowApplication();
+		var test = new TestRasterImageButton();
 		Lib.current.addChild(test);
 		test.init();
 	}

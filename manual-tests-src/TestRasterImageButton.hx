@@ -1,13 +1,17 @@
 package ;
+import flash.display.Bitmap;
 import flash.display.DisplayObject;
 import flash.display.Shape;
 import flash.display.Sprite;
+import flash.geom.Matrix;
 import temperate.components.CButtonState;
 import temperate.components.CRasterImageButton;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
+import temperate.core.CSprite;
 import temperate.docks.CRightDock;
 import temperate.minimal.graphics.MCommonBdFactory;
+import temperate.minimal.graphics.MWindowBdFactory;
 import temperate.minimal.MFilterFactory;
 import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MFormatFactory;
@@ -124,6 +128,28 @@ class TestRasterImageButton extends Sprite
 			var button = new MFlatImageButton();
 			button.text = "MFlatImageButton\n(without image)";
 			line.add(button);
+		}
+		
+		{
+			var line = new CHBox().addTo(main);
+			
+			var bg = new CSprite();
+			line.add(bg);
+			
+			var g = bg.graphics;
+			g.beginBitmapFill(MWindowBdFactory.getActiveTop(), new Matrix(1, 0, 0, 1, 0, -4));
+			g.drawRect( -2, -4, 500, 30);
+			g.endFill();
+			
+			line.add(new Bitmap(MWindowBdFactory.getBgUp()));
+			line.add(new Bitmap(MWindowBdFactory.getBgOver()));
+			line.add(new Bitmap(MWindowBdFactory.getBgDown()));
+			line.add(new Bitmap(MWindowBdFactory.getBgDisabled()));
+			line.add(new Bitmap(MWindowBdFactory.getBgUpSelected()));
+			line.add(new Bitmap(MWindowBdFactory.getBgOverSelected()));
+			line.add(new Bitmap(MWindowBdFactory.getBgDownSelected()));
+			line.add(new Bitmap(MWindowBdFactory.getBgDisabledSelected()));
+			line.add(new Bitmap(MWindowBdFactory.getFrame()));
 		}
 	}
 	

@@ -14,50 +14,16 @@ class MScrollBarBdFactory
 	//
 	//----------------------------------------------------------------------------------------------
 	
+	static function getBgColor()
+	{
+		return MBdFlatColors.bgColor;
+	}
+	
 	public static var arrowSize = 17;
 	
 	public static var arrowUpColor:UInt = 0xff305000;
 	public static var arrowOverColor:UInt = 0xff508020;
 	public static var arrowDisabledColor:UInt = 0x75808080;
-	
-	public static var bgColor(get_bgColor, set_bgColor):MFlatBgColor;
-	static var _bgColor:MFlatBgColor;
-	static function get_bgColor()
-	{
-		if (_bgColor == null)
-		{
-			var color = new MFlatBgColor();
-			
-			color.bgRatiosUp = [ 0, 138, 140, 250 ];
-			color.bgRatiosOver = [ 0, 138, 140, 250 ];
-			color.bgRatiosDown = [ 0, 250 ];
-			color.bgRatiosDisabled = [ 0, 250 ];
-
-			color.bgColorsUp = [ 0xffd0f060, 0xff80c020, 0xff60a000, 0xffa0c000 ];
-			color.bgColorsOver = [ 0xffbfef50, 0xffafcf50, 0xff8fbf30, 0xffafcf30 ];
-			color.bgColorsDown = [ 0xff506f00, 0xffc0ff30 ];
-			color.bgColorsDisabled = [ 0xffeeeeee, 0xffcccccc ];
-
-			color.bgBottomRightColor = 0xff105000;
-			color.bgBottomRightDisabledColor = 0xffbabaaa;
-
-			color.bgTopLeftColor = 0xff80a080;
-			color.bgTopLeftDisabledColor = 0xffcccccc;
-
-			color.bgInnerTopLeftColor = 0xa0ffffff;
-			color.bgInnerBottomRightColor = 0xe0ffffff;
-
-			color.bgInnerDownColor = 0x2e000000;
-			
-			_bgColor = color;
-		}
-		return _bgColor;
-	}
-	static function set_bgColor(value:MFlatBgColor)
-	{
-		_bgColor = value;
-		return _bgColor;
-	}
 	
 	public static var thumbCenterLightColor:UInt = 0xccffffff;
 	public static var thumbCenterDarkColor:UInt = 0x80305010;
@@ -468,7 +434,7 @@ class MScrollBarBdFactory
 		{
 			MBdFactoryUtil.qualityOn();
 			
-			var params = get_bgColor();
+			var params = getBgColor();
 			
 			bd = new BitmapData(arrowSize, arrowSize, true, 0x00000000);
 			var shape = MBdFactoryUtil.getShape();
@@ -744,7 +710,7 @@ class MScrollBarBdFactory
 	
 	static function newSliderThumb(horizontal:Bool, state:CButtonState)
 	{
-		var params = get_bgColor();
+		var params = getBgColor();
 		
 		var directSize = 20;
 		var crossSize = 12;
