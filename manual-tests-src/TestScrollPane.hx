@@ -84,6 +84,41 @@ class TestScrollPane extends Sprite
 				line, CScrollPolicy.ON, CScrollPolicy.AUTO, new MButton().setText("Button"))
 				.setPercents(100, 100)
 				.setContingencies(75, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
+			
+			{
+				var column = new CVBox();
+				column.setIndents(0, 20, 0, 10);
+				new MLabel().setText("isEnabled = false").addTo(column);
+				var scrollPane = new CScrollPane(
+					newHScrollBar, newVScrollBar, new MFieldRectSkin()
+				);
+				scrollPane.hScrollPolicy = CScrollPolicy.ON;
+				scrollPane.vScrollPolicy = CScrollPolicy.ON;
+				scrollPane.set(newShape(81, 50));
+				scrollPane.setSize(80, 80);
+				scrollPane.isEnabled = false;
+				var scaler = new Scaler(scrollPane);
+				column.add(scaler);
+				line.addChild(column);
+			}
+			
+			{
+				var column = new CVBox();
+				column.setIndents(0, 20, 0, 10);
+				new MLabel().setText("scroll = (10, 20)").addTo(column);
+				var scrollPane = new CScrollPane(
+					newHScrollBar, newVScrollBar, new MFieldRectSkin()
+				);
+				scrollPane.hScrollPolicy = CScrollPolicy.ON;
+				scrollPane.vScrollPolicy = CScrollPolicy.ON;
+				scrollPane.set(newShape(100, 100));
+				scrollPane.setSize(80, 80);
+				scrollPane.hScrollValue = 10;
+				scrollPane.vScrollValue = 20;
+				var scaler = new Scaler(scrollPane);
+				column.add(scaler);
+				line.addChild(column);
+			}
 		}
 		
 		{

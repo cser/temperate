@@ -12,6 +12,7 @@ import temperate.core.CMouseWheelUtil;
 import temperate.layouts.CScrollLayout;
 import temperate.layouts.ICScrollLayout;
 import temperate.layouts.parametrization.CChildWrapper;
+import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
 
 class CScrollPane extends ACScrollPane, implements ICInvalidateClient
@@ -49,7 +50,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		
 		_useMouseWheel = true;
 		
-		updateControlsEnabled();
+		updateEnabled();
 		
 		_size_valid = false;
 		postponeSize();
@@ -60,7 +61,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		if (_isEnabled != value)
 		{
 			_isEnabled = value;
-			updateControlsEnabled();
+			updateEnabled();
 			
 			_view_valid = false;
 			postponeView();
@@ -68,7 +69,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		return _isEnabled;
 	}
 	
-	function updateControlsEnabled()
+	function updateEnabled()
 	{
 		updateMouseWheelEnabled();
 		if (_hScrollAvailable)
@@ -79,6 +80,8 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		{
 			_vScrollBar.isEnabled = _isEnabled;
 		}
+		
+		_bgSkin.state = _isEnabled ? CSkinState.NORMAL : CSkinState.DISABLED;
 	}
 	
 	function updateMouseWheelEnabled()
@@ -278,6 +281,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	}
 	override function set_hScrollValue(value:Int)
 	{
+		validateSize();
 		setHScrollValue(value);
 		return _hScrollValue;
 	}
@@ -289,6 +293,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	}
 	override function set_vScrollValue(value:Int)
 	{
+		validateSize();
 		setVScrollValue(value);
 		return _vScrollValue;
 	}
@@ -394,10 +399,3 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		}
 	}
 }
-/*
-TODO
-Установка значений скроллинга, в том числе вначале
-Обновление при изменении контента
-Обновление при девалидации
-Неактивное состояние
-*/
