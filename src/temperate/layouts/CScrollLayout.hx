@@ -1,6 +1,7 @@
 package temperate.layouts;
 import flash.display.DisplayObject;
 import temperate.components.CScrollPolicy;
+import temperate.core.CMath;
 import temperate.layouts.parametrization.CChildWrapper;
 
 /**
@@ -21,10 +22,10 @@ class CScrollLayout implements ICScrollLayout
 	public var showVScrollBar:Void->DisplayObject;
 	public var hideVScrollBar:Void->Void;
 	
-	public function arrange()
+	public function arrange(hIndent:Int, vIndent:Int)
 	{
-		width = isCompactWidth ? 0 : width;
-		height = isCompactHeight ? 0 : height;
+		width = isCompactWidth ? 0 : CMath.max(0, width - hIndent);
+		height = isCompactHeight ? 0 : CMath.max(0, height - vIndent);
 		
 		var isHOn = hScrollPolicy == CScrollPolicy.ON;
 		var isHAuto = hScrollPolicy == CScrollPolicy.AUTO;
@@ -35,7 +36,7 @@ class CScrollLayout implements ICScrollLayout
 		{
 			hsb = showHScrollBar();
 			hsb.width = 0;
-			hsbWidth = hsb.width;
+			hsbWidth = CMath.max(0, hsb.width - hIndent);
 			hsbHeight = hsb.height;
 		}
 		else
@@ -52,7 +53,7 @@ class CScrollLayout implements ICScrollLayout
 			var vsb = showVScrollBar();
 			vsb.height = 0;
 			vsbWidth = vsb.width;
-			vsbHeight = vsb.height;
+			vsbHeight = CMath.max(0, vsb.height - vIndent);
 		}
 		else
 		{
@@ -287,6 +288,8 @@ class CScrollLayout implements ICScrollLayout
 				hideVScrollBar();
 			}
 		}
+		width += hIndent;
+		height += vIndent;
 	}
 		
 	public var wrapper:CChildWrapper;

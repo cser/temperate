@@ -21,6 +21,11 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	{
 		super(newHScrollBar, newVScrollBar, bgSkin);
 		
+		contentIndentLeft = 1;
+		contentIndentRight = 1;
+		contentIndentTop = 0;
+		contentIndentBottom = 0;
+		
 		_scrollRect = new Rectangle();
 		
 		_container = new Sprite();
@@ -159,19 +164,24 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		{
 			_size_valid = true;
 			
+			var hIndent = contentIndentLeft + contentIndentRight;
+			var vIndent = contentIndentTop + contentIndentBottom;
+			
 			_layout.wrapper = _wrapper;
 			_layout.isCompactWidth = isCompactWidth;
 			_layout.isCompactHeight = isCompactHeight;
 			_layout.width = _settedWidth;
 			_layout.height = _settedHeight;
-			_layout.arrange();
+			_layout.arrange(hIndent, vIndent);
 			_width = _layout.width;
 			_height = _layout.height;
 			
 			_areaWidth = Std.int(_width - (_vScrollAvailable ? _vScrollBar.width : 0));
 			_areaHeight = Std.int(_height - (_hScrollAvailable ? _hScrollBar.height : 0));
-			_hMaxScrollValue = CMath.intMax(Std.int(_wrapper.getWidth() - _areaWidth), 0);
-			_vMaxScrollValue = CMath.intMax(Std.int(_wrapper.getHeight() - _areaHeight), 0);
+			_hMaxScrollValue =
+				CMath.intMax(Std.int(_wrapper.getWidth() - _areaWidth + hIndent), 0);
+			_vMaxScrollValue =
+				CMath.intMax(Std.int(_wrapper.getHeight() - _areaHeight + vIndent), 0);
 			fixScrollValue();
 			
 			_view_valid = false;
@@ -209,17 +219,13 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 			
 			_scrollRect.x = _hScrollValue;
 			_scrollRect.y = _vScrollValue;
-			_scrollRect.width = _areaWidth;
-			_scrollRect.height = _areaHeight;
+			_scrollRect.width = Std.int(_areaWidth) - contentIndentLeft - contentIndentRight;
+			_scrollRect.height = Std.int(_areaHeight) - contentIndentTop - contentIndentBottom;
 			_container.scrollRect = _scrollRect;
 			
 			_container.x = contentIndentLeft;
 			_container.y = contentIndentTop;
-			_bgSkin.setBounds(
-				0,
-				0,
-				Std.int(_areaWidth) + contentIndentLeft + contentIndentRight,
-				Std.int(_areaHeight) + contentIndentTop + contentIndentBottom);
+			_bgSkin.setBounds(0, 0, Std.int(_areaWidth), Std.int(_areaHeight));
 			_bgSkin.redraw();
 		}
 	}
@@ -393,7 +399,5 @@ TODO
 Установка значений скроллинга, в том числе вначале
 Обновление при изменении контента
 Обновление при девалидации
-Отступы и политики размеров для контента
-Отступы относительно скроллируемой области
 Неактивное состояние
 */
