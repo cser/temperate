@@ -28,4 +28,9 @@ class CSimpleButton extends SimpleButton, implements ICButton
 	{
 		return enabled = value;
 	}
+	
+	public function setUseHandCursor(value:Bool)
+	{
+		useHandCursor = value;
+	}
 }

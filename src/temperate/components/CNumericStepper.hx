@@ -386,8 +386,8 @@ class CNumericStepper extends CSprite
 	function setUseHandCursor(value:Bool)
 	{
 		_useHandCursor = value;
-		_up.useHandCursor = _useHandCursor;
-		_down.useHandCursor = _useHandCursor;
+		_up.setUseHandCursor(_useHandCursor);
+		_down.setUseHandCursor(_useHandCursor);
 	}
 	
 	//----------------------------------------------------------------------------------------------

@@ -192,6 +192,11 @@ class ACButton extends CSprite, implements ICButton
 		return raw != null && raw != "" ? raw : " ";
 	}
 	
+	public function setUseHandCursor(value:Bool)
+	{
+		useHandCursor = value;
+	}
+	
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Helped

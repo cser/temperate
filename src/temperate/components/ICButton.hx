@@ -4,11 +4,18 @@ import flash.events.IEventDispatcher;
 
 interface ICButton implements IEventDispatcher
 {
-	public var view(default, null):DisplayObject;
+	var view(default, null):DisplayObject;
 	
-	public var isEnabled(get_isEnabled, set_isEnabled):Bool;
+	/**
+	 * isEnabled insteard of enabled couse confilct with SimpleButton enabled
+	 */
+	var isEnabled(get_isEnabled, set_isEnabled):Bool;
 	
-	public var useHandCursor:Bool;
+	/**
+	 * For easear implementaion
+	 * (HaXe getters/setters ideology is so stern to communicate with flashplayer9 API >_<)
+	 */
+	function setUseHandCursor(value:Bool):Void;
 	
-	public function validate():Void;
+	function validate():Void;
 }

@@ -58,5 +58,8 @@ class CSimpleButtonWrapper implements ICButton
 		return simpleButton.enabled;
 	}
 	
-	public var useHandCursor:Bool;
+	public function setUseHandCursor(value:Bool)
+	{
+		simpleButton.useHandCursor = value;
+	}
 }
