@@ -26,7 +26,7 @@ class TestMTween extends Sprite
 			addChild(shape);
 			
 			shape.alpha = .5;
-			MTween.to(shape, { x:10, y:20, alpha: 1 }, 1000)
+			MTween.to(shape, 1000, { x:10, y:20, alpha: 1 })
 				.setOnComplete(onComplete)
 				.setOnUpdate(onUpdate);
 		
@@ -43,7 +43,7 @@ class TestMTween extends Sprite
 			
 			_backAlpha = 0;
 			shape.alpha = .7;
-			MTween.to(shape, { x:10, y:20, alpha: 1 }, 1000)
+			MTween.to(shape, 1000, { x:10, y:20, alpha: 1 })
 				.setEase(MBack.typicalAbsolute.easeOut)
 				.setOnComplete(onBackComplete);
 		}
@@ -105,7 +105,7 @@ class TestMTween extends Sprite
 	{
 		MTween.to(
 			tween.target,
-			{ x:100 - Math.random() * 100, y:100 - Math.random() * 100 }, 1000)
+			1000, { x:100 - Math.random() * 100, y:100 - Math.random() * 100 })
 			.setOnComplete(onComplete)
 			.setOnUpdate(onUpdate);
 	}
@@ -117,7 +117,7 @@ class TestMTween extends Sprite
 		_backAlpha += Math.PI * .25;
 		MTween.to(
 			tween.target,
-			{ x:300 + Math.cos(_backAlpha) * 50, y:150 + Math.sin(_backAlpha) * 50 }, 1000)
+			1000, { x:300 + Math.cos(_backAlpha) * 50, y:150 + Math.sin(_backAlpha) * 50 })
 			.setEase(MBack.typicalAbsolute.easeOut)
 			.setOnComplete(onBackComplete);
 	}

@@ -66,13 +66,21 @@ class CValidator
 		if (!_hasExitFrame)
 		{
 			_hasExitFrame = true;
-			_shape.addEventListener(Event.EXIT_FRAME, onExitFrame);
+			_shape.addEventListener(
+				#if flash10 Event.EXIT_FRAME #else Event.ENTER_FRAME #end
+				,
+				onExitFrame
+			);
 		}
 	}
 	
 	function onExitFrame(event:Event)
 	{
-		_shape.removeEventListener(Event.EXIT_FRAME, onExitFrame);
+		_shape.removeEventListener(
+			#if flash10 Event.EXIT_FRAME #else Event.ENTER_FRAME #end
+			,
+			onExitFrame
+		);
 		var sizeListeners = _sizeListeners;
 		
 		_sizeListeners = new TypedDictionary();

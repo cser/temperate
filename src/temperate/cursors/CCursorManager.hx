@@ -38,11 +38,13 @@ class CCursorManager
 		name:String, data:flash.Vector<flash.display.BitmapData>, frameRate:Float,
 		hotSpot:flash.geom.Point)
 	{
+		#if flash10_2
 		var cursor = new MouseCursorData();
 		cursor.data = data;
 		cursor.frameRate = frameRate;
 		cursor.hotSpot = hotSpot;
 		Mouse.registerCursor(name, cursor);
+		#end
 	}
 	
 	//----------------------------------------------------------------------------------------------

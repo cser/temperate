@@ -8,8 +8,8 @@
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
-    <movie version="9" />
-    <movie minorVersion="0" />
+    <movie version="10" />
+    <movie minorVersion="2" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
   </output>
@@ -26,7 +26,7 @@
     <option flashStrict="True" />
     <option mainClass="TestMain" />
     <option enabledebug="True" />
-    <option additional="-cp test/src/&#xA;-lib munit&#xA;--no-inline&#xA;-swf-version 10.2" />
+    <option additional="-cp test/src/&#xA;-lib munit&#xA;--no-inline" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
@@ -47,7 +47,9 @@
   <!-- Executed before build -->
   <preBuildCommand />
   <!-- Executed after build -->
-  <postBuildCommand alwaysRun="False" />
+  <postBuildCommand alwaysRun="False">haxe -cp manual-tests-src -cp src -swf-version 9 -swf bin/fp9compile.swf TestMainCompileFp9
+
+haxe -cp manual-tests-src -cp src -swf-version 10 -swf bin/fp10compile.swf TestMainCompileFp9</postBuildCommand>
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="True" />
