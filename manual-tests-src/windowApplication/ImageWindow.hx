@@ -17,19 +17,20 @@ class ImageWindow extends MWindow
 		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
 		resizable = true;
 		
-		_image = new CSprite();
+		image = new CSprite();
 		_pane = new MScrollPane();
-		_pane.set(_image);
+		_pane.set(image);
 		_main.add(_pane).setPercents(100, 100);
 	}
 	
 	var _pane:MScrollPane;
-	var _image:CSprite;
+	
+	public var image(default, null):CSprite;
 	
 	public function setImageSize(width:Int, height:Int)
 	{
-		_image.setSize(width, height);
-		var g = _image.graphics;
+		image.setSize(width, height);
+		var g = image.graphics;
 		g.clear();
 		g.beginFill(0xffffff);
 		g.drawRect(0, 0, width, height);

@@ -1,6 +1,8 @@
 package ;
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.Lib;
+import temperate.core.CSprite;
 import temperate.debug.FPSMonitor;
 import temperate.minimal.MPopUpManager;
 import temperate.windows.CPopUpManager;
@@ -28,15 +30,42 @@ class TestWindowApplication extends Sprite
 		toolsWindow.dock = new CPopUpAbsoluteDock(10, 50);
 		MPopUpManager.add(toolsWindow, false, true);
 		_imageManager = new CPopUpManager(this);
+		_imageManager.addEventListener(Event.SELECT, onImageSelect);
 		stage.addEventListener(Event.RESIZE, onStageResize);
 		onStageResize();
+	}
+	
+	function onImageSelect(event:Event)
+	{
+		_state.setImage(getCurrentImage());
 	}
 	
 	var _state:ADrawState;
 	
 	public function setState(state:ADrawState)
 	{
-		_state = state;
+		if (_state != state)
+		{
+			if (_state != null)
+			{
+				_state.setImage(null);
+			}
+			_state = state;
+			if (_state != null)
+			{
+				_state.setImage(getCurrentImage());
+			}
+		}
+	}
+	
+	function getCurrentImage():CSprite
+	{
+		if (_imageManager == null)
+		{
+			return null;
+		}
+		var window = Lib.as(_imageManager.topPopUp, ImageWindow);
+		return window != null ? window.image : null;
 	}
 	
 	function onStageResize(event:Event = null)
