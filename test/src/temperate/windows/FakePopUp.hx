@@ -1,6 +1,8 @@
 package temperate.windows;
 import flash.display.DisplayObject;
 import flash.display.Shape;
+import flash.events.EventDispatcher;
+import flash.events.IEventDispatcher;
 import temperate.windows.ICPopUp;
 
 class FakePopUp implements ICPopUp
@@ -8,7 +10,11 @@ class FakePopUp implements ICPopUp
 	public function new() 
 	{
 		view = new Shape();
+		innerDispatcher = new EventDispatcher();
 	}
+	
+	public var view(default, null):DisplayObject;
+	public var innerDispatcher(default, null):IEventDispatcher;
 	
 	public var isLocked(get_isLocked, set_isLocked):Bool;
 	var _isLocked:Bool;
@@ -33,6 +39,4 @@ class FakePopUp implements ICPopUp
 		_isActive = value;
 		return _isActive;
 	}
-	
-	public var view(default, null):DisplayObject;
 }

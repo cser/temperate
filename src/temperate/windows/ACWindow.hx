@@ -1,5 +1,7 @@
 package temperate.windows;
 import flash.display.DisplayObject;
+import flash.events.EventDispatcher;
+import flash.events.IEventDispatcher;
 import temperate.core.CSprite;
 import temperate.windows.docks.CAlignedPopUpDock;
 import temperate.windows.docks.ICPopUpDock;
@@ -11,6 +13,7 @@ class ACWindow extends CSprite, implements ICPopUp
 		super();
 		_manager = manager;
 		view = this;
+		innerDispatcher = new EventDispatcher();
 		startDock = new CAlignedPopUpDock();
 		
 		updateIsLocked();
@@ -18,6 +21,10 @@ class ACWindow extends CSprite, implements ICPopUp
 	}
 	
 	var _manager:CPopUpManager;
+	
+	public var view(default, null):DisplayObject;
+	
+	public var innerDispatcher(default, null):IEventDispatcher;
 	
 	public var isLocked(get_isLocked, set_isLocked):Bool;
 	var _isLocked:Bool;
@@ -29,7 +36,7 @@ class ACWindow extends CSprite, implements ICPopUp
 	{
 		if (_isLocked != value)
 		{
-			_isLocked = true;
+			_isLocked = value;
 			updateIsLocked();
 		}
 		return _isLocked;
@@ -51,8 +58,6 @@ class ACWindow extends CSprite, implements ICPopUp
 		return _isActive;
 	}
 	
-	public var view(default, null):DisplayObject;
-	
 	function updateIsLocked()
 	{
 		mouseEnabled = !_isLocked;
@@ -65,13 +70,9 @@ class ACWindow extends CSprite, implements ICPopUp
 	
 	public function open(modal:Bool)
 	{
-		startDock.arrange(
-			Std.int(width), Std.int(height),
-			_manager.right - _manager.left,
-			_manager.bottom - _manager.top
-		);
-		x = _manager.left + startDock.x;
-		y = _manager.top + startDock.y;
+		startDock.arrange(Std.int(width), Std.int(height), _manager.areaWidth, _manager.areaHeight);
+		x = _manager.areaX + startDock.x;
+		y = _manager.areaY + startDock.y;
 		_manager.add(this, modal);
 	}
 	

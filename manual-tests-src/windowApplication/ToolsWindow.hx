@@ -158,4 +158,10 @@ class ToolsWindow extends ACWindow
 	{
 		new SaveWindow(_manager).open(true);
 	}
+	
+	override function updateIsLocked() 
+	{
+		super.updateIsLocked();
+		trace(_isLocked);
+	}
 }

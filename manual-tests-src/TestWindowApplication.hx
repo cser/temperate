@@ -25,6 +25,6 @@ class TestWindowApplication extends Sprite
 	
 	function onStageResize(event:Event = null)
 	{
-		_windowManager.setBounds(10, stage.stageWidth - 10, 10, stage.stageHeight - 10);
+		_windowManager.setArea(10, 10, stage.stageWidth - 20, stage.stageHeight - 20);
 	}
 }
