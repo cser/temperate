@@ -1,0 +1,4 @@
+v.0.6-?
+- CSignal moved to temperate.extra
+- CKey added for downed key checking (is not using in temperate)
+- CRasterImageButton added (scaled button with some DisplayObject inside)
