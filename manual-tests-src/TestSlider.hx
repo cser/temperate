@@ -28,7 +28,7 @@ class TestSlider extends Sprite
 		var slider = new CSlider(true, thumb, new MFieldRectSkin());
 		main.add(slider);
 		
-		var thumb = new MButton().setText("::-::");
+		var thumb = new MButton().setText("::\n|\n::");
 		var slider = new CSlider(false, thumb, new MFieldRectSkin());
 		main.add(slider);
 		

@@ -726,28 +726,48 @@ class MScrollBarBdFactory
 	{
 		var directSize = 20;
 		var crossSize = 12;
-		var width = horizontal ? directSize : crossSize;
-		var height = horizontal ? crossSize : directSize;
+		var downOffsetX;
+		var downOffsetY;
+		var bdWidth;
+		var bdHeight;
+		if (horizontal)
+		{
+			downOffsetX = 0;
+			downOffsetY = state == CButtonState.DOWN ? 1 : 0;
+			bdWidth = directSize;
+			bdHeight = crossSize;
+		}
+		else
+		{
+			downOffsetX = state == CButtonState.DOWN ? 1 : 0;
+			downOffsetY = 0;
+			bdWidth = crossSize;
+			bdHeight = directSize;
+		}
+		var width = bdWidth - downOffsetX * 2;
+		var height = bdHeight - downOffsetY * 2;
 		
 		MBdFactoryUtil.qualityOn();
-		var bd = new BitmapData(width, height, true, 0x00000000);
+		var bd = new BitmapData(bdWidth, bdHeight, true, 0x00000000);
 		var shape = MBdFactoryUtil.getShape();
 		var g = shape.graphics;
 		
 		g.clear();
 		
 		var enabled = state != CButtonState.DISABLED;
+		var diameter1 = 8;
+		var diameter2 = 6;
 		
 		var color = enabled ? bgBottomRightColor : bgBottomRightDisabledColor;
 		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(0, 0, width, height, 10);
-		g.drawRoundRect(0, 0, width - 1, height - 1, 10);
+		g.drawRoundRect(downOffsetX, downOffsetY, width, height, diameter1);
+		g.drawRoundRect(downOffsetX, downOffsetY, width - 1, height - 1, diameter1);
 		g.endFill();
 		
 		var color = enabled ? bgTopLeftColor : bgTopLeftDisabledColor;
 		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(0, 0, width, height, 10);
-		g.drawRoundRect(1, 1, width - 1, height - 1, 10);
+		g.drawRoundRect(downOffsetX, downOffsetY, width, height, diameter1);
+		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 1, height - 1, diameter1);
 		g.endFill();
 		
 		{
@@ -762,12 +782,9 @@ class MScrollBarBdFactory
 			var ratios;
 			switch (state)
 			{
-				case CButtonState.OVER:
+				case CButtonState.OVER, CButtonState.DOWN:
 					sourceColors = bgColorsOver;
 					ratios = bgRatiosOver;
-				case CButtonState.DOWN:
-					sourceColors = bgColorsDown;
-					ratios = bgRatiosDown;
 				case CButtonState.DISABLED:
 					sourceColors = bgColorsDisabled;
 					ratios = bgRatiosDisabled;
@@ -778,30 +795,21 @@ class MScrollBarBdFactory
 			MBdFactoryUtil.getColorsAndAlphas(sourceColors, colors, alphas);
 			
 			g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
-			g.drawRoundRect(1, 1, width - 2, height - 2, 8);
+			g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2);
 			g.endFill();
 		}
 		
 		var color = bgInnerTopLeftColor;
 		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(1, 1, width - 2, height - 2, 8);
-		g.drawRoundRect(2, 2, width - 3, height - 3, 8);
+		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2);
+		g.drawRoundRect(downOffsetX + 2, downOffsetY + 2, width - 3, height - 3, diameter2);
 		g.endFill();
 		
 		var color = bgInnerBottomRightColor;
 		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(1, 1, width - 2, height - 2, 8);
-		g.drawRoundRect(1, 1, width - 3, height - 3, 8);
+		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2);
+		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 3, height - 3, diameter2);
 		g.endFill();
-		
-		if (state == CButtonState.DOWN)
-		{
-			var color = bgInnerDownColor;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-			g.drawRoundRect(2, 2, width - 4, height - 4, 8);
-			g.drawRoundRect(3, 3, width - 6, height - 6, 8);
-			g.endFill();
-		}
 		
 		bd.draw(shape);
 		
