@@ -39,30 +39,30 @@ class ADrawState
 	
 	function subscribe()
 	{
-		_image.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		_image.addEventListener(MouseEvent.MOUSE_DOWN, onImageMouseDown);
 	}
 	
 	function unsubscribe()
 	{
-		_image.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		_image.removeEventListener(MouseEvent.MOUSE_DOWN, onImageMouseDown);
 	}
 	
-	function onMouseDown(event:MouseEvent)
+	function onImageMouseDown(event:MouseEvent)
 	{
-		_image.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-		_image.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		_image.addEventListener(MouseEvent.MOUSE_MOVE, onImageMouseMove);
+		_image.stage.addEventListener(MouseEvent.MOUSE_UP, onImageMouseUp);
 		doStart();
 	}
 	
-	function onMouseMove(event:MouseEvent)
+	function onImageMouseMove(event:MouseEvent)
 	{
 		doMove();
 	}
 	
-	function onMouseUp(event:MouseEvent)
+	function onImageMouseUp(event:MouseEvent)
 	{
-		_image.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-		_image.stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		_image.removeEventListener(MouseEvent.MOUSE_MOVE, onImageMouseMove);
+		_image.stage.removeEventListener(MouseEvent.MOUSE_UP, onImageMouseUp);
 		doComplete();
 	}
 	
