@@ -26,7 +26,7 @@
     <option flashStrict="True" />
     <option mainClass="TestMain" />
     <option enabledebug="True" />
-    <option additional="-cp test/src/&#xA;-lib munit&#xA;&#xA;-swf-version 10.2" />
+    <option additional="-cp test/src/&#xA;-lib munit&#xA;--no-inline&#xA;-swf-version 10.2" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

@@ -5,7 +5,6 @@ import flash.events.EventDispatcher;
 import flash.Lib;
 import temperate.containers.CVBox;
 import temperate.minimal.charts.MBarChart;
-import temperate.minimal.charts.MLineChart;
 import temperate.minimal.MLabel;
 import temperate.signals.CSignal;
 
