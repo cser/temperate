@@ -30,8 +30,8 @@ class TestTextArea extends Sprite
 		
 		var area = new CTextArea(newHScrollBar, newVScrollBar, new MFieldRectSkin());
 		area.type = TextFieldType.INPUT;
-		area.text = "Line 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
-			"\nLine 1\nLine 2\nLine 3";
+		area.text = "Line 1 text text\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
+			"\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3";
 		var scaler = new Scaler(area);
 		main.add(scaler);
 		

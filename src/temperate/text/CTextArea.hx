@@ -8,6 +8,8 @@ import temperate.components.CScrollBar;
 import temperate.components.CScrollPolicy;
 import temperate.core.CMath;
 import temperate.core.CSprite;
+import temperate.layouts.IScrollTextLayout;
+import temperate.layouts.ScrollTextLayout;
 import temperate.skins.ICRectSkin;
 
 class CTextArea extends CSprite
@@ -25,6 +27,8 @@ class CTextArea extends CSprite
 		_newVScrollBar = newVScrollBar;
 		_bgSkin = bgSkin;
 		
+		_layout = new ScrollTextLayout();
+		
 		_tf = new TextField();
 		_tf.multiline = true;
 		_tf.addEventListener(Event.SCROLL, onTfScroll);
@@ -33,8 +37,8 @@ class CTextArea extends CSprite
 		
 		_bgSkin.link(addChildAt0, removeChild, graphics);
 		
-		_hScrollPolicy = CScrollPolicy.AUTO;
-		_vScrollPolicy = CScrollPolicy.AUTO;
+		_layout.hScrollPolicy = CScrollPolicy.AUTO;
+		_layout.vScrollPolicy = CScrollPolicy.AUTO;
 		
 		_settedWidth = 100;
 		_settedHeight = 100;
@@ -43,6 +47,7 @@ class CTextArea extends CSprite
 		postponeSize();
 	}
 	
+	var _layout:IScrollTextLayout;
 	var _tf:TextField;
 	var _hScrollBar:CScrollBar;
 	var _hScrollAvailable:Bool;
@@ -61,6 +66,7 @@ class CTextArea extends CSprite
 			addChild(_hScrollBar);
 			_hScrollAvailable = true;
 		}
+		return _hScrollBar;
 	}
 	
 	function hideHScrollBar()
@@ -84,6 +90,7 @@ class CTextArea extends CSprite
 			addChild(_vScrollBar);
 			_vScrollAvailable = true;
 		}
+		return _vScrollBar;
 	}
 	
 	function hideVScrollBar()
@@ -94,8 +101,6 @@ class CTextArea extends CSprite
 			_vScrollAvailable = false;
 		}
 	}
-	
-	var _size_scrollValid:Bool;
 	
 	function addChildAt0(child:DisplayObject)
 	{
@@ -115,7 +120,7 @@ class CTextArea extends CSprite
 			_text = value;
 			_tf.text = text;
 			
-			_size_scrollValid = false;
+			_size_valid = false;
 			postponeSize();
 		}
 		return _text;
@@ -123,74 +128,28 @@ class CTextArea extends CSprite
 	
 	override function doValidateSize()
 	{
+		trace("doValidateSize {");
 		if (!_size_valid)
 		{
 			_size_valid = true;
 			
-			_width = _settedWidth;
-			_height = _settedHeight;
-			
-			_tf.width = _width;
-			_tf.height = _height;
-			
-			_size_scrollValid = false;
-			_view_valid = false;
-		}
-		if (!_size_scrollValid)
-		{
-			_size_scrollValid = true;
-			
-			switch (_vScrollPolicy)
-			{
-				case CScrollPolicy.ON:
-					showVScrollBar();
-				case CScrollPolicy.OFF:
-					hideVScrollBar();
-				case CScrollPolicy.AUTO:
-					var min = 1;
-					var max = _tf.maxScrollV;
-					if (max > min)
-					{
-						showVScrollBar();
-					}
-					else
-					{
-						hideVScrollBar();
-					}
-			}
-			
-			switch (_hScrollPolicy)
-			{
-				case CScrollPolicy.ON:
-					showHScrollBar();
-				case CScrollPolicy.OFF:
-					hideHScrollBar();
-				case CScrollPolicy.AUTO:
-					var min = 1;
-					var max = _tf.maxScrollH;
-					if (max > min)
-					{
-						showHScrollBar();
-					}
-					else
-					{
-						hideHScrollBar();
-					}
-			}
-			
-			if (_vScrollAvailable)
-			{
-				_vScrollBar.height = _height;
-			}
-			if (_hScrollAvailable)
-			{
-				_hScrollBar.width = _width;
-			}
+			_layout.width = _settedWidth;
+			_layout.height = _settedHeight;
+			_layout.arrange(
+				_tf,
+				showHScrollBar,
+				hideHScrollBar,
+				showVScrollBar,
+				hideVScrollBar
+			);
+			_width = _layout.width;
+			_height = _layout.height;
 			
 			if (_vScrollAvailable)
 			{
 				_vScrollBar.minValue = 1;
 				_vScrollBar.maxValue = _tf.maxScrollV;
+				trace("set parameters min = " + 1 + ", max = " + _tf.maxScrollV);
 				_vScrollBar.pageSize = CMath.max(_tf.bottomScrollV, 1);
 			}
 			
@@ -207,6 +166,7 @@ class CTextArea extends CSprite
 		{
 			postponeView();
 		}
+		trace("} doValidateSize");
 	}
 	
 	override function doValidateView()
@@ -218,16 +178,12 @@ class CTextArea extends CSprite
 			if (_vScrollAvailable)
 			{
 				_vScrollBar.x = _width - _vScrollBar.width;
-				_bgSkin.setBounds(0, 0, Std.int(_width - _vScrollBar.width), Std.int(_height));
-			}
-			else
-			{
-				_bgSkin.setBounds(0, 0, Std.int(_width), Std.int(_height));
 			}
 			if (_hScrollAvailable)
 			{
 				_hScrollBar.y = _height - _hScrollBar.height;
 			}
+			_bgSkin.setBounds(0, 0, Std.int(_tf.width), Std.int(_tf.height));
 			_bgSkin.redraw();
 		}
 	}
@@ -252,7 +208,7 @@ class CTextArea extends CSprite
 	
 	function onTfChange(event:Event)
 	{
-		_size_scrollValid = false;
+		_size_valid = false;
 		postponeSize();
 	}
 	
@@ -325,27 +281,26 @@ class CTextArea extends CSprite
 	}
 	
 	public var hScrollPolicy(get_hScrollPolicy, set_hScrollPolicy):CScrollPolicy;
-	var _hScrollPolicy:CScrollPolicy;
 	function get_hScrollPolicy()
 	{
-		return _hScrollPolicy;
+		return _layout.hScrollPolicy;
 	}
 	function set_hScrollPolicy(value)
 	{
-		_hScrollPolicy = value;
-		return _hScrollPolicy;
+		_layout.hScrollPolicy = value;
+		return value;
 	}
 	
 	public var vScrollPolicy(get_vScrollPolicy, set_vScrollPolicy):CScrollPolicy;
 	var _vScrollPolicy:CScrollPolicy;
 	function get_vScrollPolicy()
 	{
-		return _vScrollPolicy;
+		return _layout.vScrollPolicy;
 	}
 	function set_vScrollPolicy(value)
 	{
-		_vScrollPolicy = value;
-		return _vScrollPolicy;
+		_layout.vScrollPolicy = value;
+		return value;
 	}
 	
 	//----------------------------------------------------------------------------------------------
