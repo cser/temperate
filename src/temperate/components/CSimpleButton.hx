@@ -4,9 +4,11 @@ import flash.display.SimpleButton;
 
 class CSimpleButton extends SimpleButton, implements ICButton
 {
-	public function new() 
+	public function new(
+		?upState:DisplayObject, ?overState:DisplayObject, ?downState:DisplayObject,
+		?hitTestState:DisplayObject)
 	{
-		super();
+		super(upState, overState, downState, hitTestState);
 		
 		view = this;
 	}

@@ -22,25 +22,48 @@ class TestSimpleButtonWrapper extends Sprite
 	{
 		var main = new CHBox().addTo(this, 10, 10);
 		
-		var line = new CVBox().addTo(main);
-		line.add(new MLabel().setText("Simple buttons"));
-		line.add(newUpSimpleButton());
-		line.add(newDownSimpleButton());
+		var column = new CVBox().addTo(main);
+		column.add(new MLabel().setText("Simple buttons"));
+		column.add(newUpSimpleButton());
+		column.add(newDownSimpleButton());
 		
-		var line = new CVBox().addTo(main);
-		line.add(new MLabel().setText("Wrapped buttons"));
-		line.add(new CSimpleButtonWrapper(newUpSimpleButton()).view);
-		line.add(new CSimpleButtonWrapper(newDownSimpleButton()).view);
+		var column = new CVBox().addTo(main);
+		column.add(new MLabel().setText("Wrapped buttons"));
+		column.add(new CSimpleButtonWrapper(newUpSimpleButton()).view);
+		column.add(new CSimpleButtonWrapper(newDownSimpleButton()).view);
 		
-		var line = new CVBox().addTo(main);
-		line.add(new MLabel().setText("Numeric stepper with simple buttons"));
-		line.add(
+		var column = new CVBox().addTo(main);
+		column.add(new MLabel().setText("Numeric stepper with\nwrapped simple buttons"));
+		column.add(
 			new CNumericStepper(
 				new CSimpleButtonWrapper(newUpSimpleButton()),
 				new CSimpleButtonWrapper(newDownSimpleButton()),
 				new MFieldRectSkin()));
 		
-		new CSimpleButton();
+		var column = new CVBox().addTo(main);
+		column.add(new MLabel().setText("CSimpleButton"));
+		column.add(
+			new CSimpleButton(
+				new Bitmap(MScrollBarBdFactory.getTopUp()),
+				new Bitmap(MScrollBarBdFactory.getTopOver()),
+				new Bitmap(MScrollBarBdFactory.getTopDown()),
+				new Bitmap(MScrollBarBdFactory.getTopUp())));
+		
+		var column = new CVBox().addTo(main);
+		column.add(new MLabel().setText("Numeric stepper with\nCSimpleButton arrows"));
+		column.add(
+			new CNumericStepper(
+				new CSimpleButton(
+					new Bitmap(MScrollBarBdFactory.getTopUp()),
+					new Bitmap(MScrollBarBdFactory.getTopOver()),
+					new Bitmap(MScrollBarBdFactory.getTopDown()),
+					new Bitmap(MScrollBarBdFactory.getTopUp())),
+				new CSimpleButton(
+					new Bitmap(MScrollBarBdFactory.getBottomUp()),
+					new Bitmap(MScrollBarBdFactory.getBottomOver()),
+					new Bitmap(MScrollBarBdFactory.getBottomDown()),
+					new Bitmap(MScrollBarBdFactory.getBottomUp())),
+				new MFieldRectSkin()));
 	}
 	
 	function newUpSimpleButton()
@@ -63,3 +86,10 @@ class TestSimpleButtonWrapper extends Sprite
 		);
 	}
 }
+/*
+TODO
+Заменть ACButton на ICButton в:
+	CButtonSelector
+	CScrollBar
+	CSlider
+*/

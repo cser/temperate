@@ -49,15 +49,13 @@ class CSimpleButtonWrapper implements ICButton
 	}
 	
 	public var isEnabled(get_isEnabled, set_isEnabled):Bool;
-	var _isEnabled:Bool;
 	function set_isEnabled(value:Bool)
 	{
-		_isEnabled = value;
-		return _isEnabled;
+		return simpleButton.enabled = value;
 	}
 	function get_isEnabled()
 	{
-		return _isEnabled;
+		return simpleButton.enabled;
 	}
 	
 	public var useHandCursor:Bool;
