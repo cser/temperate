@@ -1,11 +1,10 @@
 package temperate.minimal.renderers;
-import flash.display.BlendMode;
 import flash.display.Graphics;
 import flash.display.Shape;
 import flash.display.Sprite;
 import flash.geom.Rectangle;
+import temperate.core.CGeomUtil;
 import temperate.core.CMath;
-import temperate.tooltips.CGeomUtil;
 
 class MTooltipBg extends Sprite
 {
@@ -19,28 +18,7 @@ class MTooltipBg extends Sprite
 		tailHalfWidth = 6;
 		fillColor = 0xffffffe0;
 		borderColor = 0xff808080;
-		
-		blendMode = BlendMode.LAYER;
-		
-		_mask = new Shape();
-		_mask.blendMode = BlendMode.ERASE;
-		addChild(_mask);
-		
-		_top = new Sprite();
-		_top.blendMode = BlendMode.LAYER;
-		addChild(_top);
-		
-		_topRect = new Shape();
-		_top.addChild(_topRect);
-		
-		_topTail = new Shape();
-		_top.addChild(_topTail);
 	}
-	
-	var _mask:Shape;
-	var _top:Sprite;
-	var _topRect:Shape;
-	var _topTail:Shape;
 	
 	public var borderRadius:Int;
 	
@@ -90,51 +68,57 @@ class MTooltipBg extends Sprite
 		_tailEndX = CGeomUtil.crossX;
 		_tailEndY = CGeomUtil.crossY;
 		
-		drawShape(graphics, graphics, borderColor, true, true);
-		drawShape(_mask.graphics, _mask.graphics, 0xffffff, false, false);
-		drawShape(_topRect.graphics, _topTail.graphics, fillColor, false, false);
-		_top.alpha = CMath.getAlpha(fillColor);
+		drawShape();
 	}
 	
-	function drawShape(rect:Graphics, tail:Graphics, color:UInt, needDrawBorder:Bool, useAlpha:Bool)
+	function drawShape()
 	{
-		tail.clear();
-		if (needDrawBorder)
-		{
-			tail.lineStyle(
-				borderThickness * 2, CMath.getColor(color), CMath.getAlpha(color));
-		}
-		
 		var dx = _tailEndX - _tailBeginX;
 		var dy = _tailEndY - _tailBeginY;
 		var a = Math.sqrt(dx * dx + dy * dy);
 		
+		var tail = null;
 		if (a > 1)
 		{
 			var cos = dx / a;
 			var sin = dy / a;
-			tail.moveTo(_tailBeginX - tailHalfWidth * sin, _tailBeginY + tailHalfWidth * cos);
-			tail.beginFill(CMath.getColor(color), useAlpha ? CMath.getAlpha(color) : 1);
-			tail.lineTo(_tailEndX, _tailEndY);
-			tail.lineTo(_tailBeginX + tailHalfWidth * sin, _tailBeginY - tailHalfWidth * cos);
-			tail.endFill();
+			tail = [
+				_tailBeginX - tailHalfWidth * sin, _tailBeginY + tailHalfWidth * cos,
+				_tailEndX, _tailEndY,
+				_tailBeginX + tailHalfWidth * sin, _tailBeginY - tailHalfWidth * cos];
 		}
+		var x0 = borderThickness;
+		var y0 = borderThickness;
+		var x1 = _width - borderThickness * 2;
+		var y1 = _height - borderThickness * 2;
+		var rect = [
+			x0, y0,
+			x1, y0,
+			x1, y1,
+			x0, y1];
 		
-		if (rect != tail)
+		var poligon = tail != null ? CGeomUtil.getUnionPoligon(rect, tail) : rect;
+		
+		var g = graphics;
+		g.clear();
+		g.lineStyle(borderThickness, CMath.getColor(borderColor), CMath.getAlpha(borderColor));
+		g.beginFill(CMath.getColor(fillColor), CMath.getAlpha(fillColor));
+		
+		var i = 0;
+		var x0 = poligon[i];
+		var y0 = poligon[i + 1];
+		g.moveTo(x0, y0);
+		i += 2;
+		while (i < poligon.length)
 		{
-			rect.clear();
-			if (needDrawBorder)
-			{
-				rect.lineStyle(borderThickness * 2, CMath.getColor(color), CMath.getAlpha(color));
-			}
+			var x = poligon[i];
+			var y = poligon[i + 1];
+			g.lineTo(x, y);
+			i += 2;
 		}
-		rect.beginFill(CMath.getColor(color), useAlpha ? CMath.getAlpha(color) : 1);
-		rect.drawRoundRect(
-			borderThickness, borderThickness,
-			_width - borderThickness * 2,_height - borderThickness * 2,
-			borderRadius * 2
-		);
-		rect.endFill();
+		g.lineTo(x0, y0);
+		
+		g.endFill();
 	}
 	
 	function getMinPositive(k0:Float, k1:Float, k2:Float, k3:Float)

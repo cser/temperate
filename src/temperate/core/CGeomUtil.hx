@@ -40,21 +40,48 @@ class CGeomUtil
 	}
 	
 	/**
-	 * Mast be convex and clockwise direction both
+	 * Mast be convex both
 	 */
-	public static function getUnionPoligon(xys0:Array<Float>, xys1:Array<Float>):Array<Float>
+	public static function getUnionPoligon(
+		xys0:Array<Float>, xys1:Array<Float>, safetyCounter:Int = 1000
+	):Array<Float>
 	{
+		xys0 = getClockwized(xys0);
+		xys1 = getClockwized(xys1);
+		
 		var result = [];
 		
 		var xys = xys0;
 		var xys_ = xys1;
-		var i = xys.length - 2;
+		
+		
+		var j = xys.length;
+		var i = 0;
+		while (true)
+		{
+			j -= 2;
+			if (j < 0)
+			{
+				break;
+			}
+			if (!isInConvexPoligon(xys_, xys[j], xys[j + 1]))
+			{
+				i = j;
+				break;
+			}
+		}
+		
 		var x0 = xys[i];
-		var y0 = xys[i + 1];
+		var y0 = xys[i];
 		var startI = i;
 		var startXys = xys;
 		while (true)
 		{
+			safetyCounter--;
+			if (safetyCounter < 0)
+			{
+				break;
+			}
 			i += 2;
 			if (i >= xys.length)
 			{
@@ -124,6 +151,37 @@ class CGeomUtil
 		return result;
 	}
 	
+	private static function getClockwized(xys:Array<Float>):Array<Float>
+	{
+		var clockwized = {
+			var x0 = xys[0];
+			var y0 = xys[1];
+			var x1 = xys[2];
+			var y1 = xys[3];
+			var x2 = xys[4];
+			var y2 = xys[5];
+			(x1 - x0) * (y2 - y1) - (y1 - y0) * (x2 - x1) > 0;
+		}
+		if (clockwized)
+		{
+			return xys;
+		}
+		var result = [];
+		var i = xys.length;
+		var j = 0;
+		while (true)
+		{
+			i -= 2;
+			if (i < 0)
+			{
+				break;
+			}
+			result[j++] = xys[i];
+			result[j++] = xys[i + 1];
+		}
+		return result;
+	}
+	
 	public static inline function isSegmentsCross(
 		x1:Float, y1:Float, x2:Float, y2:Float, x1_:Float, y1_:Float, x2_:Float, y2_:Float):Bool
 	{
@@ -150,4 +208,52 @@ class CGeomUtil
 	
 	public static var lineIntersectX(default, null):Float;
 	public static var lineIntersectY(default, null):Float;
+	
+	public static function getNearestRectCross(
+		x0:Float, y0:Float, x1:Float, y1:Float,
+		rectX:Float, rectY:Float, rectWidth:Float, rectHeight:Float, crossIndent:Float)
+	{
+		var rectX0 = rectX - crossIndent;
+		var rectX1 = rectX + rectWidth + crossIndent;
+		var rectY0 = rectY - crossIndent;
+		var rectY1 = rectY + rectHeight + crossIndent;
+		
+		var dx = x1 - x0;
+		var dy = y1 - y0;
+		
+		var k = getMinPositive(
+			(rectX0 - x1) / dx,
+			(rectX1 - x1) / dx,
+			(rectY0 - y1) / dy,
+			(rectY1 - y1) / dy
+		);
+		
+		crossX = x1 - k * dx;
+		crossY = y1 - k * dy;
+	}
+	
+	static function getMinPositive(k0:Float, k1:Float, k2:Float, k3:Float)
+	{
+		var k = Math.POSITIVE_INFINITY;
+		if (k0 > 0)
+		{
+			k = k0;
+		}
+		if (k1 > 0 && k1 < k)
+		{
+			k = k1;
+		}
+		if (k2 > 0 && k2 < k)
+		{
+			k = k2;
+		}
+		if (k3 > 0 && k3 < k)
+		{
+			k = k3;
+		}
+		return k == Math.POSITIVE_INFINITY ? 0 : k;
+	}
+	
+	public static var crossX(default, null):Float;
+	public static var crossY(default, null):Float;
 }

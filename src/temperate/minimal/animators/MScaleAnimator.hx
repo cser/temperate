@@ -1,11 +1,11 @@
 package temperate.minimal.animators;
 import flash.display.DisplayObject;
 import flash.geom.Rectangle;
+import temperate.core.CGeomUtil;
 import temperate.minimal.easing.MBack;
 import temperate.minimal.MTween;
 import temperate.tooltips.animators.CAnimatorState;
 import temperate.tooltips.animators.ICTooltipAnimator;
-import temperate.tooltips.CGeomUtil;
 import temperate.tooltips.renderers.ICTooltip;
 
 class MScaleAnimator< T > implements ICTooltipAnimator<T>
