@@ -16,8 +16,22 @@ class CScrollBar extends CSprite
 	var _leftArrow:ACButton;
 	var _rightArrow:ACButton;
 	var _thumb:ACButton;
-	var _bg:Sprite;
 	var _bgSkin:ICScrollSkin;
+	
+	var _bg:Sprite;
+	
+	var _size_pageValid:Bool;
+	var _view_positionValid:Bool;
+	
+	var _timerHelper:CChangingTimerHelper;
+	var _pageTimerHelper:CChangingTimerHelper;
+	
+	var _isBgDown:Bool;
+	var _isBgDownLeft:Bool;
+	
+	var _guideCrossOffset:Int;
+	var _guideDirectOffset:Int;
+	var _guideSize:Int;
 	
 	public function new(
 		horizontal:Bool, leftArrow:ACButton, rightArrow:ACButton, thumb:ACButton,
@@ -40,24 +54,11 @@ class CScrollBar extends CSprite
 		_pageSize = Math.NaN;
 		_pageScrollSize = Math.NaN;
 		
-		init();
+		updateOnMove = false;
 		
-		_settedWidth = _horizontal ? 100 : 0;
-		_settedHeight = _horizontal ? 0 : 100;
+		_isBgDown = false;
+		_isBgDownLeft = false;
 		
-		_size_valid = false;
-		_view_valid = false;
-		postponeSize();
-	}
-	
-	var _size_pageValid:Bool;
-	var _view_positionValid:Bool;
-	
-	var _timerHelper:CChangingTimerHelper;
-	var _pageTimerHelper:CChangingTimerHelper;
-	
-	function init()
-	{
 		_bg = new Sprite();
 		addChild(_bg);
 		
@@ -65,10 +66,6 @@ class CScrollBar extends CSprite
 		addChild(_thumb);
 		addChild(_leftArrow);
 		addChild(_rightArrow);
-		
-		updateOnMove = false;
-		_isBgDown = false;
-		_isBgDownLeft = false;
 		
 		_timerHelper = new CChangingTimerHelper();
 		_timerHelper.onIncrease = onIncrease;
@@ -82,7 +79,15 @@ class CScrollBar extends CSprite
 		_pageTimerHelper = new CChangingTimerHelper();
 		_pageTimerHelper.onIncrease = onPageIncrease;
 		_pageTimerHelper.onDecrease = onPageDecrease;
+		
 		updateEnabledListeners();
+		
+		_settedWidth = _horizontal ? 100 : 0;
+		_settedHeight = _horizontal ? 0 : 100;
+		
+		_size_valid = false;
+		_view_valid = false;
+		postponeSize();
 	}
 	
 	function onIncrease()
@@ -192,7 +197,8 @@ class CScrollBar extends CSprite
 			!isIncrease && mousePosition > thumbPosition)
 		{
 			_pageTimerHelper.up();
-			doPageUp();
+			_isBgDown = false;
+			redrawBg();
 		}
 		else
 		{
@@ -201,34 +207,33 @@ class CScrollBar extends CSprite
 		}
 	}
 	
-	var _isBgDown:Bool;
-	var _isBgDownLeft:Bool;
+	function getMousePosition()
+	{
+		return _horizontal ? _bg.mouseX : _bg.mouseY;
+	}
+	
+	function getThumbCenter()
+	{
+		return Std.int(_horizontal ? _thumb.x + _thumb.width * .5 : _thumb.y + _thumb.height * .5);
+	}
 	
 	function onBgMouseDown(event:MouseEvent)
 	{
-		doBgMouseDown(false);
-		stage.addEventListener(MouseEvent.MOUSE_UP, onStagePageMouseUp);
-		_bg.addEventListener(MouseEvent.ROLL_OVER, onBgRollOver);
-		_bg.addEventListener(MouseEvent.ROLL_OUT, onBgRollOut);
-	}
-	
-	function doBgMouseDown(useSecondDelay:Bool)
-	{
-		var mousePosition = _horizontal ? _bg.mouseX : _bg.mouseY;
-		var thumbCenter = _horizontal ?
-			_thumb.x + _thumb.width * .5 :
-			_thumb.y + _thumb.height * .5;
 		_isBgDown = true;
-		_isBgDownLeft = mousePosition < thumbCenter;
+		_isBgDownLeft = getMousePosition() < getThumbCenter();
 		if (_isBgDownLeft)
 		{
-			_pageTimerHelper.decreaseDown(useSecondDelay);
+			_pageTimerHelper.decreaseDown(false);
 		}
 		else
 		{
-			_pageTimerHelper.increaseDown(useSecondDelay);
+			_pageTimerHelper.increaseDown(false);
 		}
 		redrawBg();
+		
+		stage.addEventListener(MouseEvent.MOUSE_UP, onStagePageMouseUp);
+		_bg.addEventListener(MouseEvent.ROLL_OVER, onBgRollOver);
+		_bg.addEventListener(MouseEvent.ROLL_OUT, onBgRollOut);
 	}
 	
 	function onStagePageMouseUp(event:MouseEvent)
@@ -236,22 +241,33 @@ class CScrollBar extends CSprite
 		_bg.removeEventListener(MouseEvent.ROLL_OVER, onBgRollOver);
 		_bg.removeEventListener(MouseEvent.ROLL_OUT, onBgRollOut);
 		_pageTimerHelper.up();
-		doPageUp();
+		_isBgDown = false;
+		redrawBg();
 	}
 	
 	function onBgRollOver(event:MouseEvent)
 	{
-		doBgMouseDown(true);
+		var currentIsBgDownLeft = getMousePosition() < getThumbCenter();
+		if (currentIsBgDownLeft != _isBgDownLeft)
+		{
+			return;
+		}
+		
+		_isBgDown = true;
+		if (_isBgDownLeft)
+		{
+			_pageTimerHelper.decreaseDown(true);
+		}
+		else
+		{
+			_pageTimerHelper.increaseDown(true);
+		}
+		redrawBg();
 	}
 	
 	function onBgRollOut(event:MouseEvent)
 	{
 		_pageTimerHelper.up();
-		doPageUp();
-	}
-	
-	function doPageUp()
-	{
 		_isBgDown = false;
 		redrawBg();
 	}
@@ -363,32 +379,29 @@ class CScrollBar extends CSprite
 		}
 	}
 	
-	var _guideCrossOffset:Int;
-	var _guideDirectOffset:Int;
-	var _guideSize:Int;
-	
 	function updateBaseArrange()
 	{
+		_leftArrow.x = 0;
+		_leftArrow.y = 0;
+		_guideCrossOffset = 0;
+		
 		if (_horizontal)
 		{
-			_leftArrow.x = 0;
-			_leftArrow.y = 0;
 			_rightArrow.x = _width - _rightArrow.width;
 			_rightArrow.y = 0;
+			
+			_guideDirectOffset = Std.int(_leftArrow.width);
+			_guideSize = Std.int(_width - _leftArrow.width - _rightArrow.width);
 		}
 		else
 		{
-			_leftArrow.x = 0;
-			_leftArrow.y = 0;
 			_rightArrow.x = 0;
 			_rightArrow.y = _height - _rightArrow.height;
+			
+			_guideDirectOffset = Std.int(_leftArrow.height);
+			_guideSize = Std.int(_height - _leftArrow.height - _rightArrow.height);
 		}
 		
-		_guideCrossOffset = 0;
-		_guideDirectOffset = Std.int(_horizontal ? _leftArrow.width : _leftArrow.height);
-		_guideSize = Std.int(_horizontal ?
-			_width - _leftArrow.width - _rightArrow.width :
-			_height - _leftArrow.height - _rightArrow.height);
 		updateThumbVisible();
 	}
 	
@@ -439,10 +452,7 @@ class CScrollBar extends CSprite
 	{
 		if (_isBgDown)
 		{
-			_bgSkin.redrawDown(
-				_isBgDownLeft,
-				Std.int(_horizontal ? _thumb.x + _thumb.width * .5 : _thumb.y + _thumb.height * .5)
-			);
+			_bgSkin.redrawDown(_isBgDownLeft, getThumbCenter());
 		}
 		else
 		{
