@@ -12,6 +12,7 @@ import temperate.core.CMouseWheelUtil;
 import temperate.layouts.CScrollLayout;
 import temperate.layouts.ICScrollLayout;
 import temperate.layouts.parametrization.CChildWrapper;
+import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
 
 class CScrollPane extends ACScrollPane, implements ICInvalidateClient
@@ -20,6 +21,11 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		newHScrollBar:Void->CScrollBar, newVScrollBar:Void->CScrollBar, bgSkin:ICRectSkin) 
 	{
 		super(newHScrollBar, newVScrollBar, bgSkin);
+		
+		contentIndentLeft = 1;
+		contentIndentRight = 1;
+		contentIndentTop = 0;
+		contentIndentBottom = 0;
 		
 		_scrollRect = new Rectangle();
 		
@@ -44,7 +50,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		
 		_useMouseWheel = true;
 		
-		updateControlsEnabled();
+		updateEnabled();
 		
 		_size_valid = false;
 		postponeSize();
@@ -55,7 +61,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		if (_isEnabled != value)
 		{
 			_isEnabled = value;
-			updateControlsEnabled();
+			updateEnabled();
 			
 			_view_valid = false;
 			postponeView();
@@ -63,7 +69,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		return _isEnabled;
 	}
 	
-	function updateControlsEnabled()
+	function updateEnabled()
 	{
 		updateMouseWheelEnabled();
 		if (_hScrollAvailable)
@@ -74,6 +80,8 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		{
 			_vScrollBar.isEnabled = _isEnabled;
 		}
+		
+		_bgSkin.state = _isEnabled ? CSkinState.NORMAL : CSkinState.DISABLED;
 	}
 	
 	function updateMouseWheelEnabled()
@@ -159,19 +167,24 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		{
 			_size_valid = true;
 			
+			var hIndent = contentIndentLeft + contentIndentRight;
+			var vIndent = contentIndentTop + contentIndentBottom;
+			
 			_layout.wrapper = _wrapper;
 			_layout.isCompactWidth = isCompactWidth;
 			_layout.isCompactHeight = isCompactHeight;
 			_layout.width = _settedWidth;
 			_layout.height = _settedHeight;
-			_layout.arrange();
+			_layout.arrange(hIndent, vIndent);
 			_width = _layout.width;
 			_height = _layout.height;
 			
 			_areaWidth = Std.int(_width - (_vScrollAvailable ? _vScrollBar.width : 0));
 			_areaHeight = Std.int(_height - (_hScrollAvailable ? _hScrollBar.height : 0));
-			_hMaxScrollValue = CMath.intMax(Std.int(_wrapper.getWidth() - _areaWidth), 0);
-			_vMaxScrollValue = CMath.intMax(Std.int(_wrapper.getHeight() - _areaHeight), 0);
+			_hMaxScrollValue =
+				CMath.intMax(Std.int(_wrapper.getWidth() - _areaWidth + hIndent), 0);
+			_vMaxScrollValue =
+				CMath.intMax(Std.int(_wrapper.getHeight() - _areaHeight + vIndent), 0);
 			fixScrollValue();
 			
 			_view_valid = false;
@@ -209,17 +222,13 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 			
 			_scrollRect.x = _hScrollValue;
 			_scrollRect.y = _vScrollValue;
-			_scrollRect.width = _areaWidth;
-			_scrollRect.height = _areaHeight;
+			_scrollRect.width = Std.int(_areaWidth) - contentIndentLeft - contentIndentRight;
+			_scrollRect.height = Std.int(_areaHeight) - contentIndentTop - contentIndentBottom;
 			_container.scrollRect = _scrollRect;
 			
 			_container.x = contentIndentLeft;
 			_container.y = contentIndentTop;
-			_bgSkin.setBounds(
-				0,
-				0,
-				Std.int(_areaWidth) + contentIndentLeft + contentIndentRight,
-				Std.int(_areaHeight) + contentIndentTop + contentIndentBottom);
+			_bgSkin.setBounds(0, 0, Std.int(_areaWidth), Std.int(_areaHeight));
 			_bgSkin.redraw();
 		}
 	}
@@ -272,6 +281,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	}
 	override function set_hScrollValue(value:Int)
 	{
+		validateSize();
 		setHScrollValue(value);
 		return _hScrollValue;
 	}
@@ -283,6 +293,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	}
 	override function set_vScrollValue(value:Int)
 	{
+		validateSize();
 		setVScrollValue(value);
 		return _vScrollValue;
 	}
@@ -388,12 +399,3 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		}
 	}
 }
-/*
-TODO
-Установка значений скроллинга, в том числе вначале
-Обновление при изменении контента
-Обновление при девалидации
-Отступы и политики размеров для контента
-Отступы относительно скроллируемой области
-Неактивное состояние
-*/

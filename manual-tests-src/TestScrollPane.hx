@@ -84,6 +84,52 @@ class TestScrollPane extends Sprite
 				line, CScrollPolicy.ON, CScrollPolicy.AUTO, new MButton().setText("Button"))
 				.setPercents(100, 100)
 				.setContingencies(75, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
+			
+			{
+				var column = new CVBox();
+				column.setIndents(0, 20, 0, 10);
+				new MLabel().setText("isEnabled = false").addTo(column);
+				var scrollPane = new CScrollPane(
+					newHScrollBar, newVScrollBar, new MFieldRectSkin()
+				);
+				scrollPane.hScrollPolicy = CScrollPolicy.ON;
+				scrollPane.vScrollPolicy = CScrollPolicy.ON;
+				scrollPane.set(newShape(81, 50));
+				scrollPane.setSize(80, 80);
+				scrollPane.isEnabled = false;
+				var scaler = new Scaler(scrollPane);
+				column.add(scaler);
+				line.addChild(column);
+			}
+			
+			{
+				var column = new CVBox();
+				column.setIndents(0, 20, 0, 10);
+				new MLabel().setText("scroll = (10, 20)").addTo(column);
+				var scrollPane = new CScrollPane(
+					newHScrollBar, newVScrollBar, new MFieldRectSkin()
+				);
+				scrollPane.hScrollPolicy = CScrollPolicy.ON;
+				scrollPane.vScrollPolicy = CScrollPolicy.ON;
+				scrollPane.set(newShape(100, 100));
+				scrollPane.setSize(80, 80);
+				scrollPane.hScrollValue = 10;
+				scrollPane.vScrollValue = 20;
+				var scaler = new Scaler(scrollPane);
+				column.add(scaler);
+				line.addChild(column);
+			}
+		}
+		
+		{
+			var line = new CHBox().addTo(main);
+			
+			newIndentedScrollPaneBlock(line, CScrollPolicy.OFF, CScrollPolicy.OFF);
+			newIndentedScrollPaneBlock(line, CScrollPolicy.AUTO, CScrollPolicy.OFF);
+			newIndentedScrollPaneBlock(line, CScrollPolicy.AUTO, CScrollPolicy.ON);
+			newIndentedScrollPaneBlock(line, CScrollPolicy.OFF, CScrollPolicy.AUTO);
+			newIndentedScrollPaneBlock(line, CScrollPolicy.ON, CScrollPolicy.AUTO);
+			newIndentedScrollPaneBlock(line, CScrollPolicy.AUTO, CScrollPolicy.AUTO);
 		}
 	}
 	
@@ -101,6 +147,30 @@ class TestScrollPane extends Sprite
 		scrollPane.hScrollPolicy = hScrollPolicy;
 		scrollPane.vScrollPolicy = vScrollPolicy;
 		var wrapper = scrollPane.set(content);
+		scrollPane.setSize(80, 80);
+		var scaler = new Scaler(scrollPane);
+		column.add(scaler);
+		parent.addChild(column);
+		return wrapper;
+	}
+	
+	function newIndentedScrollPaneBlock(
+		parent:DisplayObjectContainer,
+		hScrollPolicy:CScrollPolicy, vScrollPolicy:CScrollPolicy
+	):CChildWrapper
+	{
+		var column = new CVBox();
+		column.setIndents(0, 20, 0, 10);
+		new MLabel().setText(
+			"hScrollPolicy=" + hScrollPolicy + "\nvScrollPolicy=" + vScrollPolicy
+		).addTo(column);
+		var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+		scrollPane.setContentIndents(20, 10, 5, 15);
+		scrollPane.hScrollPolicy = hScrollPolicy;
+		scrollPane.vScrollPolicy = vScrollPolicy;
+		var wrapper = scrollPane.set(new MButton().setText("Content"))
+			.setPercents(100, 100)
+			.setContingencies(75, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
 		scrollPane.setSize(80, 80);
 		var scaler = new Scaler(scrollPane);
 		column.add(scaler);

@@ -10,7 +10,7 @@ interface ICScrollLayout
 	var showVScrollBar:Void->DisplayObject;
 	var hideVScrollBar:Void->Void;
 	
-	function arrange():Void;
+	function arrange(hIndent:Int, vIndent:Int):Void;
 		
 	var wrapper:CChildWrapper;
 	
