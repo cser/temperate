@@ -1,6 +1,6 @@
 package temperate.collections;
 
-class CLinkedStack< T >
+class CValueStack< T >
 {
 	public function new(changeCallback:Void->Void = null)
 	{
@@ -8,16 +8,16 @@ class CLinkedStack< T >
 	}
 	
 	var _changeCallback:Void->Void;
-	var _head:CLinkedStackNode<T>;
+	var _head:CValueStackNode<T>;
 	
 	public var value(default, null):T;
 	
 	public function newSwitcher(priority:Int = 0):ICValueSwitcher<T>
 	{
-		return new CLinkedStackNode(add, remove, priority);
+		return new CValueStackNode(add, remove, priority);
 	}
 	
-	function add(node:CLinkedStackNode<T>)
+	function add(node:CValueStackNode<T>)
 	{
 		if (_head != null)
 		{
@@ -71,7 +71,7 @@ class CLinkedStack< T >
 		}
 	}
 	
-	function remove(node:CLinkedStackNode<T>)
+	function remove(node:CValueStackNode<T>)
 	{
 		if (_head != null)
 		{
@@ -100,7 +100,7 @@ class CLinkedStack< T >
 		}
 	}
 	
-	inline function removeFromList(node:CLinkedStackNode<T>)
+	inline function removeFromList(node:CValueStackNode<T>)
 	{
 		if (node == _head)
 		{

@@ -1,12 +1,12 @@
 package temperate.collections;
 
-class CLinkedStackNode< T > implements ICValueSwitcher<T>
+class CValueStackNode< T > implements ICValueSwitcher<T>
 {
-	private var _add:CLinkedStackNode<T>->Void;
-	private var _remove:CLinkedStackNode<T>->Void;
+	private var _add:CValueStackNode<T>->Void;
+	private var _remove:CValueStackNode<T>->Void;
 	
 	public function new(
-		add:CLinkedStackNode<T>->Void, remove:CLinkedStackNode<T>->Void, priority:Int) 
+		add:CValueStackNode<T>->Void, remove:CValueStackNode<T>->Void, priority:Int) 
 	{
 		_add = add;
 		_remove = remove;
@@ -35,8 +35,8 @@ class CLinkedStackNode< T > implements ICValueSwitcher<T>
 		return this;
 	}
 	
-	public var prev:CLinkedStackNode<T>;
-	public var next:CLinkedStackNode<T>;
+	public var prev:CValueStackNode<T>;
+	public var next:CValueStackNode<T>;
 	
 	public var changeCallback:Void->Void;
 	

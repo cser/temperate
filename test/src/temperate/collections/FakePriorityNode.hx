@@ -1,17 +1,14 @@
 package temperate.collections;
 
-class FakeComponent implements ICComponent<FakeComponent>
+class FakePriorityNode extends ACPriorityListNode<FakePriorityNode>
 {
 	public function new(value:String) 
 	{
+		super();
 		_value = value;
 	}
 	
 	var _value:String;
-	
-	public var prev:FakeComponent;
-	
-	public var next:FakeComponent;
 	
 	public function getValues():String
 	{

@@ -3,7 +3,7 @@ package temperate.collections;
 import haxe.PosInfos;
 import massive.munit.Assert;
 
-class CLinkedStackTest
+class CValueStackTest
 {
 	public function new()
 	{
@@ -377,7 +377,7 @@ class CLinkedStackTest
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 	}
 	
-	function assertNoNodeCallbacksExcludeHead<T>(head:CLinkedStackNode<T>, ?info:PosInfos)
+	function assertNoNodeCallbacksExcludeHead<T>(head:CValueStackNode<T>, ?info:PosInfos)
 	{
 		Assert.isTrue(true);// For prevent "no assert" error
 		if (head == null)
@@ -396,7 +396,7 @@ class CLinkedStackTest
 /**
  * Public Morozov :)
  */
-class ExtendedLinkedStack< T > extends CLinkedStack<T>
+class ExtendedLinkedStack< T > extends CValueStack<T>
 {
 	public function new(changeCallback:Void->Void = null)
 	{

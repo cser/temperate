@@ -1,12 +1,12 @@
 package temperate.cursors;
 import flash.display.DisplayObject;
 import flash.events.MouseEvent;
-import temperate.collections.CLinkedStack;
+import temperate.collections.CValueStack;
 import temperate.collections.ICValueSwitcher;
 
 class CHoverSwitcher< T >
 {
-	public function new(stack:CLinkedStack<T>, priority:Int) 
+	public function new(stack:CValueStack<T>, priority:Int) 
 	{
 		_switcher = stack.newSwitcher(priority);
 	}
