@@ -1,89 +1,23 @@
 ﻿package temperate.layouts.helpers;
 import temperate.core.CMath;
 
-class LayoutAlgoritms 
+class CLayoutAlgoritms 
 {
-	/*
-	 * Gets from mx.containers.utilityClasses.Flex class of Flex 2.0
-	 */
-	/*
-	<!-- Ломаем флексовую раскладку -->
+	/**
+	 * Works better than HBox/VBox layout in Flex 2.0
+	
+	<!-- Damage flex HBox layout -->
 	<mx:HBox width="100%" horizontalGap="0">
 		<mx:Button label="0" width="100%" maxWidth="100" />
 		<mx:Button label="1" width="10%" minWidth="100" />
 		<mx:Button label="2" width="100%" />
 		<mx:Button label="3" width="10%" />
 	</mx:HBox>
-	*/
-	/*public static function flexDistributeProportionally(
-		spaceForChildren:Float,
-		spaceToDistribute:Float,
-		sumPortion:Float,
-		sizeInfos:Array<SizeInfo>
-	):Float
-	{
-		var numChildren = sizeInfos.length;
-		var unused = spaceToDistribute - spaceForChildren * sumPortion;
-		if (unused > 0)
-		{
-			spaceToDistribute -= unused;
-		}
-		
-		var flexConsumed; 
-		var done;
-		do
-		{
-			flexConsumed = 0.;
-			done = true;
-			var spacePerPortion = spaceToDistribute / sumPortion;
-			var i = 0;
-			while (i < numChildren)
-			{
-				var sizeInfo = sizeInfos[i];
-				var size = sizeInfo.portion * spacePerPortion;
-				if (size < sizeInfo.min)
-				{
-					var min = sizeInfo.min;
-					sizeInfo.size = min;
-					sizeInfos[i] = sizeInfos[--numChildren];
-					sizeInfos[numChildren] = sizeInfo;
-					sumPortion -= sizeInfo.portion;
-					spaceToDistribute -= min;
-					done = false;
-					break;
-				}
-				else if (size > sizeInfo.max)
-				{
-					var max = sizeInfo.max;
-					sizeInfo.size = max;
-					sizeInfos[i] = sizeInfos[--numChildren];
-					sizeInfos[numChildren] = sizeInfo;
-					sumPortion -= sizeInfo.portion;
-					spaceToDistribute -= max;
-					done = false;
-					break;
-				}
-				else
-				{
-					sizeInfo.size = size;
-					flexConsumed += size;
-				}
-				i++;
-			}
-		} 
-		while (!done);
-		
-		return Math.max(0, spaceToDistribute - flexConsumed);
-	}*/
 	
+	*/
 	public static function distributeProportionally(
-		sumSize:Float, sumPortion:Float, infos:Array<SizeInfo>)
+		sumSize:Float, sumPortion:Float, infos:Array<CSizeInfo>)
 	{
-		/*
-		 * Key layout algoritm.
-		 * More correct than mx.containers.utilityClasses.Flex::flexChildrenProportionally.
-		 * Shortcomings: fouls by arrays;
-		 */
 		if (infos.length == 0)
 		{
 			return CMath.max(sumSize, 0);

@@ -13,7 +13,7 @@ import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MLabel;
 import temperate.minimal.skins.MFieldRectSkin;
-import temperate.raster.Scale9GridDrawer;
+import temperate.raster.CScale9GridDrawer;
 import temperate.skins.CRasterScrollDrawedSkin;
 
 class TestSimpleButtonWrapper extends Sprite
@@ -141,7 +141,7 @@ class TestSimpleButtonWrapper extends Sprite
 			new CSimpleButtonWrapper(newUpSimpleButton()),
 			new CSimpleButtonWrapper(newDownSimpleButton()),
 			new CSimpleButtonWrapper(newUpSimpleButton()),
-			new CRasterScrollDrawedSkin(MCommonBdFactory.getTextBg(), new Scale9GridDrawer(), 18),
+			new CRasterScrollDrawedSkin(MCommonBdFactory.getTextBg(), new CScale9GridDrawer(), 18),
 			false);
 	}
 }

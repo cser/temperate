@@ -4,12 +4,12 @@ import flash.display.DisplayObjectContainer;
 import flash.utils.TypedDictionary;
 import temperate.core.CMath;
 import temperate.core.CSprite;
-import temperate.layouts.ILineLayout;
-import temperate.layouts.parametrization.ChildWrapper;
+import temperate.layouts.ICLineLayout;
+import temperate.layouts.parametrization.CChildWrapper;
 
-class ACLineBox extends CSprite, implements IInvalidateClient
+class ACLineBox extends CSprite, implements ICInvalidateClient
 {
-	public function new(layout:ILineLayout) 
+	public function new(layout:ICLineLayout) 
 	{
 		super();
 		_layout = layout;
@@ -20,13 +20,13 @@ class ACLineBox extends CSprite, implements IInvalidateClient
 		_indentBottom = 0;
 	}
 	
-	var _layout:ILineLayout;
+	var _layout:ICLineLayout;
 	
-	var _wrapperByChild:TypedDictionary<DisplayObject, ChildWrapper>;
+	var _wrapperByChild:TypedDictionary<DisplayObject, CChildWrapper>;
 	
-	public function add(child:DisplayObject):ChildWrapper
+	public function add(child:DisplayObject):CChildWrapper
 	{
-		var wrapper = new ChildWrapper(child);
+		var wrapper = new CChildWrapper(child);
 		super.addChild(child);
 		_layout.add(wrapper);
 		_size_valid = false;
@@ -38,7 +38,7 @@ class ACLineBox extends CSprite, implements IInvalidateClient
 	override public function addChild(child:DisplayObject)
 	{
 		super.addChild(child);
-		var wrapper = new ChildWrapper(child);
+		var wrapper = new CChildWrapper(child);
 		_layout.add(wrapper);
 		_size_valid = false;
 		postponeSize();
@@ -49,7 +49,7 @@ class ACLineBox extends CSprite, implements IInvalidateClient
 	override public function addChildAt(child:DisplayObject, index:Int)
 	{
 		super.addChildAt(child, index);
-		var wrapper = new ChildWrapper(child);
+		var wrapper = new CChildWrapper(child);
 		_layout.addAt(wrapper, index);
 		_size_valid = false;
 		postponeSize();
@@ -179,7 +179,7 @@ class ACLineBox extends CSprite, implements IInvalidateClient
 	}
 	
 	/**
-	 * Call directly if child sizes changed and need update layout
+	 * Call it directly if child sizes changed and need update layout
 	 */
 	public function invalidate()
 	{

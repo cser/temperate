@@ -3,7 +3,7 @@ import flash.display.BitmapData;
 import flash.display.Graphics;
 import flash.geom.Matrix;
 
-class Scale3GridDrawer implements IDrawer
+class CScale3GridDrawer implements ICDrawer
 {
 	private static inline var DEFAULT_PADDING = 8;
 	
@@ -45,7 +45,7 @@ class Scale3GridDrawer implements IDrawer
 	
 	public var height:Int;
 	
-	public function setBounds(x:Int, y:Int, width:Int, height:Int):IDrawer
+	public function setBounds(x:Int, y:Int, width:Int, height:Int):ICDrawer
 	{
 		this.x = x;
 		this.y = y;
@@ -60,7 +60,7 @@ class Scale3GridDrawer implements IDrawer
 	
 	public var bitmapHeight(default, null):Int;
 	
-	public function setBitmapData(bitmapData:BitmapData):IDrawer
+	public function setBitmapData(bitmapData:BitmapData):ICDrawer
 	{
 		this.bitmapData = bitmapData;
 		if (bitmapData != null)

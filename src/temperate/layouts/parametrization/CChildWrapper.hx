@@ -2,7 +2,7 @@ package temperate.layouts.parametrization;
 import flash.display.DisplayObject;
 import temperate.core.CMath;
 
-class ChildWrapper 
+class CChildWrapper 
 {
 	public function new(child:DisplayObject)
 	{

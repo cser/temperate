@@ -1,6 +1,6 @@
 ﻿package temperate.layouts;
 
-class HLayout extends VLayout
+class CHLayout extends CVLayout
 {
 	public function new() 
 	{

@@ -1,6 +1,6 @@
 package temperate.containers;
 
-interface IInvalidateClient 
+interface ICInvalidateClient
 {
 	function invalidate():Void;
 }

@@ -3,7 +3,7 @@ import flash.display.DisplayObject;
 import flash.text.TextField;
 import temperate.components.CScrollPolicy;
 
-interface IScrollTextLayout
+interface ICScrollTextLayout
 {
 	function arrange(
 		showHScrollBar:Void->DisplayObject,

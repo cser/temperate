@@ -7,8 +7,8 @@ import temperate.components.ACScrollPane;
 import temperate.components.CScrollBar;
 import temperate.components.CScrollPolicy;
 import temperate.core.CMath;
-import temperate.layouts.IScrollTextLayout;
-import temperate.layouts.ScrollTextLayout;
+import temperate.layouts.ICScrollTextLayout;
+import temperate.layouts.CScrollTextLayout;
 import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
 
@@ -31,7 +31,7 @@ class CTextArea extends ACScrollPane
 		_tf.addEventListener(Event.CHANGE, onTfChange);
 		addChild(_tf);
 		
-		_layout = new ScrollTextLayout();
+		_layout = new CScrollTextLayout();
 		_layout.tf = _tf;
 		
 		_layout.hScrollPolicy = CScrollPolicy.AUTO;
@@ -53,7 +53,7 @@ class CTextArea extends ACScrollPane
 	
 	var _view_firstValid:Bool;
 	
-	var _layout:IScrollTextLayout;
+	var _layout:ICScrollTextLayout;
 	var _tf:TextField;
 	
 	override function doValidateSize()
@@ -272,25 +272,25 @@ class CTextArea extends ACScrollPane
 	public var hMaxScrollValue(get_hMaxScrollValue, null):Int;
 	function get_hMaxScrollValue()
 	{
-		return Std.int(_vScrollBar.maxValue);
+		return _tf.maxScrollH;
 	}
 	
 	public var vMaxScrollValue(get_vMaxScrollValue, null):Int;
 	function get_vMaxScrollValue()
 	{
-		return Std.int(_vScrollBar.maxValue);
+		return _tf.maxScrollV;
 	}
 	
 	public var hMinScrollValue(get_hMinScrollValue, null):Int;
 	function get_hMinScrollValue()
 	{
-		return Std.int(_vScrollBar.minValue);
+		return 0;
 	}
 	
 	public var vMinScrollValue(get_vMinScrollValue, null):Int;
 	function get_vMinScrollValue()
 	{
-		return Std.int(_vScrollBar.minValue);
+		return 1;
 	}
 	
 	public var hScrollPolicy(get_hScrollPolicy, set_hScrollPolicy):CScrollPolicy;

@@ -158,7 +158,7 @@ class CSprite extends Sprite
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	public function setPosition(x:Float, y:Float)
+	public function move(x:Float, y:Float)
 	{
 		this.x = x;
 		this.y = y;

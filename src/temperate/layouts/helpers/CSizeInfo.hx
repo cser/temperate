@@ -1,6 +1,6 @@
 ﻿package temperate.layouts.helpers;
 
-class SizeInfo 
+class CSizeInfo 
 {	
 	private function new()
 	{
@@ -21,13 +21,13 @@ class SizeInfo
 		else
 		{
 			num++;
-			new SizeInfo();
+			new CSizeInfo();
 		}
 	}
 	
-	static var _first:SizeInfo;
+	static var _first:CSizeInfo;
 	
-	var _next:SizeInfo;
+	var _next:CSizeInfo;
 	
 	public inline function dispose()
 	{

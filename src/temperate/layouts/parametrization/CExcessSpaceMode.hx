@@ -1,6 +1,6 @@
-﻿package temperate.layouts;
+﻿package temperate.layouts.parametrization;
 
-enum ExcessSpaceMode 
+enum CExcessSpaceMode 
 {
 	UNIFORM;
 	INCREASE_GAPS;

@@ -1,10 +1,10 @@
 ﻿package temperate.layouts;
-import temperate.layouts.ILayout;
-import temperate.layouts.parametrization.ChildWrapper;
+import temperate.layouts.ICLayout;
+import temperate.layouts.parametrization.CChildWrapper;
 
-class ALayout implements ILayout
+class ACLayout implements ICLayout
 {
-	public function new() 
+	function new() 
 	{
 		width = 0;
 		height = 0;
@@ -22,7 +22,7 @@ class ALayout implements ILayout
 		
 	}
 	
-	public function iterator():Iterator<ChildWrapper>
+	public function iterator():Iterator<CChildWrapper>
 	{
 		return null;
 	}

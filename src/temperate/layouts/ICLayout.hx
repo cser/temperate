@@ -1,13 +1,13 @@
 ﻿package temperate.layouts;
-import temperate.layouts.parametrization.ChildWrapper;
+import temperate.layouts.parametrization.CChildWrapper;
 
-interface ILayout 
+interface ICLayout 
 {
 	function arrange(offsetX:Int, offsetY:Int):Void;
 	
 	function removeAll():Void;
 	
-	function iterator():Iterator<ChildWrapper>;
+	function iterator():Iterator<CChildWrapper>;
 	
 	var width:Float;
 	

@@ -2,7 +2,7 @@ package temperate.raster;
 import flash.display.BitmapData;
 import flash.display.Graphics;
 
-interface IDrawer 
+interface ICDrawer 
 {
 	public var graphics:Graphics;
 	
@@ -14,7 +14,7 @@ interface IDrawer
 	
 	var height:Int;
 	
-	function setBounds(x:Int, y:Int, width:Int, height:Int):IDrawer;
+	function setBounds(x:Int, y:Int, width:Int, height:Int):ICDrawer;
 	
 	var bitmapData(default, null):BitmapData;
 	
@@ -22,7 +22,7 @@ interface IDrawer
 	
 	var bitmapHeight(default, null):Int;
 	
-	function setBitmapData(bitmapData:BitmapData):IDrawer;
+	function setBitmapData(bitmapData:BitmapData):ICDrawer;
 	
 	function redraw():Void;
 	

@@ -1,10 +1,10 @@
 ﻿package temperate.layouts;
 import temperate.core.CMath;
-import temperate.layouts.ExcessSpaceMode;
-import temperate.layouts.helpers.LayoutAlgoritms;
-import temperate.layouts.helpers.SizeInfo;
+import temperate.layouts.parametrization.CExcessSpaceMode;
+import temperate.layouts.helpers.CLayoutAlgoritms;
+import temperate.layouts.helpers.CSizeInfo;
 
-class VLayout extends ALineLayout
+class CVLayout extends ACLineLayout
 {
 	public function new() 
 	{	
@@ -152,7 +152,7 @@ class VLayout extends ALineLayout
 			{
 				sumPortion += portion;
 				
-				var info = SizeInfo.get();
+				var info = CSizeInfo.get();
 				info.portion = portion;
 				info.index = i;
 				if (horizontal)
@@ -177,7 +177,7 @@ class VLayout extends ALineLayout
 			}
 		}
 		
-		var space = LayoutAlgoritms.distributeProportionally(sumScaled, sumPortion, infos);
+		var space = CLayoutAlgoritms.distributeProportionally(sumScaled, sumPortion, infos);
 		
 		for (info in infos)
 		{
@@ -266,5 +266,5 @@ class VLayout extends ALineLayout
 		}
 	}
 	
-	public var excessSpaceMode:ExcessSpaceMode;
+	public var excessSpaceMode:CExcessSpaceMode;
 }

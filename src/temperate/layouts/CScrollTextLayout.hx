@@ -3,7 +3,7 @@ import flash.display.DisplayObject;
 import flash.text.TextField;
 import temperate.components.CScrollPolicy;
 
-class ScrollTextLayout implements IScrollTextLayout
+class CScrollTextLayout implements ICScrollTextLayout
 {
 	public function new()
 	{
