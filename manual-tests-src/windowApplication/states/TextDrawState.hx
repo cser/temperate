@@ -9,12 +9,15 @@ import temperate.minimal.MInputField;
 import temperate.minimal.MWindowedContainer;
 import temperate.minimal.MWindowManager;
 import temperate.windows.events.CWindowEvent;
+import windowApplication.assets.Text;
 
 class TextDrawState extends ADrawState
 {
 	public function new() 
 	{
 		super();
+		
+		icon = Text;
 	}
 	
 	var _x:Float;

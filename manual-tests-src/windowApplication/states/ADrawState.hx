@@ -1,4 +1,5 @@
 package windowApplication.states;
+import flash.display.BitmapData;
 import flash.display.Graphics;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
@@ -11,6 +12,8 @@ class ADrawState
 		_topSprite =  new Sprite();
 		_topGraphics = _topSprite.graphics;
 	}
+	
+	public var icon(default, null):Class<BitmapData>;
 	
 	var _image:CSprite;
 	var _graphics:Graphics;

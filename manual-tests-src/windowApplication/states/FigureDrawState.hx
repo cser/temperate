@@ -1,12 +1,15 @@
 package windowApplication.states;
 import flash.events.MouseEvent;
 import temperate.core.CMath;
+import windowApplication.assets.Figure;
 
 class FigureDrawState extends ADrawState
 {
 	public function new() 
 	{
 		super();
+		
+		icon = Figure;
 	}
 	
 	override function subscribe()

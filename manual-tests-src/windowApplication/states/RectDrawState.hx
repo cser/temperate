@@ -1,10 +1,13 @@
 package windowApplication.states;
+import windowApplication.assets.Rect;
 
 class RectDrawState extends ADrawState
 {
 	public function new() 
 	{
 		super();
+		
+		icon = Rect;
 	}
 	
 	var _x:Float;

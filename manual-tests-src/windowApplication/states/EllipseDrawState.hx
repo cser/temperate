@@ -1,10 +1,13 @@
 package windowApplication.states;
+import windowApplication.assets.Ellipse;
 
 class EllipseDrawState extends ADrawState
 {
 	public function new() 
 	{
 		super();
+		
+		icon = Ellipse;
 	}
 	
 	var _x:Float;

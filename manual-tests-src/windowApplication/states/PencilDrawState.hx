@@ -1,10 +1,13 @@
 package windowApplication.states;
+import windowApplication.assets.Pencil;
 
 class PencilDrawState extends ADrawState
 {
 	public function new() 
 	{
 		super();
+		
+		icon = Pencil;
 	}
 	
 	override function doStart()

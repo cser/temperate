@@ -1,10 +1,13 @@
 package windowApplication.states;
+import windowApplication.assets.Line;
 
 class LineDrawState extends ADrawState
 {
 	public function new() 
 	{
 		super();
+		
+		icon = Line;
 	}
 	
 	var _x:Float;

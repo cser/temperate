@@ -1,10 +1,15 @@
 package ;
+import flash.display.Bitmap;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.geom.Point;
 import flash.Lib;
 import temperate.core.CSprite;
+import temperate.cursors.CCursor;
+import temperate.cursors.CHoverSwitcher;
+import temperate.cursors.ICCursor;
 import temperate.debug.FPSMonitor;
+import temperate.minimal.MCursorManager;
 import temperate.minimal.MWindowManager;
 import temperate.windows.CWindowManager;
 import temperate.windows.docks.CWindowAbsoluteDock;
@@ -15,6 +20,12 @@ import windowApplication.NewWindow;
 import windowApplication.OpenWindow;
 import windowApplication.SaveWindow;
 import windowApplication.states.ADrawState;
+import windowApplication.states.EllipseDrawState;
+import windowApplication.states.FigureDrawState;
+import windowApplication.states.LineDrawState;
+import windowApplication.states.PencilDrawState;
+import windowApplication.states.RectDrawState;
+import windowApplication.states.TextDrawState;
 import windowApplication.ToolsWindow;
 
 class TestWindowApplication extends Sprite
@@ -25,6 +36,7 @@ class TestWindowApplication extends Sprite
 	}
 	
 	var _imageManager:CWindowManager;
+	var _toolCursor:CHoverSwitcher<ICCursor>;
 	
 	public function init()
 	{
@@ -33,14 +45,26 @@ class TestWindowApplication extends Sprite
 		stage.addEventListener(Event.RESIZE, onStageResize);
 		onStageResize();
 		
-		var toolsWindow = new ToolsWindow(this);
+		_toolCursor = MCursorManager.newHover(-1);
+		
+		var pencilState = new PencilDrawState();
+		var states:Array<ADrawState> = [];
+		states.push(new TextDrawState());
+		states.push(new EllipseDrawState());
+		states.push(new LineDrawState());
+		states.push(new FigureDrawState());
+		states.push(pencilState);
+		states.push(new RectDrawState());
+		var toolsWindow = new ToolsWindow(this, states, pencilState);
 		MWindowManager.add(toolsWindow, false, true);
 		toolsWindow.move(Std.int(stage.stageWidth) - toolsWindow.width - 10, 50);
 	}
 	
 	function onImageSelect(event:Event)
 	{
-		_state.setImage(getCurrentImage());
+		var image = getCurrentImage();
+		_state.setImage(image);
+		_toolCursor.setTarget(image);
 	}
 	
 	var _state:ADrawState;
@@ -57,6 +81,12 @@ class TestWindowApplication extends Sprite
 			if (_state != null)
 			{
 				_state.setImage(getCurrentImage());
+				_toolCursor.value = new CCursor()
+					.setView(new Bitmap(Type.createInstance(_state.icon, [])), true, 10, 14);
+			}
+			else
+			{
+				_toolCursor.value = null;
 			}
 		}
 	}
