@@ -186,13 +186,13 @@ class CTextArea extends ACScrollPane
 	
 	function updateControlsEnabled()
 	{
-		if (_vScrollBar != null)
-		{
-			_vScrollBar.isEnabled = _isEnabled;
-		}
-		if (_hScrollBar != null)
+		if (_hScrollAvailable)
 		{
 			_hScrollBar.isEnabled = _isEnabled;
+		}
+		if (_vScrollAvailable)
+		{
+			_vScrollBar.isEnabled = _isEnabled;
 		}
 		if (_isEnabled)
 		{
@@ -245,24 +245,22 @@ class CTextArea extends ACScrollPane
 		return value;
 	}
 	
-	public var hScrollValue(get_hScrollValue, set_hScrollValue):Int;
-	function get_hScrollValue()
+	override function get_hScrollValue()
 	{
 		return _tf.scrollH;
 	}
-	function set_hScrollValue(value:Int)
+	override function set_hScrollValue(value:Int)
 	{
 		validate();
 		_tf.scrollH = value;
 		return _tf.scrollH;
 	}
 	
-	public var vScrollValue(get_vScrollValue, set_vScrollValue):Int;
-	function get_vScrollValue()
+	override function get_vScrollValue()
 	{
 		return _tf.scrollV;
 	}
-	function set_vScrollValue(value:Int)
+	override function set_vScrollValue(value:Int)
 	{
 		validate();
 		_tf.scrollV = value;

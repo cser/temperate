@@ -1,12 +1,16 @@
-package temperate.components;
+package temperate.containers;
 import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.events.MouseEvent;
 import flash.geom.Rectangle;
+import temperate.components.ACScrollPane;
+import temperate.components.CScrollBar;
 import temperate.containers.ICInvalidateClient;
 import temperate.core.CMath;
 import temperate.layouts.CScrollLayout;
 import temperate.layouts.ICScrollLayout;
+import temperate.layouts.parametrization.CChildWrapper;
 import temperate.skins.ICRectSkin;
 
 class CScrollPane extends ACScrollPane, implements ICInvalidateClient
@@ -31,8 +35,53 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		contentIndentTop = 0;
 		contentIndentBottom = 0;
 		
+		updateControlsEnabled();
+		
 		_size_valid = false;
 		postponeSize();
+	}
+	
+	override function set_isEnabled(value)
+	{
+		if (_isEnabled != value)
+		{
+			_isEnabled = value;
+			updateControlsEnabled();
+			
+			_view_valid = false;
+			postponeView();
+		}
+		return _isEnabled;
+	}
+	
+	function updateControlsEnabled()
+	{
+		if (_isEnabled)
+		{
+			_container.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+		}
+		else
+		{
+			_container.removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+		}
+		if (_hScrollAvailable)
+		{
+			_hScrollBar.isEnabled = _isEnabled;
+		}
+		if (_vScrollAvailable)
+		{
+			_vScrollBar.isEnabled = _isEnabled;
+		}
+	}
+	
+	function onMouseWheel(event:MouseEvent)
+	{
+		var delta = event.delta;
+		var sign = delta > 0 ? -1 : 1;
+		setVScrollValue(
+			Std.int(
+				_vScrollValue +
+				sign * _vScrollStep * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3))));
 	}
 	
 	private var _scrollRect:Rectangle;
@@ -44,13 +93,16 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		return new CScrollLayout();
 	}
 	
-	public var content(get_content, set_content):DisplayObject;
+	var _wrapper:CChildWrapper;
+	
+	public var content(get_content, null):DisplayObject;
 	var _content:DisplayObject;
 	function get_content()
 	{
 		return _content;
 	}
-	function set_content(value:DisplayObject)
+	
+	public function set(value:DisplayObject):CChildWrapper
 	{
 		if (_content != value)
 		{
@@ -62,11 +114,16 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 			if (_content != null)
 			{
 				_container.addChild(_content);
+				_wrapper = new CChildWrapper(_content);
+			}
+			else
+			{
+				_wrapper = null;
 			}
 			_size_valid = false;
 			postponeSize();
 		}
-		return _content;
+		return _wrapper;
 	}
 	
 	override function doValidateSize()
@@ -75,28 +132,14 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		{
 			_size_valid = true;
 			
-			_width = isCompactWidth ? 0 : _settedWidth;
-			_height = isCompactHeight ? 0 : _settedHeight;
-			
-			if (_content != null)
-			{
-				if (_content.width > _width)
-				{
-					showHScrollBar();
-				}
-				if (_content.height > _height)
-				{
-					showVScrollBar();
-				}
-				if (_hScrollAvailable)
-				{
-					_hScrollBar.width = _width;
-				}
-				if (_vScrollAvailable)
-				{
-					_vScrollBar.height = _height;
-				}
-			}
+			_layout.wrapper = _wrapper;
+			_layout.isCompactWidth = isCompactWidth;
+			_layout.isCompactHeight = isCompactHeight;
+			_layout.width = _settedWidth;
+			_layout.height = _settedHeight;
+			_layout.arrange(showHScrollBar, hideHScrollBar, showVScrollBar, hideVScrollBar);
+			_width = _layout.width;
+			_height = _layout.height;
 			
 			_view_valid = false;
 		}
@@ -119,6 +162,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 			{
 				_vScrollBar.x = _width - _vScrollBar.width;
 				_vScrollBar.maxValue = CMath.max(_container.height - areaHeight, 0);
+				_vScrollBar.value = _vScrollValue;
 				_vScrollBar.pageSize = areaWidth;
 				_vScrollBar.height = areaHeight;
 				_vScrollBar.validate();
@@ -127,13 +171,14 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 			{
 				_hScrollBar.y = _height - _hScrollBar.height;
 				_hScrollBar.maxValue = CMath.max(_container.width - areaWidth, 0);
+				_hScrollBar.value = _hScrollValue;
 				_hScrollBar.pageSize = areaHeight;
 				_hScrollBar.width = areaWidth;
 				_hScrollBar.validate();
 			}
 			
-			_scrollRect.x = 0;
-			_scrollRect.y = 0;
+			_scrollRect.x = _hScrollValue;
+			_scrollRect.y = _vScrollValue;
 			_scrollRect.width = areaWidth;
 			_scrollRect.height = areaHeight;
 			_container.scrollRect = _scrollRect;
@@ -187,12 +232,50 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		_size_valid = false;
 		postponeSize();
 	}
+	
+	var _hScrollValue:Int;
+	override function get_hScrollValue()
+	{
+		return _hScrollValue;
+	}
+	override function set_hScrollValue(value:Int)
+	{
+		setHScrollValue(value);
+		return _hScrollValue;
+	}
+	
+	var _vScrollValue:Int;
+	override function get_vScrollValue()
+	{
+		return _vScrollValue;
+	}
+	override function set_vScrollValue(value:Int)
+	{
+		setVScrollValue(value);
+		return _vScrollValue;
+	}
+	
+	function setHScrollValue(value:Int)
+	{
+		_hScrollValue = value;
+		_scrollRect.x = _hScrollValue;
+		_container.scrollRect = _scrollRect;
+	}
+	
+	function setVScrollValue(value:Int)
+	{
+		_vScrollValue = value;
+		_scrollRect.y = _vScrollValue;
+		_container.scrollRect = _scrollRect;
+	}
 }
 /*
 TODO
+Установка значений скроллинга, в том числе вначале
 Обновление при изменении контента
 Обновление при девалидации
 Отступы и политики размеров для контента
 Отступы относительно скроллируемой области
 Скроллирование колесом мыши
+Неактивное состояние
 */

@@ -1,6 +1,7 @@
 package temperate.layouts;
 import flash.display.DisplayObject;
 import temperate.components.CScrollPolicy;
+import temperate.layouts.parametrization.CChildWrapper;
 
 class CScrollLayout implements ICScrollLayout
 {
@@ -15,10 +16,29 @@ class CScrollLayout implements ICScrollLayout
 		showVScrollBar:Void->DisplayObject,
 		hideVScrollBar:Void->Void):Void
 	{
-		
+		width = isCompactWidth ? 0 : width;
+		height = isCompactHeight ? 0 : height;
+		if (wrapper != null)
+		{
+			var hsb = null;
+			var vsb = null;
+			if (wrapper.getWidth() > width)
+			{
+				hsb = showHScrollBar();
+			}
+			if (wrapper.getHeight() > height)
+			{
+				vsb = showVScrollBar();
+			}
+		}
+		else
+		{
+			hideHScrollBar();
+			hideVScrollBar();
+		}
 	}
 		
-	public var content:DisplayObject;
+	public var wrapper:CChildWrapper;
 	
 	public var hScrollPolicy:CScrollPolicy;
 	

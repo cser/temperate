@@ -1,7 +1,10 @@
 package ;
 import flash.display.Shape;
 import flash.display.Sprite;
-import temperate.components.CScrollPane;
+import helpers.Scaler;
+import temperate.containers.CHBox;
+import temperate.containers.CScrollPane;
+import temperate.containers.CVBox;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.skins.MFieldRectSkin;
 
@@ -14,9 +17,21 @@ class TestScrollPane extends Sprite
 	
 	public function init()
 	{
-		var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
-		scrollPane.content = newShape(300, 200);
-		addChild(scrollPane);
+		var main = new CVBox().addTo(this, 10, 10);
+		
+		{
+			var line = new CHBox().addTo(main);
+			
+			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+			scrollPane.set(newShape(300, 200));
+			line.add(scrollPane);
+			
+			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+			scrollPane.set(newShape(100, 100));
+			scrollPane.setSize(80, 80);
+			var scaler = new Scaler(scrollPane);
+			line.add(scaler);
+		}
 	}
 	
 	function newShape(width:Float, height:Float)

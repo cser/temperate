@@ -159,4 +159,24 @@ class ACScrollPane extends CSprite
 	function onVScroll(event:Event)
 	{
 	}
+	
+	public var hScrollValue(get_hScrollValue, set_hScrollValue):Int;
+	function get_hScrollValue()
+	{
+		return 0;
+	}
+	function set_hScrollValue(value:Int)
+	{
+		return 0;
+	}
+	
+	public var vScrollValue(get_vScrollValue, set_vScrollValue):Int;
+	function get_vScrollValue()
+	{
+		return 0;
+	}
+	function set_vScrollValue(value:Int)
+	{
+		return 0;
+	}
 }
