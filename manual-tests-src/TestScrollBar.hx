@@ -4,6 +4,7 @@ import flash.display.Sprite;
 import flash.display.StageQuality;
 import helpers.Scaler;
 import temperate.components.CScrollBar;
+import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
@@ -44,8 +45,27 @@ class TestScrollBar extends Sprite
 	function newButtonsBlock()
 	{
 		var column = new CVBox();
-		column.add(new Bitmap(MScrollBarBdFactory.getScrollLeftUp()));
-		column.add(new Bitmap(MScrollBarBdFactory.getScrollLeftOver()));
+		
+		var line = new CHBox().addTo(column);
+		line.add(new Bitmap(MScrollBarBdFactory.getLeftUp()));
+		line.add(new Bitmap(MScrollBarBdFactory.getRightUp()));
+		line.add(new Bitmap(MScrollBarBdFactory.getTopUp()));
+		line.add(new Bitmap(MScrollBarBdFactory.getBottomUp()));
+		
+		var line = new CHBox().addTo(column);
+		line.add(new Bitmap(MScrollBarBdFactory.getLeftOver()));
+		line.add(new Bitmap(MScrollBarBdFactory.getRightOver()));
+		line.add(new Bitmap(MScrollBarBdFactory.getTopOver()));
+		line.add(new Bitmap(MScrollBarBdFactory.getBottomOver()));
+		
+		var line = new CHBox().addTo(column);
+		line.add(new Bitmap(MScrollBarBdFactory.getHThumbUp()));
+		line.add(new Bitmap(MScrollBarBdFactory.getVThumbUp()));
+		
+		var line = new CHBox().addTo(column);
+		line.add(new Bitmap(MScrollBarBdFactory.getHThumbOver()));
+		line.add(new Bitmap(MScrollBarBdFactory.getVThumbOver()));
+		
 		return column;
 	}
 	
