@@ -54,7 +54,6 @@ class ACButton extends CSprite
 			removeEventListener(MouseEvent.MOUSE_UP, onBlockMouse);
 			
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			addEventListener(MouseEvent.ROLL_OVER, onRollOver);
 			addEventListener(MouseEvent.ROLL_OUT, onRollOut);
 		}
@@ -68,9 +67,13 @@ class ACButton extends CSprite
 			addEventListener(MouseEvent.MOUSE_UP, onBlockMouse, false, CMath.INT_MAX_VALUE);
 			
 			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			removeEventListener(MouseEvent.ROLL_OVER, onRollOver);
 			removeEventListener(MouseEvent.ROLL_OUT, onRollOut);
+			
+			if (stage != null)
+			{
+				stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
+			}
 		}
 		updateState();
 	}
@@ -88,12 +91,14 @@ class ACButton extends CSprite
 			return;
 		}
 		
+		stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
 		_isDown = true;
 		updateState();
 	}
 	
-	function onMouseUp(event:MouseEvent)
+	function onStageMouseUp(event:MouseEvent)
 	{
+		stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
 		if (!_enabled)
 		{
 			event.stopImmediatePropagation();
@@ -113,7 +118,6 @@ class ACButton extends CSprite
 	function onRollOut(event:MouseEvent)
 	{
 		_isOver = false;
-		_isDown = false;
 		updateState();
 	}
 	
@@ -160,20 +164,17 @@ class ACButton extends CSprite
 	{
 		if (_enabled)
 		{
-			if (_isDown)
+			if (_isDown && _isOver)
 			{
 				_state = _selected ? CButtonState.DOWN_SELECTED : CButtonState.DOWN;
 			}
+			else if (_isDown || _isOver)
+			{
+				_state = _selected ? CButtonState.OVER_SELECTED : CButtonState.OVER;
+			}
 			else
 			{
-				if (_isOver)
-				{
-					_state = _selected ? CButtonState.OVER_SELECTED : CButtonState.OVER;
-				}
-				else
-				{
-					_state = _selected ? CButtonState.UP_SELECTED : CButtonState.UP;
-				}
+				_state = _selected ? CButtonState.UP_SELECTED : CButtonState.UP;
 			}
 		}
 		else
