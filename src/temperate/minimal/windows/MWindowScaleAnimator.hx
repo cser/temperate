@@ -28,9 +28,17 @@ class MWindowScaleAnimator extends ACWindowComponent
 		_showVars.scaleY = 1;
 	}
 	
-	var _hideVars:MAnimationParameters;
-	var _showVars:MAnimationParameters;
+	var _hideVars: {
+		width:Float, height:Float, x:Float, y:Float, alpha:Float, scaleX:Float, scaleY:Float
+	};
+	
+	var _showVars: {
+		width:Float, height:Float, x:Float, y:Float, alpha:Float, scaleX:Float, scaleY:Float
+	};
+	
 	var _tween:MTween<DisplayObject>;
+	
+	var _isShowing:Bool;
 	
 	override public function animateShow(fast:Bool):Void
 	{
@@ -50,11 +58,14 @@ class MWindowScaleAnimator extends ACWindowComponent
 		}
 		else
 		{
+			_isShowing = true;
 			_tween = MTween.to(view, _showDuration, _showVars)
 				.setEase(MBack.typical.easeIn)
 				.setVoidOnComplete(onTweenShowComplete);
 		}
 	}
+	
+	var _isHiding:Bool;
 	
 	override public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
 	{
@@ -75,6 +86,7 @@ class MWindowScaleAnimator extends ACWindowComponent
 		}
 		else
 		{
+			_isHiding = true;
 			_onHideComplete = onComplete;
 			_tween = MTween.to(view, _hideDuration, _hideVars)
 				.setEase(MBack.typical.easeOut)
@@ -86,17 +98,29 @@ class MWindowScaleAnimator extends ACWindowComponent
 	
 	function onTweenShowComplete()
 	{
+		_isShowing = false;
 		_tween = null;
 	}
 	
 	function onTweenHideComplete()
 	{
 		_tween = null;
+		_isHiding = false;
 		var onComplete = _onHideComplete;
 		_onHideComplete = null;
 		if (onComplete != null)
 		{
 			onComplete(_popUp);
 		}
+	}
+	
+	override public function move(x:Int, y:Int, needSave:Bool):Void 
+	{
+		if (_isShowing)
+		{
+			_showVars.x = x;
+			_showVars.y = y;
+		}
+		super.move(x, y, needSave);
 	}
 }

@@ -1,5 +1,4 @@
 package windowApplication.states;
-import flash.events.MouseEvent;
 
 class PencilDrawState extends ADrawState
 {
@@ -8,35 +7,18 @@ class PencilDrawState extends ADrawState
 		super();
 	}
 	
-	override function subscribe()
+	override function doStart()
 	{
-		_image.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		_graphics.lineStyle(0x000000);
+		_graphics.moveTo(_image.mouseX, _image.mouseY);
 	}
 	
-	override function unsubscribe()
+	override function doMove()
 	{
-		_image.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		_graphics.lineTo(_image.mouseX, _image.mouseY);
 	}
 	
-	function onMouseDown(event:MouseEvent)
+	override function doComplete()
 	{
-		_image.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-		_image.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-		
-		var g = _image.graphics;
-		g.lineStyle(0x000000);
-		g.moveTo(_image.mouseX, _image.mouseY);
-	}
-	
-	function onMouseMove(event:MouseEvent)
-	{
-		var g = _image.graphics;
-		g.lineTo(_image.mouseX, _image.mouseY);
-	}
-	
-	function onMouseUp(event:MouseEvent)
-	{
-		_image.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-		_image.stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 	}
 }

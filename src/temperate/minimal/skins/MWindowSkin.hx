@@ -9,11 +9,11 @@ import temperate.minimal.windows.MCloseButton;
 import temperate.minimal.windows.MMaximizeButton;
 import temperate.raster.CVScale12GridDrawer;
 import temperate.windows.skins.ACWindowSkin;
+using temperate.core.ArrayUtil;
 
 class MWindowSkin extends ACWindowSkin
 {
-	static var HINDENT = 4;
-	static var VINDENT = 4;
+	static var INDENT = 4;
 	static var LINE_TOP_INDENT = 2;
 	static var LINE_BOTTOM_INDENT = 4;
 	static var CENTER_TOP_OFFSET = -2;
@@ -62,8 +62,8 @@ class MWindowSkin extends ACWindowSkin
 			
 			var titleWidth = Std.int(_titleTF.width);
 			var titleHeight = Std.int(_titleTF.height);
-			_titleTF.x = HINDENT;
-			_titleTF.y = VINDENT;
+			_titleTF.x = INDENT;
+			_titleTF.y = INDENT;
 			
 			var buttonsWidth = 0;
 			for (button in _headButtons)
@@ -73,13 +73,14 @@ class MWindowSkin extends ACWindowSkin
 			}
 			buttonsWidth = CMath.intMax(0, buttonsWidth - BUTTONS_INDENT);
 			
-			var minWidth = titleWidth + buttonsWidth + HINDENT * 2;
-			var minHeight = titleHeight + VINDENT * 2 + LINE_TOP_INDENT + LINE_BOTTOM_INDENT;
-			var top = titleHeight + VINDENT + LINE_TOP_INDENT + LINE_BOTTOM_INDENT;
-			var bottom = VINDENT;
-			var left = VINDENT;
-			var right = VINDENT;
-			_container.width = CMath.intMax(0, getNeededWidth() - left - right);
+			var minWidth = titleWidth + buttonsWidth + INDENT * 2;
+			var minHeight = titleHeight + INDENT * 2 + LINE_TOP_INDENT + LINE_BOTTOM_INDENT;
+			var top = titleHeight + INDENT + LINE_TOP_INDENT + LINE_BOTTOM_INDENT;
+			var bottom = INDENT;
+			var left = INDENT;
+			var right = INDENT;
+			var neededWidth = CMath.intMax(getNeededWidth(), minWidth);
+			_container.width = CMath.intMax(0, neededWidth - left - right);
 			_container.height = CMath.intMax(0, getNeededHeight() - top - bottom);
 			_width = CMath.intMax(Std.int(_container.width) + left + right, minWidth);
 			_height = CMath.intMax(Std.int(_container.height) + top + bottom, minHeight);
@@ -189,6 +190,11 @@ class MWindowSkin extends ACWindowSkin
 			_size_valid = false;
 			postponeSize();
 		}
+	}
+	
+	public function existsHeadButton(button:ICButton):Bool
+	{
+		return _headButtons.exists(button);
 	}
 	
 	public var closeButton(get_closeButton, null):ICButton;

@@ -1,9 +1,10 @@
 package temperate.minimal;
 import flash.display.Sprite;
+import flash.events.Event;
+import flash.events.MouseEvent;
 import temperate.collections.ICValueSwitcher;
 import temperate.containers.CVBox;
 import temperate.minimal.cursors.MResizeCursor;
-import temperate.minimal.cursors.MWaitCursor;
 import temperate.minimal.skins.MWindowSkin;
 import temperate.minimal.windows.MWindowScaleAnimator;
 import temperate.windows.ACWindow;
@@ -36,5 +37,39 @@ class MWindow extends ACWindow
 	override function newResizeCursor():ICValueSwitcher<Dynamic>
 	{
 		return MCursorManager.newSwitcher().setValue(new MResizeCursor());
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Helped
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	public function addCloseButton():Void
+	{
+		var button = _skin.closeButton;
+		if (!_skin.existsHeadButton(button))
+		{
+			_skin.addHeadButton(button).addEventListener(MouseEvent.CLICK, onHelpedCloseClick);
+		}
+	}
+	
+	public function addMaximizeButton():Void
+	{
+		var button = _skin.maximizeButton;
+		if (!_skin.existsHeadButton(button))
+		{
+			_skin.addHeadButton(button).addEventListener(Event.CHANGE, onHelpedMaximizeChange);
+		}
+	}
+	
+	function onHelpedCloseClick(event:MouseEvent)
+	{
+		close();
+	}
+	
+	function onHelpedMaximizeChange(event:Event)
+	{
+		maximized = _skin.maximizeButton.selected;
 	}
 }

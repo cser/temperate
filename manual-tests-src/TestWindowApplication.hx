@@ -26,13 +26,14 @@ class TestWindowApplication extends Sprite
 	
 	public function init()
 	{
-		var toolsWindow = new ToolsWindow(this);
-		toolsWindow.dock = new CPopUpAbsoluteDock(10, 50);
-		MPopUpManager.add(toolsWindow, false, true);
 		_imageManager = new CPopUpManager(this);
 		_imageManager.addEventListener(Event.SELECT, onImageSelect);
 		stage.addEventListener(Event.RESIZE, onStageResize);
 		onStageResize();
+		
+		var toolsWindow = new ToolsWindow(this);
+		MPopUpManager.add(toolsWindow, false, true);
+		toolsWindow.move(Std.int(stage.stageWidth) - toolsWindow.width - 10, 50);
 	}
 	
 	function onImageSelect(event:Event)
@@ -99,7 +100,13 @@ class TestWindowApplication extends Sprite
 		var window = new ImageWindow("No name");
 		window.setSize(640, 480);
 		window.setImageSize(width, height);
+		window.dock = new CPopUpAbsoluteDock(10, 10);
+		var top = _imageManager.topPopUp;
 		_imageManager.add(window, false);
+		if (top != null)
+		{
+			window.move(top.view.x + 20, top.view.y + 20);
+		}
 	}
 	
 	public function doOpen()

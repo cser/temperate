@@ -5,5 +5,29 @@ class LineDrawState extends ADrawState
 	public function new() 
 	{
 		super();
-	}	
+	}
+	
+	var _x:Float;
+	var _y:Float;
+	
+	override function doStart()
+	{
+		_x = _image.mouseX;
+		_y = _image.mouseY;
+	}
+	
+	override function doMove()
+	{
+		_topGraphics.clear();
+		_topGraphics.lineStyle(0x000000);
+		_topGraphics.moveTo(_x, _y);
+		_topGraphics.lineTo(_image.mouseX, _image.mouseY);
+	}
+	
+	override function doComplete()
+	{
+		_topGraphics.clear();
+		_graphics.moveTo(_x, _y);
+		_graphics.lineTo(_image.mouseX, _image.mouseY);
+	}
 }
