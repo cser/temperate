@@ -39,6 +39,14 @@ class ACWindowSkin extends CSprite, implements ICWindowSkin
 		updateIsActive();
 	}
 	
+	var _mouseEnabled:Bool;
+	
+	public function setMouseEnabled(value:Bool):Void
+	{
+		_mouseEnabled = value;
+		updateMouseEnabled();
+	}
+	
 	public var isLocked(get_isLocked, set_isLocked):Bool;
 	var _isLocked:Bool;
 	function get_isLocked()
@@ -57,8 +65,13 @@ class ACWindowSkin extends CSprite, implements ICWindowSkin
 	
 	function updateIsLocked()
 	{
-		mouseEnabled = !_isLocked;
-		mouseChildren = !_isLocked;
+		updateMouseEnabled();
+	}
+	
+	function updateMouseEnabled()
+	{
+		mouseEnabled = !_isLocked && _mouseEnabled;
+		mouseChildren = !_isLocked && _mouseEnabled;
 	}
 	
 	public var isActive(get_isActive, set_isActive):Bool;

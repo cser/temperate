@@ -1,4 +1,4 @@
-package temperate.minimal.skins;
+package temperate.minimal.windows;
 import flash.display.Sprite;
 import flash.text.TextField;
 import temperate.components.ICButton;

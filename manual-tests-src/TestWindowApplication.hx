@@ -1,26 +1,18 @@
 package ;
 import flash.display.Bitmap;
 import flash.display.Sprite;
-import flash.events.Event;
 import flash.geom.Point;
-import flash.Lib;
 import flash.net.SharedObject;
 import haxe.Serializer;
 import haxe.Unserializer;
 import temperate.cursors.CCursor;
-import temperate.cursors.CHoverSwitcher;
-import temperate.cursors.ICCursor;
 import temperate.debug.FPSMonitor;
-import temperate.minimal.MCursorManager;
 import temperate.minimal.windows.MWindowManager;
-import temperate.windows.CWindowManager;
-import temperate.windows.docks.CWindowAbsoluteDock;
 import temperate.windows.events.CWindowEvent;
 import windowApplication.CImageManager;
 import windowApplication.ColorsWindow;
 import windowApplication.EditorState;
 import windowApplication.ImageData;
-import windowApplication.ImageWindow;
 import windowApplication.NewWindow;
 import windowApplication.OpenWindow;
 import windowApplication.OpenWindowData;
@@ -152,6 +144,14 @@ class TestWindowApplication extends Sprite
 		if (_colorsWindow == null)
 		{
 			_colorsWindow = new ColorsWindow(_editorState);
+			_colorsWindow.dock.move(
+				_colorsWindow.width, _colorsWindow.height,
+				stage.stageWidth,
+				stage.stageHeight,
+				stage.stageWidth - _colorsWindow.width - 10,
+				stage.stageHeight - _colorsWindow.height - 10,
+				true
+			);
 		}
 		if (!_colorsWindow.isOpened)
 		{
@@ -233,6 +233,7 @@ class TestWindowApplication extends Sprite
 	{
 		if (event.data != null)
 		{
+			var sharedObject = getSharedObject();
 			switch (event.data)
 			{
 				case OpenWindowData.OPEN(name):
@@ -240,7 +241,7 @@ class TestWindowApplication extends Sprite
 					if (window == null)
 					{
 						var imageData:ImageData = Unserializer.run(
-							Reflect.field(getSharedObject().data, name));
+							Reflect.field(sharedObject.data, name));
 						window = _imageManager.addNew(imageData.width, imageData.height, name);
 						window.drawPrimitives(imageData.primitives);
 						reinitStateByWindow();
@@ -249,12 +250,10 @@ class TestWindowApplication extends Sprite
 					{
 						_imageManager.moveToTop(window);
 					}
-				case OpenWindowData.CLEAR_ALL:
-					var data = getSharedObject().data;
-					for (key in Reflect.fields(data))
-					{
-						Reflect.deleteField(data, key);
-					}
+				case OpenWindowData.REMOVE(name):
+					var data = sharedObject.data;
+					Reflect.deleteField(data, name);
+					sharedObject.flush();
 			}
 		}
 	}
@@ -275,6 +274,3 @@ class TestWindowApplication extends Sprite
 		}
 	}
 }
-/*
-Починить падение при повторном клике на кнопке закрыть
-*/

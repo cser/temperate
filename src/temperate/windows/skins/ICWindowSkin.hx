@@ -13,6 +13,8 @@ interface ICWindowSkin
 	
 	function link(container:Sprite):Void;
 	
+	function setMouseEnabled(value:Bool):Void;
+	
 	var isLocked(get_isLocked, set_isLocked):Bool;
 	
 	var isActive(get_isActive, set_isActive):Bool;

@@ -5,8 +5,6 @@ import flash.events.MouseEvent;
 import temperate.collections.ICValueSwitcher;
 import temperate.containers.CVBox;
 import temperate.minimal.cursors.MResizeCursor;
-import temperate.minimal.skins.MWindowSkin;
-import temperate.minimal.windows.MWindowScaleAnimator;
 import temperate.windows.ACWindow;
 import temperate.windows.skins.ICWindowSkin;
 

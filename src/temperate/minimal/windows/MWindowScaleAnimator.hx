@@ -51,15 +51,14 @@ class MWindowScaleAnimator extends ACWindowComponent
 		_showVars.x = x;
 		_showVars.y = y;
 		MTween.apply(_view, _hideVars);
-		var view = _view;
 		if (fast)
 		{
-			MTween.apply(view, _showVars);
+			MTween.apply(_view, _showVars);
 		}
 		else
 		{
 			_isShowing = true;
-			_tween = MTween.to(view, _showDuration, _showVars)
+			_tween = MTween.to(_view, _showDuration, _showVars)
 				.setEase(MBack.typical.easeIn)
 				.setVoidOnComplete(onTweenShowComplete);
 		}
@@ -75,10 +74,9 @@ class MWindowScaleAnimator extends ACWindowComponent
 		var y = getY();
 		_hideVars.x = x + width * .5;
 		_hideVars.y = y + height * .5;
-		var view = _view;
 		if (fast)
 		{
-			MTween.apply(view, _hideVars);
+			MTween.apply(_view, _hideVars);
 			if (onComplete != null)
 			{
 				onComplete(_popUp);
@@ -88,7 +86,7 @@ class MWindowScaleAnimator extends ACWindowComponent
 		{
 			_isHiding = true;
 			_onHideComplete = onComplete;
-			_tween = MTween.to(view, _hideDuration, _hideVars)
+			_tween = MTween.to(_view, _hideDuration, _hideVars)
 				.setEase(MBack.typical.easeOut)
 				.setVoidOnComplete(onTweenHideComplete);
 		}

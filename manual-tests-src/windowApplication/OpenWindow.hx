@@ -54,8 +54,8 @@ class OpenWindow extends AMWindow<OpenWindowData>
 		_openButton = button;
 		
 		var button = new MButton();
-		button.text = "Clear all";
-		button.addEventListener(MouseEvent.CLICK, onClearAllClick);
+		button.text = "Remove";
+		button.addEventListener(MouseEvent.CLICK, onRemoveClick);
 		button.isEnabled = names.length > 0;
 		buttonBox.add(button);
 		
@@ -90,9 +90,9 @@ class OpenWindow extends AMWindow<OpenWindowData>
 		close(OpenWindowData.OPEN(_names.value));
 	}
 	
-	function onClearAllClick(event:MouseEvent)
+	function onRemoveClick(event:MouseEvent)
 	{
-		close(OpenWindowData.CLEAR_ALL);
+		close(OpenWindowData.REMOVE(_names.value));
 	}
 	
 	function onCancelClick(event:MouseEvent)

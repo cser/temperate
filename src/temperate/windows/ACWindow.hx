@@ -210,11 +210,13 @@ class ACWindow< TData > extends CTypedDispatcher<CWindowEvent<TData>>, implement
 	
 	public function animateShow(fast:Bool):Void
 	{
+		_baseSkin.setMouseEnabled(true);
 		_head.animateShow(fast);
 	}
 	
 	public function animateHide(fast:Bool, onComplete:ICWindow->Void):Void
 	{
+		_baseSkin.setMouseEnabled(false);
 		_head.animateHide(fast, onComplete);
 	}
 	
@@ -359,7 +361,7 @@ class ACWindow< TData > extends CTypedDispatcher<CWindowEvent<TData>>, implement
 	{
 		if (manager != null)
 		{
-			if (dispatchTyped(new CWindowEvent(CWindowEvent.CLOSE, data)))
+			if (dispatchTyped(new CWindowEvent(CWindowEvent.CLOSE, this, data)))
 			{
 				manager.remove(this, fast);
 			}
