@@ -1,5 +1,6 @@
 package temperate.windows;
 import flash.display.DisplayObjectContainer;
+import flash.errors.ArgumentError;
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.utils.TypedDictionary;
@@ -52,26 +53,52 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 	public function add(popUp:ICPopUp, modal:Bool)
 	{
 		container.addChild(popUp.view);
+		_popUps.remove(popUp);
 		_popUps.push(popUp);
 		_isModal.set(popUp, modal);
 		updateModal();
 	}
 	
+	public function moveToTop(popUp:ICPopUp)
+	{
+		var exists = false;
+		for (popUpI in _popUps)
+		{
+			if (popUpI == popUp)
+			{
+				exists = true;
+				break;
+			}
+		}
+		if (!exists)
+		{
+			throw new ArgumentError("Missing popUp: " + popUp);
+		}
+		_popUps.remove(popUp);
+		_popUps.push(popUp);
+		container.setChildIndex(popUp.view, container.numChildren - 1);
+		updateModal();
+	}
+	
 	public function remove(popUp:ICPopUp)
 	{
-		container.removeChild(popUp.view);
-		_popUps.remove(popUp);
-		_isModal.delete(popUp);
-		updateModal();
+		if (_popUps.remove(popUp))
+		{
+			_isModal.delete(popUp);
+			container.removeChild(popUp.view);
+			updateModal();
+		}
 	}
 	
 	function updateModal()
 	{
-		var i = _popUps.length;
+		var length = _popUps.length;
+		var i = length;
 		var newModal = false;
 		while (i-- > 0)
 		{
 			var popUp = _popUps[i];
+			popUp.isActive = i == length - 1;
 			popUp.isLocked = newModal;
 			newModal = newModal || _isModal.get(popUp);
 		}

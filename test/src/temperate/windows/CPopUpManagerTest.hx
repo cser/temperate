@@ -1,7 +1,9 @@
 package temperate.windows;
 
 import flash.display.Sprite;
+import flash.errors.ArgumentError;
 import flash.events.Event;
+import flash.utils.RegExp;
 import massive.munit.Assert;
 using massive.munit.Assert;
 using ArrayAssert;
@@ -12,7 +14,7 @@ class CPopUpManagerTest
 	{
 	}
 	
-	var _manager:CPopUpManager;
+	var _manager:TestPopUpManager;
 	var _container:Sprite;
 	var _log:Array<String>;
 	
@@ -21,7 +23,7 @@ class CPopUpManagerTest
 	{
 		_log = [];
 		_container = new Sprite();
-		_manager = new CPopUpManager(_container);
+		_manager = new TestPopUpManager(_container);
 		_manager.setArea(0, 0, 500, 400);
 	}
 	
@@ -164,4 +166,138 @@ class CPopUpManagerTest
 	{
 		_log.push("onResize1");
 	}
+	
+	@Test
+	public function oneAddedPopUpIsActive()
+	{
+		var popUp0 = new FakePopUp();
+		var popUp1 = new FakePopUp();
+		
+		_manager.add(popUp0, false);
+		popUp0.isActive.isTrue();
+		
+		_manager.remove(popUp0);
+		
+		_manager.add(popUp1, true);
+		popUp1.isActive.isTrue();
+	}
+	
+	@Test
+	public function topPopUpIsActive()
+	{
+		var popUp0 = new FakePopUp();
+		var popUp1 = new FakePopUp();
+		
+		_manager.add(popUp0, false);
+		_manager.add(popUp1, false);
+		popUp0.isActive.isFalse();
+		popUp1.isActive.isTrue();
+		
+		_manager.remove(popUp0);
+		popUp1.isActive.isTrue();
+		
+		_manager.add(popUp0, false);
+		popUp1.isActive.isFalse();
+		popUp0.isActive.isTrue();
+	}
+	
+	@Test
+	public function repeatAddition()
+	{
+		var popUp0 = new FakePopUp();
+		var popUp1 = new FakePopUp();
+		
+		_manager.add(popUp0, false);
+		_manager.add(popUp0, true);
+		
+		_container.getChildAt(0).areEqual(popUp0.view);
+		[popUp0].equalToArray(_manager.getPopUps());
+		popUp0.isLocked.isFalse();
+		
+		_manager.add(popUp1, true);
+		_container.getChildAt(0).areEqual(popUp0.view);
+		_container.getChildAt(1).areEqual(popUp1.view);
+		[popUp0, popUp1].equalToArray(_manager.getPopUps());
+		popUp0.isLocked.isTrue();
+		popUp1.isLocked.isFalse();
+		
+		_manager.add(popUp0, true);
+		_container.getChildAt(0).areEqual(popUp1.view);
+		_container.getChildAt(1).areEqual(popUp0.view);
+		[popUp1, popUp0].equalToArray(_manager.getPopUps());
+		popUp1.isLocked.isTrue();
+		popUp0.isLocked.isFalse();
+	}
+	
+	@Test
+	public function repeatRemoving()
+	{
+		var popUp0 = new FakePopUp();
+		var popUp1 = new FakePopUp();
+		
+		_manager.add(popUp0, false);
+		_manager.remove(popUp0);
+		_manager.remove(popUp0);
+		
+		_container.numChildren.areEqual(0);
+		[].equalToArray(_manager.getPopUps());		
+		
+		_manager.add(popUp0, true);
+		_manager.add(popUp1, true);
+		_manager.remove(popUp1);
+		_manager.remove(popUp1);
+		_container.numChildren.areEqual(1);
+		_container.getChildAt(0).areEqual(popUp0.view);
+		[popUp0].equalToArray(_manager.getPopUps());
+		popUp0.isLocked.isFalse();
+	}
+	
+	@Test
+	public function moteToTopForMissingPopUpIsThrowsError()
+	{
+		var popUp0 = new FakePopUp();
+		var popUp1 = new FakePopUp();
+		var popUp2 = new FakePopUp();
+		
+		_manager.add(popUp0, true);
+		_manager.add(popUp1, true);
+		try
+		{
+			_manager.moveToTop(popUp2);
+			"Mast throws error".fail();
+		}
+		catch (error:ArgumentError)
+		{
+		}
+		[popUp0, popUp1].equalToArray(_manager.getPopUps());
+		popUp0.isActive.isFalse();
+		popUp1.isActive.isTrue();
+	}
+	
+	@Test
+	public function moteToTop()
+	{
+		var popUp0 = new FakePopUp();
+		var popUp1 = new FakePopUp();
+		var popUp2 = new FakePopUp();
+		
+		_manager.add(popUp0, true);
+		_manager.add(popUp1, true);
+		_manager.add(popUp2, true);
+		
+		_manager.moveToTop(popUp2);
+		[popUp0, popUp1, popUp2].equalToArray(_manager.getPopUps());
+		popUp0.isActive.isFalse();
+		popUp1.isActive.isFalse();
+		popUp2.isActive.isTrue();
+		
+		_manager.moveToTop(popUp1);
+		[popUp0, popUp2, popUp1].equalToArray(_manager.getPopUps());
+		popUp0.isActive.isFalse();
+		popUp2.isActive.isFalse();
+		popUp1.isActive.isTrue();
+	}
 }
+/*
+- Перемещение окна наверх
+*/

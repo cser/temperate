@@ -162,6 +162,5 @@ class ToolsWindow extends ACWindow
 	override function updateIsLocked() 
 	{
 		super.updateIsLocked();
-		trace(_isLocked);
 	}
 }
