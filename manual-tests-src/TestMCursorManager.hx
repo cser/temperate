@@ -153,7 +153,7 @@ class TestMCursorManager extends Sprite
 					.addTo(box);
 				MCursorManager.newHover()
 					.setTarget(button)
-					.setValue(new CCursor().setNative(NATIVE_WAIT));
+					.setValue(new CCursor().setSystem(NATIVE_WAIT));
 			}
 			
 			{
@@ -185,7 +185,7 @@ class TestMCursorManager extends Sprite
 					.addTo(box);
 				MCursorManager.newHover()
 					.setTarget(button)
-					.setValue(new CCursor().setNative(NATIVE_ANIMATED));
+					.setValue(new CCursor().setSystem(NATIVE_ANIMATED));
 			}
 			
 			#end

@@ -6,7 +6,7 @@ import temperate.minimal.graphics.MCursorBdFactory;
 class MHandCursor extends CRasterPressCursor
 {
 	public function new(
-		updateOnMove:Bool = false, hideSystem:Bool = true, system:MouseCursor = null) 
+		updateOnMove:Bool = false, hideSystem:Bool = true, mouseCursor:MouseCursor = null) 
 	{
 		super();
 		
@@ -17,6 +17,6 @@ class MHandCursor extends CRasterPressCursor
 		);
 		
 		setHideSystem(hideSystem);
-		setSystem(system);
+		setSystem(mouseCursor);
 	}	
 }

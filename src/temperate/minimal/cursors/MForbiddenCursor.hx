@@ -7,7 +7,7 @@ import temperate.minimal.graphics.MCursorBdFactory;
 class MForbiddenCursor extends CCursor
 {
 	public function new(
-		updateOnMove:Bool = false, hideSystem:Bool = false, system:MouseCursor = null)
+		updateOnMove:Bool = false, hideSystem:Bool = false, mouseCursor:String = null)
 	{
 		super();
 		
@@ -19,6 +19,6 @@ class MForbiddenCursor extends CCursor
 		);
 		
 		setHideSystem(hideSystem);
-		setSystem(system);
+		setSystem(mouseCursor);
 	}	
 }

@@ -1,10 +1,10 @@
 package temperate.cursors;
 import flash.display.DisplayObjectContainer;
-import flash.display.MouseCursorData;
 import flash.events.Event;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import flash.ui.Mouse;
+import flash.ui.MouseCursorData;
 import temperate.collections.CLinkedStack;
 import temperate.collections.ICValueSwitcher;
 import temperate.core.CMath;
@@ -38,17 +38,11 @@ class CCursorManager
 		name:String, data:flash.Vector<flash.display.BitmapData>, frameRate:Float,
 		hotSpot:flash.geom.Point)
 	{
-		var mouseCursorData: {
-			data:flash.Vector<flash.display.BitmapData>,
-			frameRate:Float,
-			hotSpot:flash.geom.Point,
-			name:String
-		} = untyped __new__(__global__["flash.ui.MouseCursorData"]);
-		mouseCursorData.data = data;
-		mouseCursorData.frameRate = frameRate;
-		mouseCursorData.hotSpot = hotSpot;
-		
-		untyped Mouse["registerCursor"](name, mouseCursorData);
+		var cursor = new MouseCursorData();
+		cursor.data = data;
+		cursor.frameRate = frameRate;
+		cursor.hotSpot = hotSpot;
+		Mouse.registerCursor(name, cursor);
 	}
 	
 	//----------------------------------------------------------------------------------------------

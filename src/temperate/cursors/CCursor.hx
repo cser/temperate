@@ -2,11 +2,11 @@ package temperate.cursors;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.InteractiveObject;
-import flash.display.MouseCursorData;
 import flash.events.IEventDispatcher;
 import flash.Lib;
 import flash.ui.Mouse;
 import flash.ui.MouseCursor;
+import flash.ui.MouseCursorData;
 
 class CCursor implements ICCursor
 {
@@ -20,7 +20,7 @@ class CCursor implements ICCursor
 	}
 	
 	private var _hideSystem:Bool;
-	private var _system:MouseCursor;
+	private var _system:String;
 	
 	//----------------------------------------------------------------------------------------------
 	//
@@ -65,15 +65,9 @@ class CCursor implements ICCursor
 	/**
 	 * For once call only
 	 */
-	public function setSystem(system:MouseCursor)
+	public function setSystem(mouseCursor:String)
 	{
-		_system = system;
-		return this;
-	}
-	
-	@:require(flash10_2) public function setNative(name:String)
-	{
-		_system = cast name;
+		_system = mouseCursor;
 		return this;
 	}
 	
