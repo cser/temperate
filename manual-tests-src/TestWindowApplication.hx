@@ -18,6 +18,7 @@ import temperate.windows.docks.CWindowAbsoluteDock;
 import temperate.windows.events.CWindowEvent;
 import windowApplication.CImageManager;
 import windowApplication.ColorsWindow;
+import windowApplication.EditorState;
 import windowApplication.ImageData;
 import windowApplication.ImageWindow;
 import windowApplication.NewWindow;
@@ -41,11 +42,14 @@ class TestWindowApplication extends Sprite
 	}
 	
 	var _imageManager:CImageManager;
+	var _editorState:EditorState;
 	
 	public function init()
 	{
 		_imageManager = new CImageManager(this);
 		_imageManager.onImageSelect = onImageSelect;
+		
+		_editorState = new EditorState();
 		
 		var pencilState = new PencilDrawState();
 		var states:Array<ADrawState> = [];
@@ -55,7 +59,11 @@ class TestWindowApplication extends Sprite
 		states.push(new FigureDrawState());
 		states.push(pencilState);
 		states.push(new RectDrawState());
-		_toolsWindow = new ToolsWindow(this, states, pencilState);
+		for (state in states)
+		{
+			state.init(_editorState);
+		}
+		_toolsWindow = new ToolsWindow(this, states, pencilState, _editorState);
 		MWindowManager.add(_toolsWindow, false, true);
 		_toolsWindow.move(Std.int(stage.stageWidth) - _toolsWindow.width - 10, 50);
 		updateSaveEnabled();
@@ -143,7 +151,7 @@ class TestWindowApplication extends Sprite
 	{
 		if (_colorsWindow == null)
 		{
-			_colorsWindow = new ColorsWindow();
+			_colorsWindow = new ColorsWindow(_editorState);
 		}
 		if (!_colorsWindow.isOpened)
 		{

@@ -4,6 +4,7 @@ import flash.display.Graphics;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 import temperate.core.CSprite;
+import windowApplication.EditorState;
 import windowApplication.Primitive;
 
 class ADrawState 
@@ -12,6 +13,13 @@ class ADrawState
 	{
 		_topSprite =  new Sprite();
 		_topGraphics = _topSprite.graphics;
+	}
+	
+	var _editorState:EditorState;
+	
+	public function init(editorState:EditorState)
+	{
+		_editorState = editorState;
 	}
 	
 	public var icon(default, null):Class<BitmapData>;
@@ -94,5 +102,16 @@ class ADrawState
 	{
 		_graphics.lineTo(x, y);
 		_primitives.push(LINE_TO(x, y));
+	}
+	
+	function topLineStyle()
+	{
+		_topGraphics.lineStyle(0, _editorState.color);
+	}
+	
+	function lineStyle()
+	{
+		_graphics.lineStyle(0, _editorState.color);
+		_primitives.push(LINE_STYLE(_editorState.color));
 	}
 }

@@ -2,6 +2,7 @@ package windowApplication;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import temperate.core.CSprite;
+import temperate.minimal.MFormatFactory;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.windows.AMWindow;
 
@@ -54,6 +55,17 @@ class ImageWindow extends AMWindow<Dynamic>
 					g.drawEllipse(x, y, width, height);
 				case RECT(x, y, width, height):
 					g.drawRect(x, y, width, height);
+				case LINE_STYLE(color):
+					g.lineStyle(0, color);
+				case TF(x, y, width, height, text, color):
+					var tf = MFormatFactory.LABEL.clone().setColor(color).newFixed(false);
+					tf.x = x;
+					tf.y = y;
+					tf.width = width;
+					tf.height = height;
+					tf.wordWrap = true;
+					tf.text = text;
+					image.addChild(tf);
 			}
 		}
 	}

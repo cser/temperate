@@ -53,7 +53,7 @@ class FigureDrawState extends ADrawState
 			_y = y;
 			_firstX = _x;
 			_firstY = _y;
-			_graphics.lineStyle(0, 0x000000);
+			lineStyle();
 			moveTo(_x, _y);
 		}
 		else
@@ -86,7 +86,7 @@ class FigureDrawState extends ADrawState
 			}
 			else
 			{
-				_topGraphics.lineStyle(0, 0x000000);
+				topLineStyle();
 				_topGraphics.moveTo(_x, _y);
 				_topGraphics.lineTo(x, y);
 			}

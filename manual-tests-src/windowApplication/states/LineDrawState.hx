@@ -22,7 +22,7 @@ class LineDrawState extends ADrawState
 	override function doMove()
 	{
 		_topGraphics.clear();
-		_topGraphics.lineStyle(0x000000);
+		topLineStyle();
 		_topGraphics.moveTo(_x, _y);
 		_topGraphics.lineTo(_image.mouseX, _image.mouseY);
 	}
@@ -30,7 +30,7 @@ class LineDrawState extends ADrawState
 	override function doComplete()
 	{
 		_topGraphics.clear();
-		_graphics.lineStyle(0x000000);
+		lineStyle();
 		moveTo(_x, _y);
 		lineTo(_image.mouseX, _image.mouseY);
 	}

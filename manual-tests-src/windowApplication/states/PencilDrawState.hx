@@ -12,7 +12,7 @@ class PencilDrawState extends ADrawState
 	
 	override function doStart()
 	{
-		_graphics.lineStyle(0x000000);
+		lineStyle();
 		moveTo(_image.mouseX, _image.mouseY);
 	}
 	

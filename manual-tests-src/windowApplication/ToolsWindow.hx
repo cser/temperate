@@ -18,13 +18,16 @@ class ToolsWindow extends AMWindow<Dynamic>
 {
 	var _application:TestWindowApplication;
 	var _states:CButtonSelector<ADrawState>;
+	var _editorState:EditorState;
 	
 	public function new(
-		application:TestWindowApplication, states:Array<ADrawState>, selectedState:ADrawState)
+		application:TestWindowApplication, states:Array<ADrawState>, selectedState:ADrawState,
+		editorState:EditorState)
 	{
 		super();
 		
 		_application = application;
+		_editorState = editorState;
 		_baseSkin.title = "Tools";
 		_states = new CButtonSelector(null);
 		_states.addEventListener(Event.CHANGE, onStatesChange);
@@ -92,7 +95,8 @@ class ToolsWindow extends AMWindow<Dynamic>
 		button.addEventListener(MouseEvent.CLICK, onFPSClick);
 		_main.add(button).setPercents(100);
 		
-		setColor(0x00ff00);
+		_editorState.colorChanged.add(onColorChange);
+		onColorChange();
 	}
 	
 	public var saveButton(default, null):ICButton;
@@ -109,23 +113,18 @@ class ToolsWindow extends AMWindow<Dynamic>
 		_application.doShowColors();
 	}
 	
-	var _color:UInt;
-	function setColor(color:UInt)
+	function onColorChange()
 	{
-		if (_color != color)
-		{
-			_color = color;
-			var w = _colorImage.width;
-			var h = _colorImage.height;
-			var g = _colorImage.graphics;
-			g.clear();
-			g.beginFill(0x000000);
-			g.drawRect(0, 0, w, h);
-			g.drawRect(1, 1, w - 2, h - 2);
-			g.beginFill(color);
-			g.drawRect(1, 1, w - 2, h - 2);
-			g.endFill();
-		}
+		var w = _colorImage.width;
+		var h = _colorImage.height;
+		var g = _colorImage.graphics;
+		g.clear();
+		g.beginFill(0x000000);
+		g.drawRect(0, 0, w, h);
+		g.drawRect(1, 1, w - 2, h - 2);
+		g.beginFill(_editorState.color);
+		g.drawRect(1, 1, w - 2, h - 2);
+		g.endFill();
 	}
 	
 	function onNewClick(event:MouseEvent)

@@ -10,6 +10,7 @@ import temperate.minimal.windows.MWindowedContainer;
 import temperate.minimal.windows.MWindowManager;
 import temperate.windows.events.CWindowEvent;
 import windowApplication.assets.Text;
+import windowApplication.Primitive;
 
 class TextDrawState extends ADrawState
 {
@@ -34,7 +35,7 @@ class TextDrawState extends ADrawState
 	override function doMove()
 	{
 		_topGraphics.clear();
-		_topGraphics.lineStyle(0x000000);
+		topLineStyle();
 		_topGraphics.drawRect(_x, _y, _image.mouseX - _x, _image.mouseY - _y);
 	}
 	
@@ -92,7 +93,8 @@ class TextDrawState extends ADrawState
 			return;
 		}
 		
-		var tf = MFormatFactory.LABEL.newFixed(false);
+		var color = _editorState.color;
+		var tf = MFormatFactory.LABEL.clone().setColor(color).newFixed(false);
 		tf.x = _x;
 		tf.y = _y;
 		tf.width = _width;
@@ -100,5 +102,7 @@ class TextDrawState extends ADrawState
 		tf.text = data;
 		tf.wordWrap = true;
 		_image.addChild(tf);
+		
+		_primitives.push(Primitive.TF(tf.x, tf.y, tf.width, tf.height, tf.text, color));
 	}
 }
