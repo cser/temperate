@@ -8,7 +8,7 @@ import temperate.text.CDefaultFormatFactory;
 
 class ACRasterTextButton extends ACButton
 {
-	public function new() 
+	function new() 
 	{
 		super();
 	}
