@@ -8,12 +8,12 @@ class CIndexedComponentSetTest
 	{
 	}
 	
-	var _components:CIndexedComponentSet<FakeComponent>;
+	var _components:CComponentStack<FakeComponent>;
 	
 	@Before
 	public function setUp():Void
 	{
-		_components = new CIndexedComponentSet();
+		_components = new CComponentStack();
 	}
 	
 	@After

@@ -9,6 +9,8 @@ class FakeComponent implements ICComponent<FakeComponent>
 	
 	var _value:String;
 	
+	public var prev:FakeComponent;
+	
 	public var next:FakeComponent;
 	
 	public function getValues():String

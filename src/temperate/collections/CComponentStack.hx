@@ -1,7 +1,7 @@
 package temperate.collections;
 import flash.utils.TypedDictionary;
 
-class CIndexedComponentSet< T:ICComponent<T> >
+class CComponentStack< T:ICComponent<T> >
 {
 	public function new() 
 	{

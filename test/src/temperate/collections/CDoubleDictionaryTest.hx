@@ -131,8 +131,18 @@ class CDoubleDictionaryTest
 		ArrayAssert.equalToArrayIgnoringOrder([], dictionary.keys());
 		ArrayAssert.equalToArrayIgnoringOrder([], dictionary.values());
 	}
+	
+	@Test
+	public function iterator()
+	{
+		var dictionary = new CDoubleDictionary<String, Int>();
+		dictionary.set("a", 1);
+		dictionary.set("b", 2);
+		var keys = [];
+		for (key in dictionary)
+		{
+			keys.push(key);
+		}
+		ArrayAssert.equalToArrayIgnoringOrder(["a", "b"], keys);
+	}
 }
-/**
-Удаление элементов
-Итератор
-*/
