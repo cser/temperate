@@ -5,6 +5,7 @@ import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
+import temperate.collections.CPriorityList;
 import temperate.skins.CNullWindowSkin;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.components.ACWindowComponent;
@@ -30,10 +31,6 @@ class ACWindow implements ICPopUp
 		view = _baseSkin.view;
 		
 		initComponents();
-		
-		addComponent(new CWindowConstraintsComponent());
-		_mover = newMover();
-		addComponent(_mover);
 		
 		view.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 	}
@@ -124,41 +121,38 @@ class ACWindow implements ICPopUp
 		return new CMoveWindowComponent(_baseSkin.head, get_dock);
 	}
 	
-	public var x(get_x, null):Float;
+	public var x(get_x, null):Int;
 	function get_x()
 	{
-		return view.x;
+		return _head.getX();
 	}
 	
-	public var y(get_y, null):Float;
+	public var y(get_y, null):Int;
 	function get_y()
 	{
-		return view.y;
+		return _head.getY();
 	}
 	
 	public function move(x:Float, y:Float)
 	{
-		_top.move(Std.int(x), Std.int(y));
+		_head.move(Std.int(x), Std.int(y));
 	}
 	
-	public var width(get_width, set_width):Float;
+	public var width(get_width, null):Int;
 	function get_width()
 	{
-		return view.width;
-	}
-	function set_width(value)
-	{
-		return view.width = value;
+		return _head.getWidth();
 	}
 	
-	public var height(get_height, set_height):Float;
+	public var height(get_height, null):Int;
 	function get_height()
 	{
-		return view.height;
+		return _head.getHeight();
 	}
-	function set_height(value)
+	
+	public function setSize(width:Float, height:Float):Void
 	{
-		return view.height = value;
+		_head.setSize(Std.int(width), Std.int(height));
 	}
 	
 	public var animator(get_animator, set_animator):ACWindowComponent;
@@ -176,6 +170,7 @@ class ACWindow implements ICPopUp
 		_animator = value;
 		if (_animator != null)
 		{
+			_animator.priority = PRIORITY_ANIMATOR;
 			addComponent(_animator);
 		}
 		return _animator;
@@ -183,12 +178,12 @@ class ACWindow implements ICPopUp
 	
 	public function animateShow(fast:Bool):Void
 	{
-		_top.animateShow(fast);
+		_head.animateShow(fast);
 	}
 	
 	public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
 	{
-		_top.animateHide(fast, onComplete);
+		_head.animateHide(fast, onComplete);
 	}
 	
 	//----------------------------------------------------------------------------------------------
@@ -197,47 +192,44 @@ class ACWindow implements ICPopUp
 	//
 	//----------------------------------------------------------------------------------------------
 	
+	static var PRIORITY_BASE = 0;
+	static var PRIORITY_ANIMATOR = 1;
+	static var PRIORITY_CONSTRAINTS = 2;
+	static var PRIORITY_MOVER = 3;
+	
+	var _components:CPriorityList<ACWindowComponent>;
+	var _base:ACWindowComponent;
+	var _constraints:ACWindowComponent;
+	var _head:ACWindowComponent;
+	
 	function initComponents()
 	{
+		_components = new CPriorityList();
+		
 		_base = new CBaseWindowComponent();
+		_base.priority = PRIORITY_BASE;
 		addComponent(_base);
+		
+		_constraints = new CWindowConstraintsComponent();
+		_constraints.priority = PRIORITY_CONSTRAINTS;
+		addComponent(_constraints);
+		
+		_mover = newMover();
+		_mover.priority = PRIORITY_MOVER;
+		addComponent(_mover);
 	}
-	
-	var _top:ACWindowComponent;
-	var _base:ACWindowComponent;
 	
 	function addComponent(component:ACWindowComponent)
 	{
-		if (_top == null)
-		{
-			_top = component;
-			_top.next = null;
-		}
-		else
-		{
-			component.next = _top;
-			_top = component;
-		}
+		_components.add(component);
 		component.subscribe(this, getManager, _baseSkin);
+		_head = _components.head;
 	}
 	
 	function removeComponent(component:ACWindowComponent)
 	{
-		if (_top == component)
-		{
-			_top = component.next;
-		}
-		var current = _top;
-		while (current != null)
-		{
-			if (current.next == component)
-			{
-				current.next = component.next;
-				break;
-			}
-			current = current.next;
-		}
 		component.unsubscribe();
-		component.next = null;
+		_components.remove(component);
+		_head = _components.head;
 	}
 }

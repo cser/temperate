@@ -153,8 +153,7 @@ class ToolsWindow extends ACWindow
 	function onOpenClick(event:MouseEvent)
 	{
 		var window = new OpenWindow(_manager);
-		window.width = 200;
-		window.height = 150;
+		window.setSize(200, 150);
 		window.open(true);
 	}
 	

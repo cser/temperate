@@ -1,13 +1,15 @@
 package temperate.windows.components;
 import flash.display.DisplayObject;
+import temperate.collections.ACPriorityListNode;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.CPopUpManager;
 import temperate.windows.ICPopUp;
 
-class ACWindowComponent 
+class ACWindowComponent extends ACPriorityListNode<ACWindowComponent>
 {
 	function new() 
 	{
+		super();
 	}
 	
 	var _popUp:ICPopUp;
@@ -38,8 +40,6 @@ class ACWindowComponent
 	function doUnsubscribe():Void
 	{
 	}
-	
-	public var next:ACWindowComponent;
 	
 	public function getX():Int
 	{
