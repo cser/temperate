@@ -477,7 +477,7 @@ class CNumericStepper extends CSprite
 	{
 		var delta = event.delta;
 		var sign = delta > 0 ? 1 : -1;
-		value += sign * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3));
+		value += sign * _step * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3));
 	}
 	
 	function onKeyDown(event:KeyboardEvent)

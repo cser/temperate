@@ -61,6 +61,11 @@ class TestScrollBar extends Sprite
 		new MScrollBar(true).addTo(this, 500, 100);
 		new MScrollBar(false).addTo(this, 610, 100);
 		
+		var scrollBar = new MScrollBar(true).addTo(this, 650, 100);
+		scrollBar.enabled = false;
+		var scrollBar = new MScrollBar(false).addTo(this, 760, 100);
+		scrollBar.enabled = false;
+		
 		if (Std.string(stage.quality).toLowerCase() != Std.string(StageQuality.LOW))
 		{
 			throw new Error("Quality mast steel be low");
@@ -141,6 +146,7 @@ class TestScrollBar extends Sprite
 }
 /*
 TODO
+Обработка клика по линии
 Параметризация цветов
 Другой тип выбора состояний для движка
 Сброс движка на кратную позицию при отпускании

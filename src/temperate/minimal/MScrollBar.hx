@@ -20,7 +20,7 @@ class MScrollBar extends CScrollBar
 		leftArrow.getState(CButtonState.DISABLED).setBitmapData(
 			horizontal ?
 				MScrollBarBdFactory.getLeftDisabled() :
-				MScrollBarBdFactory.getBottomDisabled());
+				MScrollBarBdFactory.getTopDisabled());
 		var rightArrow = new CRasterFixedButton();
 		rightArrow.getState(CButtonState.UP).setBitmapData(
 			horizontal ? MScrollBarBdFactory.getRightUp() : MScrollBarBdFactory.getBottomUp());

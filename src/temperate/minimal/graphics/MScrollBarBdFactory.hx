@@ -390,7 +390,7 @@ class MScrollBarBdFactory
 			case CButtonState.OVER:
 				transform = new ColorTransform(1.5, 1.5, 1.5);
 			case CButtonState.DISABLED:
-				transform = new ColorTransform(1.5, 1.5, 1.5, .5);
+				transform = new ColorTransform(1.5, 1, 1.5, .3);
 			default:
 				transform = new ColorTransform();
 		}
@@ -441,16 +441,16 @@ class MScrollBarBdFactory
 			
 			g.clear();
 			
-			var disabledAlphaRatio = state == CButtonState.DISABLED ? .5 : 1;
+			var enabled = state != CButtonState.DISABLED;
 			
-			var color = 0xff306010;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color) * disabledAlphaRatio);
+			var color = enabled ? 0xff306010 : 0xffbabaaa;
+			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
 			g.drawRoundRect(0, 0, arrowSize, arrowSize, 6);
 			g.drawRoundRect(0, 0, arrowSize - 1, arrowSize - 1, 6);
 			g.endFill();
 			
-			var color = 0xffa0c070;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color) * disabledAlphaRatio);
+			var color = enabled ? 0xffa0c070 : 0xffcccccc;
+			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
 			g.drawRoundRect(0, 0, arrowSize, arrowSize, 6);
 			g.drawRoundRect(1, 1, arrowSize - 1, arrowSize - 1, 6);
 			g.endFill();
@@ -471,7 +471,7 @@ class MScrollBarBdFactory
 					case CButtonState.DOWN:
 						sourceColors = [ 0xff80af00, 0xffb0d030 ];
 					case CButtonState.DISABLED:
-						sourceColors = [ 0x80aae030, 0x8080c000 ];
+						sourceColors = [ 0xffe8fac0, 0xffddefaa ];
 					default:
 						sourceColors = [ 0xffaae030, 0xff80c000 ];
 				}
@@ -485,13 +485,13 @@ class MScrollBarBdFactory
 			}
 			
 			var color = 0xffffffff;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color) * disabledAlphaRatio);
+			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
 			g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 4);
 			g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
 			g.endFill();
 			
-			var color = 0x2e000000;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color) * disabledAlphaRatio);
+			var color = enabled ? 0x2e000000 : 0x10000000;
+			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
 			g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
 			g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 4);
 			g.endFill();

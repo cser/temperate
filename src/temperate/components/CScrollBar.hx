@@ -76,6 +76,8 @@ class CScrollBar extends CSprite
 		
 		_thumb.addEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		
+		updateEnabled();
+		
 		_debug = new Shape();
 		addChild(_debug);
 	}
@@ -205,8 +207,13 @@ class CScrollBar extends CSprite
 		_guideSize = Std.int(_horizontal ?
 			_width - _leftArrow.width - _rightArrow.width :
 			_height - _leftArrow.height - _rightArrow.height);
+		updateThumbVisible();
+	}
+	
+	function updateThumbVisible()
+	{
 		var thumbSize = _horizontal ? _thumb.width : _thumb.height;
-		_thumb.visible = thumbSize < _guideSize;
+		_thumb.visible = _enabled && thumbSize < _guideSize;
 	}
 	
 	function setThumbPositionByValue()
@@ -269,6 +276,13 @@ class CScrollBar extends CSprite
 		return value;
 	}
 	
+	function onMouseWheel(event:MouseEvent)
+	{
+		var delta = event.delta;
+		var sign = delta > 0 ? -1 : 1;
+		value += sign * _lineScrollSize * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3));
+	}
+	
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Scrolling by arrow
@@ -327,6 +341,31 @@ class CScrollBar extends CSprite
 		_timer.stop();
 		_timer.removeEventListener(TimerEvent.TIMER, increaseValueHandler);
 		_timer.removeEventListener(TimerEvent.TIMER, decreaseValueHandler);
+	}
+	
+	override function set_enabled(value)
+	{
+		if (_enabled != value)
+		{
+			_enabled = value;
+			_leftArrow.enabled = value;
+			_rightArrow.enabled = value;
+			updateThumbVisible();
+			updateEnabled();
+		}
+		return _enabled;
+	}
+	
+	function updateEnabled()
+	{
+		if (_enabled)
+		{
+			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+		}
+		else
+		{
+			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+		}
 	}
 	
 	//----------------------------------------------------------------------------------------------
