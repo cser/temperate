@@ -1,5 +1,6 @@
 package temperate.minimal.graphics;
 import flash.display.BitmapData;
+import flash.display.Graphics;
 import flash.geom.Matrix;
 import temperate.core.CMath;
 
@@ -31,22 +32,17 @@ class MScrollBarBdFactory
 		var bitmapData = new BitmapData(width, height, true, 0x00000000);
 		
 		var g = shape.graphics;
-		g.clear();
-		
-		g.beginFill(CMath.colorPart(bgColor), CMath.alphaPart(bgColor));
-		g.drawRoundRect(0, 0, width, height, 4);
-		g.endFill();
-		
+		drawBg(g, width, height);
 		bitmapData.draw(shape);
 		
 		g.clear();
 		g.beginFill(CMath.colorPart(arrowColor), CMath.alphaPart(arrowColor));
-		g.moveTo(3, 1);
-		g.lineTo(8, 7);
-		g.lineTo(3, 13);
-		g.lineTo(1, 11);
-		g.lineTo(4, 7);
-		g.lineTo(1, 3);
+		g.moveTo(-1, -5);
+		g.lineTo(4, 1);
+		g.lineTo(-1, 7);
+		g.lineTo(-3, 5);
+		g.lineTo(0, 1);
+		g.lineTo(-3, -3);
 		g.endFill();
 		
 		var innerStrength = 1.7;
@@ -72,5 +68,24 @@ class MScrollBarBdFactory
 		
 		MBdFactoryUtil.qualityOff();
 		return bitmapData;
+	}
+	
+	static function drawBg(g:Graphics, width:Int, height:Int)
+	{
+		g.clear();
+		
+		g.beginFill(CMath.colorPart(bgColor), CMath.alphaPart(bgColor));
+		g.drawRoundRect(0, 0, width, height, 4);
+		g.endFill();
+		
+		var color = 0xffffffff;
+		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.drawRoundRect(1, 1, width - 2, height - 2, 4);
+		g.endFill();
+		
+		var color = 0xff80cc00;
+		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.drawRoundRect(2, 2, width - 4, height - 4, 2);
+		g.endFill();
 	}
 }
