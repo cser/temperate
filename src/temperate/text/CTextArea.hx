@@ -5,6 +5,7 @@ import flash.events.Event;
 import flash.text.TextField;
 import flash.text.TextFieldType;
 import temperate.components.CScrollBar;
+import temperate.components.CScrollPolicy;
 import temperate.core.CMath;
 import temperate.core.CSprite;
 import temperate.skins.ICRectSkin;
@@ -31,6 +32,9 @@ class CTextArea extends CSprite
 		
 		_bgSkin = bgSkin;
 		_bgSkin.link(addChildAt0, removeChild, graphics);
+		
+		_hScrollPolicy = CScrollPolicy.AUTO;
+		_vScrollPolicy = CScrollPolicy.AUTO;
 		
 		_settedWidth = 100;
 		_settedHeight = 100;
@@ -134,6 +138,87 @@ class CTextArea extends CSprite
 	{
 		_tf.type = value;
 		return value;
+	}
+	
+	public var worldWrap(get_worldWrap, set_worldWrap):Bool;
+	function get_worldWrap()
+	{
+		return _tf.wordWrap;
+	}
+	function set_worldWrap(value:Bool)
+	{
+		_tf.wordWrap = value;
+		return value;
+	}
+	
+	public var hScrollValue(get_hScrollValue, set_hScrollValue):Int;
+	function get_hScrollValue()
+	{
+		return Std.int(_scrollBar.value);
+	}
+	function set_hScrollValue(value:Int)
+	{
+		_scrollBar.value = value;
+		return value;
+	}
+	
+	public var vScrollValue(get_vScrollValue, set_vScrollValue):Int;
+	function get_vScrollValue()
+	{
+		return Std.int(_scrollBar.value);
+	}
+	function set_vScrollValue(value:Int)
+	{
+		_scrollBar.value = value;
+		return value;
+	}
+	
+	public var hMaxScrollValue(get_hMaxScrollValue, null):Int;
+	function get_hMaxScrollValue()
+	{
+		return Std.int(_scrollBar.maxValue);
+	}
+	
+	public var vMaxScrollValue(get_vMaxScrollValue, null):Int;
+	function get_vMaxScrollValue()
+	{
+		return Std.int(_scrollBar.maxValue);
+	}
+	
+	public var hMinScrollValue(get_hMinScrollValue, null):Int;
+	function get_hMinScrollValue()
+	{
+		return Std.int(_scrollBar.minValue);
+	}
+	
+	public var vMinScrollValue(get_vMinScrollValue, null):Int;
+	function get_vMinScrollValue()
+	{
+		return Std.int(_scrollBar.minValue);
+	}
+	
+	public var hScrollPolicy(get_hScrollPolicy, set_hScrollPolicy):CScrollPolicy;
+	var _hScrollPolicy:CScrollPolicy;
+	function get_hScrollPolicy()
+	{
+		return _hScrollPolicy;
+	}
+	function set_hScrollPolicy(value)
+	{
+		_hScrollPolicy = value;
+		return _hScrollPolicy;
+	}
+	
+	public var vScrollPolicy(get_vScrollPolicy, set_vScrollPolicy):CScrollPolicy;
+	var _vScrollPolicy:CScrollPolicy;
+	function get_vScrollPolicy()
+	{
+		return _vScrollPolicy;
+	}
+	function set_vScrollPolicy(value)
+	{
+		_vScrollPolicy = value;
+		return _vScrollPolicy;
 	}
 	
 	//----------------------------------------------------------------------------------------------
