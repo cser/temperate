@@ -7,6 +7,7 @@ import temperate.containers.CVBox;
 import temperate.minimal.graphics.MLineBdFactory;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
+import temperate.minimal.MLabel;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.MSlider;
 import temperate.minimal.MTooltipFactory;
@@ -31,8 +32,9 @@ class TestSlider extends Sprite
 		var slider = new CSlider(false, thumb, new MFieldRectSkin());
 		main.add(slider);
 		
-		MTooltipFactory.newText(
-			new MScrollBar(true).addTo(main), "It here just for skin comarision");
+		var scrollBar = new MScrollBar(true).addTo(main);
+		scrollBar.value = 20;
+		MTooltipFactory.newText(scrollBar, "It here just for skin comarision");
 		
 		{
 			var line = new CHBox().addTo(main);
@@ -54,8 +56,32 @@ class TestSlider extends Sprite
 		
 		{
 			var line = new CHBox().addTo(main);
-			new MSlider(true).addTo(line);
+			var column = new CVBox().addTo(line);
+			new MSlider(true).addTo(column);
+			new MSlider(true).addTo(column).value = 10;
+			new MSlider(true).addTo(column).value = 20;
+			new MSlider(true).addTo(column).value = 50;
+			new MSlider(true).addTo(column).value = 100;
 			new MSlider(false).addTo(line);
+			new MSlider(false).addTo(line).value = 10;
+			new MSlider(false).addTo(line).value = 20;
+			new MSlider(false).addTo(line).value = 50;
+			new MSlider(false).addTo(line).value = 100;
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("value = 50").addTo(column);
+			new MSlider(true).addTo(column).value = 50;
+			new MSlider(false).addTo(column).value = 50;
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("updateOnMove = true").addTo(column);
+			new MSlider(true).addTo(column).updateOnMove = true;
+			new MSlider(false).addTo(column).updateOnMove = true;
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("useHandCursor = true").addTo(column);
+			new MSlider(true).addTo(column).useHandCursor = true;
+			new MSlider(false).addTo(column).useHandCursor = true;
 		}
 	}
 }
