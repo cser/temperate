@@ -56,6 +56,10 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 				}
 			}
 		}
+		if (hasEventListener(Event.RESIZE))
+		{
+			dispatchEvent(new Event(Event.RESIZE));
+		}
 	}
 	
 	var _popUps:Array<ICPopUp>;

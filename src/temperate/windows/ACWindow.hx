@@ -121,7 +121,7 @@ class ACWindow implements ICPopUp
 	
 	function newMover():ACWindowComponent
 	{
-		return new CWindowMoveComponent(_baseSkin.head, get_dock);
+		return new CWindowMoveComponent(_baseSkin.head);
 	}
 	
 	public var x(get_x, null):Int;
@@ -257,7 +257,7 @@ class ACWindow implements ICPopUp
 		if (!_components.exists(component))
 		{
 			_components.add(component);
-			component.subscribe(this, getManager, _baseSkin);
+			component.subscribe(this, getManager, get_dock, _baseSkin);
 			_head = _components.head;
 		}
 	}

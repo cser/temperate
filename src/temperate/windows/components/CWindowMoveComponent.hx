@@ -2,20 +2,17 @@ package temperate.windows.components;
 import flash.display.DisplayObject;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
-import temperate.windows.docks.ICPopUpDock;
 
 class CWindowMoveComponent extends ACWindowComponent
 {
-	public function new(target:DisplayObject, getDock:Void->ICPopUpDock)
+	public function new(target:DisplayObject)
 	{
 		super();
 		
 		_target = target;
-		_getDock = getDock;
 	}
 	
 	var _target:DisplayObject;
-	var _getDock:Void->ICPopUpDock;
 	
 	override function doSubscribe()
 	{

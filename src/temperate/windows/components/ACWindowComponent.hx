@@ -1,9 +1,10 @@
 package temperate.windows.components;
 import flash.display.DisplayObject;
 import temperate.collections.ACPriorityListNode;
-import temperate.windows.skins.ICWindowSkin;
 import temperate.windows.CPopUpManager;
+import temperate.windows.docks.ICPopUpDock;
 import temperate.windows.ICPopUp;
+import temperate.windows.skins.ICWindowSkin;
 
 class ACWindowComponent extends ACPriorityListNode<ACWindowComponent>
 {
@@ -15,14 +16,17 @@ class ACWindowComponent extends ACPriorityListNode<ACWindowComponent>
 	var _popUp:ICPopUp;
 	var _view:DisplayObject;
 	var _getManager:Void->CPopUpManager;
+	var _getDock:Void->ICPopUpDock;
 	var _skin:ICWindowSkin;
 	
 	public function subscribe(
-		popUp:ICPopUp, getManager:Void->CPopUpManager, skin:ICWindowSkin):Void
+		popUp:ICPopUp, getManager:Void->CPopUpManager, getDock:Void->ICPopUpDock,
+		skin:ICWindowSkin):Void
 	{
 		_popUp = popUp;
 		_view = popUp.view;
 		_getManager = getManager;
+		_getDock = getDock;
 		_skin = skin;
 		doSubscribe();
 	}

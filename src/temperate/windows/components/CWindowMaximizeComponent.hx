@@ -29,13 +29,17 @@ class CWindowMaximizeComponent extends ACWindowComponent
 	{
 		_popUp.innerDispatcher.removeEventListener(Event.RESIZE, onResize);
 		super.setSize(_width, _height);
-		super.move(_x, _y, false);
+		var manager = _getManager();
+		var dock = _getDock();
+		dock.arrange(getWidth(), getHeight(), manager.areaWidth, manager.areaHeight);
+		super.move(manager.areaX + dock.x, manager.areaY + dock.y, false);
 	}
 	
 	function onResize(event:Event = null)
 	{
 		var manager = _getManager();
 		super.setSize(manager.areaWidth, manager.areaHeight);
+		super.move(manager.areaX, manager.areaY, false);
 	}
 	
 	override public function move(x:Int, y:Int, needSave:Bool):Void
