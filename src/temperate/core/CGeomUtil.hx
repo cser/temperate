@@ -40,64 +40,87 @@ class CGeomUtil
 	}
 	
 	/**
-	 * Need clockwise direction both
+	 * Mast be convex and clockwise direction both
 	 */
 	public static function getUnionPoligon(xys0:Array<Float>, xys1:Array<Float>):Array<Float>
 	{
 		var result = [];
 		
-		var length0 = xys0.length;
-		var length1 = xys1.length;
-		
 		var xys = xys0;
 		var xys_ = xys1;
-		var length = length0;
-		var length_ = length1;
-		var i = 0;
+		var i = xys.length - 2;
 		var x0 = xys[i];
 		var y0 = xys[i + 1];
-		for (k in 0 ... 100)
+		var startI = i;
+		var startXys = xys;
+		while (true)
 		{
 			i += 2;
-			if (i >= length)
+			if (i >= xys.length)
 			{
 				i = 0;
 			}
 			var x1 = xys[i];
 			var y1 = xys[i + 1];
 			
-			var j = length_ - 2;
-			var x0_ = xys_[j];
-			var y0_ = xys_[j + 1];
-			j = 0;
-			while (j < length_)
+			var minDistance = -1.;
+			var intersectX = 0.;
+			var intersectY = 0.;
+			var intersectJ = 0;
 			{
-				var x1_ = xys_[j];
-				var y1_ = xys_[j + 1];
-				
-				if (isSegmentsCross(x0, y0, x1, y1, x0_, y0_, x1_, y1_))
+				var j = xys_.length - 2;
+				var x0_ = xys_[j];
+				var y0_ = xys_[j + 1];
+				j = 0;
+				while (j < xys_.length)
 				{
-					getLineIntersect(x0, y0, x1, y1, x0_, y0_, x1_, y1_);
-					result.push(lineIntersectX);
-					result.push(lineIntersectY);
+					var x1_ = xys_[j];
+					var y1_ = xys_[j + 1];
+					
+					if (isSegmentsCross(x0, y0, x1, y1, x0_, y0_, x1_, y1_))
+					{
+						getLineIntersect(x0, y0, x1, y1, x0_, y0_, x1_, y1_);
+						var dx = lineIntersectX - x0;
+						var dy = lineIntersectY - y0;
+						var distance = dx * dx + dy * dy;
+						if (minDistance < 0 || distance < minDistance)
+						{
+							minDistance = distance;
+							intersectX = lineIntersectX;
+							intersectY = lineIntersectY;
+							intersectJ = j;
+						}
+					}
+					
+					x0_ = x1_;
+					y0_ = y1_;
+					j += 2;
 				}
-				
-				x0_ = x1_;
-				y0_ = y1_;
-				j += 2;
 			}
 			
-			if (!isInConvexPoligon(xys1, x0, y0))
+			if (minDistance < 0)
 			{
-				result.push(x0);
-				result.push(y0);
+				result.push(x1);
+				result.push(y1);
+				x0 = x1;
+				y0 = y1;
 			}
-			
-			x0 = x1;
-			y0 = y1;
-			i += 2;
+			else
+			{
+				result.push(intersectX);
+				result.push(intersectY);
+				var c = xys;
+				xys = xys_;
+				xys_ = c;
+				i = intersectJ - 2;
+				x0 = intersectX;
+				y0 = intersectY;
+			}
+			if (i == startI && xys == startXys)
+			{
+				break;
+			}
 		}
-		
 		return result;
 	}
 	

@@ -51,7 +51,8 @@ class TestMain
 		
 		var test = new TestWindows();
 		var test = new TestValidationBug();
-		var test = new TestWindowApplication();var test = new TestTooltipsOld();
+		var test = new TestWindowApplication(); var test = new TestTooltipsOld();
+		var test = new TestGeomUtil();
 		Lib.current.addChild(test);
 		test.init();
 	}
