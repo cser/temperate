@@ -7,6 +7,7 @@ class MainTestSuite extends TestSuite
 	public function new()
 	{
 		super();
+		add(ArrayAssertTest);
 		add(FakeTimerFactoryTest);
 		add(temperate.collections.CLinkedStackTest);
 		add(temperate.components.CButtonSelectorTest);
@@ -22,6 +23,7 @@ class MainTestSuite extends TestSuite
 		add(temperate.core.CMouseWheelUtilTest);
 		add(temperate.docks.RightDockTest);
 		add(temperate.minimal.charts.MChartTest);
+		add(temperate.signals.CSignalTest);
 		add(temperate.text.CInputFieldTest);
 		add(temperate.text.CLabelTest);
 		add(temperate.text.CTextFormatTest);
