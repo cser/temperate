@@ -66,6 +66,12 @@ class TestScrollBar extends Sprite
 		line.add(new Bitmap(MScrollBarBdFactory.getTopDown()));
 		line.add(new Bitmap(MScrollBarBdFactory.getBottomDown()));
 		
+		var line = new CHBox().addTo(column);
+		line.add(new Bitmap(MScrollBarBdFactory.getLeftDisabled()));
+		line.add(new Bitmap(MScrollBarBdFactory.getRightDisabled()));
+		line.add(new Bitmap(MScrollBarBdFactory.getTopDisabled()));
+		line.add(new Bitmap(MScrollBarBdFactory.getBottomDisabled()));
+		
 		var subBox = new CVBox().addTo(column);
 		subBox.add(newShape(true, MScrollBarBdFactory.getHThumbUp()));
 		subBox.add(newShape(true, MScrollBarBdFactory.getHThumbOver()));
@@ -109,3 +115,8 @@ class TestScrollBar extends Sprite
 		return sprite;
 	}
 }
+/*
+TODO
+Параметризация цветов
+Другой тип выбора состояний для движка
+*/
