@@ -21,13 +21,7 @@ class SaveWindow extends ACWindow
 	{
 		super(manager);
 		
-		_main.setIndents(10, 10, 10, 10);
-		
-		_title = MFormatFactory.WINDOW_TITLE.newAutoSized();
-		_title.text = "Save file";
-		_main.add(_title);
-		
-		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
+		_baseSkin.title = "Save file";
 		
 		var line = new CHBox();
 		_main.add(line);
@@ -37,7 +31,7 @@ class SaveWindow extends ACWindow
 		_input = new MInputField();
 		line.add(_input);
 		
-		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
+		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
 		
 		var buttonBox = new CHBox();
 		_main.add(buttonBox).setAlign(.5);

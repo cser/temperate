@@ -21,13 +21,7 @@ class OpenWindow extends ACWindow
 	{
 		super(manager);
 		
-		_main.setIndents(10, 10, 10, 10);
-		
-		_title = MFormatFactory.WINDOW_TITLE.newAutoSized();
-		_title.text = "Open file";
-		_main.add(_title);
-		
-		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
+		_baseSkin.title = "Open file";
 		
 		var list = new CVBox();
 		list.gapY = 0;
@@ -42,7 +36,7 @@ class OpenWindow extends ACWindow
 		scrollPane.set(list).setPercents(100);
 		_main.add(scrollPane).setPercents(100, 100);
 		
-		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
+		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
 		
 		var buttonBox = new CHBox();
 		_main.add(buttonBox).setAlign(.5);

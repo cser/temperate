@@ -40,11 +40,7 @@ class ToolsWindow extends ACWindow
 	{
 		super(manager);
 		
-		_main.setIndents(10, 10, 10, 10);
-		
 		_baseSkin.title = "Tools";
-		
-		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
 		
 		{
 			var toolBox = new CVBox();
@@ -88,7 +84,7 @@ class ToolsWindow extends ACWindow
 			line.add(button).setPercents(100, 100);
 		}
 		
-		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
+		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
 		
 		var button = new MFlatButton();
 		button.text = "New";

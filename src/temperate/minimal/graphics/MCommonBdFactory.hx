@@ -13,34 +13,7 @@ import temperate.core.CMath;
  * (In this case just incluse swf with you BitmapData's and customize components by they)
  */
 class MCommonBdFactory 
-{	
-	/*
-	static function newStriae(color:UInt, backgroundColor:UInt, space:Int, size:Int)
-	{
-		var g = shape.graphics;
-		g.clear();
-		
-		g.lineStyle(size, color);
-		var x = -DEFAULT_STRIAE_SIZE;
-		while (x < DEFAULT_STRIAE_SIZE)
-		{
-			g.moveTo(x + DEFAULT_STRIAE_SIZE, 0);
-			g.lineTo(x, DEFAULT_STRIAE_SIZE);
-			x += space + size;
-		}
-		
-		var bitmapData = new BitmapData(
-			DEFAULT_STRIAE_SIZE, DEFAULT_STRIAE_SIZE, false, backgroundColor);
-		bitmapData.draw(shape);
-		return bitmapData;
-	}
-	
-	public static function getPanelStriae()
-	{
-		return newStriae(0xc0c0c0, 0xd0d0d0, 3, 1);
-	}
-	*/
-	
+{
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Customizing
