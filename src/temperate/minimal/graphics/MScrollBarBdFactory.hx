@@ -411,13 +411,13 @@ class MScrollBarBdFactory
 		}
 		else if (!horizontal && left)
 		{
-			var tx = offsetX;
+			var tx = offsetX + 1;
 			var ty = offsetY;
 			bitmapData.draw(arrow, new Matrix(1, 0, 0, 1, tx, ty), transform);
 		}
 		else
 		{
-			var tx = offsetX;
+			var tx = offsetX + 1;
 			var ty = offsetY + arrow.height + 1;
 			bitmapData.draw(arrow, new Matrix(1, 0, 0, -1, tx, ty), transform);
 		}
@@ -433,6 +433,8 @@ class MScrollBarBdFactory
 		var bd = _bgByState[key];
 		if (bd == null)
 		{
+			MBdFactoryUtil.qualityOn();
+			
 			bd = new BitmapData(arrowSize, arrowSize, true, 0x00000000);
 			var shape = MBdFactoryUtil.getShape();
 			var g = shape.graphics;
@@ -496,6 +498,8 @@ class MScrollBarBdFactory
 			
 			bd.draw(shape);
 			_bgByState[key] = bd;
+			
+			MBdFactoryUtil.qualityOff();
 		}
 		return bd;
 	}

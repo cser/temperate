@@ -3,6 +3,7 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Sprite;
 import flash.display.StageQuality;
+import flash.errors.Error;
 import helpers.Scaler;
 import temperate.components.CScrollBar;
 import temperate.containers.CHBox;
@@ -22,7 +23,7 @@ class TestScrollBar extends Sprite
 	
 	public function init()
 	{
-		stage.quality = StageQuality.LOW;
+		stage.quality = StageQuality.LOW;// To check bitmap data generation during low quality mode
 		
 		newScrollBar(true).addTo(this);
 		newScrollBar(false).addTo(this, 100, 0);
@@ -54,6 +55,12 @@ class TestScrollBar extends Sprite
 		
 		new MScrollBar(true).addTo(this, 500, 100);
 		new MScrollBar(false).addTo(this, 610, 100);
+		
+		if (Std.string(stage.quality).toLowerCase() != Std.string(StageQuality.LOW))
+		{
+			throw new Error("Quality mast steel be low");
+		}
+		stage.quality = StageQuality.HIGH;
 	}
 	
 	function newButtonsBlock()

@@ -83,7 +83,7 @@ class Scale3GridDrawer implements IDrawer
 	}
 	
 	public function redraw()
-	{
+	{	
 		var w = width;
 		var h = height;
 		var g = graphics;

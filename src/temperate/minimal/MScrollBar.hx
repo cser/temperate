@@ -47,8 +47,8 @@ class MScrollBar extends CScrollBar
 		{
 			thumb.setIcon(MScrollBarBdFactory.getVThumbCenter(), 0, 0);
 		}
-		thumb.setGrid3Insets(4, 4);
-		thumb.setMinSizeParams(8, 14);
+		thumb.setGrid3Insets(5, 5);
+		thumb.setMinSizeParams(10, 16);
 		var bg = CNullRectSkin.getInstance();
 		super(horizontal, leftArrow, rightArrow, thumb, bg);
 	}

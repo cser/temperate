@@ -156,8 +156,8 @@ class CRasterThumb extends ACButton
 	public function setGrid3Insets(left:Int, right:Int)
 	{
 		_drawer.setInsets(left, right);
-		_size_valid = false;
-		postponeSize();
+		_view_valid = false;
+		postponeView();
 	}
 	
 	public var minSize(default, null):Float;

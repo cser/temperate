@@ -28,7 +28,7 @@ class TestMain
 		var test = new TestMCheckBox();
 		var test = new TestTooltipsOld();
 		var test = new TestMTooltips();
-		
+		var test = new TestNumericStepper();
 		var test = new TestCursorManager();
 		var test = new TestMCursorManager();
 		var test = new TestMCharts();
@@ -36,7 +36,7 @@ class TestMain
 		var test = new TestMTween();
 		var test = new TestTooltips();
 		
-		var test = new TestScrollBar();var test = new TestNumericStepper();
+		var test = new TestScrollBar();
 		Lib.current.addChild(test);
 		test.init();
 	}
