@@ -6,7 +6,7 @@ interface ICButton implements IEventDispatcher
 {
 	public var view(default, null):DisplayObject;
 	
-	public var enabled(get_enabled, set_enabled):Bool;
+	public var isEnabled(get_isEnabled, set_isEnabled):Bool;
 	
 	public var useHandCursor:Bool;
 	

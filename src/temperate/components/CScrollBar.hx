@@ -175,7 +175,7 @@ class CScrollBar extends CSprite, implements ICSlider
 	
 	function updateEnabledListeners()
 	{
-		if (_enabled)
+		if (_isEnabled)
 		{
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			_bg.addEventListener(MouseEvent.MOUSE_DOWN, onBgMouseDown);
@@ -444,7 +444,7 @@ class CScrollBar extends CSprite, implements ICSlider
 	function updateThumbVisible()
 	{
 		var thumbSize = _horizontal ? _thumb.width : _thumb.height;
-		_thumb.visible = _enabled && thumbSize < _guideSize && _maxValue > _minValue;
+		_thumb.visible = _isEnabled && thumbSize < _guideSize && _maxValue > _minValue;
 	}
 	
 	function updateBg()
@@ -506,17 +506,17 @@ class CScrollBar extends CSprite, implements ICSlider
 		return value;
 	}
 	
-	override function set_enabled(value)
+	override function set_isEnabled(value)
 	{
-		if (_enabled != value)
+		if (_isEnabled != value)
 		{
-			_enabled = value;
-			_leftArrow.enabled = _enabled;
-			_rightArrow.enabled = _enabled;
+			_isEnabled = value;
+			_leftArrow.isEnabled = _isEnabled;
+			_rightArrow.isEnabled = _isEnabled;
 			updateThumbVisible();
 			updateEnabledListeners();
 		}
-		return _enabled;
+		return _isEnabled;
 	}
 	
 	var _useHandCursor:Bool;

@@ -81,11 +81,11 @@ class CInputField extends CSprite
 		dispatchEvent(new Event(Event.CHANGE));
 	}
 	
-	override function set_enabled(value)
+	override function set_isEnabled(value)
 	{
-		if (_enabled != value)
+		if (_isEnabled != value)
 		{
-			_enabled = value;
+			_isEnabled = value;
 			updateTextType();
 			updateControlsEnabled();
 			
@@ -93,12 +93,12 @@ class CInputField extends CSprite
 			_view_valid = false;
 			postponeView();
 		}
-		return _enabled;
+		return _isEnabled;
 	}
 	
 	function updateControlsEnabled()
 	{
-		if (_enabled)
+		if (_isEnabled)
 		{
 			_bg.state = _editable ? CSkinState.NORMAL : CSkinState.INACTIVE;
 		}
@@ -138,7 +138,7 @@ class CInputField extends CSprite
 	
 	function updateTextType()
 	{
-		_tf.type = _enabled && _editable ?
+		_tf.type = _isEnabled && _editable ?
 			_tf.type = TextFieldType.INPUT :
 			_tf.type = TextFieldType.DYNAMIC;
 	}
@@ -146,7 +146,7 @@ class CInputField extends CSprite
 	function updateFormat()
 	{
 		var newFormat = null;
-		if (_enabled)
+		if (_isEnabled)
 		{
 			if (_isCorrect)
 			{

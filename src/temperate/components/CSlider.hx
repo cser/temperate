@@ -129,7 +129,7 @@ class CSlider extends CSprite, implements ICSlider
 	
 	function updateEnabled()
 	{
-		if (_enabled)
+		if (_isEnabled)
 		{
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			_bg.addEventListener(MouseEvent.MOUSE_DOWN, onBgMouseDown);
@@ -142,7 +142,7 @@ class CSlider extends CSprite, implements ICSlider
 			_thumb.removeEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		}
 		_view_valid = false;
-		_bgSkin.state = _enabled ? CSkinState.NORMAL : CSkinState.DISABLED;
+		_bgSkin.state = _isEnabled ? CSkinState.NORMAL : CSkinState.DISABLED;
 	}
 	
 	function onBgMouseDown(event:MouseEvent)
@@ -405,15 +405,15 @@ class CSlider extends CSprite, implements ICSlider
 		return _mouseWheelStep;
 	}
 	
-	override function set_enabled(value)
+	override function set_isEnabled(value)
 	{
-		if (_enabled != value)
+		if (_isEnabled != value)
 		{
-			_enabled = value;
-			_thumb.enabled = _enabled;
+			_isEnabled = value;
+			_thumb.isEnabled = _isEnabled;
 			updateEnabled();
 		}
-		return _enabled;
+		return _isEnabled;
 	}
 	
 	var _useHandCursor:Bool;

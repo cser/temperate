@@ -8,7 +8,7 @@ class CSprite extends Sprite
 	{
 		super();
 		_validator = CValidator.getInstance();
-		_enabled = true;
+		_isEnabled = true;
 		_width = 0;
 		_height = 0;
 		_settedWidth = 0;
@@ -140,16 +140,16 @@ class CSprite extends Sprite
 		postponeSize();
 	}
 	
-	public var enabled(get_enabled, set_enabled):Bool;
-	var _enabled:Bool;
-	function get_enabled()
+	public var isEnabled(get_isEnabled, set_isEnabled):Bool;
+	var _isEnabled:Bool;
+	function get_isEnabled()
 	{
-		return _enabled;
+		return _isEnabled;
 	}
-	function set_enabled(value)
+	function set_isEnabled(value)
 	{
-		_enabled = value;
-		return _enabled;
+		_isEnabled = value;
+		return _isEnabled;
 	}
 	
 	//----------------------------------------------------------------------------------------------

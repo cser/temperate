@@ -247,11 +247,11 @@ class CNumericStepper extends CSprite
 		updateControlsEnabled();
 	}
 	
-	override function set_enabled(value)
+	override function set_isEnabled(value)
 	{
-		if (_enabled != value)
+		if (_isEnabled != value)
 		{
-			_enabled = value;
+			_isEnabled = value;
 			updateTextType();
 			updateControlsEnabled();
 			updateEnabled();
@@ -259,12 +259,12 @@ class CNumericStepper extends CSprite
 			_view_formatValid = false;
 			postponeView();
 		}
-		return _enabled;
+		return _isEnabled;
 	}
 	
 	function updateEnabled()
 	{
-		if (_enabled)
+		if (_isEnabled)
 		{
 			_tf.addEventListener(FocusEvent.FOCUS_IN, onTfFocusIn);
 			_tf.addEventListener(FocusEvent.FOCUS_OUT, onTfFocusOut);
@@ -398,16 +398,16 @@ class CNumericStepper extends CSprite
 	
 	function updateTextType()
 	{
-		_tf.type = _enabled && _editable && _maxValue > _minValue ?
+		_tf.type = _isEnabled && _editable && _maxValue > _minValue ?
 			_tf.type = TextFieldType.INPUT :
 			_tf.type = TextFieldType.DYNAMIC;
 	}
 	
 	function updateControlsEnabled()
 	{
-		_up.enabled = _value < _maxValue && _enabled;
-		_down.enabled = _value > _minValue && _enabled;
-		if (_enabled)
+		_up.isEnabled = _value < _maxValue && _isEnabled;
+		_down.isEnabled = _value > _minValue && _isEnabled;
+		if (_isEnabled)
 		{
 			_bg.state = _editable ? CSkinState.NORMAL : CSkinState.INACTIVE;
 		}
@@ -657,7 +657,7 @@ class CNumericStepper extends CSprite
 	function updateFormat()
 	{
 		var newFormat = null;
-		if (_enabled)
+		if (_isEnabled)
 		{
 			var text = _tf.text;
 			if (valueIsCorrect(text) && isTextValueInBounds(text))

@@ -93,10 +93,10 @@ class TestSlider extends Sprite
 			var column = new CVBox().addTo(line);
 			new MLabel().setText("enabled = false, value = 50").addTo(column);
 			var slider = new MSlider(true).addTo(column);
-			slider.enabled = false;
+			slider.isEnabled = false;
 			slider.value = 50;
 			var slider = new MSlider(false).addTo(column);
-			slider.enabled = false;
+			slider.isEnabled = false;
 			slider.value = 50;
 		}
 		

@@ -29,14 +29,14 @@ class TestMCheckBox extends Sprite
 	public function init()
 	{
 		new MCheckBox().setText("Button").addTo(this, 100, 50);
-		new MCheckBox().setText("Disabled").addTo(this, 100, 90).enabled = false;
+		new MCheckBox().setText("Disabled").addTo(this, 100, 90).isEnabled = false;
 		
 		_selectedButton = new MCheckBox().setText("Selected").addTo(this, 200, 50);
 		_selectedButton.selected = true;
 		
 		var button = new MCheckBox().setText("Selected disabled").addTo(this, 200, 90);
 		button.selected = true;
-		button.enabled = false;
+		button.isEnabled = false;
 		
 		var button = new MCheckBox().setText("Some text\nwith thwo lines").addTo(this, 200, 150);
 		button.setCompact(false, false);

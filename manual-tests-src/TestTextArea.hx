@@ -53,7 +53,7 @@ class TestTextArea extends Sprite
 			new TestScrollBarBug(false).addTo(line);
 			
 			var area = new MTextArea().addTo(line);
-			area.enabled = false;
+			area.isEnabled = false;
 			area.selectable = false;
 			area.text = "Line 1 text text\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
 				"\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3";

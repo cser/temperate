@@ -3,6 +3,7 @@ import flash.display.Bitmap;
 import flash.display.SimpleButton;
 import flash.display.Sprite;
 import temperate.components.CNumericStepper;
+import temperate.components.CSimpleButton;
 import temperate.components.CSimpleButtonWrapper;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
@@ -38,6 +39,8 @@ class TestSimpleButtonWrapper extends Sprite
 				new CSimpleButtonWrapper(newUpSimpleButton()),
 				new CSimpleButtonWrapper(newDownSimpleButton()),
 				new MFieldRectSkin()));
+		
+		new CSimpleButton();
 	}
 	
 	function newUpSimpleButton()

@@ -40,11 +40,11 @@ class ACButton extends CSprite, implements ICButton
 		
 	}
 	
-	override function set_enabled(value:Bool)
+	override function set_isEnabled(value:Bool)
 	{
-		if (_enabled != value)
+		if (_isEnabled != value)
 		{
-			_enabled = value;
+			_isEnabled = value;
 			updateEnabled();
 		}
 		return value;
@@ -52,8 +52,8 @@ class ACButton extends CSprite, implements ICButton
 	
 	function updateEnabled()
 	{
-		buttonMode = _enabled;
-		if (_enabled)
+		buttonMode = _isEnabled;
+		if (_isEnabled)
 		{
 			removeEventListener(MouseEvent.CLICK, onBlockMouse);
 			removeEventListener(MouseEvent.MOUSE_DOWN, onBlockMouse);
@@ -91,7 +91,7 @@ class ACButton extends CSprite, implements ICButton
 	
 	function onMouseDown(event:MouseEvent)
 	{
-		if (!_enabled)
+		if (!_isEnabled)
 		{
 			event.stopImmediatePropagation();
 			return;
@@ -109,7 +109,7 @@ class ACButton extends CSprite, implements ICButton
 	function onStageMouseUp(event:MouseEvent)
 	{
 		stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-		if (!_enabled)
+		if (!_isEnabled)
 		{
 			event.stopImmediatePropagation();
 			return;
@@ -178,7 +178,7 @@ class ACButton extends CSprite, implements ICButton
 	
 	function updateState()
 	{
-		_state = selectState(_isDown, _isOver, _selected, _enabled);
+		_state = selectState(_isDown, _isOver, _selected, _isEnabled);
 		doUpdateState();
 	}
 	

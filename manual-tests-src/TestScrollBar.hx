@@ -69,9 +69,9 @@ class TestScrollBar extends Sprite
 		new MScrollBar(false).addTo(this, 610, 100);
 		
 		var scrollBar = new MScrollBar(true).addTo(this, 650, 100);
-		scrollBar.enabled = false;
+		scrollBar.isEnabled = false;
 		var scrollBar = new MScrollBar(false).addTo(this, 760, 100);
-		scrollBar.enabled = false;
+		scrollBar.isEnabled = false;
 		
 		if (Std.string(stage.quality).toLowerCase() != Std.string(StageQuality.LOW))
 		{

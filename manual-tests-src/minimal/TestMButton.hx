@@ -17,7 +17,7 @@ class TestMButton extends Sprite
 	public function init()
 	{
 		new MButton().setText("Button").addTo(this, 100, 50);
-		new MButton().setText("Disabled").addTo(this, 100, 90).enabled = false;
+		new MButton().setText("Disabled").addTo(this, 100, 90).isEnabled = false;
 		new MButton().setText("Toggle").addTo(this, 100, 120).toggle = true;
 		
 		_selectedButton = new MButton().setText("Selected manual toggled").addTo(this, 200, 50);
@@ -26,7 +26,7 @@ class TestMButton extends Sprite
 		
 		var button = new MButton().setText("Selected disabled").addTo(this, 200, 90);
 		button.selected = true;
-		button.enabled = false;
+		button.isEnabled = false;
 		
 		var button = new MButton().setText("Some text\nwith thwo lines").addTo(this, 200, 150);
 		button.setCompact(false, false);
