@@ -108,4 +108,28 @@ class Scaler extends Sprite
 			g.lineTo(x + width, y + height);
 		}
 	}
+	
+	@:getter(width)
+	function get_width():Float
+	{
+		return _target.width;
+	}
+	
+	@:setter(width)
+	function set_width(value:Float):Void
+	{
+		_target.width = value;
+	}
+	
+	@:getter(height)
+	function get_height():Float
+	{
+		return _target.height;
+	}
+	
+	@:setter(height)
+	function set_height(value:Float):Void
+	{
+		_target.height = value;
+	}
 }
