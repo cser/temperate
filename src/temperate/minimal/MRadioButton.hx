@@ -1,6 +1,7 @@
 package temperate.minimal;
 import temperate.components.CButtonState;
 import temperate.components.CRasterFixedButton;
+import temperate.minimal.graphics.MCommonBdFactory;
 
 class MRadioButton extends CRasterFixedButton
 {
@@ -9,35 +10,35 @@ class MRadioButton extends CRasterFixedButton
 		super();
 		
 		getState(CButtonState.UP)
-			.setBitmapData(MBitmapDataFactory.getRadioButtonBgUp())
+			.setBitmapData(MCommonBdFactory.getRadioButtonBgUp())
 			.setFormat(MFormatFactory.LABEL)
 			;
 		getState(CButtonState.OVER)
-			.setBitmapData(MBitmapDataFactory.getRadioButtonBgUp())
+			.setBitmapData(MCommonBdFactory.getRadioButtonBgUp())
 			.setFilters(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DOWN)
-			.setBitmapData(MBitmapDataFactory.getRadioButtonBgDown())
+			.setBitmapData(MCommonBdFactory.getRadioButtonBgDown())
 			.setFilters(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DISABLED)
-			.setBitmapData(MBitmapDataFactory.getRadioButtonBgUp())
+			.setBitmapData(MCommonBdFactory.getRadioButtonBgUp())
 			.setAlpha(.5)
 			.setFormat(MFormatFactory.LABEL_DISABLED)
 			;
 		getState(CButtonState.UP_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getRadioButtonBgUpSelected())
+			.setBitmapData(MCommonBdFactory.getRadioButtonBgUpSelected())
 			;
 		getState(CButtonState.OVER_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getRadioButtonBgUpSelected())
+			.setBitmapData(MCommonBdFactory.getRadioButtonBgUpSelected())
 			.setFilters(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DOWN_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getRadioButtonBgDownSelected())
+			.setBitmapData(MCommonBdFactory.getRadioButtonBgDownSelected())
 			.setFilters(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DISABLED_SELECTED)
-			.setBitmapData(MBitmapDataFactory.getRadioButtonBgUpSelected())
+			.setBitmapData(MCommonBdFactory.getRadioButtonBgUpSelected())
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setAlpha(.5)
 			.setFormat(MFormatFactory.LABEL_DISABLED)

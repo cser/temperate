@@ -7,7 +7,7 @@ import flash.geom.Rectangle;
 import flash.utils.Timer;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
-import temperate.minimal.MBitmapDataFactory;
+import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MTooltipFactory;
 import temperate.minimal.renderers.MTextTooltip;
@@ -88,7 +88,7 @@ class TestMTooltips extends Sprite
 	function focedTooltipButton_onRollOver(event:MouseEvent)
 	{
 		MTooltipFactory.showForced(
-			_focedTooltipButton, TestTooltip, MBitmapDataFactory.getButtonBgUp());
+			_focedTooltipButton, TestTooltip, MCommonBdFactory.getButtonBgUp());
 	}
 	
 	function focedTooltipButton_onRollOut(event:MouseEvent)

@@ -1,7 +1,7 @@
 package temperate.minimal.cursors;
 import flash.ui.MouseCursor;
 import temperate.cursors.CRasterPressCursor;
-import temperate.minimal.MBitmapDataFactory;
+import temperate.minimal.graphics.MCursorBdFactory;
 
 class MHandCursor extends CRasterPressCursor
 {
@@ -11,7 +11,7 @@ class MHandCursor extends CRasterPressCursor
 		super();
 		
 		setView(
-			MBitmapDataFactory.getHandUp(), MBitmapDataFactory.getHandDown(), updateOnMove,
+			MCursorBdFactory.getHandUp(), MCursorBdFactory.getHandDown(), updateOnMove,
 			hideSystem ? 0 : 14,
 			hideSystem ? 0 : 16
 		);

@@ -3,7 +3,7 @@ import flash.display.BitmapData;
 import flash.display.Graphics;
 import flash.geom.Matrix;
 
-class Scale9GridDrawer
+class Scale9GridDrawer implements IDrawer
 {
 	private static inline var DEFAULT_PADDING = 8;
 	
@@ -42,7 +42,7 @@ class Scale9GridDrawer
 	
 	public var height:Int;
 	
-	inline public function setBounds(x:Int, y:Int, width:Int, height:Int)
+	public function setBounds(x:Int, y:Int, width:Int, height:Int):IDrawer
 	{
 		this.x = x;
 		this.y = y;
@@ -57,7 +57,7 @@ class Scale9GridDrawer
 	
 	public var bitmapHeight(default, null):Int;
 	
-	inline public function setBitmapData(bitmapData:BitmapData)
+	public function setBitmapData(bitmapData:BitmapData):IDrawer
 	{
 		this.bitmapData = bitmapData;
 		if (bitmapData != null)
@@ -154,6 +154,14 @@ class Scale9GridDrawer
 			g.beginBitmapFill(bitmapData, getMatrix(kX, kY, x + (1 - kX) * left, y + (1 - kY) * top));
 			g.drawRect(x + left, y + top, w - hPadding, h - vPadding);
 			g.endFill();
+		}
+	}
+	
+	public function clear()
+	{
+		if (graphics != null)
+		{
+			graphics.clear();
 		}
 	}
 }

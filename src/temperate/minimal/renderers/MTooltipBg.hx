@@ -15,7 +15,7 @@ class MTooltipBg extends Sprite
 		
 		borderRadius = 8;
 		borderThickness = 1;
-		tailIndent = -6;
+		tailIndent = -4;
 		tailHalfWidth = 6;
 		fillColor = 0xffffffe0;
 		borderColor = 0xff808080;

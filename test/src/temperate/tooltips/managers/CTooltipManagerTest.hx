@@ -152,13 +152,21 @@ class FakeTooltiper implements ICTooltiper
 		log = [];
 	}
 	
-	public function show(fast:Bool)
+	public function internalShow(fast:Bool)
 	{
 		log.push("show");
 	}
 	
-	public function hide(fast:Bool)
+	public function internalHide(fast:Bool)
 	{
 		log.push("hide");
 	}
+	
+	public var showDelay:Null<Int>;
+	
+	public var secondShowDelay:Null<Int>;
+	
+	public var hideDelay:Null<Int>;
+	
+	public var secondShowTimeout:Null<Int>;
 }

@@ -18,19 +18,19 @@ InputText.as			MInputText
 
 NumericStepper.as		MNumericStepper (Not allow float values)
 
-HRangeSlider.as			-
-HScrollBar.as			-
-HSlider.as				-
-HUISlider.as			-
-VRangeSlider.as			-
-VScrollBar.as			-
-VSlider.as				-
-VUISlider.as			-
-ScrollBar.as			-
+ScrollBar.as			MScrollBar
+HScrollBar.as			MScrollBar(true)
+VScrollBar.as			MScrollBar(false)
 ScrollPane.as			-
 Slider.as				-
+HSlider.as				-
+VSlider.as				-
 UISlider.as				-
+HUISlider.as			-
+VUISlider.as			-
 RangeSlider.as			-
+HRangeSlider.as			-
+VRangeSlider.as			-
 
 ProgressBar.as			-
 

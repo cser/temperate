@@ -16,7 +16,7 @@ import temperate.cursors.ICCursor;
 import temperate.minimal.cursors.MForbiddenCursor;
 import temperate.minimal.cursors.MHandCursor;
 import temperate.minimal.cursors.MWaitCursor;
-import temperate.minimal.MBitmapDataFactory;
+import temperate.minimal.graphics.MCursorBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MCheckBox;
 import temperate.minimal.MCursorManager;
@@ -113,8 +113,8 @@ class TestMCursorManager extends Sprite
 			box.add(button);
 			MCursorManager.newHover().setTarget(button).setValue(new MHandCursor(true));
 			
-			box.add(new Bitmap(MBitmapDataFactory.getHandUp()));
-			box.add(new Bitmap(MBitmapDataFactory.getHandDown()));
+			box.add(new Bitmap(MCursorBdFactory.getHandUp()));
+			box.add(new Bitmap(MCursorBdFactory.getHandDown()));
 			
 			_handCursorCheckBox = new MCheckBox()
 				.setText("Enable hand cursor\nwith system cusor visible").addTo(box);
@@ -126,12 +126,12 @@ class TestMCursorManager extends Sprite
 		{	
 			var box = new CVBox().addTo(line);
 			
-			box.add(new Bitmap(MBitmapDataFactory.getForbidden()));
+			box.add(new Bitmap(MCursorBdFactory.getForbidden()));
 			
 			var button = new MButton().setText("Forbidden cursor").addTo(box);
 			MCursorManager.newHover().setTarget(button).setValue(new MForbiddenCursor(true));
 			
-			box.add(new Bitmap(MBitmapDataFactory.getWait()));
+			box.add(new Bitmap(MCursorBdFactory.getWait()));
 			
 			var button = new MButton().setText("Wait cursor").addTo(box);
 			button.setSize(100, 100);
@@ -145,7 +145,7 @@ class TestMCursorManager extends Sprite
 			
 			{
 				var data = new Vector();
-				data[0] = MBitmapDataFactory.getWait();
+				data[0] = MCursorBdFactory.getWait();
 				MCursorManager.addNative(NATIVE_WAIT, data, 1, new Point(10, 10));
 				
 				var button = new MButton()

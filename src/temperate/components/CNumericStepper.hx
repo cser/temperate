@@ -477,7 +477,7 @@ class CNumericStepper extends CSprite
 	{
 		var delta = event.delta;
 		var sign = delta > 0 ? 1 : -1;
-		value += sign * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3));
+		value += sign * _step * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3));
 	}
 	
 	function onKeyDown(event:KeyboardEvent)
@@ -697,7 +697,7 @@ class CNumericStepper extends CSprite
 		return this;
 	}
 	
-	public function addChangeHandler(handler:MouseEvent->Dynamic)
+	public function addChangeHandler(handler:Event->Dynamic)
 	{
 		addEventListener(Event.CHANGE, handler);
 		return this;

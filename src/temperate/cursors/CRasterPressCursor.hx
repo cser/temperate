@@ -7,7 +7,7 @@ import flash.events.MouseEvent;
 import flash.ui.Mouse;
 import flash.ui.MouseCursor;
 import temperate.cursors.ICCursor;
-import temperate.minimal.MBitmapDataFactory;
+import temperate.minimal.graphics.MCommonBdFactory;
 
 class CRasterPressCursor implements ICCursor
 {

@@ -7,7 +7,7 @@ import temperate.components.ACButton;
 import temperate.components.CButtonSelector;
 import temperate.components.CButtonState;
 import temperate.containers.CVBox;
-import temperate.minimal.MBitmapDataFactory;
+import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MCheckBox;
 import temperate.minimal.MFormatFactory;
@@ -123,6 +123,6 @@ class TestMCheckBox extends Sprite
 	function onEmptyButtonClick(event:MouseEvent)
 	{
 		cast(_selectedButton, MCheckBox).getState(CButtonState.UP_SELECTED).bitmapData =
-			MBitmapDataFactory.getButtonBgUp();
+			MCommonBdFactory.getButtonBgUp();
 	}
 }
