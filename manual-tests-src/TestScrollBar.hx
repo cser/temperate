@@ -1,7 +1,6 @@
 package ;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
-import flash.display.Shape;
 import flash.display.Sprite;
 import flash.display.StageQuality;
 import helpers.Scaler;
@@ -84,11 +83,21 @@ class TestScrollBar extends Sprite
 	
 	function newShape(horizontal:Bool, bd:BitmapData)
 	{
-		var shape = new Shape();
-		var drawer = new Scale3GridDrawer(horizontal, shape.graphics);
+		var width = horizontal ? 100 : bd.width;
+		var height = horizontal ? bd.height : 100;
+		var sprite = new Sprite();
+		var drawer = new Scale3GridDrawer(horizontal, sprite.graphics);
 		drawer.setBitmapData(bd);
-		drawer.setBounds(0, 0, horizontal ? 100 : 0, horizontal ? 0 : 100);
+		drawer.setBounds(0, 0, width, height);
 		drawer.redraw();
-		return shape;
+		var bitmap = new Bitmap(
+			horizontal ?
+				MScrollBarBdFactory.getHThumbCenter() :
+				MScrollBarBdFactory.getVThumbCenter()
+		);
+		bitmap.x = (width - Std.int(bitmap.width)) >> 1;
+		bitmap.y = (height - Std.int(bitmap.height)) >> 1;
+		sprite.addChild(bitmap);
+		return sprite;
 	}
 }
