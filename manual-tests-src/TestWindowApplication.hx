@@ -27,5 +27,11 @@ class TestWindowApplication extends Sprite
 	function onStageResize(event:Event = null)
 	{
 		_windowManager.setArea(10, 10, stage.stageWidth - 20, stage.stageHeight - 20);
+		var g = graphics;
+		g.clear();
+		g.lineStyle(0, 0x808080);
+		g.drawRect(
+			_windowManager.areaX, _windowManager.areaY,
+			_windowManager.areaWidth, _windowManager.areaHeight);
 	}
 }

@@ -5,7 +5,6 @@ import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
-import temperate.core.CSprite;
 import temperate.skins.CNullWindowSkin;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.docks.CAlignedPopUpDock;
@@ -30,7 +29,7 @@ class ACWindow implements ICPopUp
 		var head = _baseSkin.head;
 		if (head != null)
 		{
-			_mover.subscribe(getManager, this, head, get_dock);
+			_mover.subscribe(getManager, this, head, get_dock, fixPosition);
 		}
 		
 		view.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -83,6 +82,7 @@ class ACWindow implements ICPopUp
 		dock.arrange(Std.int(width), Std.int(height), _manager.areaWidth, _manager.areaHeight);
 		view.x = _manager.areaX + dock.x;
 		view.y = _manager.areaY + dock.y;
+		fixPosition();
 	}
 	
 	public var dock(get_dock, set_dock):ICPopUpDock;
@@ -123,6 +123,23 @@ class ACWindow implements ICPopUp
 		return new CPopUpMover();
 	}
 	
+	public var x(get_x, null):Float;
+	function get_x()
+	{
+		return view.x;
+	}
+	
+	public var y(get_y, null):Float;
+	function get_y()
+	{
+		return view.y;
+	}
+	
+	public function move(x:Float, y:Float)
+	{
+		_mover.move(Std.int(x), Std.int(y));
+	}
+	
 	public var width(get_width, set_width):Float;
 	function get_width()
 	{
@@ -141,5 +158,29 @@ class ACWindow implements ICPopUp
 	function set_height(value)
 	{
 		return view.height = value;
+	}
+	
+	function fixPosition()
+	{
+		var x = view.x;
+		var y = view.y;
+		if (x < _manager.areaX - view.width * .5)
+		{
+			x = Std.int(_manager.areaX - view.width * .5);
+		}
+		else if (x > _manager.areaX + _manager.areaWidth - view.width * .5)
+		{
+			x = Std.int(_manager.areaX + _manager.areaWidth - view.width * .5);
+		}
+		if (y < _manager.areaY)
+		{
+			y = Std.int(_manager.areaY);
+		}
+		else if (y > _manager.areaY + _manager.areaHeight - _baseSkin.headHeight)
+		{
+			y = Std.int(_manager.areaY + _manager.areaHeight - _baseSkin.headHeight);
+		}
+		view.x = x;
+		view.y = y;
 	}
 }

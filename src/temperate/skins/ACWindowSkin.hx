@@ -19,6 +19,12 @@ class ACWindowSkin extends CSprite, implements ICWindowSkin
 	
 	public var head(default, null):InteractiveObject;
 	
+	public var headHeight(get_headHeight, null):Float;
+	function get_headHeight()
+	{
+		return head != null ? head.height : 0;
+	}
+	
 	var _container:Sprite;
 	
 	public function link(container:Sprite):Void

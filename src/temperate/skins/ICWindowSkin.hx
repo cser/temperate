@@ -9,6 +9,8 @@ interface ICWindowSkin
 	
 	var head(default, null):InteractiveObject;
 	
+	var headHeight(get_headHeight, null):Float;
+	
 	function link(container:Sprite):Void;
 	
 	var isLocked(get_isLocked, set_isLocked):Bool;

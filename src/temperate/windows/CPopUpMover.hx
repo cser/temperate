@@ -14,16 +14,18 @@ class CPopUpMover
 	var _target:DisplayObject;
 	var _getManager:Void->CPopUpManager;
 	var _getDock:Void->ICPopUpDock;
+	var _fixPosition:Void->Void;
 	
 	public function subscribe(
 		getManager:Void->CPopUpManager, popUp:ICPopUp, target:DisplayObject, 
-		getDock:Void->ICPopUpDock
+		getDock:Void->ICPopUpDock, fixPosition:Void->Void
 	)
 	{
 		_getManager = getManager;
 		_popUp = popUp;
 		_target = target;
 		_getDock = getDock;
+		_fixPosition = fixPosition;
 		_target.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 	}
 	
@@ -53,18 +55,11 @@ class CPopUpMover
 	
 	function onMouseMove(event:MouseEvent)
 	{
-		var view = _popUp.view;
-		var parent = view.parent;
+		var parent = _popUp.view.parent;
 		var x = Std.int(parent.mouseX) - _mouseX;
 		var y = Std.int(parent.mouseY) - _mouseY;
-		view.x = x;
-		view.y = y;
-		var dock = _getDock();
+		move(x, y);
 		var manager = _getManager();
-		dock.move(
-			Std.int(view.width), Std.int(view.height), manager.areaWidth, manager.areaHeight,
-			x - manager.areaX, y - manager.areaY
-		);
 		if (manager.updateOnMove)
 		{
 			event.updateAfterEvent();
@@ -76,5 +71,19 @@ class CPopUpMover
 		_stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 		_stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		_stage = null;
+	}
+	
+	public function move(x:Int, y:Int)
+	{
+		var view = _popUp.view;
+		view.x = x;
+		view.y = y;
+		_fixPosition();
+		var dock = _getDock();
+		var manager = _getManager();
+		dock.move(
+			Std.int(view.width), Std.int(view.height), manager.areaWidth, manager.areaHeight,
+			x - manager.areaX, y - manager.areaY
+		);
 	}
 }
