@@ -4,29 +4,38 @@ import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.ui.Keyboard;
+import temperate.components.CButtonSelector;
+import temperate.components.ICButton;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
-import temperate.minimal.AMWindow;
 import temperate.minimal.MButton;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.MSeparator;
+import temperate.minimal.windows.AMWindow;
 
-class OpenWindow extends AMWindow<Dynamic>
+class OpenWindow extends AMWindow<OpenWindowData>
 {
-	public function new() 
+	public function new(names:Array<String>)
 	{
 		super();
 		
 		_baseSkin.title = "Open file";
 		
+		_names = new CButtonSelector(null, true);
+		
 		var list = new CVBox();
 		list.gapY = 0;
-		for (file in ["File 01", "File 02", "File 03", "File 04", "File 05", "File 06", "File 07"])
+		for (name in names)
 		{
 			var button = new MFlatButton();
-			button.text = file;
+			button.text = name;
 			list.add(button).setPercents(100);
+			_names.add(button, name);
+		}
+		if (names.length > 0)
+		{
+			_names.value = names[0];
 		}
 		
 		var scrollPane = new MScrollPane();
@@ -42,6 +51,13 @@ class OpenWindow extends AMWindow<Dynamic>
 		button.text = "Open";
 		button.addEventListener(MouseEvent.CLICK, onOpenClick);
 		buttonBox.add(button);
+		_openButton = button;
+		
+		var button = new MButton();
+		button.text = "Clear all";
+		button.addEventListener(MouseEvent.CLICK, onClearAllClick);
+		button.isEnabled = names.length > 0;
+		buttonBox.add(button);
 		
 		var button = new MButton();
 		button.text = "Cancel";
@@ -53,15 +69,30 @@ class OpenWindow extends AMWindow<Dynamic>
 		innerDispatcher.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		
 		resizable = true;
+		
+		_names.addEventListener(Event.CHANGE, onNamesChange);
+		onNamesChange();
 	}
 	
+	var _names:CButtonSelector<String>;
 	var _buttonBox:CHBox;
 	var _title:TextField;
 	var _description:TextField;
+	var _openButton:ICButton;
+	
+	function onNamesChange(event:Event = null)
+	{
+		_openButton.isEnabled = _names.value != null;
+	}
 	
 	function onOpenClick(event:MouseEvent)
 	{
-		close(null);
+		close(OpenWindowData.OPEN(_names.value));
+	}
+	
+	function onClearAllClick(event:MouseEvent)
+	{
+		close(OpenWindowData.CLEAR_ALL);
 	}
 	
 	function onCancelClick(event:MouseEvent)
@@ -79,6 +110,10 @@ class OpenWindow extends AMWindow<Dynamic>
 		if (event.keyCode == Keyboard.ESCAPE)
 		{
 			close(null);
+		}
+		if (event.keyCode == Keyboard.ENTER)
+		{
+			close(OpenWindowData.OPEN(_names.value));
 		}
 	}
 }

@@ -4,6 +4,7 @@ import flash.display.Graphics;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 import temperate.core.CSprite;
+import windowApplication.Primitive;
 
 class ADrawState 
 {
@@ -19,8 +20,9 @@ class ADrawState
 	var _graphics:Graphics;
 	var _topSprite:Sprite;
 	var _topGraphics:Graphics;
+	var _primitives:Array<Primitive>;
 	
-	public function setImage(image:CSprite)
+	public function setImage(image:CSprite, primitives:Array<Primitive>)
 	{
 		if (_image != image)
 		{
@@ -31,6 +33,7 @@ class ADrawState
 				_image.removeChild(_topSprite);
 			}
 			_image = image;
+			_primitives = primitives;
 			if (_image != null)
 			{
 				_image.addChild(_topSprite);
@@ -79,5 +82,17 @@ class ADrawState
 	
 	function doComplete()
 	{
+	}
+	
+	function moveTo(x:Float, y:Float)
+	{
+		_graphics.moveTo(x, y);
+		_primitives.push(MOVE_TO(x, y));
+	}
+	
+	function lineTo(x:Float, y:Float)
+	{
+		_graphics.lineTo(x, y);
+		_primitives.push(LINE_TO(x, y));
 	}
 }

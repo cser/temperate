@@ -3,14 +3,15 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 import temperate.components.CButtonSelector;
 import temperate.components.CButtonState;
+import temperate.components.ICButton;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.core.CSprite;
-import temperate.minimal.AMWindow;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MSeparator;
 import temperate.minimal.MToolButton;
+import temperate.minimal.windows.AMWindow;
 import windowApplication.states.ADrawState;
 
 class ToolsWindow extends AMWindow<Dynamic>
@@ -84,6 +85,7 @@ class ToolsWindow extends AMWindow<Dynamic>
 		button.text = "Save";
 		button.addEventListener(MouseEvent.CLICK, onSaveClick);
 		_main.add(button).setPercents(100);
+		saveButton = button;
 		
 		var button = new MFlatButton();
 		button.text = "FPS";
@@ -92,6 +94,8 @@ class ToolsWindow extends AMWindow<Dynamic>
 		
 		setColor(0x00ff00);
 	}
+	
+	public var saveButton(default, null):ICButton;
 	
 	function onStatesChange(event:Event)
 	{

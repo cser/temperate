@@ -1,9 +1,8 @@
 package windowApplication;
-import flash.events.Event;
 import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.ui.Keyboard;
-import temperate.minimal.AMWindow;
+import temperate.minimal.windows.AMWindow;
 
 class ColorsWindow extends AMWindow<Dynamic>
 {

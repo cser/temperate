@@ -73,12 +73,12 @@ class MTween< T >
 	 * @return	tween object (for additional parametrization or stop,
 	 * parametrization is _not_ damage tween if it in this frame)
 	 */
-	public static function to<T>(target:T, duration:Int, vars:Dynamic):MTween<T>
+	public static function to< T >(target:T, duration:Int, vars:Dynamic):MTween<T>
 	{
 		return new MTween(target, duration, vars);
 	}
 	
-	public static function apply<T>(target:T, vars:Dynamic):Void
+	public static function apply< T >(target:T, vars:Dynamic):Void
 	{
 		killTargetTween(target);
 		for (field in Reflect.fields(vars))

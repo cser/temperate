@@ -1,5 +1,6 @@
 package windowApplication.states;
 import windowApplication.assets.Ellipse;
+import windowApplication.Primitive;
 
 class EllipseDrawState extends ADrawState
 {
@@ -30,6 +31,9 @@ class EllipseDrawState extends ADrawState
 	{
 		_topGraphics.clear();
 		_graphics.lineStyle(0x000000);
-		_graphics.drawEllipse(_x, _y, _image.mouseX - _x, _image.mouseY - _y);
+		var width = _image.mouseX - _x;
+		var height = _image.mouseY - _y;
+		_graphics.drawEllipse(_x, _y, width, height);
+		_primitives.push(ELLIPSE(_x, _y, width, height));
 	}
 }

@@ -6,8 +6,8 @@ import temperate.containers.CVBox;
 import temperate.minimal.MButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MInputField;
-import temperate.minimal.MWindowedContainer;
-import temperate.minimal.MWindowManager;
+import temperate.minimal.windows.MWindowedContainer;
+import temperate.minimal.windows.MWindowManager;
 import temperate.windows.events.CWindowEvent;
 import windowApplication.assets.Text;
 

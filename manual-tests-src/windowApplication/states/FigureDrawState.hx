@@ -2,6 +2,7 @@ package windowApplication.states;
 import flash.events.MouseEvent;
 import temperate.core.CMath;
 import windowApplication.assets.Figure;
+import windowApplication.Primitive;
 
 class FigureDrawState extends ADrawState
 {
@@ -23,7 +24,7 @@ class FigureDrawState extends ADrawState
 	{
 		if (_pointIndex > 1)
 		{
-			_graphics.lineTo(_firstX, _firstY);
+			lineTo(_firstX, _firstY);
 		}
 		_pointIndex = 0;
 		_image.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -53,13 +54,13 @@ class FigureDrawState extends ADrawState
 			_firstX = _x;
 			_firstY = _y;
 			_graphics.lineStyle(0, 0x000000);
-			_graphics.moveTo(_x, _y);
+			moveTo(_x, _y);
 		}
 		else
 		{
 			_x = x;
 			_y = y;
-			_graphics.lineTo(_x, _y);
+			lineTo(_x, _y);
 		}
 		_pointIndex++;
 	}
@@ -80,7 +81,7 @@ class FigureDrawState extends ADrawState
 			{
 				_x = x;
 				_y = y;
-				_graphics.lineTo(_x, _y);
+				lineTo(_x, _y);
 				_pointIndex++;
 			}
 			else
@@ -98,7 +99,7 @@ class FigureDrawState extends ADrawState
 		{
 			if (isNearEnd())
 			{
-				_graphics.lineTo(_firstX, _firstY);
+				lineTo(_firstX, _firstY);
 				_pointIndex = 0;
 			}
 		}

@@ -4,15 +4,15 @@ import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.ui.Keyboard;
 import temperate.containers.CHBox;
-import temperate.minimal.AMWindow;
 import temperate.minimal.MButton;
 import temperate.minimal.MInputField;
 import temperate.minimal.MLabel;
 import temperate.minimal.MSeparator;
+import temperate.minimal.windows.AMWindow;
 
-class SaveWindow extends AMWindow<Dynamic>
+class SaveWindow extends AMWindow<String>
 {
-	public function new() 
+	public function new(name:String) 
 	{
 		super();
 		
@@ -24,6 +24,7 @@ class SaveWindow extends AMWindow<Dynamic>
 		line.add(new MLabel().setText("Name"));
 		
 		_input = new MInputField();
+		_input.text = name;
 		line.add(_input);
 		
 		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
@@ -50,7 +51,7 @@ class SaveWindow extends AMWindow<Dynamic>
 	
 	function onSaveClick(event:MouseEvent)
 	{
-		close(null);
+		close(_input.text);
 	}
 	
 	function onCancelClick(event:MouseEvent)
@@ -63,6 +64,10 @@ class SaveWindow extends AMWindow<Dynamic>
 		if (event.keyCode == Keyboard.ESCAPE)
 		{
 			close(null);
+		}
+		else if (event.keyCode == Keyboard.ENTER)
+		{
+			close(_input.text);
 		}
 	}
 }

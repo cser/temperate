@@ -1,4 +1,4 @@
-package temperate.minimal;
+package temperate.minimal.windows;
 import flash.display.Stage;
 import flash.events.Event;
 import flash.Lib;

@@ -1,9 +1,13 @@
 package ;
+import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import temperate.minimal.MSlider;
+import temperate.minimal.windows.MAlert;
+import temperate.minimal.windows.MButtonInfo;
 import temperate.windows.CWindowManager;
 import temperate.windows.docks.CWindowAbsoluteDock;
+import temperate.windows.events.CWindowEvent;
 import windows.MMaximizedWindow;
 import windows.TestWindow;
 
@@ -49,6 +53,27 @@ class TestWindows extends Sprite
 		_manager.add(window, false);
 		
 		_manager.keyboardDispatcher = stage;
+		
+		MAlert.show(false, "Alert!").addTypedListener(CWindowEvent.CLOSE, onAlertClose);
+	}
+	
+	function onAlertClose(event:CWindowEvent<Dynamic>)
+	{
+		var shape = new Shape();
+		var g = shape.graphics;
+		g.beginFill(0x000000);
+		g.drawRect(0, 0, 100, 100);
+		g.endFill();
+		MAlert.show(
+			false, "Alert with several buttons", "Title",
+			[ new MButtonInfo("ok", "OK"), new MButtonInfo("cancel", "Cancel") ],
+			"cancel", true, shape
+		).addTypedListener(CWindowEvent.CLOSE, onMultibuttonAlertClose);
+	}
+	
+	function onMultibuttonAlertClose(event:CWindowEvent<String>)
+	{
+		MAlert.show(true, event.data);
 	}
 	
 	function onStageResize(event:Event = null)
@@ -71,7 +96,6 @@ class TestWindows extends Sprite
 	}
 }
 /*
-[done]Починить дрейф выравнивания при изменении размеров границ
 Окно-контейнер
 Скинование окон с целью отвязать внешний вид окна от иерархии наследования
 Возможность добавления отображаемых объектов, не являющихся окнами

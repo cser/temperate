@@ -1,5 +1,6 @@
 package windowApplication.states;
 import windowApplication.assets.Rect;
+import windowApplication.Primitive;
 
 class RectDrawState extends ADrawState
 {
@@ -30,6 +31,9 @@ class RectDrawState extends ADrawState
 	{
 		_topGraphics.clear();
 		_graphics.lineStyle(0x000000);
-		_graphics.drawRect(_x, _y, _image.mouseX - _x, _image.mouseY - _y);
+		var width = _image.mouseX - _x;
+		var height = _image.mouseY - _y;
+		_graphics.drawRect(_x, _y, width, height);
+		_primitives.push(RECT(_x, _y, width, height));
 	}
 }

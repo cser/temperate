@@ -1,14 +1,12 @@
 package windowApplication;
-import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Point;
 import temperate.containers.CHBox;
-import temperate.extra.CSignal;
 import temperate.minimal.MButton;
 import temperate.minimal.MLabel;
 import temperate.minimal.MNumericStepper;
 import temperate.minimal.MSeparator;
-import temperate.minimal.AMWindow;
+import temperate.minimal.windows.AMWindow;
 
 class NewWindow extends AMWindow<Point>
 {	

@@ -4,20 +4,25 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.geom.Point;
 import flash.Lib;
-import temperate.core.CSprite;
+import flash.net.SharedObject;
+import haxe.Serializer;
+import haxe.Unserializer;
 import temperate.cursors.CCursor;
 import temperate.cursors.CHoverSwitcher;
 import temperate.cursors.ICCursor;
 import temperate.debug.FPSMonitor;
 import temperate.minimal.MCursorManager;
-import temperate.minimal.MWindowManager;
+import temperate.minimal.windows.MWindowManager;
 import temperate.windows.CWindowManager;
 import temperate.windows.docks.CWindowAbsoluteDock;
 import temperate.windows.events.CWindowEvent;
+import windowApplication.CImageManager;
 import windowApplication.ColorsWindow;
+import windowApplication.ImageData;
 import windowApplication.ImageWindow;
 import windowApplication.NewWindow;
 import windowApplication.OpenWindow;
+import windowApplication.OpenWindowData;
 import windowApplication.SaveWindow;
 import windowApplication.states.ADrawState;
 import windowApplication.states.EllipseDrawState;
@@ -35,17 +40,12 @@ class TestWindowApplication extends Sprite
 		super();
 	}
 	
-	var _imageManager:CWindowManager;
-	var _toolCursor:CHoverSwitcher<ICCursor>;
+	var _imageManager:CImageManager;
 	
 	public function init()
 	{
-		_imageManager = new CWindowManager(this);
-		_imageManager.addEventListener(Event.SELECT, onImageSelect);
-		stage.addEventListener(Event.RESIZE, onStageResize);
-		onStageResize();
-		
-		_toolCursor = MCursorManager.newHover(-1);
+		_imageManager = new CImageManager(this);
+		_imageManager.onImageSelect = onImageSelect;
 		
 		var pencilState = new PencilDrawState();
 		var states:Array<ADrawState> = [];
@@ -55,16 +55,44 @@ class TestWindowApplication extends Sprite
 		states.push(new FigureDrawState());
 		states.push(pencilState);
 		states.push(new RectDrawState());
-		var toolsWindow = new ToolsWindow(this, states, pencilState);
-		MWindowManager.add(toolsWindow, false, true);
-		toolsWindow.move(Std.int(stage.stageWidth) - toolsWindow.width - 10, 50);
+		_toolsWindow = new ToolsWindow(this, states, pencilState);
+		MWindowManager.add(_toolsWindow, false, true);
+		_toolsWindow.move(Std.int(stage.stageWidth) - _toolsWindow.width - 10, 50);
+		updateSaveEnabled();
 	}
 	
-	function onImageSelect(event:Event)
+	var _toolsWindow:ToolsWindow;
+	
+	function getSharedObject()
 	{
-		var image = getCurrentImage();
-		_state.setImage(image);
-		_toolCursor.setTarget(image);
+		return SharedObject.getLocal("temperate_test");
+	}
+	
+	function onImageSelect()
+	{
+		reinitStateByWindow();
+		updateSaveEnabled();
+	}
+	
+	function reinitStateByWindow()
+	{
+		var window = _imageManager.current;
+		if (window != null)
+		{
+			_state.setImage(null, null);
+			_state.setImage(window.image, window.primitives);
+			_imageManager.toolCursor.setTarget(window.image);
+		}
+		else
+		{
+			_state.setImage(null, null);
+			_imageManager.toolCursor.setTarget(null);
+		}
+	}
+	
+	function updateSaveEnabled()
+	{
+		_toolsWindow.saveButton.isEnabled = _imageManager.current != null;
 	}
 	
 	var _state:ADrawState;
@@ -75,35 +103,38 @@ class TestWindowApplication extends Sprite
 		{
 			if (_state != null)
 			{
-				_state.setImage(null);
+				_state.setImage(null, null);
 			}
 			_state = state;
 			if (_state != null)
 			{
-				_state.setImage(getCurrentImage());
-				_toolCursor.value = new CCursor()
-					.setView(new Bitmap(Type.createInstance(_state.icon, [])), true, 10, 14);
+				var window = _imageManager.current;
+				if (window != null)
+				{
+					_state.setImage(window.image, window.primitives);
+				}
+				else
+				{
+					_state.setImage(null, null);
+				}
+				var cursorView = new Bitmap(Type.createInstance(_state.icon, []));
+				var cursor = new CCursor();
+				if (Std.is(_state, PencilDrawState))
+				{
+					cursor.setView(cursorView, true, 0, -Std.int(cursorView.height));
+					cursor.setHideSystem(true);
+				}
+				else
+				{
+					cursor.setView(cursorView, true, 10, 14);
+				}
+				_imageManager.toolCursor.value = cursor;
 			}
 			else
 			{
-				_toolCursor.value = null;
+				_imageManager.toolCursor.value = null;
 			}
 		}
-	}
-	
-	function getCurrentImage():CSprite
-	{
-		if (_imageManager == null)
-		{
-			return null;
-		}
-		var window = Lib.as(_imageManager.topWindow, ImageWindow);
-		return window != null ? window.image : null;
-	}
-	
-	function onStageResize(event:Event = null)
-	{
-		_imageManager.setArea(0, 0, stage.stageWidth, stage.stageHeight);
 	}
 	
 	var _colorsWindow:ColorsWindow;
@@ -130,34 +161,94 @@ class TestWindowApplication extends Sprite
 	function onNewWindowClose(event:CWindowEvent<Point>)
 	{
 		var data = event.data;
-		if (data == null)
+		if (data != null)
 		{
-			return;
+			_imageManager.addNew(Std.int(data.x), Std.int(data.y), findNewName());
 		}
-		
-		var window = new ImageWindow("No name");
-		window.setSize(640, 480);
-		window.setImageSize(Std.int(data.x), Std.int(data.y));
-		window.dock = new CWindowAbsoluteDock(10, 10);
-		var top = _imageManager.topWindow;
-		_imageManager.add(window, false);
-		if (top != null)
+	}
+	
+	function findNewName()
+	{
+		var name = "No name";
+		var i = 1;
+		while (true)
 		{
-			window.move(top.view.x + 20, top.view.y + 20);
+			if (_imageManager.getByName(name) == null)
+			{
+				break;
+			}
+			name = "No name " + (++i);
 		}
+		return name;
 	}
 	
 	public function doOpen()
 	{
-		var window = new OpenWindow();
+		var names = [];
+		for (name in Reflect.fields(getSharedObject().data))
+		{
+			names.push(name);
+		}
+		var window = new OpenWindow(names);
+		window.addTypedListener(CWindowEvent.CLOSE, onOpenClose);
 		window.setSize(200, 150);
 		MWindowManager.add(window, true);
 	}
 	
 	public function doSave()
 	{
-		var window = new SaveWindow();
+		var name = _imageManager.current.title;
+		var window = new SaveWindow(name);
+		window.addTypedListener(CWindowEvent.CLOSE, onSaveClose);
 		MWindowManager.add(window, true);
+	}
+	
+	function onSaveClose(event:CWindowEvent<String>)
+	{
+		var name = event.data;
+		if (name != null)
+		{
+			var window = _imageManager.current;
+			var sharedObject = getSharedObject();
+			var imageData:ImageData = {
+				width: Std.int(window.image.width),
+				height: Std.int(window.image.height),
+				primitives: window.primitives
+			}
+			Reflect.setField(sharedObject.data, name, Serializer.run(imageData));
+			sharedObject.flush();
+			window.title = name;
+		}
+	}
+	
+	function onOpenClose(event:CWindowEvent<OpenWindowData>)
+	{
+		if (event.data != null)
+		{
+			switch (event.data)
+			{
+				case OpenWindowData.OPEN(name):
+					var window = _imageManager.getByName(name);
+					if (window == null)
+					{
+						var imageData:ImageData = Unserializer.run(
+							Reflect.field(getSharedObject().data, name));
+						window = _imageManager.addNew(imageData.width, imageData.height, name);
+						window.drawPrimitives(imageData.primitives);
+						reinitStateByWindow();
+					}
+					else
+					{
+						_imageManager.moveToTop(window);
+					}
+				case OpenWindowData.CLEAR_ALL:
+					var data = getSharedObject().data;
+					for (key in Reflect.fields(data))
+					{
+						Reflect.deleteField(data, key);
+					}
+			}
+		}
 	}
 	
 	var _fpsMonitor:FPSMonitor;
