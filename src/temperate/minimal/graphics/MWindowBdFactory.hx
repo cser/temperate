@@ -1,7 +1,11 @@
 package temperate.minimal.graphics;
 import flash.display.BitmapData;
 import flash.display.GradientType;
+import flash.filters.BevelFilter;
+import flash.filters.BitmapFilterType;
+import flash.filters.GlowFilter;
 import flash.geom.Matrix;
+import flash.geom.Point;
 import temperate.components.CButtonState;
 using temperate.core.CMath;
 
@@ -188,52 +192,48 @@ class MWindowBdFactory
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	public static var bgColor(get_bgColor, set_bgColor):MFlatBgColor;
-	static var _bgColor:MFlatBgColor;
+	public static var bgColor(get_bgColor, set_bgColor):MWindowBdColor;
+	static var _bgColor:MWindowBdColor;
 	static function get_bgColor()
 	{
 		if (_bgColor == null)
 		{
-			var color = new MFlatBgColor();
+			var color = new MWindowBdColor();
 			
 			color.bgRatiosUp = [ 0, 250 ];
 			color.bgRatiosOver = [ 0, 250 ];
 			color.bgRatiosDown = [ 0, 250 ];
 			color.bgRatiosDisabled = [ 0, 250 ];
-
+			
 			color.bgColorsUp = [ 0xffd0f060, 0xff80c020 ];
 			color.bgColorsOver = [ 0xffbfef50, 0xffafcf50 ];
 			color.bgColorsDown = [ 0xff506f00, 0xffc0ff30 ];
 			color.bgColorsDisabled = [ 0xffeeeeee, 0xffcccccc ];
-
-			color.bgBottomRightColor = 0xff105000;
-			color.bgBottomRightDisabledColor = 0xffbabaaa;
-
-			color.bgTopLeftColor = 0xff80a080;
-			color.bgTopLeftDisabledColor = 0xffcccccc;
-
+			
 			color.bgInnerTopLeftColor = 0xa0ffffff;
-			color.bgInnerBottomRightColor = 0xe0ffffff;
-
-			color.bgInnerDownColor = 0x2e000000;
+			color.bgInnerBottomRightColor = 0x30000000;
+			color.outerBorderColor = 0xc0ffffff;
+			color.outerBorderDisabledColor = 0x80ffffff;
+			color.innerBorderColor = 0xff508000;
+			color.innerBorderDisabledColor = 0xff808080;
 			
 			_bgColor = color;
 		}
 		return _bgColor;
 	}
-	static function set_bgColor(value:MFlatBgColor)
+	static function set_bgColor(value:MWindowBdColor)
 	{
 		_bgColor = value;
 		return _bgColor;
 	}
 	
-	public static var bgSelectedColor(get_bgSelectedColor, set_bgSelectedColor):MFlatBgColor;
-	static var _bgSelectedColor:MFlatBgColor;
+	public static var bgSelectedColor(get_bgSelectedColor, set_bgSelectedColor):MWindowBdColor;
+	static var _bgSelectedColor:MWindowBdColor;
 	static function get_bgSelectedColor()
 	{
 		if (_bgSelectedColor == null)
 		{
-			var color = new MFlatBgColor();
+			var color = new MWindowBdColor();
 			
 			color.bgRatiosUp = [ 0, 250 ];
 			color.bgRatiosOver = [ 0, 250 ];
@@ -245,23 +245,18 @@ class MWindowBdFactory
 			color.bgColorsDown = [ 0xffaa8000, 0xfffffe00 ];
 			color.bgColorsDisabled = [ 0xffeeeecc, 0xffcccc82 ];
 
-			color.bgBottomRightColor = 0xff202020;
-
-			color.bgBottomRightDisabledColor = 0xffb5b5b5;
-
-			color.bgTopLeftColor = 0xff8b8b8b;
-			color.bgTopLeftDisabledColor = 0xffcccccc;
-
 			color.bgInnerTopLeftColor = 0xa0ffffff;
-			color.bgInnerBottomRightColor = 0xe0ffffff;
-
-			color.bgInnerDownColor = 0x2e000000;
+			color.bgInnerBottomRightColor = 0x30000000;
+			color.outerBorderColor = 0xc0ffffff;
+			color.outerBorderDisabledColor = 0x80ffffff;
+			color.innerBorderColor = 0xff508000;
+			color.innerBorderDisabledColor = 0xff808080;
 			
 			_bgSelectedColor = color;
 		}
 		return _bgSelectedColor;
 	}
-	static function set_bgSelectedColor(value:MFlatBgColor)
+	static function set_bgSelectedColor(value:MWindowBdColor)
 	{
 		_bgSelectedColor = value;
 		return _bgSelectedColor;
@@ -269,7 +264,7 @@ class MWindowBdFactory
 	
 	public static var size = 22;
 	
-	static function getBg(params:MFlatBgColor, state:CButtonState)
+	static function getBg(params:MWindowBdColor, state:CButtonState)
 	{
 		MBdFactoryUtil.qualityOn();
 		
@@ -279,22 +274,20 @@ class MWindowBdFactory
 		
 		g.clear();
 		
-		var enabled = state != CButtonState.DISABLED;
-		
-		var color = 0xaaffffff;
+		var color = state.enabled ? params.outerBorderColor : params.outerBorderDisabledColor;
 		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(0, 0, size, size, 8);
 		g.drawRoundRect(1, 1, size - 2, size - 2, 6);
 		g.endFill();
 		
-		var color = 0xff508000;
+		var color = state.enabled ? params.innerBorderColor : params.innerBorderDisabledColor;
 		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(1, 1, size - 2, size - 2, 6);
 		g.drawRoundRect(2, 2, size - 4, size - 4, 4);
 		g.endFill();
 		
 		{
-			var boxHeight = 20;
+			var boxHeight = size - 2;
 			var matrix = new Matrix();
 			matrix.createGradientBox(boxHeight, boxHeight, Math.PI * .5, -3, -3);
 			
@@ -324,7 +317,7 @@ class MWindowBdFactory
 			g.endFill();
 		}
 		
-		var color = 0x30000000;
+		var color = params.bgInnerBottomRightColor;
 		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(2, 2, size - 4, size - 4, 4);
 		g.drawRoundRect(2, 2, size - 5, size - 5, 4);
@@ -436,5 +429,83 @@ class MWindowBdFactory
 			_bgDisabledSelected = getBg(bgSelectedColor, CButtonState.DISABLED);
 		}
 		return _bgDisabledSelected;
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Images
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	static var _imageClose:BitmapData;
+	public static function getImageClose():BitmapData
+	{
+		if (_imageClose == null)
+		{
+			_imageClose = new BitmapData(size - 4, size - 4, true, 0x00000000);
+			var shape = MBdFactoryUtil.getShape();
+			var g = shape.graphics;
+			g.clear();
+			var x0 = 4;
+			var y0 = 4;
+			var x1 = size - 8;
+			var y1 = size - 8;
+			var halfWidth = 2;
+			g.beginFill(0xffffff);
+			g.moveTo(x0, y0);
+			g.lineTo(x0 + halfWidth, y0);
+			g.lineTo(x1, y1 - halfWidth);
+			g.lineTo(x1, y1);
+			g.lineTo(x1 - halfWidth, y1);
+			g.lineTo(x0, y0 + halfWidth);
+			g.lineTo(x0, y0);
+			g.endFill();
+			g.beginFill(0xffffff);
+			g.moveTo(x1, y0);
+			g.lineTo(x1, y0 + halfWidth);
+			g.lineTo(x0 + halfWidth, y1);
+			g.lineTo(x0, y1);
+			g.lineTo(x0, y1 - halfWidth);
+			g.lineTo(x1 - halfWidth, y0);
+			g.lineTo(x1, y0);
+			g.endFill();
+			MBdFactoryUtil.qualityOn();
+			_imageClose.draw(shape);
+			_imageClose.applyFilter(
+				_imageClose, _imageClose.rect, new Point(),
+				new GlowFilter(0x000000, 1, 2, 2));
+			MBdFactoryUtil.qualityOff();
+		}
+		return _imageClose;
+	}
+	
+	static var _imageMinimize:BitmapData;
+	public static function getImageMinimize():BitmapData
+	{
+		if (_imageMinimize == null)
+		{
+			_imageMinimize = new BitmapData(size - 4, size - 4, true, 0x00000000);
+		}
+		return _imageMinimize;
+	}
+	
+	static var _imageMaximize:BitmapData;
+	public static function getImageMaximize():BitmapData
+	{
+		if (_imageMaximize == null)
+		{
+			_imageMaximize = new BitmapData(size - 4, size - 4, true, 0x00000000);
+		}
+		return _imageMaximize;
+	}
+	
+	static var _imageCollapse:BitmapData;
+	public static function getImageCollapse():BitmapData
+	{
+		if (_imageCollapse == null)
+		{
+			_imageCollapse = new BitmapData(size - 4, size - 4, true, 0x00000000);
+		}
+		return _imageCollapse;
 	}
 }

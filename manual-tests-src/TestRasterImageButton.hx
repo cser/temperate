@@ -132,6 +132,7 @@ class TestRasterImageButton extends Sprite
 		
 		{
 			var line = new CHBox().addTo(main);
+			line.gapX = 1;
 			
 			var bg = new CSprite();
 			line.add(bg);
@@ -149,7 +150,15 @@ class TestRasterImageButton extends Sprite
 			line.add(new Bitmap(MWindowBdFactory.getBgOverSelected()));
 			line.add(new Bitmap(MWindowBdFactory.getBgDownSelected()));
 			line.add(new Bitmap(MWindowBdFactory.getBgDisabledSelected()));
-			line.add(new Bitmap(MWindowBdFactory.getFrame()));
+			line.add(new Bitmap(MWindowBdFactory.getFrame())).setFixedSize(0, 0).setOffsets(-2, -4);
+			
+			line.add(new Bitmap(MWindowBdFactory.getBgUp())).setFixedSize(0, 0).setOffsets(-1, 0);
+			line.add(new Bitmap(MWindowBdFactory.getImageClose())).setOffsets(0, 2);
+			line.add(new Bitmap(MWindowBdFactory.getImageClose()))
+				.setFixedSize(72).setChildAlign(1).setOffsets(-1, 2);
+			line.add(new Bitmap(MWindowBdFactory.getImageMinimize()));
+			line.add(new Bitmap(MWindowBdFactory.getImageMaximize()));
+			line.add(new Bitmap(MWindowBdFactory.getImageCollapse()));
 		}
 	}
 	

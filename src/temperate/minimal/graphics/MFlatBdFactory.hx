@@ -29,15 +29,13 @@ class MFlatBdFactory
 		
 		g.clear();
 		
-		var enabled = state != CButtonState.DISABLED;
-		
-		var color = enabled ? params.bgBottomRightColor : params.bgBottomRightDisabledColor;
+		var color = state.enabled ? params.bgBottomRightColor : params.bgBottomRightDisabledColor;
 		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(0, 0, size, size, 6);
 		g.drawRoundRect(0, 0, size - 1, size - 1, 6);
 		g.endFill();
 		
-		var color = enabled ? params.bgTopLeftColor : params.bgTopLeftDisabledColor;
+		var color = state.enabled ? params.bgTopLeftColor : params.bgTopLeftDisabledColor;
 		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(0, 0, size, size, 6);
 		g.drawRoundRect(1, 1, size - 1, size - 1, 6);

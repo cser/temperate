@@ -1,8 +1,8 @@
 package temperate.minimal.graphics;
 
-class MFlatBgColor
+class MWindowBdColor
 {
-	public function new()
+	public function new() 
 	{
 	}
 	
@@ -16,14 +16,10 @@ class MFlatBgColor
 	public var bgColorsDown:Array<UInt>;
 	public var bgColorsDisabled:Array<UInt>;
 	
-	public var bgBottomRightColor:UInt;
-	public var bgBottomRightDisabledColor:UInt;
-	
-	public var bgTopLeftColor:UInt;
-	public var bgTopLeftDisabledColor:UInt;
-	
 	public var bgInnerTopLeftColor:UInt;
 	public var bgInnerBottomRightColor:UInt;
-	
-	public var bgInnerDownColor:UInt;
+	public var outerBorderColor:UInt;
+	public var outerBorderDisabledColor:UInt;
+	public var innerBorderColor:UInt;
+	public var innerBorderDisabledColor:UInt;
 }
