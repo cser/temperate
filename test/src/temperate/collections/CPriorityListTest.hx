@@ -588,6 +588,14 @@ class CPriorityListTest
 	}
 	
 	@Test
+	public function nullNodeIsNotExists()
+	{
+		Assert.areEqual(false, _list.exists(null));
+		_list.add(new FakePriorityNode("0"));
+		Assert.areEqual(false, _list.exists(null));
+	}
+	
+	@Test
 	public function iteratorNormalCase()
 	{
 		var node =
@@ -604,5 +612,16 @@ class CPriorityListTest
 			array.push(node);
 		}
 		ArrayAssert.equalToArray(node, array);
+	}
+	
+	@Test
+	public function iteratorOfEmptyListCase()
+	{
+		var array:Array<FakePriorityNode> = [];
+		for (node in _list)
+		{
+			array.push(node);
+		}
+		ArrayAssert.equalToArray([], array);
 	}
 }

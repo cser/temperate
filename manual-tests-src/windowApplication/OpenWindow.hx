@@ -1,20 +1,14 @@
 package windowApplication;
-import flash.display.Sprite;
+import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
-import temperate.minimal.cursors.MHandCursor;
 import temperate.minimal.MButton;
-import temperate.minimal.MCursorManager;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.MSeparator;
 import temperate.minimal.MWindow;
-import temperate.minimal.skins.MWindowSkin;
-import temperate.minimal.windows.MWindowScaleAnimator;
-import temperate.skins.ICWindowSkin;
-import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
 
 class OpenWindow extends MWindow
@@ -52,6 +46,9 @@ class OpenWindow extends MWindow
 		button.text = "Cancel";
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
+		
+		_skin.addHeadButton(_skin.maximizeButton).addEventListener(Event.CHANGE, onMaximizeChange);
+		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCancelClick);
 	}
 	
 	var _buttonBox:CHBox;
@@ -66,5 +63,10 @@ class OpenWindow extends MWindow
 	function onCancelClick(event:MouseEvent)
 	{
 		close();
+	}
+	
+	function onMaximizeChange(event:Event)
+	{
+		maximized = _skin.maximizeButton.selected;
 	}
 }

@@ -298,29 +298,6 @@ class MWindowBdFactory
 		return image;
 	}
 	
-	static var _imageMinimize:Array<BitmapData>;
-	public static function getImageMinimize(state:CButtonState):BitmapData
-	{
-		if (_imageMinimize == null)
-		{
-			_imageMinimize = [];
-		}
-		var image = _imageMinimize[state.index];
-		if (image == null)
-		{
-			var shape = MBdFactoryUtil.getShape();
-			var color = getImageColor(state);
-			var g = shape.graphics;
-			g.clear();
-			g.beginFill(color.getColor(), color.getAlpha());
-			g.drawRect(0, imageSize - 3, imageSize, 3);
-			g.endFill();
-			image = drawImage(shape, state);
-			_imageMinimize[state.index] = image;
-		}
-		return image;
-	}
-	
 	static var _imageMaximize:Array<BitmapData>;
 	public static function getImageMaximize(state:CButtonState):BitmapData
 	{

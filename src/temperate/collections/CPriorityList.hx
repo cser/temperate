@@ -163,7 +163,7 @@ class CPriorityList< T:ACPriorityListNode<T> >
 	 */
 	inline public function exists(node:T):Bool
 	{
-		return node.prev != null || node.next != null || node == head;
+		return node != null && (node.prev != null || node.next != null || node == head);
 	}
 	
 	/**

@@ -12,6 +12,7 @@ import temperate.windows.components.ACWindowComponent;
 import temperate.windows.components.CBaseWindowComponent;
 import temperate.windows.components.CMoveWindowComponent;
 import temperate.windows.components.CWindowConstraintsComponent;
+import temperate.windows.components.CWindowMaximizeComponent;
 import temperate.windows.docks.CAlignedPopUpDock;
 import temperate.windows.docks.ICPopUpDock;
 
@@ -195,6 +196,40 @@ class ACWindow implements ICPopUp
 	public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
 	{
 		_head.animateHide(fast, onComplete);
+	}
+	
+	public var maximized(get_maximized, set_maximized):Bool;
+	var _maximized:Bool;
+	function get_maximized()
+	{
+		return _maximized;
+	}
+	function set_maximized(value)
+	{
+		if (_maximized != value)
+		{
+			_maximized = value;
+			if (_maximized)
+			{
+				if (_maximizeComponent == null)
+				{
+					_maximizeComponent = newMaximizeComponent();
+				}
+				addComponent(_maximizeComponent);
+			}
+			else
+			{
+				removeComponent(_maximizeComponent);
+			}
+		}
+		return _maximized;
+	}
+	
+	var _maximizeComponent:ACWindowComponent;
+	
+	function newMaximizeComponent():ACWindowComponent
+	{
+		return new CWindowMaximizeComponent();
 	}
 	
 	//----------------------------------------------------------------------------------------------

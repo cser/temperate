@@ -40,7 +40,7 @@ class SaveWindow extends MWindow
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
 		
-		_skin.addCloseButton().addEventListener(MouseEvent.CLICK, onCancelClick);
+		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCancelClick);
 	}
 	
 	var _title:TextField;

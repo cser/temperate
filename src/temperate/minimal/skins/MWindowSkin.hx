@@ -11,6 +11,7 @@ import temperate.minimal.graphics.MWindowBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.windows.MCloseButton;
+import temperate.minimal.windows.MMaximizeButton;
 import temperate.raster.CVScale12GridDrawer;
 import temperate.skins.ACWindowSkin;
 
@@ -21,6 +22,8 @@ class MWindowSkin extends ACWindowSkin
 	static var LINE_TOP_INDENT = 2;
 	static var LINE_BOTTOM_INDENT = 4;
 	static var CENTER_TOP_OFFSET = -2;
+	static var BUTTONS_RIGHT = 6;
+	static var BUTTONS_INDENT = 2;
 	
 	public function new() 
 	{
@@ -66,7 +69,16 @@ class MWindowSkin extends ACWindowSkin
 			var titleHeight = Std.int(_titleTF.height);
 			_titleTF.x = HINDENT;
 			_titleTF.y = VINDENT;
-			var minWidth = titleWidth + HINDENT * 2;
+			
+			var buttonsWidth = 0;
+			for (button in _headButtons)
+			{
+				var view = button.view;
+				buttonsWidth += Std.int(view.width) + BUTTONS_INDENT;
+			}
+			buttonsWidth = CMath.intMax(0, buttonsWidth - BUTTONS_INDENT);
+			
+			var minWidth = titleWidth + buttonsWidth + HINDENT * 2;
 			var minHeight = titleHeight + VINDENT * 2 + LINE_TOP_INDENT + LINE_BOTTOM_INDENT;
 			var top = titleHeight + VINDENT + LINE_TOP_INDENT + LINE_BOTTOM_INDENT;
 			var bottom = VINDENT;
@@ -127,14 +139,14 @@ class MWindowSkin extends ACWindowSkin
 		{
 			_view_headButtonsValid = true;
 			
-			var x = _width - 6;
+			var x = _width - BUTTONS_RIGHT;
 			for (button in _headButtons)
 			{
 				var view = button.view;
 				x -= view.width;
 				view.x = x;
 				view.y = 2;
-				x -= 2;
+				x -= BUTTONS_INDENT;
 			}
 		}
 	}
@@ -169,14 +181,32 @@ class MWindowSkin extends ACWindowSkin
 		_headButtons.remove(button);
 		_headButtons.unshift(button);
 		addChild(button.view);
-		_view_headButtonsValid = false;
-		postponeView();
+		_size_valid = false;
+		postponeSize();
 		return button;
 	}
 	
-	public function addCloseButton():ICButton
+	public var closeButton(get_closeButton, null):ICButton;
+	var _closeButton:ICButton;
+	function get_closeButton()
 	{
-		return addHeadButton(new MCloseButton());
+		if (_closeButton == null)
+		{
+			_closeButton = new MCloseButton();
+		}
+		return _closeButton;
+	}
+	
+	public var maximizeButton(get_maximizeButton, null):ICButton;
+	var _maximizeButton:MMaximizeButton;
+	function get_maximizeButton()
+	{
+		if (_maximizeButton == null)
+		{
+			_maximizeButton = new MMaximizeButton();
+			_maximizeButton.toggle = true;
+		}
+		return _maximizeButton;
 	}
 	
 	public function removeHeadButton(button:ICButton)
