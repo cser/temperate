@@ -408,14 +408,17 @@ class CScrollBar extends CSprite
 	function updateThumbVisible()
 	{
 		var thumbSize = _horizontal ? _thumb.width : _thumb.height;
-		_thumb.visible = _enabled && thumbSize < _guideSize;
+		_thumb.visible = _enabled && thumbSize < _guideSize && _maxValue > _minValue;
 	}
 	
 	function setThumbPositionByValue()
 	{
 		var thumbSize = Std.int(_horizontal ? _thumb.width : _thumb.height);
-		var thumbOffset = Std.int(_guideDirectOffset + 
-			(_guideSize - thumbSize) * (_value - _minValue) / (_maxValue - _minValue));
+		var delta = _maxValue - _minValue;
+		var thumbOffset = _guideDirectOffset + 
+			(delta > 0 ?
+				Std.int((_guideSize - thumbSize) * (_value - _minValue) / (_maxValue - _minValue)) :
+				0);
 		if (_horizontal)
 		{
 			_thumb.x = thumbOffset;
@@ -463,15 +466,19 @@ class CScrollBar extends CSprite
 	function updateThumbSize()
 	{
 		var pageSize = this.pageSize;
-		var delta = _maxValue - _minValue > 0 ? _maxValue - _minValue : 1;
-		var size = _guideSize * pageSize / delta;
+		var delta = _maxValue - _minValue + pageSize;
+		var size = Std.int(_guideSize * pageSize / delta);
+		if (size < 0 || size > _guideSize)
+		{
+			size = CMath.intMax(_guideSize - 1, 0);
+		}
 		if (_horizontal)
 		{
-			_thumb.width = Std.int(size);
+			_thumb.width = size;
 		}
 		else
 		{
-			_thumb.height = Std.int(size);
+			_thumb.height = size;
 		}
 	}
 	
@@ -692,3 +699,8 @@ class CScrollBar extends CSprite
 		return this;
 	}
 }
+/*
+TODO
+Продебажить лаги при изменении размеров движка
+Починить некорректный прыгающий при наведении размер движка
+*/
