@@ -624,4 +624,96 @@ class CPriorityListTest
 		}
 		ArrayAssert.equalToArray([], array);
 	}
+	
+	@Test
+	public function removeElementsOnIteration()
+	{
+		var node =
+			[new FakePriorityNode("0"), new FakePriorityNode("1"), new FakePriorityNode("2"),
+			new FakePriorityNode("3"), new FakePriorityNode("4")];
+		_list.add(node[0], 0);
+		_list.add(node[1], -1);
+		_list.add(node[2], -2);
+		_list.add(node[3], -3);
+		_list.add(node[4], -4);
+		var array:Array<FakePriorityNode> = [];
+		for (node in _list)
+		{
+			array.push(node);
+		}
+		ArrayAssert.equalToArray(node, array);
+		
+		for (nodeI in _list)
+		{
+			if (nodeI == node[1] || nodeI == node[3])
+			{
+				_list.remove(nodeI);
+			}
+		}
+		var array:Array<FakePriorityNode> = [];
+		for (node in _list)
+		{
+			array.push(node);
+		}
+		ArrayAssert.equalToArray([node[0], node[2], node[4]], array);
+		assertLinking(3);
+		
+		for (nodeI in _list)
+		{
+			if (nodeI == node[0] || nodeI == node[2])
+			{
+				_list.remove(nodeI);
+			}
+		}
+		var array:Array<FakePriorityNode> = [];
+		for (node in _list)
+		{
+			array.push(node);
+		}
+		ArrayAssert.equalToArray([node[4]], array);
+		assertLinking(1);
+		
+		for (nodeI in _list)
+		{
+			_list.remove(nodeI);
+		}
+		var array:Array<FakePriorityNode> = [];
+		for (node in _list)
+		{
+			array.push(node);
+		}
+		ArrayAssert.equalToArray([], array);
+		assertLinking(0);
+	}
+	
+	@Test
+	public function removeAllOnIteration()
+	{
+		var node =
+			[new FakePriorityNode("0"), new FakePriorityNode("1"), new FakePriorityNode("2"),
+			new FakePriorityNode("3"), new FakePriorityNode("4")];
+		_list.add(node[0], 0);
+		_list.add(node[1], -1);
+		_list.add(node[2], -2);
+		_list.add(node[3], -3);
+		_list.add(node[4], -4);
+		var array:Array<FakePriorityNode> = [];
+		for (node in _list)
+		{
+			array.push(node);
+		}
+		ArrayAssert.equalToArray(node, array);
+		
+		for (nodeI in _list)
+		{
+			_list.remove(nodeI);
+		}
+		var array:Array<FakePriorityNode> = [];
+		for (node in _list)
+		{
+			array.push(node);
+		}
+		ArrayAssert.equalToArray([], array);
+		assertLinking(0);
+	}
 }
