@@ -43,7 +43,7 @@ class TestMain
 		var test = new TestTextArea();
 		var test = new TestSlider();
 		
-		var test = new TestSimpleButtonWrapper();
+		var test = new TestSimpleButtonWrapper();var test = new TestSlider();
 		Lib.current.addChild(test);
 		test.init();
 	}

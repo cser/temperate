@@ -19,9 +19,9 @@ import temperate.skins.ICScrollSkin;
 class CScrollBar extends CSprite, implements ICSlider
 {
 	var _horizontal:Bool;
-	var _leftArrow:ACButton;
-	var _rightArrow:ACButton;
-	var _thumb:ACButton;
+	var _leftArrow:ICButton;
+	var _rightArrow:ICButton;
+	var _thumb:ICButton;
 	var _bgSkin:ICScrollSkin;
 	
 	var _bg:Sprite;
@@ -40,7 +40,7 @@ class CScrollBar extends CSprite, implements ICSlider
 	var _guideSize:Int;
 	
 	public function new(
-		horizontal:Bool, leftArrow:ACButton, rightArrow:ACButton, thumb:ACButton,
+		horizontal:Bool, leftArrow:ICButton, rightArrow:ICButton, thumb:ICButton,
 		bgSkin:ICScrollSkin) 
 	{
 		_horizontal = horizontal;
@@ -70,9 +70,9 @@ class CScrollBar extends CSprite, implements ICSlider
 		addChild(_bg);
 		
 		_bgSkin.link(_horizontal, _bg.addChild, _bg.removeChild, _bg.graphics);
-		addChild(_thumb);
-		addChild(_leftArrow);
-		addChild(_rightArrow);
+		addChild(_thumb.view);
+		addChild(_leftArrow.view);
+		addChild(_rightArrow.view);
 		
 		_timerChanger = newTimerChanger();
 		_timerChanger.onIncrease = onIncrease;
@@ -205,14 +205,14 @@ class CScrollBar extends CSprite, implements ICSlider
 		if (_horizontal)
 		{
 			mousePosition = _bg.mouseX;
-			thumbPosition = _thumb.x;
-			thumbSize = _thumb.width;
+			thumbPosition = _thumb.view.x;
+			thumbSize = _thumb.view.width;
 		}
 		else
 		{
 			mousePosition = _bg.mouseY;
-			thumbPosition = _thumb.y;
-			thumbSize = _thumb.height;
+			thumbPosition = _thumb.view.y;
+			thumbSize = _thumb.view.height;
 		}
 		if (isIncrease && mousePosition < thumbPosition + thumbSize ||
 			!isIncrease && mousePosition > thumbPosition)
@@ -235,7 +235,10 @@ class CScrollBar extends CSprite, implements ICSlider
 	
 	function getThumbCenter()
 	{
-		return Std.int(_horizontal ? _thumb.x + _thumb.width * .5 : _thumb.y + _thumb.height * .5);
+		return Std.int(
+			_horizontal ?
+				_thumb.view.x + _thumb.view.width * .5 :
+				_thumb.view.y + _thumb.view.height * .5);
 	}
 	
 	function onBgMouseDown(event:MouseEvent)
@@ -293,14 +296,13 @@ class CScrollBar extends CSprite, implements ICSlider
 		redrawBg();
 	}
 	
+	var _mouseOffsetX:Float;
+	var _mouseOffsetY:Float;
+	
 	function onThumbMouseDown(event:MouseEvent)
 	{
-		var rect = _horizontal ? 
-			new Rectangle(
-				_guideDirectOffset, _guideCrossOffset, _guideSize - Std.int(_thumb.width), 0) :
-			new Rectangle(
-				_guideCrossOffset, _guideDirectOffset, 0, _guideSize - Std.int(_thumb.height));
-		_thumb.startDrag(false, rect);
+		_mouseOffsetX = _thumb.view.mouseX;
+		_mouseOffsetY = _thumb.view.mouseY;
 		stage.addEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 		stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
 	}
@@ -309,12 +311,33 @@ class CScrollBar extends CSprite, implements ICSlider
 	{
 		stage.removeEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 		stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-		_thumb.stopDrag();
 		setThumbPositionByValue();
 	}
 	
 	function onStageMouseMove(event:MouseEvent)
 	{
+		var value = Std.int(_horizontal ? mouseX - _mouseOffsetX : mouseY - _mouseOffsetY);
+		if (value < _guideDirectOffset)
+		{
+			value = _guideDirectOffset;
+		}
+		else
+		{
+			var maxValue = _guideDirectOffset + _guideSize -
+				Std.int(_horizontal ? _thumb.view.width : _thumb.view.height);
+			if (value > maxValue)
+			{
+				value = maxValue;
+			}
+		}
+		if (_horizontal)
+		{
+			_thumb.view.x = value;
+		}
+		else
+		{
+			_thumb.view.y = value;
+		}
 		if (updateOnMove)
 		{
 			event.updateAfterEvent();
@@ -385,20 +408,20 @@ class CScrollBar extends CSprite, implements ICSlider
 	
 	function updateSize()
 	{
-		var leftWidth = _leftArrow.width;
-		var leftHeight = _leftArrow.height;
-		var rightWidth = _rightArrow.width;
-		var rightHeight = _rightArrow.height;
+		var leftWidth = _leftArrow.view.width;
+		var leftHeight = _leftArrow.view.height;
+		var rightWidth = _rightArrow.view.width;
+		var rightHeight = _rightArrow.view.height;
 		var minWidth;
 		var minHeight;
 		if (_horizontal)
 		{
 			minWidth = leftWidth + rightWidth;
-			minHeight = CMath.max3(leftHeight, rightHeight, _thumb.height);
+			minHeight = CMath.max3(leftHeight, rightHeight, _thumb.view.height);
 		}
 		else
 		{
-			minWidth = CMath.max3(leftWidth, rightWidth, _thumb.width);
+			minWidth = CMath.max3(leftWidth, rightWidth, _thumb.view.width);
 			minHeight = leftHeight + rightHeight;
 		}
 		if (_horizontal)
@@ -419,32 +442,32 @@ class CScrollBar extends CSprite, implements ICSlider
 	
 	function updateBaseArrange()
 	{
-		_leftArrow.x = 0;
-		_leftArrow.y = 0;
+		_leftArrow.view.x = 0;
+		_leftArrow.view.y = 0;
 		_guideCrossOffset = 0;
 		
 		if (_horizontal)
 		{
-			_rightArrow.x = _width - _rightArrow.width;
-			_rightArrow.y = 0;
+			_rightArrow.view.x = _width - _rightArrow.view.width;
+			_rightArrow.view.y = 0;
 			
-			_guideDirectOffset = Std.int(_leftArrow.width);
-			_guideSize = Std.int(_width - _leftArrow.width - _rightArrow.width);
+			_guideDirectOffset = Std.int(_leftArrow.view.width);
+			_guideSize = Std.int(_width - _leftArrow.view.width - _rightArrow.view.width);
 		}
 		else
 		{
-			_rightArrow.x = 0;
-			_rightArrow.y = _height - _rightArrow.height;
+			_rightArrow.view.x = 0;
+			_rightArrow.view.y = _height - _rightArrow.view.height;
 			
-			_guideDirectOffset = Std.int(_leftArrow.height);
-			_guideSize = Std.int(_height - _leftArrow.height - _rightArrow.height);
+			_guideDirectOffset = Std.int(_leftArrow.view.height);
+			_guideSize = Std.int(_height - _leftArrow.view.height - _rightArrow.view.height);
 		}
 	}
 	
 	function updateThumbVisible()
 	{
-		var thumbSize = _horizontal ? _thumb.width : _thumb.height;
-		_thumb.visible = _isEnabled && thumbSize < _guideSize && _maxValue > _minValue;
+		var thumbSize = _horizontal ? _thumb.view.width : _thumb.view.height;
+		_thumb.view.visible = _isEnabled && thumbSize < _guideSize && _maxValue > _minValue;
 	}
 	
 	function updateBg()
@@ -476,11 +499,11 @@ class CScrollBar extends CSprite, implements ICSlider
 		}
 		if (_horizontal)
 		{
-			_thumb.width = size;
+			_thumb.view.width = size;
 		}
 		else
 		{
-			_thumb.height = size;
+			_thumb.view.height = size;
 		}
 	}
 	
@@ -539,9 +562,9 @@ class CScrollBar extends CSprite, implements ICSlider
 	function setUseHandCursor(value:Bool)
 	{
 		_useHandCursor = value;
-		_leftArrow.useHandCursor = _useHandCursor;
-		_rightArrow.useHandCursor = _useHandCursor;
-		_thumb.useHandCursor = _useHandCursor;
+		_leftArrow.setUseHandCursor(_useHandCursor);
+		_rightArrow.setUseHandCursor(_useHandCursor);
+		_thumb.setUseHandCursor(_useHandCursor);
 	}
 	
 	//----------------------------------------------------------------------------------------------
@@ -552,7 +575,7 @@ class CScrollBar extends CSprite, implements ICSlider
 	
 	function setThumbPositionByValue()
 	{
-		var thumbSize = Std.int(_horizontal ? _thumb.width : _thumb.height);
+		var thumbSize = Std.int(_horizontal ? _thumb.view.width : _thumb.view.height);
 		var delta = _maxValue - _minValue;
 		var thumbOffset = _guideDirectOffset + 
 			(delta > 0 ?
@@ -560,20 +583,20 @@ class CScrollBar extends CSprite, implements ICSlider
 				0);
 		if (_horizontal)
 		{
-			_thumb.x = thumbOffset;
-			_thumb.y = _guideCrossOffset;
+			_thumb.view.x = thumbOffset;
+			_thumb.view.y = _guideCrossOffset;
 		}
 		else
 		{
-			_thumb.x = _guideCrossOffset;
-			_thumb.y = thumbOffset;
+			_thumb.view.x = _guideCrossOffset;
+			_thumb.view.y = thumbOffset;
 		}
 	}
 	
 	function setValueByThumbPosition()
 	{
-		var thumbSize = Std.int(_horizontal ? _thumb.width : _thumb.height);
-		var thumbOffset = Std.int(_horizontal ? _thumb.x : _thumb.y);
+		var thumbSize = Std.int(_horizontal ? _thumb.view.width : _thumb.view.height);
+		var thumbOffset = Std.int(_horizontal ? _thumb.view.x : _thumb.view.y);
 		var rawValue = _minValue +  (thumbOffset - _guideDirectOffset)
 			* (_maxValue - _minValue) / (_guideSize - thumbSize);
 		var newValue = fixedValue(rawValue);

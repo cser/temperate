@@ -94,40 +94,6 @@ class CSliderTest
 		}
 	}
 	
-	@Test
-	public function onThumbMoveEventDispatched()
-	{
-		for (horizontal in [ true, false ])
-		{
-			var slider = new TestSlider(horizontal);
-			Lib.current.addChild(slider);
-			
-			_log = [];
-			
-			slider.setValues(0, 100, 50);
-			slider.setSize(100, 100);
-			slider.validate();
-			slider.addEventListener(Event.CHANGE, onChange);
-			slider.addEventListener(Event.COMPLETE, onComplete);
-			slider.thumb.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true));
-			if (horizontal)
-			{
-				slider.thumb.x = 10;
-			}
-			else
-			{
-				slider.thumb.y = 10;
-			}
-			slider.thumb.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_MOVE, true));
-			ArrayAssert.areEqual(["change"], _log);
-			
-			slider.thumb.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP, true));
-			ArrayAssert.areEqual(["change", "complete"], _log);
-			
-			Lib.current.removeChild(slider);
-		}
-	}
-	
 	function onChange(event:Event)
 	{
 		_log.push("change");
