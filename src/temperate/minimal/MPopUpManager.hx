@@ -47,6 +47,11 @@ class MPopUpManager
 		getInstance().moveToTop(popUp);
 	}
 	
+	public static function moveTo(popUp:ICPopUp, index:Int):Void
+	{
+		getInstance().moveTo(popUp, index);
+	}
+	
 	public static function remove(popUp:ICPopUp, fast:Bool = false):Void
 	{
 		getInstance().remove(popUp, fast);

@@ -89,6 +89,18 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		updateModal();
 	}
 	
+	public function moveTo(popUp:ICPopUp, index:Int)
+	{
+		if (!_popUps.exists(popUp))
+		{
+			throw new ArgumentError("Missing popUp: " + popUp);
+		}
+		_popUps.remove(popUp);
+		_popUps.insert(index, popUp);
+		container.setChildIndex(popUp.view, index);
+		updateModal();
+	}
+	
 	public function remove(popUp:ICPopUp, fast:Bool = false)
 	{
 		if (_popUps.remove(popUp))

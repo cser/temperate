@@ -32,12 +32,32 @@ class ACWindow implements ICPopUp
 		
 		initComponents();
 		
-		view.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		moveToTopOnMouseDown = true;
 	}
 	
 	function getManager()
 	{
 		return manager;
+	}
+	
+	public var moveToTopOnMouseDown(get_moveToTopOnMouseDown, set_moveToTopOnMouseDown):Bool;
+	var _moveToTopOnMouseDown:Bool;
+	function get_moveToTopOnMouseDown()
+	{
+		return _moveToTopOnMouseDown;
+	}
+	function set_moveToTopOnMouseDown(value)
+	{
+		_moveToTopOnMouseDown = value;
+		if (_moveToTopOnMouseDown)
+		{
+			view.addEventListener(MouseEvent.MOUSE_DOWN, onMoveToTopMouseDown);
+		}
+		else
+		{
+			view.removeEventListener(MouseEvent.MOUSE_DOWN, onMoveToTopMouseDown);
+		}
+		return _moveToTopOnMouseDown;
 	}
 	
 	public var isOpened:Bool;
@@ -83,7 +103,6 @@ class ACWindow implements ICPopUp
 	{
 		dock.arrange(Std.int(width), Std.int(height), manager.areaWidth, manager.areaHeight);
 		_head.move(manager.areaX + dock.x, manager.areaY + dock.y, false);
-		//move(manager.areaX + dock.x, manager.areaY + dock.y);
 	}
 	
 	public var dock(get_dock, set_dock):ICPopUpDock;
@@ -98,7 +117,7 @@ class ACWindow implements ICPopUp
 		return _dock;
 	}
 	
-	function onMouseDown(event:MouseEvent)
+	function onMoveToTopMouseDown(event:MouseEvent)
 	{
 		if (manager != null)
 		{

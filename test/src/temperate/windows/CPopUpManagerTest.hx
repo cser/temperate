@@ -15,7 +15,7 @@ class CPopUpManagerTest
 	{
 	}
 	
-	var _manager:TestPopUpManager;
+	var _manager:CPopUpManager;
 	var _container:Sprite;
 	var _log:Array<String>;
 	
@@ -24,7 +24,7 @@ class CPopUpManagerTest
 	{
 		_log = [];
 		_container = new Sprite();
-		_manager = new TestPopUpManager(_container);
+		_manager = new CPopUpManager(_container);
 		_manager.setArea(0, 0, 500, 400);
 	}
 	
@@ -212,20 +212,20 @@ class CPopUpManagerTest
 		_manager.add(popUp0, true);
 		
 		_container.getChildAt(0).areEqual(popUp0.view);
-		[popUp0].equalToArray(_manager.getPopUps());
+		[popUp0].equalToArray(getPopUps());
 		popUp0.isLocked.isFalse();
 		
 		_manager.add(popUp1, true);
 		_container.getChildAt(0).areEqual(popUp0.view);
 		_container.getChildAt(1).areEqual(popUp1.view);
-		[popUp0, popUp1].equalToArray(_manager.getPopUps());
+		[popUp0, popUp1].equalToArray(getPopUps());
 		popUp0.isLocked.isTrue();
 		popUp1.isLocked.isFalse();
 		
 		_manager.add(popUp0, true);
 		_container.getChildAt(0).areEqual(popUp1.view);
 		_container.getChildAt(1).areEqual(popUp0.view);
-		[popUp1, popUp0].equalToArray(_manager.getPopUps());
+		[popUp1, popUp0].equalToArray(getPopUps());
 		popUp1.isLocked.isTrue();
 		popUp0.isLocked.isFalse();
 	}
@@ -241,7 +241,7 @@ class CPopUpManagerTest
 		_manager.remove(popUp0);
 		
 		_container.numChildren.areEqual(0);
-		[].equalToArray(_manager.getPopUps());		
+		[].equalToArray(getPopUps());		
 		
 		_manager.add(popUp0, true);
 		_manager.add(popUp1, true);
@@ -249,7 +249,7 @@ class CPopUpManagerTest
 		_manager.remove(popUp1);
 		_container.numChildren.areEqual(1);
 		_container.getChildAt(0).areEqual(popUp0.view);
-		[popUp0].equalToArray(_manager.getPopUps());
+		[popUp0].equalToArray(getPopUps());
 		popUp0.isLocked.isFalse();
 	}
 	
@@ -270,13 +270,13 @@ class CPopUpManagerTest
 		catch (error:ArgumentError)
 		{
 		}
-		[popUp0, popUp1].equalToArray(_manager.getPopUps());
+		[popUp0, popUp1].equalToArray(getPopUps());
 		popUp0.isActive.isFalse();
 		popUp1.isActive.isTrue();
 	}
 	
 	@Test
-	public function moteToTop()
+	public function moveToTop()
 	{
 		var popUp0 = new FakePopUp();
 		var popUp1 = new FakePopUp();
@@ -287,13 +287,37 @@ class CPopUpManagerTest
 		_manager.add(popUp2, true);
 		
 		_manager.moveToTop(popUp2);
-		[popUp0, popUp1, popUp2].equalToArray(_manager.getPopUps());
+		[popUp0, popUp1, popUp2].equalToArray(getPopUps());
 		popUp0.isActive.isFalse();
 		popUp1.isActive.isFalse();
 		popUp2.isActive.isTrue();
 		
 		_manager.moveToTop(popUp1);
-		[popUp0, popUp2, popUp1].equalToArray(_manager.getPopUps());
+		[popUp0, popUp2, popUp1].equalToArray(getPopUps());
+		popUp0.isActive.isFalse();
+		popUp2.isActive.isFalse();
+		popUp1.isActive.isTrue();
+	}
+	
+	@Test
+	public function moveTo()
+	{
+		var popUp0 = new FakePopUp();
+		var popUp1 = new FakePopUp();
+		var popUp2 = new FakePopUp();
+		
+		_manager.add(popUp0, true);
+		_manager.add(popUp1, true);
+		_manager.add(popUp2, true);
+		
+		_manager.moveTo(popUp1, 0);
+		[popUp1, popUp0, popUp2].equalToArray(getPopUps());
+		popUp1.isActive.isFalse();
+		popUp0.isActive.isFalse();
+		popUp2.isActive.isTrue();
+		
+		_manager.moveTo(popUp1, 2);
+		[popUp0, popUp2, popUp1].equalToArray(getPopUps());
 		popUp0.isActive.isFalse();
 		popUp2.isActive.isFalse();
 		popUp1.isActive.isTrue();
@@ -330,5 +354,15 @@ class CPopUpManagerTest
 			array.push(popUp);
 		}
 		expected.equalToArray(array);
+	}
+	
+	function getPopUps()
+	{
+		var array = [];
+		for (popUp in _manager)
+		{
+			array.push(popUp);
+		}
+		return array;
 	}
 }

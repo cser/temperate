@@ -1,6 +1,7 @@
 package windowApplication;
 import flash.events.MouseEvent;
 import temperate.containers.CHBox;
+import temperate.extra.CSignal;
 import temperate.minimal.MButton;
 import temperate.minimal.MLabel;
 import temperate.minimal.MNumericStepper;
@@ -9,12 +10,16 @@ import temperate.minimal.MWindow;
 
 class NewWindow extends MWindow
 {
+	public var signalOk(default, null):CSignal < Int->Int->Void > ;
+	
 	var _widthNs:MNumericStepper;
 	var _heightNs:MNumericStepper;
 	
 	public function new() 
 	{
 		super();
+		
+		signalOk = new CSignal();
 		
 		title = "New";
 		
@@ -58,6 +63,7 @@ class NewWindow extends MWindow
 	
 	function onOkClick(event:MouseEvent)
 	{
+		signalOk.dispatch(_widthNs.value, _heightNs.value);
 		close();
 	}
 	

@@ -2,8 +2,10 @@ package ;
 import flash.display.Sprite;
 import temperate.debug.FPSMonitor;
 import temperate.minimal.MPopUpManager;
+import temperate.minimal.MWindow;
 import temperate.windows.docks.CPopUpAbsoluteDock;
 import windowApplication.ColorsWindow;
+import windowApplication.ImageWindow;
 import windowApplication.NewWindow;
 import windowApplication.OpenWindow;
 import windowApplication.SaveWindow;
@@ -40,7 +42,16 @@ class TestWindowApplication extends Sprite
 	public function doNew()
 	{
 		var window = new NewWindow();
+		window.signalOk.add(onNewWindowOk);
 		MPopUpManager.add(window, true);
+	}
+	
+	function onNewWindowOk(width:Int, height:Int)
+	{
+		var window = new ImageWindow();
+		window.setSize(width, height);
+		MPopUpManager.add(window, false);
+		MPopUpManager.moveTo(window, 0);
 	}
 	
 	public function doOpen()
