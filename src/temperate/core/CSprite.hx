@@ -86,8 +86,9 @@ class CSprite extends Sprite
 	
 	function validateView():Void
 	{
-		_validator.removeSize(validateView);
-		validateSize();
+		_validator.removeSize(validateSize);
+		doValidateSize();
+		_validator.removeView(validateView);
 		doValidateView();
 	}
 	
