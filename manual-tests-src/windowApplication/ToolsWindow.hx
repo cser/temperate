@@ -112,7 +112,7 @@ class ToolsWindow extends ACWindow
 		
 		var mover = new CPopUpMover();
 		mover.updateOnMove = true;
-		mover.subscribe(this, this);
+		mover.subscribe(getManager, this, this, get_dock);
 	}
 	
 	var _main:CVBox;

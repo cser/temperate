@@ -25,6 +25,11 @@ class ACWindow extends CSprite, implements ICPopUp
 	
 	var _manager:CPopUpManager;
 	
+	function getManager()
+	{
+		return _manager;
+	}
+	
 	public var view(default, null):DisplayObject;
 	
 	public var innerDispatcher(default, null):IEventDispatcher;
@@ -89,5 +94,15 @@ class ACWindow extends CSprite, implements ICPopUp
 		y = _manager.areaY + dock.y;
 	}
 	
-	public var dock:ICPopUpDock;
+	public var dock(get_dock, set_dock):ICPopUpDock;
+	var _dock:ICPopUpDock;
+	function get_dock()
+	{
+		return _dock;
+	}
+	function set_dock(value)
+	{
+		_dock = value;
+		return _dock;
+	}
 }

@@ -17,4 +17,12 @@ class CAlignedPopUpDock extends ACPopUpDock
 		x = Std.int((mainWidth - width) * alignX);
 		y = Std.int((mainHeight - height) * alignY);
 	}
+	
+	override public function move(
+		width:Int, height:Int, mainWidth:Int, mainHeight:Int, x:Int, y:Int
+	):Void
+	{
+		alignX = x / (mainWidth - width);
+		alignY = y / (mainHeight - height);
+	}
 }

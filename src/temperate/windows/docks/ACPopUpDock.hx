@@ -10,6 +10,10 @@ class ACPopUpDock implements ICPopUpDock
 	{
 	}
 	
+	public function move(width:Int, height:Int, mainWidth:Int, mainHeight:Int, x:Int, y:Int):Void
+	{
+	}
+	
 	public var x(default, null):Int;
 	
 	public var y(default, null):Int;

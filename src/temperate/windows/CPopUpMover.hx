@@ -2,6 +2,7 @@ package temperate.windows;
 import flash.display.DisplayObject;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
+import temperate.windows.docks.ICPopUpDock;
 
 class CPopUpMover 
 {
@@ -14,11 +15,18 @@ class CPopUpMover
 	
 	var _popUp:ICPopUp;
 	var _target:DisplayObject;
+	var _getManager:Void->CPopUpManager;
+	var _getDock:Void->ICPopUpDock;
 	
-	public function subscribe(popUp:ICPopUp, target:DisplayObject)
+	public function subscribe(
+		getManager:Void->CPopUpManager, popUp:ICPopUp, target:DisplayObject, 
+		getDock:Void->ICPopUpDock
+	)
 	{
+		_getManager = getManager;
 		_popUp = popUp;
 		_target = target;
+		_getDock = getDock;
 		_target.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 	}
 	
@@ -50,8 +58,16 @@ class CPopUpMover
 	{
 		var view = _popUp.view;
 		var parent = view.parent;
-		view.x = parent.mouseX - _mouseX;
-		view.y = parent.mouseY - _mouseY;
+		var x = Std.int(parent.mouseX) - _mouseX;
+		var y = Std.int(parent.mouseY) - _mouseY;
+		view.x = x;
+		view.y = y;
+		var dock = _getDock();
+		var manager = _getManager();
+		dock.move(
+			Std.int(view.width), Std.int(view.height), manager.areaWidth, manager.areaHeight,
+			x - manager.areaX, y - manager.areaY
+		);
 		if (updateOnMove)
 		{
 			event.updateAfterEvent();
