@@ -13,6 +13,12 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		super();
 		
 		this.container = container;
+		
+		areaX = 0;
+		areaY = 0;
+		areaWidth = 100;
+		areaHeight = 100;
+		
 		_popUps = [];
 		_isModal = new TypedDictionary();
 		modal = false;
