@@ -9,6 +9,8 @@ import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MSeparator;
 import temperate.windows.ACWindow;
+import temperate.windows.CPopUpManager;
+import temperate.windows.docks.CAbsolutePopUpDock;
 
 @:bitmap("manual-tests-src/windowApplication/arrow.png")
 class Arrow extends flash.display.BitmapData { public function new() { super(0, 0); }}
@@ -30,9 +32,9 @@ class Rect extends flash.display.BitmapData { public function new() { super(0, 0
 
 class ToolsWindow extends ACWindow
 {
-	public function new() 
+	public function new(manager:CPopUpManager) 
 	{
-		super();
+		super(manager);
 		
 		_main = new CVBox();
 		_main.setIndents(10, 10, 10, 10);
@@ -45,8 +47,13 @@ class ToolsWindow extends ACWindow
 		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
 		
 		{
+			var toolBox = new CVBox();
+			toolBox.gapY = 0;
+			_main.add(toolBox).setPercents(100);
+			
 			var line = new CHBox();
-			_main.add(line).setPercents(100);
+			line.gapX = 0;
+			toolBox.add(line).setPercents(100);
 			
 			var button = new MFlatImageButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Arrow());
@@ -57,7 +64,8 @@ class ToolsWindow extends ACWindow
 			line.add(button).setPercents(100, 100);
 			
 			var line = new CHBox();
-			_main.add(line).setPercents(100);
+			line.gapX = 0;
+			toolBox.add(line).setPercents(100);
 			
 			var button = new MFlatImageButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Figure());
@@ -68,7 +76,8 @@ class ToolsWindow extends ACWindow
 			line.add(button).setPercents(100, 100);
 			
 			var line = new CHBox();
-			_main.add(line).setPercents(100);
+			line.gapX = 0;
+			toolBox.add(line).setPercents(100);
 			
 			var button = new MFlatImageButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Pencil());
@@ -97,6 +106,8 @@ class ToolsWindow extends ACWindow
 		
 		_size_valid = false;
 		postponeSize();
+		
+		startDock = new CAbsolutePopUpDock(10, 50);
 	}
 	
 	var _main:CVBox;
@@ -137,11 +148,14 @@ class ToolsWindow extends ACWindow
 	
 	function onOpenClick(event:MouseEvent)
 	{
-		addChild(new OpenWindow());
+		var window = new OpenWindow(_manager);
+		window.width = 200;
+		window.height = 150;
+		window.open(true);
 	}
 	
 	function onSaveClick(event:MouseEvent)
 	{
-		addChild(new SaveWindow());
+		new SaveWindow(_manager).open(true);
 	}
 }

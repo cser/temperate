@@ -1,14 +1,23 @@
 package temperate.windows;
 import flash.display.DisplayObject;
 import temperate.core.CSprite;
+import temperate.windows.docks.CAlignedPopUpDock;
+import temperate.windows.docks.ICPopUpDock;
 
 class ACWindow extends CSprite, implements ICPopUp
 {
-	function new() 
+	function new(manager:CPopUpManager) 
 	{
 		super();
+		_manager = manager;
 		view = this;
+		startDock = new CAlignedPopUpDock();
+		
+		updateIsLocked();
+		updateIsActive();
 	}
+	
+	var _manager:CPopUpManager;
 	
 	public var isLocked(get_isLocked, set_isLocked):Bool;
 	var _isLocked:Bool;
@@ -46,11 +55,30 @@ class ACWindow extends CSprite, implements ICPopUp
 	
 	function updateIsLocked()
 	{
-		mouseEnabled = _isLocked;
-		mouseChildren = _isLocked;
+		mouseEnabled = !_isLocked;
+		mouseChildren = !_isLocked;
 	}
 	
 	function updateIsActive()
 	{
 	}
+	
+	public function open(modal:Bool)
+	{
+		startDock.arrange(
+			Std.int(width), Std.int(height),
+			_manager.right - _manager.left,
+			_manager.bottom - _manager.top
+		);
+		x = _manager.left + startDock.x;
+		y = _manager.top + startDock.y;
+		_manager.add(this, modal);
+	}
+	
+	public function close()
+	{
+		_manager.remove(this);
+	}
+	
+	public var startDock:ICPopUpDock;
 }

@@ -1,4 +1,5 @@
 package windowApplication;
+import flash.events.MouseEvent;
 import flash.text.TextField;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
@@ -8,12 +9,13 @@ import temperate.minimal.MInputField;
 import temperate.minimal.MLabel;
 import temperate.minimal.MSeparator;
 import temperate.windows.ACWindow;
+import temperate.windows.CPopUpManager;
 
 class SaveWindow extends ACWindow 
 {
-	public function new() 
+	public function new(manager:CPopUpManager) 
 	{
-		super();
+		super(manager);
 		
 		_main = new CVBox();
 		_main.setIndents(10, 10, 10, 10);
@@ -40,10 +42,12 @@ class SaveWindow extends ACWindow
 		
 		var button = new MButton();
 		button.text = "Save";
+		button.addEventListener(MouseEvent.CLICK, onSaveClick);
 		buttonBox.add(button);
 		
 		var button = new MButton();
 		button.text = "Cancel";
+		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
 		
 		_size_valid = false;
@@ -83,5 +87,15 @@ class SaveWindow extends ACWindow
 			g.drawRoundRect(0, 0, _width, _height, 10);
 			g.endFill();
 		}
+	}
+	
+	function onSaveClick(event:MouseEvent)
+	{
+		close();
+	}
+	
+	function onCancelClick(event:MouseEvent)
+	{
+		close();
 	}
 }

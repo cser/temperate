@@ -20,8 +20,7 @@ class TestWindowApplication extends Sprite
 		stage.addEventListener(Event.RESIZE, onStageResize);
 		onStageResize();
 		
-		var window = new ToolsWindow();
-		_windowManager.add(window, true);
+		new ToolsWindow(_windowManager).open(false);
 	}
 	
 	function onStageResize(event:Event = null)

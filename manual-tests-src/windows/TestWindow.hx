@@ -7,12 +7,13 @@ import temperate.containers.CVBox;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFormatFactory;
 import temperate.windows.ACWindow;
+import temperate.windows.CPopUpManager;
 
 class TestWindow extends ACWindow
 {
-	public function new() 
+	public function new(manager:CPopUpManager) 
 	{
-		super();
+		super(manager);
 		_main = new CVBox();
 		_main.setIndents(10, 10, 10, 10);
 		addChild(_main);

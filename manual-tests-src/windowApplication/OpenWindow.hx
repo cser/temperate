@@ -1,4 +1,5 @@
 package windowApplication;
+import flash.events.MouseEvent;
 import flash.text.TextField;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
@@ -8,12 +9,13 @@ import temperate.minimal.MFormatFactory;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.MSeparator;
 import temperate.windows.ACWindow;
+import temperate.windows.CPopUpManager;
 
 class OpenWindow extends ACWindow
 {
-	public function new() 
+	public function new(manager:CPopUpManager) 
 	{
-		super();
+		super(manager);
 		
 		_main = new CVBox();
 		_main.setIndents(10, 10, 10, 10);
@@ -36,7 +38,7 @@ class OpenWindow extends ACWindow
 		
 		var scrollPane = new MScrollPane();
 		scrollPane.set(list).setPercents(100);
-		_main.add(scrollPane).setPercents(100);
+		_main.add(scrollPane).setPercents(100, 100);
 		
 		_main.add(new MSeparator(true)).setIndents( -8, -8).setPercents(100);
 		
@@ -45,10 +47,12 @@ class OpenWindow extends ACWindow
 		
 		var button = new MButton();
 		button.text = "Open";
+		button.addEventListener(MouseEvent.CLICK, onOpenClick);
 		buttonBox.add(button);
 		
 		var button = new MButton();
 		button.text = "Cancel";
+		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
 		
 		_size_valid = false;
@@ -89,5 +93,15 @@ class OpenWindow extends ACWindow
 			g.drawRoundRect(0, 0, _width, _height, 10);
 			g.endFill();
 		}
+	}
+	
+	function onOpenClick(event:MouseEvent)
+	{
+		close();
+	}
+	
+	function onCancelClick(event:MouseEvent)
+	{
+		close();
 	}
 }
