@@ -9,6 +9,7 @@ class MainTestSuite extends TestSuite
 		super();
 		add(ArrayAssertTest);
 		add(FakeTimerFactoryTest);
+		add(temperate.collections.CDoubleDictionaryTest);
 		add(temperate.collections.CIndexedComponentSetTest);
 		add(temperate.collections.CLinkedStackTest);
 		add(temperate.components.CButtonSelectorTest);
