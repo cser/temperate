@@ -9,7 +9,7 @@ import temperate.core.CSprite;
 
 class ACButton extends CSprite, implements ICButton
 {
-	public function new() 
+	function new() 
 	{
 		super();
 		

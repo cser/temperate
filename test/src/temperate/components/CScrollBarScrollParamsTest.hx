@@ -38,7 +38,7 @@ class CScrollBarScrollParamsTest
 	function newScrollBar(horizontal:Bool)
 	{
 		return new CScrollBar(
-			horizontal, new ACButton(), new ACButton(), new ACButton(),
+			horizontal, new FakeEmptyButton(), new FakeEmptyButton(), new FakeEmptyButton(),
 			CNullScrollSkin.getInstance());
 	}
 	

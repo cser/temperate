@@ -151,7 +151,7 @@ class ExtendedTestNumericStepper extends CNumericStepper
 	{
 		eventLog = [];
 		addEventListener(Event.CHANGE, onChange);
-		super(new ACButton(), new ACButton(), new CRaster9GridRectSkin());
+		super(new FakeEmptyButton(), new FakeEmptyButton(), new CRaster9GridRectSkin());
 	}
 	
 	public var eventLog:Array<String>;
