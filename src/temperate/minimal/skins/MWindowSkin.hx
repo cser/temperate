@@ -43,6 +43,7 @@ class MWindowSkin extends ACWindowSkin
 	{
 		super.link(container);
 		_titleTF = MFormatFactory.WINDOW_TITLE.newAutoSized();
+		_titleTF.mouseEnabled = false;
 		addChild(_titleTF);
 	}
 	

@@ -4,7 +4,9 @@ import flash.events.MouseEvent;
 import flash.text.TextField;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
+import temperate.minimal.cursors.MHandCursor;
 import temperate.minimal.MButton;
+import temperate.minimal.MCursorManager;
 import temperate.minimal.MInputField;
 import temperate.minimal.MLabel;
 import temperate.minimal.MSeparator;
@@ -43,6 +45,8 @@ class SaveWindow extends ACWindow
 		button.text = "Cancel";
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
+		
+		MCursorManager.newHover(0).setTarget(_baseSkin.head).setValue(new MHandCursor(true));
 	}
 	
 	var _main:CVBox;

@@ -5,6 +5,8 @@ import flash.text.TextField;
 import temperate.components.CButtonState;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
+import temperate.minimal.cursors.MHandCursor;
+import temperate.minimal.MCursorManager;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MSeparator;
@@ -99,6 +101,8 @@ class ToolsWindow extends ACWindow
 		_main.add(button).setPercents(100);
 		
 		dock = new CAbsolutePopUpDock(10, 50);
+		
+		MCursorManager.newHover(0).setTarget(_baseSkin.head).setValue(new MHandCursor(true));
 	}
 	
 	var _main:CVBox;
