@@ -23,6 +23,7 @@ class CScrollBar extends CSprite, implements ICSlider
 	var _rightArrow:ICButton;
 	var _thumb:ICButton;
 	var _bgSkin:ICScrollSkin;
+	var _isThumbResizable:Bool;
 	
 	var _bg:Sprite;
 	
@@ -41,13 +42,14 @@ class CScrollBar extends CSprite, implements ICSlider
 	
 	public function new(
 		horizontal:Bool, leftArrow:ICButton, rightArrow:ICButton, thumb:ICButton,
-		bgSkin:ICScrollSkin) 
+		bgSkin:ICScrollSkin, isThumbResizable:Bool = true) 
 	{
 		_horizontal = horizontal;
 		_leftArrow = leftArrow;
 		_rightArrow = rightArrow;
 		_thumb = thumb;
 		_bgSkin = bgSkin;
+		_isThumbResizable = isThumbResizable;
 		
 		super();
 		
@@ -235,10 +237,11 @@ class CScrollBar extends CSprite, implements ICSlider
 	
 	function getThumbCenter()
 	{
+		var thumbView = _thumb.view;
 		return Std.int(
 			_horizontal ?
-				_thumb.view.x + _thumb.view.width * .5 :
-				_thumb.view.y + _thumb.view.height * .5);
+				thumbView.x + thumbView.width * .5 :
+				thumbView.y + thumbView.height * .5);
 	}
 	
 	function onBgMouseDown(event:MouseEvent)
@@ -316,6 +319,7 @@ class CScrollBar extends CSprite, implements ICSlider
 	
 	function onStageMouseMove(event:MouseEvent)
 	{
+		var thumbView = _thumb.view;
 		var value = Std.int(_horizontal ? mouseX - _mouseOffsetX : mouseY - _mouseOffsetY);
 		if (value < _guideDirectOffset)
 		{
@@ -324,7 +328,7 @@ class CScrollBar extends CSprite, implements ICSlider
 		else
 		{
 			var maxValue = _guideDirectOffset + _guideSize -
-				Std.int(_horizontal ? _thumb.view.width : _thumb.view.height);
+				Std.int(_horizontal ? thumbView.width : thumbView.height);
 			if (value > maxValue)
 			{
 				value = maxValue;
@@ -332,11 +336,11 @@ class CScrollBar extends CSprite, implements ICSlider
 		}
 		if (_horizontal)
 		{
-			_thumb.view.x = value;
+			thumbView.x = value;
 		}
 		else
 		{
-			_thumb.view.y = value;
+			thumbView.y = value;
 		}
 		if (updateOnMove)
 		{
@@ -497,13 +501,16 @@ class CScrollBar extends CSprite, implements ICSlider
 		{
 			size = CMath.intMax(_guideSize - 1, 0);
 		}
-		if (_horizontal)
+		if (_isThumbResizable)
 		{
-			_thumb.view.width = size;
-		}
-		else
-		{
-			_thumb.view.height = size;
+			if (_horizontal)
+			{
+				_thumb.view.width = size;
+			}
+			else
+			{
+				_thumb.view.height = size;
+			}
 		}
 	}
 	
