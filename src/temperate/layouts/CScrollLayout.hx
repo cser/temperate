@@ -25,16 +25,38 @@ class CScrollLayout implements ICScrollLayout
 	{
 		width = isCompactWidth ? 0 : width;
 		height = isCompactHeight ? 0 : height;
-		if (hScrollPolicy == CScrollPolicy.ON && vScrollPolicy == CScrollPolicy.ON)
+		if (hScrollPolicy != CScrollPolicy.AUTO && vScrollPolicy != CScrollPolicy.AUTO)
 		{
-			var hsb = showHScrollBar();
-			hsb.width = 0;
-			var hsbWidth = hsb.width;
-			var hsbHeight = hsb.height;
-			var vsb = showVScrollBar();
-			vsb.height = 0;
-			var vsbWidth = vsb.width;
-			var vsbHeight = vsb.height;
+			var hOn = hScrollPolicy == CScrollPolicy.ON;
+			var hsb = null;
+			var hsbWidth = 0.;
+			var hsbHeight = 0.;
+			if (hOn)
+			{
+				hsb = showHScrollBar();
+				hsb.width = 0;
+				hsbWidth = hsb.width;
+				hsbHeight = hsb.height;
+			}
+			else
+			{
+				hideHScrollBar();
+			}
+			var vOn = vScrollPolicy == CScrollPolicy.ON;
+			var vsb = null;
+			var vsbWidth = 0.;
+			var vsbHeight = 0.;
+			if (vOn)
+			{
+				var vsb = showVScrollBar();
+				vsb.height = 0;
+				vsbWidth = vsb.width;
+				vsbHeight = vsb.height;
+			}
+			else
+			{
+				hideVScrollBar();
+			}
 			
 			if (width < hsbWidth + vsbWidth)
 			{
@@ -55,92 +77,14 @@ class CScrollLayout implements ICScrollLayout
 				{
 					wrapper.setHeight(height - hsbHeight);
 				}
-			}
-		}
-		else if (hScrollPolicy == CScrollPolicy.OFF && vScrollPolicy == CScrollPolicy.OFF)
-		{
-			if (width < 0)
-			{
-				width = 0;
-			}
-			if (height < 0)
-			{
-				height = 0;
-			}
-			if (wrapper != null)
-			{
-				if (!Math.isNaN(wrapper.widthPortion))
+				if (!hOn)
 				{
-					wrapper.setWidth(width);
+					width = wrapper.getWidth() + vsbWidth;
 				}
-				if (!Math.isNaN(wrapper.heightPortion))
+				if (!vOn)
 				{
-					wrapper.setHeight(height);
+					height = wrapper.getHeight() + hsbHeight;
 				}
-				width = wrapper.getWidth();
-				height = wrapper.getHeight();
-			}
-			hideHScrollBar();
-			hideVScrollBar();
-		}
-		else if (hScrollPolicy == CScrollPolicy.ON && vScrollPolicy == CScrollPolicy.OFF)
-		{
-			var hsb = showHScrollBar();
-			hsb.width = 0;
-			var hsbWidth = hsb.width;
-			var hsbHeight = hsb.height;
-			hideVScrollBar();
-			
-			if (width < hsbWidth)
-			{
-				width = hsbWidth;
-			}
-			if (height < hsbHeight)
-			{
-				height = hsbHeight;
-			}
-			
-			if (wrapper != null)
-			{
-				if (!Math.isNaN(wrapper.widthPortion))
-				{
-					wrapper.setWidth(width);
-				}
-				if (!Math.isNaN(wrapper.heightPortion))
-				{
-					wrapper.setHeight(height - hsbHeight);
-				}
-				height = wrapper.getHeight() + hsbHeight;
-			}
-		}
-		else if (hScrollPolicy == CScrollPolicy.OFF && vScrollPolicy == CScrollPolicy.ON)
-		{
-			var vsb = showVScrollBar();
-			vsb.height = 0;
-			var vsbWidth = vsb.width;
-			var vsbHeight = vsb.height;
-			hideHScrollBar();
-			
-			if (width < vsbWidth)
-			{
-				width = vsbWidth;
-			}
-			if (height < vsbHeight)
-			{
-				height = vsbHeight;
-			}
-			
-			if (wrapper != null)
-			{
-				if (!Math.isNaN(wrapper.widthPortion))
-				{
-					wrapper.setWidth(width - vsbWidth);
-				}
-				if (!Math.isNaN(wrapper.heightPortion))
-				{
-					wrapper.setHeight(height);
-				}
-				width = wrapper.getWidth() + vsbWidth;
 			}
 		}
 		else

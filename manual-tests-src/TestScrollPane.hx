@@ -32,6 +32,13 @@ class TestScrollPane extends Sprite
 			var scaler = new Scaler(scrollPane);
 			line.add(scaler);
 		}
+		
+		{
+			var line = new CHBox().addTo(main);
+			
+			line.add(newShape(300, 200));
+			line.add(newShape(100, 100));
+		}
 	}
 	
 	function newShape(width:Float, height:Float)
