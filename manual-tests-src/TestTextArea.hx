@@ -21,14 +21,14 @@ class TestTextArea extends Sprite
 	{
 		var main = new CVBox().addTo(this, 10, 10);
 		
-		var area = new CTextArea(new MScrollBar(false), new MFieldRectSkin()).addTo(main);
+		var area = new CTextArea(newHScrollBar, newVScrollBar, new MFieldRectSkin()).addTo(main);
 		area.text = "Line 1\nLine 2\nLine 3\nLine 4\nLine 5\nLine 6\nLine 7\nLine 8\nLine 9" +
 			"\nLine10\nlines11";
 		
-		var area = new CTextArea(new MScrollBar(false), new MFieldRectSkin()).addTo(main);
+		var area = new CTextArea(newHScrollBar, newVScrollBar, new MFieldRectSkin()).addTo(main);
 		area.text = "Line 1\nLine 2\nLine 3";
 		
-		var area = new CTextArea(new MScrollBar(false), new MFieldRectSkin());
+		var area = new CTextArea(newHScrollBar, newVScrollBar, new MFieldRectSkin());
 		area.type = TextFieldType.INPUT;
 		area.text = "Line 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
 			"\nLine 1\nLine 2\nLine 3";
@@ -37,6 +37,16 @@ class TestTextArea extends Sprite
 		
 		new TestScrollBarBug(true).addTo(main);
 		new TestScrollBarBug(false).addTo(main);
+	}
+	
+	function newHScrollBar()
+	{
+		return new MScrollBar(true);
+	}
+	
+	function newVScrollBar()
+	{
+		return new MScrollBar(false);
 	}
 }
 class TestScrollBarBug extends temperate.minimal.MScrollBar
