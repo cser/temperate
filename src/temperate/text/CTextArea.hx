@@ -1,4 +1,5 @@
 package temperate.text;
+import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.events.Event;
 import flash.text.TextField;
@@ -6,13 +7,15 @@ import flash.text.TextFieldType;
 import temperate.components.CScrollBar;
 import temperate.core.CMath;
 import temperate.core.CSprite;
+import temperate.skins.ICRectSkin;
 
 class CTextArea extends CSprite
 {
 	var _tf:TextField;
 	var _scrollBar:CScrollBar;
+	var _bgSkin:ICRectSkin;
 	
-	public function new(scrollBar:CScrollBar) 
+	public function new(scrollBar:CScrollBar, bgSkin:ICRectSkin) 
 	{
 		super();
 		
@@ -26,6 +29,9 @@ class CTextArea extends CSprite
 		_scrollBar.addEventListener(Event.SCROLL, onScroll);
 		addChild(_scrollBar);
 		
+		_bgSkin = bgSkin;
+		_bgSkin.link(addChildAt0, removeChild, graphics);
+		
 		_settedWidth = 100;
 		_settedHeight = 100;
 		
@@ -34,6 +40,11 @@ class CTextArea extends CSprite
 	}
 	
 	var _size_scrollValid:Bool;
+	
+	function addChildAt0(child:DisplayObject)
+	{
+		addChildAt(child, 0);
+	}
 	
 	public var text(get_text, set_text):String;
 	var _text:String;
@@ -60,10 +71,15 @@ class CTextArea extends CSprite
 		{
 			_size_valid = true;
 			
-			_height = _settedHeight;
 			_width = _settedWidth;
+			_height = _settedHeight;
+			
+			_tf.width = _width;
+			_tf.height = _height;
+			
 			_scrollBar.height = _height;
 			
+			_size_scrollValid = false;
 			_view_valid = false;
 		}
 		if (!_size_scrollValid)
@@ -88,6 +104,8 @@ class CTextArea extends CSprite
 			_view_valid = true;
 			
 			_scrollBar.x = _width - _scrollBar.width;
+			_bgSkin.setBounds(0, 0, Std.int(_width - _scrollBar.width), Std.int(_height));
+			_bgSkin.redraw();
 		}
 	}
 	
@@ -138,3 +156,7 @@ class CTextArea extends CSprite
 		return this;
 	}
 }
+/*
+TODO
+Починить некорректное определение размера скроллирования при изменении размеров
+*/

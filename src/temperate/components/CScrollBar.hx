@@ -311,13 +311,16 @@ class CScrollBar extends CSprite
 	
 	override function doValidateSize()
 	{
-		var oldSize_valid = _size_valid;
-		_size_valid = true;
-		if (!oldSize_valid)
+		if (!_size_valid)
 		{
+			_size_valid = true;
+			
 			updateSize();
 			updateBaseArrange();
+			
 			_size_pageValid = false;
+			_view_positionValid = false;
+			_view_valid = false;
 		}
 		if (!_size_pageValid)
 		{
@@ -325,12 +328,8 @@ class CScrollBar extends CSprite
 			
 			updateThumbSize();
 			updateThumbVisible();
+			
 			_view_positionValid = false;
-		}
-		if (!oldSize_valid)
-		{
-			_view_positionValid = false;
-			_view_valid = false;
 		}
 		if (!_view_positionValid || !_view_valid)
 		{
@@ -709,8 +708,3 @@ class CScrollBar extends CSprite
 		return this;
 	}
 }
-/*
-TODO
-Продебажить лаги при изменении размеров движка
-Починить некорректный прыгающий при наведении размер движка
-*/
