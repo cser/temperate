@@ -3,19 +3,19 @@ import flash.display.Stage;
 import flash.events.Event;
 import flash.Lib;
 import temperate.minimal.windows.MLockArea;
-import temperate.windows.CPopUpManager;
-import temperate.windows.ICPopUp;
+import temperate.windows.CWindowManager;
+import temperate.windows.ICWindow;
 
-class MPopUpManager
+class MWindowManager
 {
-	static var _instance:CPopUpManager;
+	static var _instance:CWindowManager;
 	
-	static function getInstance():CPopUpManager
+	static function getInstance():CWindowManager
 	{
 		if (_instance == null)
 		{
 			_stage = Lib.current.stage;
-			_instance = new CPopUpManager(_stage);
+			_instance = new CWindowManager(_stage);
 			_lockArea = new MLockArea().setManager(_instance);
 			_stage.addEventListener(Event.RESIZE, onStageResize);
 			onStageResize();
@@ -23,10 +23,10 @@ class MPopUpManager
 		return _instance;
 	}
 	
-	public static function add(popUp:ICPopUp, modal:Bool, fast:Bool = false):Void
+	public static function add(popUp:ICWindow, modal:Bool, fast:Bool = false):Void
 	{
 		getInstance().add(popUp, modal, fast);
-		var index = _stage.getChildIndex(_instance.getPopUpAt(0).view);
+		var index = _stage.getChildIndex(_instance.getWindowAt(0).view);
 		var lockView = _lockArea.container;
 		if (lockView.parent != _stage)
 		{
@@ -42,17 +42,17 @@ class MPopUpManager
 		}
 	}
 	
-	public static function moveToTop(popUp:ICPopUp):Void
+	public static function moveToTop(popUp:ICWindow):Void
 	{
 		getInstance().moveToTop(popUp);
 	}
 	
-	public static function moveTo(popUp:ICPopUp, index:Int):Void
+	public static function moveTo(popUp:ICWindow, index:Int):Void
 	{
 		getInstance().moveTo(popUp, index);
 	}
 	
-	public static function remove(popUp:ICPopUp, fast:Bool = false):Void
+	public static function remove(popUp:ICWindow, fast:Bool = false):Void
 	{
 		getInstance().remove(popUp, fast);
 	}

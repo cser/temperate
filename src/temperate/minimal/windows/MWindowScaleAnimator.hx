@@ -3,7 +3,7 @@ import flash.display.DisplayObject;
 import temperate.minimal.easing.MBack;
 import temperate.minimal.MTween;
 import temperate.windows.components.ACWindowComponent;
-import temperate.windows.ICPopUp;
+import temperate.windows.ICWindow;
 
 class MWindowScaleAnimator extends ACWindowComponent
 {
@@ -67,7 +67,7 @@ class MWindowScaleAnimator extends ACWindowComponent
 	
 	var _isHiding:Bool;
 	
-	override public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
+	override public function animateHide(fast:Bool, onComplete:ICWindow->Void):Void
 	{
 		var width = getWidth();
 		var height = getHeight();
@@ -94,7 +94,7 @@ class MWindowScaleAnimator extends ACWindowComponent
 		}
 	}
 	
-	var _onHideComplete:ICPopUp->Void;
+	var _onHideComplete:ICWindow->Void;
 	
 	function onTweenShowComplete()
 	{

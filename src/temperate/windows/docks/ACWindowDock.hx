@@ -1,6 +1,6 @@
 package temperate.windows.docks;
 
-class ACPopUpDock implements ICPopUpDock
+class ACWindowDock implements ICWindowDock
 {
 	public function new() 
 	{

@@ -9,13 +9,13 @@ import massive.munit.Assert;
 using massive.munit.Assert;
 using ArrayAssert;
 
-class CPopUpManagerTest
+class CWindowManagerTest
 {
 	public function new()
 	{
 	}
 	
-	var _manager:CPopUpManager;
+	var _manager:CWindowManager;
 	var _container:Sprite;
 	var _log:Array<String>;
 	
@@ -24,22 +24,22 @@ class CPopUpManagerTest
 	{
 		_log = [];
 		_container = new Sprite();
-		_manager = new CPopUpManager(_container);
+		_manager = new CWindowManager(_container);
 		_manager.setArea(0, 0, 500, 400);
 	}
 	
 	@Test
-	public function addPopUp()
+	public function addWindow()
 	{
-		var popUp = new FakePopUp();
+		var popUp = new FakeWindow();
 		_manager.add(popUp, false);
 		popUp.view.parent.areEqual(_container);
 	}
 	
 	@Test
-	public function removePopUp()
+	public function removeWindow()
 	{
-		var popUp = new FakePopUp();
+		var popUp = new FakeWindow();
 		_manager.add(popUp, false);
 		_manager.remove(popUp);
 		popUp.view.parent.isNull();
@@ -48,7 +48,7 @@ class CPopUpManagerTest
 	@Test
 	public function modalChanging()
 	{
-		var popUp = new FakePopUp();
+		var popUp = new FakeWindow();
 		_manager.modal.isFalse();
 		_manager.add(popUp, true);
 		_manager.modal.isTrue();
@@ -59,8 +59,8 @@ class CPopUpManagerTest
 	@Test
 	public function changeEventDispatchedOnlyIfChangesExists()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
 		
 		_log = [];
 		
@@ -83,10 +83,10 @@ class CPopUpManagerTest
 	}
 	
 	@Test
-	public function isLockedChangeByUpperModalPopUp()
+	public function isLockedChangeByUpperModalWindow()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
 		
 		_manager.add(popUp0, false);
 		_manager.add(popUp1, true);
@@ -101,11 +101,11 @@ class CPopUpManagerTest
 	}
 	
 	@Test
-	public function topPopUpIsNotLockedByBottomModalPopUp()
+	public function topWindowIsNotLockedByBottomModalWindow()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
-		var popUp2 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
+		var popUp2 = new FakeWindow();
 		
 		_manager.add(popUp0, false);
 		_manager.add(popUp1, true);
@@ -115,7 +115,7 @@ class CPopUpManagerTest
 		popUp1.isLocked.isFalse();
 		popUp2.isLocked.isFalse();
 		
-		var popUp3 = new FakePopUp();
+		var popUp3 = new FakeWindow();
 		_manager.add(popUp3, true);
 		popUp2.isLocked.isTrue();
 		_manager.remove(popUp3);
@@ -123,11 +123,11 @@ class CPopUpManagerTest
 	}
 	
 	@Test
-	public function onRemovePopUpOldLockedRecovery()
+	public function onRemoveWindowOldLockedRecovery()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
-		var popUp2 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
+		var popUp2 = new FakeWindow();
 		
 		_manager.add(popUp0, false);
 		_manager.add(popUp1, true);
@@ -141,8 +141,8 @@ class CPopUpManagerTest
 	@Test
 	public function evenWindowGetsEventIfContainerSizeIsChanged()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
 		popUp0.innerDispatcher.addEventListener(Event.RESIZE, onResize0);
 		popUp1.innerDispatcher.addEventListener(Event.RESIZE, onResize1);
 		
@@ -169,10 +169,10 @@ class CPopUpManagerTest
 	}
 	
 	@Test
-	public function oneAddedPopUpIsActive()
+	public function oneAddedWindowIsActive()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
 		
 		_manager.add(popUp0, false);
 		popUp0.isActive.isTrue();
@@ -184,10 +184,10 @@ class CPopUpManagerTest
 	}
 	
 	@Test
-	public function topPopUpIsActive()
+	public function topWindowIsActive()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
 		
 		_manager.add(popUp0, false);
 		_manager.add(popUp1, false);
@@ -205,27 +205,27 @@ class CPopUpManagerTest
 	@Test
 	public function repeatAddition()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
 		
 		_manager.add(popUp0, false);
 		_manager.add(popUp0, true);
 		
 		_container.getChildAt(0).areEqual(popUp0.view);
-		[popUp0].equalToArray(getPopUps());
+		[popUp0].equalToArray(getWindows());
 		popUp0.isLocked.isFalse();
 		
 		_manager.add(popUp1, true);
 		_container.getChildAt(0).areEqual(popUp0.view);
 		_container.getChildAt(1).areEqual(popUp1.view);
-		[popUp0, popUp1].equalToArray(getPopUps());
+		[popUp0, popUp1].equalToArray(getWindows());
 		popUp0.isLocked.isTrue();
 		popUp1.isLocked.isFalse();
 		
 		_manager.add(popUp0, true);
 		_container.getChildAt(0).areEqual(popUp1.view);
 		_container.getChildAt(1).areEqual(popUp0.view);
-		[popUp1, popUp0].equalToArray(getPopUps());
+		[popUp1, popUp0].equalToArray(getWindows());
 		popUp1.isLocked.isTrue();
 		popUp0.isLocked.isFalse();
 	}
@@ -233,15 +233,15 @@ class CPopUpManagerTest
 	@Test
 	public function repeatRemoving()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
 		
 		_manager.add(popUp0, false);
 		_manager.remove(popUp0);
 		_manager.remove(popUp0);
 		
 		_container.numChildren.areEqual(0);
-		[].equalToArray(getPopUps());		
+		[].equalToArray(getWindows());		
 		
 		_manager.add(popUp0, true);
 		_manager.add(popUp1, true);
@@ -249,16 +249,16 @@ class CPopUpManagerTest
 		_manager.remove(popUp1);
 		_container.numChildren.areEqual(1);
 		_container.getChildAt(0).areEqual(popUp0.view);
-		[popUp0].equalToArray(getPopUps());
+		[popUp0].equalToArray(getWindows());
 		popUp0.isLocked.isFalse();
 	}
 	
 	@Test
-	public function moteToTopForMissingPopUpIsThrowsError()
+	public function moteToTopForMissingWindowIsThrowsError()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
-		var popUp2 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
+		var popUp2 = new FakeWindow();
 		
 		_manager.add(popUp0, true);
 		_manager.add(popUp1, true);
@@ -270,7 +270,7 @@ class CPopUpManagerTest
 		catch (error:ArgumentError)
 		{
 		}
-		[popUp0, popUp1].equalToArray(getPopUps());
+		[popUp0, popUp1].equalToArray(getWindows());
 		popUp0.isActive.isFalse();
 		popUp1.isActive.isTrue();
 	}
@@ -278,22 +278,22 @@ class CPopUpManagerTest
 	@Test
 	public function moveToTop()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
-		var popUp2 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
+		var popUp2 = new FakeWindow();
 		
 		_manager.add(popUp0, true);
 		_manager.add(popUp1, true);
 		_manager.add(popUp2, true);
 		
 		_manager.moveToTop(popUp2);
-		[popUp0, popUp1, popUp2].equalToArray(getPopUps());
+		[popUp0, popUp1, popUp2].equalToArray(getWindows());
 		popUp0.isActive.isFalse();
 		popUp1.isActive.isFalse();
 		popUp2.isActive.isTrue();
 		
 		_manager.moveToTop(popUp1);
-		[popUp0, popUp2, popUp1].equalToArray(getPopUps());
+		[popUp0, popUp2, popUp1].equalToArray(getWindows());
 		popUp0.isActive.isFalse();
 		popUp2.isActive.isFalse();
 		popUp1.isActive.isTrue();
@@ -302,22 +302,22 @@ class CPopUpManagerTest
 	@Test
 	public function moveTo()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
-		var popUp2 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
+		var popUp2 = new FakeWindow();
 		
 		_manager.add(popUp0, true);
 		_manager.add(popUp1, true);
 		_manager.add(popUp2, true);
 		
 		_manager.moveTo(popUp1, 0);
-		[popUp1, popUp0, popUp2].equalToArray(getPopUps());
+		[popUp1, popUp0, popUp2].equalToArray(getWindows());
 		popUp1.isActive.isFalse();
 		popUp0.isActive.isFalse();
 		popUp2.isActive.isTrue();
 		
 		_manager.moveTo(popUp1, 2);
-		[popUp0, popUp2, popUp1].equalToArray(getPopUps());
+		[popUp0, popUp2, popUp1].equalToArray(getWindows());
 		popUp0.isActive.isFalse();
 		popUp2.isActive.isFalse();
 		popUp1.isActive.isTrue();
@@ -326,32 +326,32 @@ class CPopUpManagerTest
 	@Test
 	public function popUpsIteration()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
-		var popUp2 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
+		var popUp2 = new FakeWindow();
 		
-		0.areEqual(_manager.numPopUps);
-		assertPopUpIteration([]);
+		0.areEqual(_manager.numWindows);
+		assertWindowIteration([]);
 		
 		_manager.add(popUp0, true);
-		1.areEqual(_manager.numPopUps);
-		popUp0.areEqual(_manager.getPopUpAt(0));
-		assertPopUpIteration([popUp0]);
+		1.areEqual(_manager.numWindows);
+		popUp0.areEqual(_manager.getWindowAt(0));
+		assertWindowIteration([popUp0]);
 		
 		_manager.add(popUp1, true);
 		_manager.add(popUp2, true);
-		3.areEqual(_manager.numPopUps);
-		popUp1.areEqual(_manager.getPopUpAt(1));
-		popUp2.areEqual(_manager.getPopUpAt(2));
-		assertPopUpIteration([popUp0, popUp1, popUp2]);
+		3.areEqual(_manager.numWindows);
+		popUp1.areEqual(_manager.getWindowAt(1));
+		popUp2.areEqual(_manager.getWindowAt(2));
+		assertWindowIteration([popUp0, popUp1, popUp2]);
 	}
 	
-	function assertPopUpIteration(expected:Array<Dynamic>, ?info:PosInfos)
+	function assertWindowIteration(expected:Array<Dynamic>, ?info:PosInfos)
 	{
-		expected.equalToArray(getPopUps());
+		expected.equalToArray(getWindows());
 	}
 	
-	function getPopUps()
+	function getWindows()
 	{
 		var array = [];
 		for (popUp in _manager)
@@ -362,28 +362,28 @@ class CPopUpManagerTest
 	}
 	
 	@Test
-	public function topPopUpChange()
+	public function topWindowChange()
 	{
-		var popUp0 = new FakePopUp();
-		var popUp1 = new FakePopUp();
+		var popUp0 = new FakeWindow();
+		var popUp1 = new FakeWindow();
 		_manager.addEventListener(Event.SELECT, onManagerSelect);
 		
-		Assert.areEqual(null, _manager.topPopUp);
+		Assert.areEqual(null, _manager.topWindow);
 		
 		_log = [];
 		_manager.add(popUp0, false);
-		Assert.areEqual(popUp0, _manager.topPopUp);
+		Assert.areEqual(popUp0, _manager.topWindow);
 		ArrayAssert.equalToArray([Event.SELECT], _log);
 		
 		_log = [];
 		_manager.remove(popUp0);
-		Assert.areEqual(null, _manager.topPopUp);
+		Assert.areEqual(null, _manager.topWindow);
 		ArrayAssert.equalToArray([Event.SELECT], _log);
 		
 		_log = [];
 		_manager.add(popUp0, false);
 		_manager.add(popUp1, false);
-		Assert.areEqual(popUp1, _manager.topPopUp);
+		Assert.areEqual(popUp1, _manager.topWindow);
 	}
 	
 	function onManagerSelect(event:Event)

@@ -5,7 +5,7 @@ import temperate.containers.CVBox;
 import temperate.minimal.MButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MInputField;
-import temperate.minimal.MPopUpManager;
+import temperate.minimal.MWindowManager;
 import temperate.minimal.MWindow;
 import temperate.minimal.MWindowedContainer;
 
@@ -46,7 +46,7 @@ class TextDrawState extends ADrawState
 		button.text = "OK";
 		button.addEventListener(MouseEvent.CLICK, onOKClick);
 		container.add(button).setAlign(1);
-		MPopUpManager.add(_window, true);
+		MWindowManager.add(_window, true);
 	}
 	
 	var _input:MInputField;

@@ -2,7 +2,7 @@ package temperate.windows;
 import flash.display.DisplayObject;
 import flash.events.IEventDispatcher;
 
-interface ICPopUp
+interface ICWindow
 {
 	var view(default, null):DisplayObject;
 	
@@ -14,9 +14,9 @@ interface ICPopUp
 	
 	var isOpened:Bool;
 	
-	var manager:CPopUpManager;
+	var manager:CWindowManager;
 	
 	function animateShow(fast:Bool):Void;
 	
-	function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void;
+	function animateHide(fast:Bool, onComplete:ICWindow->Void):Void;
 }

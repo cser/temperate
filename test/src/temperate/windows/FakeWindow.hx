@@ -3,9 +3,9 @@ import flash.display.DisplayObject;
 import flash.display.Shape;
 import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
-import temperate.windows.ICPopUp;
+import temperate.windows.ICWindow;
 
-class FakePopUp implements ICPopUp
+class FakeWindow implements ICWindow
 {
 	public function new() 
 	{
@@ -17,7 +17,7 @@ class FakePopUp implements ICPopUp
 	public var isOpened:Bool;
 	public var view(default, null):DisplayObject;
 	public var innerDispatcher(default, null):IEventDispatcher;
-	public var manager:CPopUpManager;
+	public var manager:CWindowManager;
 	
 	public var isLocked(get_isLocked, set_isLocked):Bool;
 	var _isLocked:Bool;
@@ -47,7 +47,7 @@ class FakePopUp implements ICPopUp
 	{
 	}
 	
-	public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
+	public function animateHide(fast:Bool, onComplete:ICWindow->Void):Void
 	{
 		if (onComplete != null)
 		{

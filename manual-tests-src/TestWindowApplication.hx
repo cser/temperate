@@ -4,9 +4,9 @@ import flash.events.Event;
 import flash.Lib;
 import temperate.core.CSprite;
 import temperate.debug.FPSMonitor;
-import temperate.minimal.MPopUpManager;
-import temperate.windows.CPopUpManager;
-import temperate.windows.docks.CPopUpAbsoluteDock;
+import temperate.minimal.MWindowManager;
+import temperate.windows.CWindowManager;
+import temperate.windows.docks.CWindowAbsoluteDock;
 import windowApplication.ColorsWindow;
 import windowApplication.ImageWindow;
 import windowApplication.NewWindow;
@@ -22,17 +22,17 @@ class TestWindowApplication extends Sprite
 		super();
 	}
 	
-	var _imageManager:CPopUpManager;
+	var _imageManager:CWindowManager;
 	
 	public function init()
 	{
-		_imageManager = new CPopUpManager(this);
+		_imageManager = new CWindowManager(this);
 		_imageManager.addEventListener(Event.SELECT, onImageSelect);
 		stage.addEventListener(Event.RESIZE, onStageResize);
 		onStageResize();
 		
 		var toolsWindow = new ToolsWindow(this);
-		MPopUpManager.add(toolsWindow, false, true);
+		MWindowManager.add(toolsWindow, false, true);
 		toolsWindow.move(Std.int(stage.stageWidth) - toolsWindow.width - 10, 50);
 	}
 	
@@ -65,7 +65,7 @@ class TestWindowApplication extends Sprite
 		{
 			return null;
 		}
-		var window = Lib.as(_imageManager.topPopUp, ImageWindow);
+		var window = Lib.as(_imageManager.topWindow, ImageWindow);
 		return window != null ? window.image : null;
 	}
 	
@@ -84,7 +84,7 @@ class TestWindowApplication extends Sprite
 		}
 		if (!_colorsWindow.isOpened)
 		{
-			MPopUpManager.add(_colorsWindow, false);
+			MWindowManager.add(_colorsWindow, false);
 		}
 	}
 	
@@ -92,7 +92,7 @@ class TestWindowApplication extends Sprite
 	{
 		var window = new NewWindow();
 		window.signalOk.add(onNewWindowOk);
-		MPopUpManager.add(window, true);
+		MWindowManager.add(window, true);
 	}
 	
 	function onNewWindowOk(width:Int, height:Int)
@@ -100,8 +100,8 @@ class TestWindowApplication extends Sprite
 		var window = new ImageWindow("No name");
 		window.setSize(640, 480);
 		window.setImageSize(width, height);
-		window.dock = new CPopUpAbsoluteDock(10, 10);
-		var top = _imageManager.topPopUp;
+		window.dock = new CWindowAbsoluteDock(10, 10);
+		var top = _imageManager.topWindow;
 		_imageManager.add(window, false);
 		if (top != null)
 		{
@@ -113,13 +113,13 @@ class TestWindowApplication extends Sprite
 	{
 		var window = new OpenWindow();
 		window.setSize(200, 150);
-		MPopUpManager.add(window, true);
+		MWindowManager.add(window, true);
 	}
 	
 	public function doSave()
 	{
 		var window = new SaveWindow();
-		MPopUpManager.add(window, true);
+		MWindowManager.add(window, true);
 	}
 	
 	var _fpsMonitor:FPSMonitor;

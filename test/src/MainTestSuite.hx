@@ -37,6 +37,6 @@ class MainTestSuite extends TestSuite
 		add(temperate.tooltips.docks.CHTooltipDockTest);
 		add(temperate.tooltips.docks.CVTooltipDockTest);
 		add(temperate.tooltips.managers.CTooltipManagerTest);
-		add(temperate.windows.CPopUpManagerTest);
+		add(temperate.windows.CWindowManagerTest);
 	}
 }

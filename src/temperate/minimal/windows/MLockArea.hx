@@ -4,7 +4,7 @@ import flash.display.Sprite;
 import flash.events.Event;
 import temperate.core.ICArea;
 import temperate.minimal.MTween;
-import temperate.windows.CPopUpManager;
+import temperate.windows.CWindowManager;
 using temperate.core.CMath;
 
 class MLockArea extends Sprite, implements ICArea
@@ -61,9 +61,9 @@ class MLockArea extends Sprite, implements ICArea
 		g.endFill();
 	}
 	
-	var _manager:CPopUpManager;
+	var _manager:CWindowManager;
 	
-	public function setManager(manager:CPopUpManager):MLockArea
+	public function setManager(manager:CWindowManager):MLockArea
 	{
 		if (_manager != manager)
 		{

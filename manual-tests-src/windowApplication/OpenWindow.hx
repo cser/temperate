@@ -11,7 +11,7 @@ import temperate.minimal.MFlatButton;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.MSeparator;
 import temperate.minimal.MWindow;
-import temperate.windows.CPopUpManager;
+import temperate.windows.CWindowManager;
 
 class OpenWindow extends MWindow
 {

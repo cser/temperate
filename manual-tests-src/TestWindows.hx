@@ -2,8 +2,8 @@ package ;
 import flash.display.Sprite;
 import flash.events.Event;
 import temperate.minimal.MSlider;
-import temperate.windows.CPopUpManager;
-import temperate.windows.docks.CPopUpAbsoluteDock;
+import temperate.windows.CWindowManager;
+import temperate.windows.docks.CWindowAbsoluteDock;
 import windows.MMaximizedWindow;
 import windows.TestWindow;
 
@@ -14,7 +14,7 @@ class TestWindows extends Sprite
 		super();
 	}
 	
-	var _manager:CPopUpManager;
+	var _manager:CWindowManager;
 	var _slider:MSlider;
 	
 	public function init()
@@ -25,12 +25,12 @@ class TestWindows extends Sprite
 		_slider.addEventListener(Event.CHANGE, onStageResize);
 		addChild(_slider);
 		
-		_manager = new CPopUpManager(this);
+		_manager = new CWindowManager(this);
 		stage.addEventListener(Event.RESIZE, onStageResize);
 		onStageResize();
 		
 		var window = new TestWindow();
-		window.dock = new CPopUpAbsoluteDock();
+		window.dock = new CWindowAbsoluteDock();
 		_manager.add(window, false);
 		window.move(100, 100);
 		
@@ -45,7 +45,7 @@ class TestWindows extends Sprite
 		_manager.add(window, false);
 		
 		var window = new MMaximizedWindow();
-		window.dock = new CPopUpAbsoluteDock(100, 10);
+		window.dock = new CWindowAbsoluteDock(100, 10);
 		_manager.add(window, false);
 		
 		_manager.keyboardDispatcher = stage;

@@ -1,6 +1,6 @@
 package temperate.windows.docks;
 
-class CPopUpAbsoluteDock extends ACPopUpDock
+class CWindowAbsoluteDock extends ACWindowDock
 {
 	public function new(x:Int = 0, y:Int = 0)
 	{

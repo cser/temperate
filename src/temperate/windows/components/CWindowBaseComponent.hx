@@ -1,5 +1,5 @@
 package temperate.windows.components;
-import temperate.windows.ICPopUp;
+import temperate.windows.ICWindow;
 
 class CWindowBaseComponent extends ACWindowComponent
 {
@@ -12,7 +12,7 @@ class CWindowBaseComponent extends ACWindowComponent
 	{
 	}
 	
-	override public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
+	override public function animateHide(fast:Bool, onComplete:ICWindow->Void):Void
 	{
 		if (onComplete != null)
 		{

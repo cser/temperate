@@ -1,9 +1,9 @@
 package temperate.windows.components;
 import flash.display.DisplayObject;
 import temperate.collections.ACPriorityListNode;
-import temperate.windows.CPopUpManager;
-import temperate.windows.docks.ICPopUpDock;
-import temperate.windows.ICPopUp;
+import temperate.windows.CWindowManager;
+import temperate.windows.docks.ICWindowDock;
+import temperate.windows.ICWindow;
 import temperate.windows.skins.ICWindowSkin;
 
 class ACWindowComponent extends ACPriorityListNode<ACWindowComponent>
@@ -13,14 +13,14 @@ class ACWindowComponent extends ACPriorityListNode<ACWindowComponent>
 		super();
 	}
 	
-	var _popUp:ICPopUp;
+	var _popUp:ICWindow;
 	var _view:DisplayObject;
-	var _getManager:Void->CPopUpManager;
-	var _getDock:Void->ICPopUpDock;
+	var _getManager:Void->CWindowManager;
+	var _getDock:Void->ICWindowDock;
 	var _skin:ICWindowSkin;
 	
 	public function subscribe(
-		popUp:ICPopUp, getManager:Void->CPopUpManager, getDock:Void->ICPopUpDock,
+		popUp:ICWindow, getManager:Void->CWindowManager, getDock:Void->ICWindowDock,
 		skin:ICWindowSkin):Void
 	{
 		_popUp = popUp;
@@ -90,7 +90,7 @@ class ACWindowComponent extends ACPriorityListNode<ACWindowComponent>
 		}
 	}
 	
-	public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
+	public function animateHide(fast:Bool, onComplete:ICWindow->Void):Void
 	{
 		if (next != null)
 		{

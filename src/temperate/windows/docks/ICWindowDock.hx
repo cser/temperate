@@ -1,6 +1,6 @@
 package temperate.windows.docks;
 
-interface ICPopUpDock
+interface ICWindowDock
 {
 	function arrange(width:Int, height:Int, mainWidth:Int, mainHeight:Int):Void;
 	

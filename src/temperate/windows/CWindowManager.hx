@@ -15,7 +15,7 @@ using temperate.core.ArrayUtil;
  * Event.RESIZE
  * Event.SELECT
  */
-class CPopUpManager extends EventDispatcher, implements ICArea
+class CWindowManager extends EventDispatcher, implements ICArea
 {	
 	public function new(container:DisplayObjectContainer) 
 	{
@@ -68,10 +68,10 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		}
 	}
 	
-	var _popUps:Array<ICPopUp>;
-	var _isModal:TypedDictionary<ICPopUp, Bool>;
+	var _popUps:Array<ICWindow>;
+	var _isModal:TypedDictionary<ICWindow, Bool>;
 	
-	public function add(popUp:ICPopUp, modal:Bool, fast:Bool = false)
+	public function add(popUp:ICWindow, modal:Bool, fast:Bool = false)
 	{
 		container.addChild(popUp.view);
 		_popUps.remove(popUp);
@@ -83,7 +83,7 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		popUp.animateShow(fast);
 	}
 	
-	public function moveToTop(popUp:ICPopUp)
+	public function moveToTop(popUp:ICWindow)
 	{
 		if (!_popUps.exists(popUp))
 		{
@@ -95,7 +95,7 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		updateModal();
 	}
 	
-	public function moveTo(popUp:ICPopUp, index:Int)
+	public function moveTo(popUp:ICWindow, index:Int)
 	{
 		if (!_popUps.exists(popUp))
 		{
@@ -107,7 +107,7 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		updateModal();
 	}
 	
-	public function remove(popUp:ICPopUp, fast:Bool = false)
+	public function remove(popUp:ICWindow, fast:Bool = false)
 	{
 		if (_popUps.remove(popUp))
 		{
@@ -119,7 +119,7 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		}
 	}
 	
-	function onAnimateCloseComplete(popUp:ICPopUp)
+	function onAnimateCloseComplete(popUp:ICWindow)
 	{
 		container.removeChild(popUp.view);
 	}
@@ -141,10 +141,10 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 			modal = newModal;
 			dispatchEvent(new Event(Event.CHANGE));
 		}
-		var newTopPopUp = _popUps[length - 1];
-		if (topPopUp != newTopPopUp)
+		var newTopWindow = _popUps[length - 1];
+		if (topWindow != newTopWindow)
 		{
-			topPopUp = newTopPopUp;
+			topWindow = newTopWindow;
 			dispatchEvent(new Event(Event.SELECT));
 		}
 	}
@@ -184,20 +184,20 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		}
 	}
 	
-	public var topPopUp(default, null):ICPopUp;
+	public var topWindow(default, null):ICWindow;
 	
-	public function getPopUpAt(index:Int):ICPopUp
+	public function getWindowAt(index:Int):ICWindow
 	{
 		return _popUps[index];
 	}
 	
-	public var numPopUps(get_numPopUps, null):Int;
-	function get_numPopUps()
+	public var numWindows(get_numWindows, null):Int;
+	function get_numWindows()
 	{
 		return _popUps.length;
 	}
 	
-	inline public function iterator():Iterator<ICPopUp>
+	inline public function iterator():Iterator<ICWindow>
 	{
 		return _popUps.iterator();
 	}

@@ -9,7 +9,7 @@ import temperate.minimal.MInputField;
 import temperate.minimal.MLabel;
 import temperate.minimal.MSeparator;
 import temperate.minimal.MWindow;
-import temperate.windows.CPopUpManager;
+import temperate.windows.CWindowManager;
 
 class SaveWindow extends MWindow 
 {

@@ -14,17 +14,17 @@ import temperate.windows.components.CWindowConstraintsComponent;
 import temperate.windows.components.CWindowMaximizeComponent;
 import temperate.windows.components.CWindowMoveComponent;
 import temperate.windows.components.CWindowResizeComponent;
-import temperate.windows.docks.CPopUpAlignedDock;
-import temperate.windows.docks.ICPopUpDock;
+import temperate.windows.docks.CWindowAlignedDock;
+import temperate.windows.docks.ICWindowDock;
 import temperate.windows.skins.ICWindowSkin;
 
-class ACWindow implements ICPopUp
+class ACWindow implements ICWindow
 {
 	function new() 
 	{
 		isOpened = false;
 		innerDispatcher = new EventDispatcher();
-		dock = new CPopUpAlignedDock();
+		dock = new CWindowAlignedDock();
 		
 		innerDispatcher.addEventListener(Event.RESIZE, onManagerResize);
 		
@@ -65,7 +65,7 @@ class ACWindow implements ICPopUp
 	
 	public var isOpened:Bool;
 	
-	public var manager:CPopUpManager;
+	public var manager:CWindowManager;
 	
 	public var view(default, null):DisplayObject;
 	
@@ -108,8 +108,8 @@ class ACWindow implements ICPopUp
 		_head.move(manager.areaX + dock.x, manager.areaY + dock.y, false);
 	}
 	
-	public var dock(get_dock, set_dock):ICPopUpDock;
-	var _dock:ICPopUpDock;
+	public var dock(get_dock, set_dock):ICWindowDock;
+	var _dock:ICWindowDock;
 	function get_dock()
 	{
 		return _dock;
@@ -209,7 +209,7 @@ class ACWindow implements ICPopUp
 		_head.animateShow(fast);
 	}
 	
-	public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
+	public function animateHide(fast:Bool, onComplete:ICWindow->Void):Void
 	{
 		_head.animateHide(fast, onComplete);
 	}

@@ -54,17 +54,9 @@ class FigureDrawState extends ADrawState
 		}
 		else
 		{
-			/*if (isNearEnd())
-			{
-				_graphics.lineTo(_firstX, _firstY);
-				_state = STATE_SELECT_FIRST_POINT;
-			}
-			else*/
-			{
-				_x = x;
-				_y = y;
-				_graphics.lineTo(_x, _y);
-			}
+			_x = x;
+			_y = y;
+			_graphics.lineTo(_x, _y);
 		}
 		_pointIndex++;
 	}
