@@ -30,7 +30,7 @@ class CSprite extends Sprite
 	@:getter(width)
 	function get_width():Float
 	{
-		validateSize();
+		__validateSize();
 		return _width;
 	}
 	
@@ -49,7 +49,7 @@ class CSprite extends Sprite
 	@:getter(height)
 	function get_height():Float
 	{
-		validateSize();
+		__validateSize();
 		return _height;
 	}
 	
@@ -70,27 +70,32 @@ class CSprite extends Sprite
 	
 	inline function postponeSize():Void
 	{
-		_validator.postponeSize(validateSize);
+		_validator.postponeSize(this);
 	}
 	
 	inline function postponeView():Void
 	{
-		_validator.postponeView(validateView);
+		_validator.postponeView(this);
 	}
 	
-	function validateSize():Void
+	public function __validateSize():Void
 	{
-		_validator.removeSize(validateSize);
+		_validator.removeSize(this);
 		doValidateSize();
 	}
 	
-	function validateView():Void
+	public function __validateView():Void
 	{
-		_validator.removeSize(validateSize);
+		_validator.removeSize(this);
 		doValidateSize();
-		_validator.removeView(validateView);
+		_validator.removeView(this);
 		doValidateView();
 	}
+	
+	public var __sp:CSprite;
+	public var __sn:CSprite;
+	public var __vp:CSprite;
+	public var __vn:CSprite;
 	
 	/**
 	 * There validates all that accessible from properties
@@ -116,7 +121,7 @@ class CSprite extends Sprite
 	 */
 	public function validate():Void
 	{
-		validateView();
+		__validateView();
 	}
 	
 	public var isCompactWidth(get_isCompactWidth, null):Bool;

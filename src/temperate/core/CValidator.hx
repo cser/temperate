@@ -1,8 +1,6 @@
 package temperate.core;
-import flash.display.DisplayObject;
-import flash.display.Shape;
 import flash.events.Event;
-import flash.utils.TypedDictionary;
+import flash.events.IEventDispatcher;
 
 class CValidator
 {
@@ -13,52 +11,77 @@ class CValidator
 		if (_instance == null)
 		{
 			_instance = new CValidator();
+			_instance._sizeHead = new CSprite();
+			_instance._sizeTail = new CSprite();
+			_instance._viewHead = new CSprite();
+			_instance._viewTail = new CSprite();
+			_instance._sizeTail.__sp = _instance._sizeHead;
+			_instance._sizeHead.__sn = _instance._sizeTail;
+			_instance._viewTail.__vp = _instance._viewHead;
+			_instance._viewHead.__vn = _instance._viewTail;
+			_instance._dispatcher = _instance._sizeHead;
 		}
 		return _instance;
 	}
 	
 	function new()
 	{
-		_shape = new Shape();
 		_hasExitFrame = false;
-		_sizeListeners = new TypedDictionary();
-		_viewListeners = new TypedDictionary();
 	}
 	
-	var _shape:DisplayObject;
+	var _sizeHead:CSprite;
+	var _sizeTail:CSprite;
+	var _viewHead:CSprite;
+	var _viewTail:CSprite;
+	
+	var _dispatcher:IEventDispatcher;
 	
 	var _hasExitFrame:Bool;
 	
-	var _sizeListeners:TypedDictionary < Void->Dynamic, Bool > ;
-	
-	var _viewListeners:TypedDictionary < Void->Dynamic, Bool > ;
-	
-	inline public function postponeSize(listener:Void->Dynamic)
+	inline public function postponeSize(sprite:CSprite)
 	{
-		if (listener != null)
+		if (sprite.__sp == null)
 		{
-			_sizeListeners.set(listener, true);
-			wait();
+			sprite.__sn = _sizeTail;
+			sprite.__sp = _sizeTail.__sp;
+			_sizeTail.__sp.__sn = sprite;
+			_sizeTail.__sp = sprite;
+		}
+		wait();
+	}
+	
+	inline public function postponeView(sprite:CSprite)
+	{
+		if (sprite.__vp == null)
+		{
+			sprite.__vn = _viewTail;
+			sprite.__vp = _viewTail.__vp;
+			_viewTail.__vp.__vn = sprite;
+			_viewTail.__vp = sprite;
+		}
+		wait();
+	}
+	
+	inline public function removeSize(sprite:CSprite)
+	{
+		if (sprite.__sp != null)
+		{
+			sprite.__sp.__sn = sprite.__sn;
+			sprite.__sn.__sp = sprite.__sp;
+			sprite.__sn = null;
+			sprite.__sp = null;
 		}
 	}
 	
-	inline public function postponeView(listener:Void->Dynamic)
+	inline public function removeView(sprite:CSprite)
 	{
-		if (listener != null)
+		if (sprite.__vp != null)
 		{
-			_viewListeners.set(listener, true);
-			wait();
+			sprite.__vp.__vn = sprite.__vn;
+			sprite.__vn.__vp = sprite.__vp;
+			sprite.__vn = null;
+			sprite.__vp = null;
 		}
-	}
-	
-	inline public function removeSize(listener:Void->Dynamic)
-	{
-		_sizeListeners.delete(listener);
-	}
-	
-	inline public function removeView(listener:Void->Dynamic)
-	{
-		_viewListeners.delete(listener);
 	}
 	
 	inline function wait()
@@ -66,7 +89,7 @@ class CValidator
 		if (!_hasExitFrame)
 		{
 			_hasExitFrame = true;
-			_shape.addEventListener(
+			_dispatcher.addEventListener(
 				#if flash10 Event.EXIT_FRAME #else Event.ENTER_FRAME #end
 				,
 				onExitFrame
@@ -76,24 +99,43 @@ class CValidator
 	
 	function onExitFrame(event:Event)
 	{
-		_shape.removeEventListener(
+		_dispatcher.removeEventListener(
 			#if flash10 Event.EXIT_FRAME #else Event.ENTER_FRAME #end
 			,
 			onExitFrame
 		);
-		var sizeListeners = _sizeListeners;
-		
-		_sizeListeners = new TypedDictionary();
-		for (listener in sizeListeners)
+		var sprite;
+		var sn = _sizeHead.__sn;
+		while (true)
 		{
-			listener();
+			sprite = sn;
+			if (sprite == _sizeTail)
+			{
+				break;
+			}
+			sn = sprite.__sn;
+			sprite.__sp.__sn = sn;
+			sn.__sp = sprite.__sp;
+			sprite.__sn = null;
+			sprite.__sp = null;
+			sprite.__validateSize();
 		}
 		
-		var viewListeners = _viewListeners;
-		_viewListeners = new TypedDictionary();
-		for (listener in viewListeners)
+		var sprite;
+		var vn = _viewHead.__vn;
+		while (true)
 		{
-			listener();
+			sprite = vn;
+			if (sprite == _viewTail)
+			{
+				break;
+			}
+			vn = sprite.__vn;
+			sprite.__vp.__vn = vn;
+			vn.__vp = sprite.__vp;
+			sprite.__vn = null;
+			sprite.__vp = null;
+			sprite.__validateView();
 		}
 		
 		_hasExitFrame = false;
