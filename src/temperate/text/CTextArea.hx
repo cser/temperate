@@ -78,7 +78,7 @@ class CTextArea extends CSprite
 		if (_hScrollBar == null)
 		{
 			_hScrollBar = _newHScrollBar();
-			_hScrollBar.enabled = _enabled;
+			_hScrollBar.isEnabled = _isEnabled;
 			_hScrollBar.step = _hScrollStep;
 			_hScrollBar.updateOnMove = _updateOnMove;
 			_hScrollBar.addEventListener(Event.CHANGE, onHScroll);
@@ -105,7 +105,7 @@ class CTextArea extends CSprite
 		if (_vScrollBar == null)
 		{
 			_vScrollBar = _newVScrollBar();
-			_vScrollBar.enabled = _enabled;
+			_vScrollBar.isEnabled = _isEnabled;
 			_vScrollBar.updateOnMove = _updateOnMove;
 			_vScrollBar.addEventListener(Event.CHANGE, onVScroll);
 		}
@@ -254,7 +254,7 @@ class CTextArea extends CSprite
 	
 	function updateTextType()
 	{
-		_tf.type = _enabled && _editable ?
+		_tf.type = _isEnabled && _editable ?
 			_tf.type = TextFieldType.INPUT :
 			_tf.type = TextFieldType.DYNAMIC;
 	}
@@ -263,13 +263,13 @@ class CTextArea extends CSprite
 	{
 		if (_vScrollBar != null)
 		{
-			_vScrollBar.enabled = _enabled;
+			_vScrollBar.isEnabled = _isEnabled;
 		}
 		if (_hScrollBar != null)
 		{
-			_hScrollBar.enabled = _enabled;
+			_hScrollBar.isEnabled = _isEnabled;
 		}
-		if (_enabled)
+		if (_isEnabled)
 		{
 			_bgSkin.state = _editable ? CSkinState.NORMAL : CSkinState.INACTIVE;
 		}
@@ -296,17 +296,17 @@ class CTextArea extends CSprite
 		return _editable;
 	}
 	
-	override function set_enabled(value)
+	override function set_isEnabled(value)
 	{
-		if (_enabled != value)
+		if (_isEnabled != value)
 		{
-			_enabled = value;
+			_isEnabled = value;
 			updateControlsEnabled();
 			
 			_view_valid = false;
 			postponeView();
 		}
-		return _enabled;
+		return _isEnabled;
 	}
 	
 	public var worldWrap(get_worldWrap, set_worldWrap):Bool;

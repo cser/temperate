@@ -99,7 +99,7 @@ class TestText extends Sprite
 				var column = new CVBox().addTo(line);
 				column.add(new CLabel().setText("Disabled CInputField"));
 				var field = newInputField().setText("Some text").addTo(column);
-				field.enabled = false;
+				field.isEnabled = false;
 			}
 			
 			line.add(new MSeparator(false)).setPercents( -1, 100);
@@ -116,10 +116,10 @@ class TestText extends Sprite
 				field.editable = false;
 				field.selectable = false;
 				
-				new MInputField().setText("Disabled").addTo(column).enabled = false;
+				new MInputField().setText("Disabled").addTo(column).isEnabled = false;
 				
 				var field = new MInputField().setText("Disabled unselectable").addTo(column);
-				field.enabled = false;
+				field.isEnabled = false;
 				field.selectable = false;
 			}
 		}

@@ -41,8 +41,9 @@ class TestMain
 		var test = new TestTooltips();
 		var test = new TestScrollBar();
 		var test = new TestTextArea();
-		
 		var test = new TestSlider();
+		
+		var test = new TestSimpleButtonWrapper();
 		Lib.current.addChild(test);
 		test.init();
 	}

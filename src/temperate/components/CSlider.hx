@@ -5,7 +5,6 @@ import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
-import flash.geom.Rectangle;
 import temperate.core.CMath;
 import temperate.core.CSprite;
 import temperate.skins.CSkinState;
@@ -19,12 +18,12 @@ import temperate.skins.ICRectSkin;
 class CSlider extends CSprite, implements ICSlider
 {
 	var _horizontal:Bool;
-	var _thumb:ACButton;
+	var _thumb:ICButton;
 	var _bgSkin:ICRectSkin;
 	var _bg:Sprite;
 	var _bgShape:Shape;
 	
-	public function new(horizontal:Bool, thumb:ACButton, bgSkin:ICRectSkin) 
+	public function new(horizontal:Bool, thumb:ICButton, bgSkin:ICRectSkin) 
 	{
 		_horizontal = horizontal;
 		_thumb = thumb;
@@ -47,7 +46,7 @@ class CSlider extends CSprite, implements ICSlider
 		_bgShape = new Shape();
 		_bg.addChild(_bgShape);
 		
-		addChild(_thumb);
+		addChild(_thumb.view);
 		_bgSkin.link(addChildToBg, _bg.removeChild, _bg.graphics);
 		
 		updateOnMove = false;
@@ -129,7 +128,7 @@ class CSlider extends CSprite, implements ICSlider
 	
 	function updateEnabled()
 	{
-		if (_enabled)
+		if (_isEnabled)
 		{
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			_bg.addEventListener(MouseEvent.MOUSE_DOWN, onBgMouseDown);
@@ -142,13 +141,13 @@ class CSlider extends CSprite, implements ICSlider
 			_thumb.removeEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		}
 		_view_valid = false;
-		_bgSkin.state = _enabled ? CSkinState.NORMAL : CSkinState.DISABLED;
+		_bgSkin.state = _isEnabled ? CSkinState.NORMAL : CSkinState.DISABLED;
 	}
 	
 	function onBgMouseDown(event:MouseEvent)
 	{
 		var thumbOffset = Std.int(
-			_horizontal ? mouseX - _thumb.width * .5 : mouseY - _thumb.height * .5);
+			_horizontal ? mouseX - _thumb.view.width * .5 : mouseY - _thumb.view.height * .5);
 		var newValue = getValueByPosition(thumbOffset);
 		if (_value != newValue)
 		{
@@ -159,20 +158,40 @@ class CSlider extends CSprite, implements ICSlider
 		}
 	}
 	
+	var _mouseOffsetX:Float;
+	var _mouseOffsetY:Float;
+	
 	function onThumbMouseDown(event:MouseEvent)
 	{
-		var rect = _horizontal ? 
-			new Rectangle(
-				_guideDirectOffset, _guideCrossOffset, _guideSize, 0) :
-			new Rectangle(
-				_guideCrossOffset, _guideDirectOffset, 0, _guideSize);
-		_thumb.startDrag(false, rect);
+		_mouseOffsetX = _thumb.view.mouseX;
+		_mouseOffsetY = _thumb.view.mouseY;
 		stage.addEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 		stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
 	}
 	
 	function onStageMouseMove(event:MouseEvent)
 	{
+		var value = Std.int(_horizontal ? mouseX - _mouseOffsetX : mouseY - _mouseOffsetY);
+		if (value < _guideDirectOffset)
+		{
+			value = _guideDirectOffset;
+		}
+		else
+		{
+			var maxValue = _guideDirectOffset + _guideSize;
+			if (value > maxValue)
+			{
+				value = maxValue;
+			}
+		}
+		if (_horizontal)
+		{
+			_thumb.view.x = value;
+		}
+		else
+		{
+			_thumb.view.y = value;
+		}
 		if (updateOnMove)
 		{
 			event.updateAfterEvent();
@@ -184,7 +203,6 @@ class CSlider extends CSprite, implements ICSlider
 	{
 		stage.removeEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 		stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-		_thumb.stopDrag();
 		setThumbPositionByValue();
 		dispatchEvent(new Event(Event.COMPLETE));
 	}
@@ -206,8 +224,8 @@ class CSlider extends CSprite, implements ICSlider
 	
 	function updateSize()
 	{
-		var thumbWidth = _thumb.width;
-		var thumbHeight = _thumb.height;
+		var thumbWidth = _thumb.view.width;
+		var thumbHeight = _thumb.view.height;
 		var minWidth;
 		var minHeight;
 		if (_horizontal)
@@ -234,8 +252,8 @@ class CSlider extends CSprite, implements ICSlider
 	
 	function updateBaseArrange()
 	{
-		var thumbWidth = _thumb.width;
-		var thumbHeight = _thumb.height;
+		var thumbWidth = _thumb.view.width;
+		var thumbHeight = _thumb.view.height;
 		
 		_guideCrossOffset = 0;
 		_guideDirectOffset = 0;
@@ -265,7 +283,7 @@ class CSlider extends CSprite, implements ICSlider
 	function setUseHandCursor(value:Bool)
 	{
 		_useHandCursor = value;
-		_thumb.useHandCursor = _useHandCursor;
+		_thumb.setUseHandCursor(_useHandCursor);
 		_bg.useHandCursor = _useHandCursor;
 	}
 	
@@ -282,19 +300,19 @@ class CSlider extends CSprite, implements ICSlider
 			(delta > 0 ? Std.int(_guideSize * (_value - _minValue) / (_maxValue - _minValue)) : 0);
 		if (_horizontal)
 		{
-			_thumb.x = thumbOffset;
-			_thumb.y = _guideCrossOffset;
+			_thumb.view.x = thumbOffset;
+			_thumb.view.y = _guideCrossOffset;
 		}
 		else
 		{
-			_thumb.x = _guideCrossOffset;
-			_thumb.y = thumbOffset;
+			_thumb.view.x = _guideCrossOffset;
+			_thumb.view.y = thumbOffset;
 		}
 	}
 	
 	function setValueByThumbPosition()
 	{
-		var thumbOffset = Std.int(_horizontal ? _thumb.x : _thumb.y);
+		var thumbOffset = Std.int(_horizontal ? _thumb.view.x : _thumb.view.y);
 		var newValue = getValueByPosition(thumbOffset);
 		if (_value != newValue)
 		{
@@ -405,15 +423,15 @@ class CSlider extends CSprite, implements ICSlider
 		return _mouseWheelStep;
 	}
 	
-	override function set_enabled(value)
+	override function set_isEnabled(value)
 	{
-		if (_enabled != value)
+		if (_isEnabled != value)
 		{
-			_enabled = value;
-			_thumb.enabled = _enabled;
+			_isEnabled = value;
+			_thumb.isEnabled = _isEnabled;
 			updateEnabled();
 		}
-		return _enabled;
+		return _isEnabled;
 	}
 	
 	var _useHandCursor:Bool;
