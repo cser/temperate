@@ -310,9 +310,9 @@ class CScrollBar extends CSprite
 	
 	override function doValidateSize()
 	{
-		var needSizeValidation = !_size_valid;
+		var oldSize_valid = _size_valid;
 		_size_valid = true;
-		if (needSizeValidation)
+		if (!oldSize_valid)
 		{
 			updateSize();
 			updateBaseArrange();
@@ -323,7 +323,7 @@ class CScrollBar extends CSprite
 			_size_pageValid = true;
 			updateThumbSize();
 		}
-		if (needSizeValidation)
+		if (!oldSize_valid)
 		{
 			_view_positionValid = false;
 			_view_valid = false;
