@@ -11,8 +11,11 @@ import temperate.containers.CVBox;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MScrollBar;
+import temperate.minimal.MTooltipFactory;
+import temperate.minimal.renderers.MTextTooltip;
 import temperate.minimal.skins.MFieldRectSkin;
 import temperate.raster.Scale3GridDrawer;
+import temperate.tooltips.docks.CVTooltipDock;
 
 class TestScrollBar extends Sprite
 {
@@ -51,6 +54,8 @@ class TestScrollBar extends Sprite
 		
 		var scrollBar = new MScrollBar(false).addTo(this, 410, 100);
 		scrollBar.pageSize = 50;
+		scrollBar.updateOnMove = true;
+		MTooltipFactory.newText(scrollBar, "Using updateOnMove");
 		addChild(new Scaler(scrollBar));
 		
 		new MScrollBar(true).addTo(this, 500, 100);
@@ -138,4 +143,6 @@ class TestScrollBar extends Sprite
 TODO
 Параметризация цветов
 Другой тип выбора состояний для движка
+Сброс движка на кратную позицию при отпускании
+Починить возникающий зазор между движком и кнопкой
 */
