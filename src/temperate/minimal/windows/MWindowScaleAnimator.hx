@@ -5,35 +5,41 @@ import temperate.minimal.MTween;
 import temperate.windows.components.ACWindowComponent;
 import temperate.windows.ICPopUp;
 
-class MPopUpScaleAnimator extends ACWindowComponent
+class MWindowScaleAnimator extends ACWindowComponent
 {
 	var _showDuration:Int;
 	var _hideDuration:Int;
 	
-	public function new(showDuration:Int = 300, hideDuration:Int = 500)
+	public function new(showDuration:Int = 300, hideDuration:Int = 300)
 	{
 		super();
 		
 		_showDuration = showDuration;
 		_hideDuration = hideDuration;
 		
-		_hideVars = { };
+		_hideVars = cast { };
 		_hideVars.alpha = 0;
 		_hideVars.scaleX = 0;
 		_hideVars.scaleY = 0;
 		
-		_showVars = { };
+		_showVars = cast { };
 		_showVars.alpha = 1;
 		_showVars.scaleX = 1;
 		_showVars.scaleY = 1;
 	}
 	
-	var _hideVars:Dynamic;
-	var _showVars:Dynamic;
+	var _hideVars:MAnimationParameters;
+	var _showVars:MAnimationParameters;
 	var _tween:MTween<DisplayObject>;
 	
 	override public function animateShow(fast:Bool):Void
 	{
+		var width = getWidth();
+		var height = getHeight();
+		var x = getX();
+		var y = getY();
+		_hideVars.x = x + width * .5;
+		_hideVars.y = y + height * .5;
 		MTween.apply(_view, _hideVars);
 		var view = _view;
 		if (fast)
@@ -50,6 +56,12 @@ class MPopUpScaleAnimator extends ACWindowComponent
 	
 	override public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
 	{
+		var width = getWidth();
+		var height = getHeight();
+		var x = getX();
+		var y = getY();
+		_hideVars.x = x + width * .5;
+		_hideVars.y = y + height * .5;
 		var view = _view;
 		if (fast)
 		{
@@ -63,6 +75,7 @@ class MPopUpScaleAnimator extends ACWindowComponent
 		{
 			_onHideComplete = onComplete;
 			_tween = MTween.to(view, _hideDuration, _hideVars)
+				.setEase(MBack.typical.easeOut)
 				.setVoidOnComplete(onTweenHideComplete);
 		}
 	}

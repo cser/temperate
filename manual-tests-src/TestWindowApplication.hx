@@ -2,7 +2,6 @@ package ;
 import flash.display.Sprite;
 import flash.events.Event;
 import temperate.core.ICArea;
-import temperate.minimal.windows.MPopUpScaleAnimator;
 import temperate.minimal.windows.MLockArea;
 import temperate.windows.CPopUpManager;
 import windowApplication.ToolsWindow;

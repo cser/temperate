@@ -19,4 +19,36 @@ class CBaseWindowComponent extends ACWindowComponent
 			onComplete(_popUp);
 		}
 	}
+	
+	override public function getWidth():Int
+	{
+		return Std.int(_view.width);
+	}
+	
+	override public function getHeight():Int
+	{
+		return Std.int(_view.height);
+	}
+	
+	override public function setSize(width:Int, height:Int):Void
+	{
+		_view.width = width;
+		_view.height = height;
+	}
+	
+	override public function getX():Int
+	{
+		return Std.int(_view.x);
+	}
+	
+	override public function getY():Int
+	{
+		return Std.int(_view.y);
+	}
+	
+	override public function move(x:Int, y:Int):Void
+	{
+		_view.x = x;
+		_view.y = y;
+	}
 }

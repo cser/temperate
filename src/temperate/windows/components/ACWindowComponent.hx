@@ -1,5 +1,7 @@
 package temperate.windows.components;
 import flash.display.DisplayObject;
+import temperate.skins.ICWindowSkin;
+import temperate.windows.CPopUpManager;
 import temperate.windows.ICPopUp;
 
 class ACWindowComponent 
@@ -10,17 +12,31 @@ class ACWindowComponent
 	
 	var _popUp:ICPopUp;
 	var _view:DisplayObject;
+	var _getManager:Void->CPopUpManager;
+	var _skin:ICWindowSkin;
 	
-	public function subscribe(popUp:ICPopUp):Void
+	public function subscribe(popUp:ICPopUp, getManager:Void->CPopUpManager, skin:ICWindowSkin):Void
 	{
 		_popUp = popUp;
 		_view = popUp.view;
+		_getManager = getManager;
+		_skin = skin;
+		doSubscribe();
 	}
 	
 	public function unsubscribe(popUp:ICPopUp):Void
 	{
+		doUnsubscribe();
 		_popUp = null;
 		_view = null;
+	}
+	
+	function doSubscribe():Void
+	{
+	}
+	
+	function doUnsubscribe():Void
+	{
 	}
 	
 	public var next:ACWindowComponent;
@@ -35,7 +51,7 @@ class ACWindowComponent
 		return next != null ? next.getY() : 0;
 	}
 	
-	public function move(x:Float, y:Float):Void
+	public function move(x:Int, y:Int):Void
 	{
 		if (next != null)
 		{

@@ -1,42 +1,32 @@
-package temperate.windows;
+package temperate.windows.components;
 import flash.display.DisplayObject;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
+import temperate.windows.CPopUpManager;
 import temperate.windows.docks.ICPopUpDock;
+import temperate.windows.ICPopUp;
 
-class CPopUpMover 
+class CMoveWindowComponent extends ACWindowComponent
 {
-	public function new() 
+	public function new(target:DisplayObject, getDock:Void->ICPopUpDock)
 	{
-	}
-	
-	var _popUp:ICPopUp;
-	var _target:DisplayObject;
-	var _getManager:Void->CPopUpManager;
-	var _getDock:Void->ICPopUpDock;
-	var _fixPosition:Void->Void;
-	
-	public function subscribe(
-		getManager:Void->CPopUpManager, popUp:ICPopUp, target:DisplayObject, 
-		getDock:Void->ICPopUpDock, fixPosition:Void->Void
-	)
-	{
-		_getManager = getManager;
-		_popUp = popUp;
+		super();
+		
 		_target = target;
 		_getDock = getDock;
-		_fixPosition = fixPosition;
+	}
+	
+	var _target:DisplayObject;
+	var _getDock:Void->ICPopUpDock;
+	
+	override function doSubscribe()
+	{
 		_target.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 	}
 	
-	public function unsubscribe()
+	override function doUnsubscribe()
 	{
-		_popUp = null;
-		if (_target != null)
-		{
-			_target.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			_target = null;
-		}
+		_target.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 	}
 	
 	var _mouseX:Int;
@@ -73,17 +63,16 @@ class CPopUpMover
 		_stage = null;
 	}
 	
-	public function move(x:Int, y:Int)
+	override public function move(x:Int, y:Int)
 	{
-		var view = _popUp.view;
-		view.x = x;
-		view.y = y;
-		_fixPosition();
+		var width = getWidth();
+		var height = getHeight();
 		var dock = _getDock();
 		var manager = _getManager();
 		dock.move(
-			Std.int(view.width), Std.int(view.height), manager.areaWidth, manager.areaHeight,
+			width, height, manager.areaWidth, manager.areaHeight,
 			x - manager.areaX, y - manager.areaY
 		);
+		super.move(x, y);
 	}
 }

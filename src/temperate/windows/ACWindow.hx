@@ -9,6 +9,8 @@ import temperate.skins.CNullWindowSkin;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.components.ACWindowComponent;
 import temperate.windows.components.CBaseWindowComponent;
+import temperate.windows.components.CMoveWindowComponent;
+import temperate.windows.components.CWindowConstraintsComponent;
 import temperate.windows.docks.CAlignedPopUpDock;
 import temperate.windows.docks.ICPopUpDock;
 
@@ -27,16 +29,13 @@ class ACWindow implements ICPopUp
 		_baseSkin.link(_baseContainer);
 		view = _baseSkin.view;
 		
+		initComponents();
+		
 		_mover = newMover();
-		var head = _baseSkin.head;
-		if (head != null)
-		{
-			_mover.subscribe(getManager, this, head, get_dock, fixPosition);
-		}
+		addComponent(new CWindowConstraintsComponent());
+		addComponent(_mover);
 		
 		view.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-		
-		initComponents();
 	}
 	
 	var _manager:CPopUpManager;
@@ -84,9 +83,7 @@ class ACWindow implements ICPopUp
 	function onManagerResize(event:Event = null)
 	{
 		dock.arrange(Std.int(width), Std.int(height), _manager.areaWidth, _manager.areaHeight);
-		view.x = _manager.areaX + dock.x;
-		view.y = _manager.areaY + dock.y;
-		fixPosition();
+		move(_manager.areaX + dock.x, _manager.areaY + dock.y);
 	}
 	
 	public var dock(get_dock, set_dock):ICPopUpDock;
@@ -120,11 +117,11 @@ class ACWindow implements ICPopUp
 		return CNullWindowSkin.getInstance();
 	}
 	
-	var _mover:CPopUpMover;
+	var _mover:ACWindowComponent;
 	
-	function newMover()
+	function newMover():ACWindowComponent
 	{
-		return new CPopUpMover();
+		return new CMoveWindowComponent(_baseSkin.head, get_dock);
 	}
 	
 	public var x(get_x, null):Float;
@@ -141,7 +138,7 @@ class ACWindow implements ICPopUp
 	
 	public function move(x:Float, y:Float)
 	{
-		_mover.move(Std.int(x), Std.int(y));
+		_top.move(Std.int(x), Std.int(y));
 	}
 	
 	public var width(get_width, set_width):Float;
@@ -162,30 +159,6 @@ class ACWindow implements ICPopUp
 	function set_height(value)
 	{
 		return view.height = value;
-	}
-	
-	function fixPosition()
-	{
-		var x = view.x;
-		var y = view.y;
-		if (x < _manager.areaX - view.width * .5)
-		{
-			x = Std.int(_manager.areaX - view.width * .5);
-		}
-		else if (x > _manager.areaX + _manager.areaWidth - view.width * .5)
-		{
-			x = Std.int(_manager.areaX + _manager.areaWidth - view.width * .5);
-		}
-		if (y < _manager.areaY)
-		{
-			y = Std.int(_manager.areaY);
-		}
-		else if (y > _manager.areaY + _manager.areaHeight - _baseSkin.headHeight)
-		{
-			y = Std.int(_manager.areaY + _manager.areaHeight - _baseSkin.headHeight);
-		}
-		view.x = x;
-		view.y = y;
 	}
 	
 	public var animator(get_animator, set_animator):ACWindowComponent;
@@ -245,7 +218,7 @@ class ACWindow implements ICPopUp
 			component.next = _top;
 			_top = component;
 		}
-		component.subscribe(this);
+		component.subscribe(this, getManager, _baseSkin);
 	}
 	
 	function removeComponent(component:ACWindowComponent)
