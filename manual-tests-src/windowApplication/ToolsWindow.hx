@@ -10,6 +10,7 @@ import temperate.minimal.MFormatFactory;
 import temperate.minimal.MSeparator;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
+import temperate.windows.CPopUpMover;
 import temperate.windows.docks.CAbsolutePopUpDock;
 
 @:bitmap("manual-tests-src/windowApplication/arrow.png")
@@ -107,7 +108,11 @@ class ToolsWindow extends ACWindow
 		_size_valid = false;
 		postponeSize();
 		
-		startDock = new CAbsolutePopUpDock(10, 50);
+		dock = new CAbsolutePopUpDock(10, 50);
+		
+		var mover = new CPopUpMover();
+		mover.updateOnMove = true;
+		mover.subscribe(this, this);
 	}
 	
 	var _main:CVBox;

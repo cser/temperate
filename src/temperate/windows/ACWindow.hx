@@ -1,5 +1,6 @@
 package temperate.windows;
 import flash.display.DisplayObject;
+import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
 import temperate.core.CSprite;
@@ -14,10 +15,12 @@ class ACWindow extends CSprite, implements ICPopUp
 		_manager = manager;
 		view = this;
 		innerDispatcher = new EventDispatcher();
-		startDock = new CAlignedPopUpDock();
+		dock = new CAlignedPopUpDock();
 		
 		updateIsLocked();
 		updateIsActive();
+		
+		innerDispatcher.addEventListener(Event.RESIZE, onManagerResize);
 	}
 	
 	var _manager:CPopUpManager;
@@ -70,9 +73,7 @@ class ACWindow extends CSprite, implements ICPopUp
 	
 	public function open(modal:Bool)
 	{
-		startDock.arrange(Std.int(width), Std.int(height), _manager.areaWidth, _manager.areaHeight);
-		x = _manager.areaX + startDock.x;
-		y = _manager.areaY + startDock.y;
+		onManagerResize();
 		_manager.add(this, modal);
 	}
 	
@@ -81,5 +82,12 @@ class ACWindow extends CSprite, implements ICPopUp
 		_manager.remove(this);
 	}
 	
-	public var startDock:ICPopUpDock;
+	function onManagerResize(event:Event = null)
+	{
+		dock.arrange(Std.int(width), Std.int(height), _manager.areaWidth, _manager.areaHeight);
+		x = _manager.areaX + dock.x;
+		y = _manager.areaY + dock.y;
+	}
+	
+	public var dock:ICPopUpDock;
 }

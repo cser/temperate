@@ -10,6 +10,7 @@ import temperate.minimal.MScrollPane;
 import temperate.minimal.MSeparator;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
+import temperate.windows.CPopUpMover;
 
 class OpenWindow extends ACWindow
 {
@@ -57,6 +58,10 @@ class OpenWindow extends ACWindow
 		
 		_size_valid = false;
 		postponeSize();
+		
+		var mover = new CPopUpMover();
+		mover.updateOnMove = true;
+		mover.subscribe(this, this);
 	}
 	
 	var _main:CVBox;

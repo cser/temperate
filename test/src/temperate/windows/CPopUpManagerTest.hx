@@ -298,6 +298,3 @@ class CPopUpManagerTest
 		popUp1.isActive.isTrue();
 	}
 }
-/*
-- Перемещение окна наверх
-*/

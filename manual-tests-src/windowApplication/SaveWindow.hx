@@ -10,6 +10,7 @@ import temperate.minimal.MLabel;
 import temperate.minimal.MSeparator;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
+import temperate.windows.CPopUpMover;
 
 class SaveWindow extends ACWindow 
 {
@@ -52,6 +53,10 @@ class SaveWindow extends ACWindow
 		
 		_size_valid = false;
 		postponeSize();
+		
+		var mover = new CPopUpMover();
+		mover.updateOnMove = true;
+		mover.subscribe(this, this);
 	}
 	
 	var _main:CVBox;
