@@ -9,9 +9,38 @@ import temperate.core.CMath;
 
 class MScrollBarBdFactory 
 {
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Parametrization
+	//
+	//----------------------------------------------------------------------------------------------
+	
 	public static var arrowSize = 17;
-	public static var arrowColor:UInt = 0xff385900;
-	public static var bgColor:UInt = 0xff80f000;
+	
+	public static var arrowUpColor:UInt = 0xff305000;
+	public static var arrowOverColor:UInt = 0xff508020;
+	public static var arrowDisabledColor:UInt = 0xffa0bb80;
+	
+	public static var bgRatiosUp:Array<Int> = [ 0, 138, 140, 250 ];
+	public static var bgRatiosOver:Array<Int> = [ 0, 138, 140, 250 ];
+	public static var bgRatiosDown:Array<Int> = [ 0, 250 ];
+	public static var bgRatiosDisabled:Array<Int> = [ 0, 250 ];
+	
+	public static var bgColorsUp:Array<UInt> = [ 0xffd0f060, 0xff80c020, 0xff60a000, 0xffa0c000 ];
+	public static var bgColorsOver:Array<UInt> = [ 0xffbfef50, 0xffafcf50, 0xff8fbf30, 0xffafcf30 ];
+	public static var bgColorsDown:Array<UInt> = [ 0xff506f00, 0xffc0ff30 ];
+	public static var bgColorsDisabled:Array<UInt> = [ 0xffe8fac0, 0xffaacc80 ];
+	
+	public static var bgBottomRightColor:UInt = 0xff105000;
+	public static var bgBottomRightDisabledColor:UInt = 0xffbabaaa;
+	
+	public static var bgTopLeftColor:UInt = 0xff80a080;
+	public static var bgTopLeftDisabledColor:UInt = 0xffcccccc;
+	
+	public static var bgInnerTopLeftColor:UInt = 0xa0ffffff;
+	public static var bgInnerBottomRightColor:UInt = 0xe0ffffff;
+	
+	public static var bgInnerDownColor:UInt = 0x2e000000;
 	
 	public static var thumbCenterLightColor:UInt = 0xccffffff;
 	public static var thumbCenterDarkColor:UInt = 0x80305010;
@@ -368,58 +397,40 @@ class MScrollBarBdFactory
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	static var _upArrow:BitmapData;
-	
-	static function getUpArrow()
-	{
-		if (_upArrow == null)
-		{
-			_upArrow = MArrowBdFactory.newUpArrow(arrowColor);
-		}
-		return _upArrow;
-	}
-	
 	static function newArrow(horizontal:Bool, left:Bool, state:CButtonState)
 	{
 		var bitmapData = getBg(horizontal, state).clone();
-		var arrow = getUpArrow();
 		
-		var transform;
-		switch (state)
+		var arrowColor = switch (state)
 		{
 			case CButtonState.OVER:
-				transform = new ColorTransform(1.5, 1.5, 1.5);
+				arrowOverColor;
 			case CButtonState.DISABLED:
-				transform = new ColorTransform(1.5, 1, 1.5, .3);
+				arrowDisabledColor;
 			default:
-				transform = new ColorTransform();
+				arrowUpColor;
 		}
+		var arrow = MArrowBdFactory.newUpArrow(arrowColor);
 		
 		var offsetX = (arrowSize - arrow.width) >> 1;
 		var offsetY = (arrowSize - arrow.height) >> 1;
 		if (horizontal && left)
 		{
-			var tx = offsetY;
-			var ty = offsetX + 1;
-			bitmapData.draw(arrow, new Matrix(0, 1, 1, 0, tx, ty), transform);
+			bitmapData.draw(arrow, new Matrix(0, 1, 1, 0, offsetY, offsetX + 1));
 		}
 		else if (horizontal && !left)
 		{
-			var tx = offsetY + arrow.height + 1;
-			var ty = offsetX + 1;
-			bitmapData.draw(arrow, new Matrix(0, 1, -1, 0, tx, ty), transform);
+			bitmapData.draw(
+				arrow, new Matrix(0, 1, -1, 0, offsetY + arrow.height + 1, offsetX + 1));
 		}
 		else if (!horizontal && left)
 		{
-			var tx = offsetX + 1;
-			var ty = offsetY;
-			bitmapData.draw(arrow, new Matrix(1, 0, 0, 1, tx, ty), transform);
+			bitmapData.draw(arrow, new Matrix(1, 0, 0, 1, offsetX + 1, offsetY));
 		}
 		else
 		{
-			var tx = offsetX + 1;
-			var ty = offsetY + arrow.height + 1;
-			bitmapData.draw(arrow, new Matrix(1, 0, 0, -1, tx, ty), transform);
+			bitmapData.draw(
+				arrow, new Matrix(1, 0, 0, -1, offsetX + 1, offsetY + arrow.height + 1));
 		}
 		
 		return bitmapData;
@@ -443,13 +454,13 @@ class MScrollBarBdFactory
 			
 			var enabled = state != CButtonState.DISABLED;
 			
-			var color = enabled ? 0xff105000 : 0xffbabaaa;
+			var color = enabled ? bgBottomRightColor : bgBottomRightDisabledColor;
 			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
 			g.drawRoundRect(0, 0, arrowSize, arrowSize, 6);
 			g.drawRoundRect(0, 0, arrowSize - 1, arrowSize - 1, 6);
 			g.endFill();
 			
-			var color = enabled ? 0xff80a080 : 0xffcccccc;
+			var color = enabled ? bgTopLeftColor : bgTopLeftDisabledColor;
 			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
 			g.drawRoundRect(0, 0, arrowSize, arrowSize, 6);
 			g.drawRoundRect(1, 1, arrowSize - 1, arrowSize - 1, 6);
@@ -467,27 +478,18 @@ class MScrollBarBdFactory
 				var ratios;
 				switch (state)
 				{
-					case CButtonState.DOWN:
-						ratios = [ 0, 250 ];
-					case CButtonState.DISABLED:
-						ratios = [ 0, 250 ];
-					default:
-						ratios = [ 0, 138, 140, 250 ];
-				}
-				switch (state)
-				{
 					case CButtonState.OVER:
-						//sourceColors = [ 0xffbfef50, 0xffbfef50, 0xffafcf30, 0xffafcf30 ];
-						sourceColors = [ 0xffbfef50, 0xffafcf50, 0xff8fbf30, 0xffafcf30 ];
+						sourceColors = bgColorsOver;
+						ratios = bgRatiosOver;
 					case CButtonState.DOWN:
-						//sourceColors = [ 0xff80af00, 0xff80af00, 0xffb0d030, 0xffb0d030 ];
-						sourceColors = [ 0xff506f00, 0xffc0ff30 ];
+						sourceColors = bgColorsDown;
+						ratios = bgRatiosDown;
 					case CButtonState.DISABLED:
-						sourceColors = [ 0xffe8fac0, 0xffaacc80 ];
+						sourceColors = bgColorsDisabled;
+						ratios = bgRatiosDisabled;
 					default:						
-						//sourceColors = [ 0xffc0f050, 0xff80a010, 0xff608000, 0xff80c000 ];
-						
-						sourceColors = [ 0xffd0f060, 0xff80c020, 0xff60a000, 0xffa0c000 ];
+						sourceColors = bgColorsUp;
+						ratios = bgRatiosUp;
 				}
 				MBdFactoryUtil.getColorsAndAlphas(sourceColors, colors, alphas);
 				
@@ -496,13 +498,13 @@ class MScrollBarBdFactory
 				g.endFill();
 			}
 			
-			var color = 0xa0ffffff;
+			var color = bgInnerTopLeftColor;
 			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
 			g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 4);
 			g.drawRoundRect(2, 2, arrowSize - 3, arrowSize - 3, 4);
 			g.endFill();
 			
-			var color = 0x80ffffff;
+			var color = bgInnerBottomRightColor;
 			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
 			g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 4);
 			g.drawRoundRect(1, 1, arrowSize - 3, arrowSize - 3, 4);
@@ -510,20 +512,12 @@ class MScrollBarBdFactory
 			
 			if (state == CButtonState.DOWN)
 			{
-				var color = 0x2e000000;
+				var color = bgInnerDownColor;
 				g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
 				g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
 				g.drawRoundRect(3, 3, arrowSize - 6, arrowSize - 6, 4);
 				g.endFill();
 			}
-			
-			/*
-			var color = enabled ? 0x2e000000 : 0x10000000;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-			g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
-			g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 4);
-			g.endFill();
-			*/
 			
 			bd.draw(shape);
 			_bgByState[key] = bd;

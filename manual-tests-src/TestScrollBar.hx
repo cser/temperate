@@ -12,10 +12,8 @@ import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.MTooltipFactory;
-import temperate.minimal.renderers.MTextTooltip;
 import temperate.minimal.skins.MFieldRectSkin;
 import temperate.raster.Scale3GridDrawer;
-import temperate.tooltips.docks.CVTooltipDock;
 
 class TestScrollBar extends Sprite
 {
@@ -151,4 +149,5 @@ TODO
 Другой тип выбора состояний для движка
 Сброс движка на кратную позицию при отпускании
 Починить возникающий зазор между движком и кнопкой
+Разобраться с useHandCursor
 */
