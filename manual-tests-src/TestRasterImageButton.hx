@@ -6,12 +6,14 @@ import flash.display.Sprite;
 import flash.geom.Matrix;
 import temperate.components.CButtonState;
 import temperate.components.CRasterImageButton;
+import temperate.components.CRasterToolButton;
 import temperate.components.CSpacer;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.core.CSprite;
 import temperate.docks.CRightDock;
 import temperate.minimal.graphics.MCommonBdFactory;
+import temperate.minimal.graphics.MToolBdFactory;
 import temperate.minimal.graphics.MWindowBdFactory;
 import temperate.minimal.MFilterFactory;
 import temperate.minimal.MFlatImageButton;
@@ -143,23 +145,34 @@ class TestRasterImageButton extends Sprite
 			g.drawRect( -2, -4, 500, 30);
 			g.endFill();
 			
-			line.add(new Bitmap(MWindowBdFactory.getBgUp()));
-			line.add(new Bitmap(MWindowBdFactory.getBgOver()));
-			line.add(new Bitmap(MWindowBdFactory.getBgDown()));
-			line.add(new Bitmap(MWindowBdFactory.getBgDisabled()));
-			line.add(new Bitmap(MWindowBdFactory.getBgUpSelected()));
-			line.add(new Bitmap(MWindowBdFactory.getBgOverSelected()));
-			line.add(new Bitmap(MWindowBdFactory.getBgDownSelected()));
-			line.add(new Bitmap(MWindowBdFactory.getBgDisabledSelected()));
-			line.add(new Bitmap(MWindowBdFactory.getFrame())).setFixedSize(0, 0).setOffsets(-2, -4);
+			line.add(new Bitmap(MToolBdFactory.getBgUp()));
+			line.add(new Bitmap(MToolBdFactory.getBgOver()));
+			line.add(new Bitmap(MToolBdFactory.getBgDown()));
+			line.add(new Bitmap(MToolBdFactory.getBgDisabled()));
+			line.add(new Bitmap(MToolBdFactory.getBgUpSelected()));
+			line.add(new Bitmap(MToolBdFactory.getBgOverSelected()));
+			line.add(new Bitmap(MToolBdFactory.getBgDownSelected()));
+			line.add(new Bitmap(MToolBdFactory.getBgDisabledSelected()));
 			
-			line.add(new Bitmap(MWindowBdFactory.getBgUp())).setFixedSize(0, 0).setOffsets(-1, 0);
-			line.add(new Bitmap(MWindowBdFactory.getImageClose())).setOffsets(0, 2);
-			line.add(new CSpacer()).setFixedSize(5);
-			line.add(new Bitmap(MWindowBdFactory.getImageMinimize())).setOffsets(0, 2);
-			line.add(new Bitmap(MWindowBdFactory.getImageMaximize())).setOffsets(0, 2);
-			line.add(new Bitmap(MWindowBdFactory.getImageClose())).setOffsets(0, 2);
-			line.add(new Bitmap(MWindowBdFactory.getImageCollapse())).setOffsets(0, 2);
+			line.add(new Bitmap(MWindowBdFactory.getFrame())).setFixedSize(0, 0).setOffsets(-2, -4);
+			line.add(new CSpacer()).setFixedSize(22);
+			line.add(new Bitmap(MWindowBdFactory.getImageMinimize()));
+			line.add(new Bitmap(MWindowBdFactory.getImageMaximize()));
+			line.add(new Bitmap(MWindowBdFactory.getImageClose()));
+			line.add(new Bitmap(MWindowBdFactory.getImageCollapse()));
+			
+			line.add(new CSpacer()).setFixedSize(10);
+			
+			var button = newToolButton();
+			button.setImageIndents(5, 5, 5, 5);
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0x800000));
+			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT_HARD);
+			button.getImage(CButtonState.DOWN).setOffset(0, 1);
+			line.add(button);
+			
+			var button = newToolButton();
+			button.selected = true;
+			line.add(button);
 		}
 	}
 	
@@ -220,5 +233,23 @@ class TestRasterImageButton extends Sprite
 		g.drawRect(0, 0, width, height);
 		g.endFill();
 		return image;
+	}
+	
+	function newToolButton():CRasterToolButton
+	{
+		var button = new CRasterToolButton();
+		button.getState(CButtonState.UP).setBitmapData(MToolBdFactory.getBgUp());
+		button.getState(CButtonState.OVER).setBitmapData(MToolBdFactory.getBgOver());
+		button.getState(CButtonState.DOWN).setBitmapData(MToolBdFactory.getBgDown());
+		button.getState(CButtonState.DISABLED).setBitmapData(MToolBdFactory.getBgDisabled());
+		button.getState(CButtonState.UP_SELECTED)
+			.setBitmapData(MToolBdFactory.getBgUpSelected());
+		button.getState(CButtonState.OVER_SELECTED)
+			.setBitmapData(MToolBdFactory.getBgOverSelected());
+		button.getState(CButtonState.DOWN_SELECTED)
+			.setBitmapData(MToolBdFactory.getBgDownSelected());
+		button.getState(CButtonState.DISABLED_SELECTED)
+			.setBitmapData(MToolBdFactory.getBgDisabledSelected());
+		return button;
 	}
 }

@@ -20,9 +20,9 @@ class CRasterScaledButton extends ACRasterTextButton
 		
 		super.init();
 		
-		_textAlignX = .5;
-		_textAlignY = .5;
 		_drawer = new CScale9GridDrawer(_bg.graphics);
+		textAlignX = .5;
+		textAlignY = .5;
 		textIndentLeft = 5;
 		textIndentRight = 5;
 		textIndentTop = 3;
@@ -94,12 +94,12 @@ class CRasterScaledButton extends ACRasterTextButton
 			}
 			
 			_tf.x = Std.int(
-				_textAlignX * 
+				textAlignX * 
 				(_width - _measuringTf.width - textIndentLeft - textIndentRight) +
 				textIndentLeft
 			) + (params != null ? params.textOffsetX : 0);
 			_tf.y = Std.int(
-				_textAlignY * 
+				textAlignY * 
 				(_height - _measuringTf.height - textIndentTop - textIndentBottom) +
 				textIndentTop
 			) + (params != null ? params.textOffsetY : 0);
@@ -131,24 +131,14 @@ class CRasterScaledButton extends ACRasterTextButton
 		postponeSize();
 	}
 	
-	public var textAlignX(get_textAlignX, null):Float;
-	var _textAlignX:Float;
-	function get_textAlignX()
-	{
-		return _textAlignX;
-	}
+	public var textAlignX(default, null):Float;
 	
-	public var textAlignY(get_textAlignY, null):Float;
-	var _textAlignY:Float;
-	function get_textAlignY()
-	{
-		return _textAlignY;
-	}
+	public var textAlignY(default, null):Float;
 	
 	public function setTextAlign(alignX:Float, alignY:Float)
 	{
-		_textAlignX = alignX;
-		_textAlignY = alignY;
+		textAlignX = alignX;
+		textAlignY = alignY;
 		_view_valid = false;
 		postponeView();
 	}

@@ -231,28 +231,6 @@ class CRasterImageButton extends ACRasterTextButton
 	
 	function getStateImage()
 	{
-		var image = null;
-		var imageParams = _imageParams[_state.index];
-		if (imageParams != null)
-		{
-			image = imageParams.image;
-		}
-		if (image == null && _state.selected)
-		{
-			var params = _imageParams[CButtonState.UP_SELECTED.index];
-			if (params != null)
-			{
-				image = params.image;
-			}
-		}
-		if (image == null)
-		{
-			var params = _imageParams[CButtonState.UP.index];
-			if (params != null)
-			{
-				image = params.image;
-			}
-		}
-		return image;
+		return CImageParams.getImage(_imageParams, _state);
 	}
 }

@@ -2,6 +2,7 @@ package temperate.components.parametrization;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
+import temperate.components.CButtonState;
 
 class CImageParams 
 {
@@ -47,5 +48,33 @@ class CImageParams
 	{
 		this.alpha = alpha;
 		return this;
+	}
+	
+	public static function getImage(
+		paramsByIndex:Array<CImageParams>, state:CButtonState):DisplayObject
+	{
+		var image = null;
+		var imageParams = paramsByIndex[state.index];
+		if (imageParams != null)
+		{
+			image = imageParams.image;
+		}
+		if (image == null && state.selected)
+		{
+			var params = paramsByIndex[CButtonState.UP_SELECTED.index];
+			if (params != null)
+			{
+				image = params.image;
+			}
+		}
+		if (image == null)
+		{
+			var params = paramsByIndex[CButtonState.UP.index];
+			if (params != null)
+			{
+				image = params.image;
+			}
+		}
+		return image;
 	}
 }
