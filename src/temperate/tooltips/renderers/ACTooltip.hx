@@ -32,7 +32,10 @@ class ACTooltip< T > extends CSprite, implements ICTooltip<T>
 	{
 		
 	}
-	
+
+	/**
+	 * Called by tooltip system. May be used for pool organization
+	 */
 	public function dispose()
 	{
 	}
