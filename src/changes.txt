@@ -1,4 +1,5 @@
 v.0.-?
+- Show text for custom plots of DebugMonitor
 v.0.7
 - CSignal moved to temperate.extra
 - CKey added for downed key checking (is not using in temperate)

@@ -132,7 +132,10 @@ class CCursorManager
 		if (_cursor != null && _owner != null)
 		{
 			updateViewPosition();
-			event.updateAfterEvent();
+			if (_cursor.updateOnMove)
+			{
+				event.updateAfterEvent();
+			}
 		}
 	}
 	
