@@ -91,6 +91,10 @@ class ACButton extends CSprite
 			return;
 		}
 		
+		if (stage == null)
+		{
+			return;
+		}
 		stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
 		_isDown = true;
 		updateState();
