@@ -20,23 +20,13 @@ class CScrollLayout implements ICScrollLayout
 		height = isCompactHeight ? 0 : height;
 		if (wrapper != null)
 		{
-			var hsb = null;
-			var vsb = null;
-			if (wrapper.getWidth() > width)
+			if (vScrollPolicy == CScrollPolicy.ON && hScrollPolicy == CScrollPolicy.ON)
 			{
-				hsb = showHScrollBar();
-			}
-			else
-			{
-				hideHScrollBar();
-			}
-			if (wrapper.getHeight() > height)
-			{
-				vsb = showVScrollBar();
-			}
-			else
-			{
-				hideVScrollBar();
+				var hsb = showHScrollBar();
+				var vsb = showVScrollBar();
+				
+				wrapper.setWidth(width - vsb.width);
+				wrapper.setHeight(height - hsb.height);
 			}
 		}
 		else
