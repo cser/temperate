@@ -182,7 +182,7 @@ class ACWindow implements ICPopUp
 		_animator = value;
 		if (_animator != null)
 		{
-			_animator.priority = PRIORITY_ANIMATOR;
+			_animator.priority = CWindowComponentPriority.ANIMATOR;
 			addComponent(_animator);
 		}
 		return _animator;
@@ -214,6 +214,7 @@ class ACWindow implements ICPopUp
 				if (_maximizeComponent == null)
 				{
 					_maximizeComponent = newMaximizeComponent();
+					_maximizeComponent.priority = CWindowComponentPriority.MAXIMIZE;
 				}
 				addComponent(_maximizeComponent);
 			}
@@ -238,11 +239,6 @@ class ACWindow implements ICPopUp
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	static var PRIORITY_BASE = 0;
-	static var PRIORITY_ANIMATOR = 1;
-	static var PRIORITY_CONSTRAINTS = 2;
-	static var PRIORITY_MOVER = 3;
-	
 	var _components:CPriorityList<ACWindowComponent>;
 	var _base:ACWindowComponent;
 	var _constraints:ACWindowComponent;
@@ -253,15 +249,15 @@ class ACWindow implements ICPopUp
 		_components = new CPriorityList();
 		
 		_base = new CBaseWindowComponent();
-		_base.priority = PRIORITY_BASE;
+		_base.priority = CWindowComponentPriority.BASE;
 		addComponent(_base);
 		
 		_constraints = new CWindowConstraintsComponent();
-		_constraints.priority = PRIORITY_CONSTRAINTS;
+		_constraints.priority = CWindowComponentPriority.CONSTRAINTS;
 		addComponent(_constraints);
 		
 		_mover = newMover();
-		_mover.priority = PRIORITY_MOVER;
+		_mover.priority = CWindowComponentPriority.MOVER;
 		addComponent(_mover);
 	}
 	
