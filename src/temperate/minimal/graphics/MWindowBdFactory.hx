@@ -437,40 +437,54 @@ class MWindowBdFactory
 	//
 	//----------------------------------------------------------------------------------------------
 	
+	public static var imageSize:Int = 12;
+	public static var imageHorizontalIndent:Int = 2;
+	public static var imageVerticalIndent:Int = 6;
+	
+	static function newImageBitmapData()
+	{
+		return new BitmapData(
+			imageSize + imageHorizontalIndent * 2,
+			imageSize + imageVerticalIndent * 2,
+			true,
+			0x00000000);
+	}
+	
+	static function getImageOffsetMatrix()
+	{
+		return new Matrix(1, 0, 0, 1, imageHorizontalIndent, imageVerticalIndent);
+	}
+	
 	static var _imageClose:BitmapData;
 	public static function getImageClose():BitmapData
 	{
 		if (_imageClose == null)
 		{
-			_imageClose = new BitmapData(size - 4, size - 4, true, 0x00000000);
+			_imageClose = newImageBitmapData();
 			var shape = MBdFactoryUtil.getShape();
 			var g = shape.graphics;
 			g.clear();
-			var x0 = 4;
-			var y0 = 4;
-			var x1 = size - 8;
-			var y1 = size - 8;
 			var halfWidth = 2;
 			g.beginFill(0xffffff);
-			g.moveTo(x0, y0);
-			g.lineTo(x0 + halfWidth, y0);
-			g.lineTo(x1, y1 - halfWidth);
-			g.lineTo(x1, y1);
-			g.lineTo(x1 - halfWidth, y1);
-			g.lineTo(x0, y0 + halfWidth);
-			g.lineTo(x0, y0);
+			g.moveTo(0, 0);
+			g.lineTo(halfWidth, 0);
+			g.lineTo(imageSize, imageSize - halfWidth);
+			g.lineTo(imageSize, imageSize);
+			g.lineTo(imageSize - halfWidth, imageSize);
+			g.lineTo(0, halfWidth);
+			g.lineTo(0, 0);
 			g.endFill();
 			g.beginFill(0xffffff);
-			g.moveTo(x1, y0);
-			g.lineTo(x1, y0 + halfWidth);
-			g.lineTo(x0 + halfWidth, y1);
-			g.lineTo(x0, y1);
-			g.lineTo(x0, y1 - halfWidth);
-			g.lineTo(x1 - halfWidth, y0);
-			g.lineTo(x1, y0);
+			g.moveTo(imageSize, 0);
+			g.lineTo(imageSize, halfWidth);
+			g.lineTo(halfWidth, imageSize);
+			g.lineTo(0, imageSize);
+			g.lineTo(0, imageSize - halfWidth);
+			g.lineTo(imageSize - halfWidth, 0);
+			g.lineTo(imageSize, 0);
 			g.endFill();
 			MBdFactoryUtil.qualityOn();
-			_imageClose.draw(shape);
+			_imageClose.draw(shape, getImageOffsetMatrix());
 			_imageClose.applyFilter(
 				_imageClose, _imageClose.rect, new Point(),
 				new GlowFilter(0x000000, 1, 2, 2));
@@ -484,7 +498,19 @@ class MWindowBdFactory
 	{
 		if (_imageMinimize == null)
 		{
-			_imageMinimize = new BitmapData(size - 4, size - 4, true, 0x00000000);
+			_imageMinimize = newImageBitmapData();
+			var shape = MBdFactoryUtil.getShape();
+			var g = shape.graphics;
+			g.clear();
+			g.beginFill(0xffffff);
+			g.drawRect(0, imageSize - 3, imageSize, 3);
+			g.endFill();
+			MBdFactoryUtil.qualityOn();
+			_imageMinimize.draw(shape, getImageOffsetMatrix());
+			_imageMinimize.applyFilter(
+				_imageMinimize, _imageMinimize.rect, new Point(),
+				new GlowFilter(0x000000, 1, 2, 2));
+			MBdFactoryUtil.qualityOff();
 		}
 		return _imageMinimize;
 	}
@@ -494,7 +520,20 @@ class MWindowBdFactory
 	{
 		if (_imageMaximize == null)
 		{
-			_imageMaximize = new BitmapData(size - 4, size - 4, true, 0x00000000);
+			_imageMaximize = newImageBitmapData();
+			var shape = MBdFactoryUtil.getShape();
+			var g = shape.graphics;
+			g.clear();
+			g.beginFill(0xffffff);
+			g.drawRect(0, 0, imageSize, imageSize);
+			g.drawRect(2, 3, imageSize - 4, imageSize - 5);
+			g.endFill();
+			MBdFactoryUtil.qualityOn();
+			_imageMaximize.draw(shape, getImageOffsetMatrix());
+			_imageMaximize.applyFilter(
+				_imageMaximize, _imageMaximize.rect, new Point(),
+				new GlowFilter(0x000000, 1, 2, 2));
+			MBdFactoryUtil.qualityOff();
 		}
 		return _imageMaximize;
 	}
@@ -504,7 +543,24 @@ class MWindowBdFactory
 	{
 		if (_imageCollapse == null)
 		{
-			_imageCollapse = new BitmapData(size - 4, size - 4, true, 0x00000000);
+			_imageCollapse = newImageBitmapData();
+			var shape = MBdFactoryUtil.getShape();
+			var g = shape.graphics;
+			g.clear();
+			g.beginFill(0xffffff);
+			g.drawRect(3, 0, imageSize - 3, imageSize - 4);
+			g.drawRect(3, 3, imageSize - 5, imageSize - 7);
+			g.endFill();
+			g.beginFill(0xffffff);
+			g.drawRect(0, 4, imageSize - 3, imageSize - 4);
+			g.drawRect(2, 7, imageSize - 7, imageSize - 9);
+			g.endFill();
+			MBdFactoryUtil.qualityOn();
+			_imageCollapse.draw(shape, getImageOffsetMatrix());
+			_imageCollapse.applyFilter(
+				_imageCollapse, _imageCollapse.rect, new Point(),
+				new GlowFilter(0x000000, 1, 2, 2));
+			MBdFactoryUtil.qualityOff();
 		}
 		return _imageCollapse;
 	}

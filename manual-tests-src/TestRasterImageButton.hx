@@ -6,6 +6,7 @@ import flash.display.Sprite;
 import flash.geom.Matrix;
 import temperate.components.CButtonState;
 import temperate.components.CRasterImageButton;
+import temperate.components.CSpacer;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.core.CSprite;
@@ -154,11 +155,11 @@ class TestRasterImageButton extends Sprite
 			
 			line.add(new Bitmap(MWindowBdFactory.getBgUp())).setFixedSize(0, 0).setOffsets(-1, 0);
 			line.add(new Bitmap(MWindowBdFactory.getImageClose())).setOffsets(0, 2);
-			line.add(new Bitmap(MWindowBdFactory.getImageClose()))
-				.setFixedSize(72).setChildAlign(1).setOffsets(-1, 2);
-			line.add(new Bitmap(MWindowBdFactory.getImageMinimize()));
-			line.add(new Bitmap(MWindowBdFactory.getImageMaximize()));
-			line.add(new Bitmap(MWindowBdFactory.getImageCollapse()));
+			line.add(new CSpacer()).setFixedSize(5);
+			line.add(new Bitmap(MWindowBdFactory.getImageMinimize())).setOffsets(0, 2);
+			line.add(new Bitmap(MWindowBdFactory.getImageMaximize())).setOffsets(0, 2);
+			line.add(new Bitmap(MWindowBdFactory.getImageClose())).setOffsets(0, 2);
+			line.add(new Bitmap(MWindowBdFactory.getImageCollapse())).setOffsets(0, 2);
 		}
 	}
 	
