@@ -1,6 +1,7 @@
 package temperate.text;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
+import flash.errors.Error;
 import flash.events.Event;
 import flash.text.TextField;
 import flash.text.TextFieldType;
@@ -128,9 +129,9 @@ class CTextArea extends CSprite
 	
 	override function doValidateSize()
 	{
-		trace("doValidateSize {");
 		if (!_size_valid)
 		{
+			trace("doValidateSize {");
 			_size_valid = true;
 			
 			_layout.width = _settedWidth;
@@ -161,12 +162,12 @@ class CTextArea extends CSprite
 			}
 			
 			_view_valid = false;
+			trace("} doValidateSize");
 		}
 		if (!_view_valid)
 		{
 			postponeView();
 		}
-		trace("} doValidateSize");
 	}
 	
 	override function doValidateView()

@@ -72,7 +72,6 @@ class CValidator
 	
 	function onExitFrame(event:Event)
 	{
-		trace("{{{{{{{{{{{{{{{{{{{{{{{{{{");
 		_shape.removeEventListener(Event.EXIT_FRAME, onExitFrame);
 		var sizeListeners = _sizeListeners;
 		
@@ -90,6 +89,5 @@ class CValidator
 		}
 		
 		_hasExitFrame = false;
-		trace("}}}}}}}}}}}}}}}}}}}}}}}}}}");
 	}
 }

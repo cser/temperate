@@ -29,15 +29,15 @@ class ScrollTextLayout implements IScrollTextLayout
 		
 		var hScrollBar = tryScrollH(tf, showHScrollBar, hideHScrollBar);
 		var hasH = hScrollBar != null;
-		if (hasH && !hasV)
-		{
-			// Second try
-			vScrollBar = tryScrollV(tf, showVScrollBar, hideVScrollBar);
-			hasV = vScrollBar != null;
-		}
 		if (hasH)
 		{
 			tf.height = height - hScrollBar.height;
+			if (!hasV)
+			{
+				// Second try
+				vScrollBar = tryScrollV(tf, showVScrollBar, hideVScrollBar);
+				hasV = vScrollBar != null;
+			}
 			hScrollBar.width = hasV ? width - vScrollBar.width : width;
 		}
 		
