@@ -224,7 +224,8 @@ class MScrollBarBdFactory
 		{
 			var boxHeight = 20;
 			var matrix = new Matrix();
-			matrix.createGradientBox(boxHeight, boxHeight, 0, -3, -3);
+			matrix.createGradientBox(
+				boxHeight, boxHeight, 0/*horizontal ? Math.PI * .5 : 0*/, -3, -3);
 			
 			var colors = [];
 			var alphas = [];
@@ -245,9 +246,9 @@ class MScrollBarBdFactory
 			g.endFill();
 		}
 		
-		var color = 0xf050a030;
+		var color = 0x8050a030;
 		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(3, 3, arrowSize - 4, arrowSize - 4, 4);
+		g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 4);
 		g.drawRoundRect(3, 3, arrowSize - 6, arrowSize - 6, 4);
 		g.endFill();
 		
@@ -317,9 +318,9 @@ class MScrollBarBdFactory
 				g.endFill();
 			}
 			
-			var color = 0xf050a030;
+			var color = 0x8050a030;
 			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-			g.drawRoundRect(3, 3, arrowSize - 4, arrowSize - 4, 4);
+			g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 4);
 			g.drawRoundRect(3, 3, arrowSize - 6, arrowSize - 6, 4);
 			g.endFill();
 			

@@ -1,5 +1,7 @@
 package ;
 import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.Shape;
 import flash.display.Sprite;
 import flash.display.StageQuality;
 import helpers.Scaler;
@@ -9,6 +11,7 @@ import temperate.containers.CVBox;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.skins.MFieldRectSkin;
+import temperate.raster.Scale3GridDrawer;
 
 class TestScrollBar extends Sprite
 {
@@ -35,7 +38,7 @@ class TestScrollBar extends Sprite
 		
 		var g = graphics;
 		g.beginFill(0xeeeeee);
-		g.drawRect(0, 290, 200, 200);
+		g.drawRect(0, 290, 200, 300);
 		g.endFill();
 		
 		newButtonsBlock().addTo(this, 10, 300);
@@ -59,12 +62,12 @@ class TestScrollBar extends Sprite
 		line.add(new Bitmap(MScrollBarBdFactory.getBottomOver()));
 		
 		var line = new CHBox().addTo(column);
-		line.add(new Bitmap(MScrollBarBdFactory.getHThumbUp()));
-		line.add(new Bitmap(MScrollBarBdFactory.getVThumbUp()));
+		line.add(newShape(true, MScrollBarBdFactory.getHThumbUp()));
+		line.add(newShape(false, MScrollBarBdFactory.getVThumbUp()));
 		
 		var line = new CHBox().addTo(column);
-		line.add(new Bitmap(MScrollBarBdFactory.getHThumbOver()));
-		line.add(new Bitmap(MScrollBarBdFactory.getVThumbOver()));
+		line.add(newShape(true, MScrollBarBdFactory.getHThumbOver()));
+		line.add(newShape(false, MScrollBarBdFactory.getVThumbOver()));
 		
 		return column;
 	}
@@ -77,5 +80,15 @@ class TestScrollBar extends Sprite
 			new MButton().setText("::"),
 			new MFieldRectSkin()
 		);
+	}
+	
+	function newShape(horizontal:Bool, bd:BitmapData)
+	{
+		var shape = new Shape();
+		var drawer = new Scale3GridDrawer(horizontal, shape.graphics);
+		drawer.setBitmapData(bd);
+		drawer.setBounds(0, 0, horizontal ? 100 : 0, horizontal ? 0 : 100);
+		drawer.redraw();
+		return shape;
 	}
 }
