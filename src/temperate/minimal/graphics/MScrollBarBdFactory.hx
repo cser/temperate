@@ -315,6 +315,54 @@ class MScrollBarBdFactory
 	}
 	
 	//----------------------------------------------------------------------------------------------
+	// Background
+	//----------------------------------------------------------------------------------------------
+	
+	private static var _hBgUp:BitmapData;
+	
+	public static function getHBgUp()
+	{
+		if (_hBgUp == null)
+		{
+			_hBgUp = newScrollBg(true, false);
+		}
+		return _hBgUp;
+	}
+	
+	private static var _hBgDown:BitmapData;
+
+	public static function getHBgDown()
+	{
+		if (_hBgDown == null)
+		{
+			_hBgDown = newScrollBg(true, true);
+		}
+		return _hBgDown;
+	}
+	
+	private static var _vBgUp:BitmapData;
+	
+	public static function getVBgUp()
+	{
+		if (_vBgUp == null)
+		{
+			_vBgUp = newScrollBg(false, false);
+		}
+		return _vBgUp;
+	}
+	
+	private static var _vBgDown:BitmapData;
+
+	public static function getVBgDown()
+	{
+		if (_vBgDown == null)
+		{
+			_vBgDown = newScrollBg(false, true);
+		}
+		return _vBgDown;
+	}
+	
+	//----------------------------------------------------------------------------------------------
 	//
 	//  Generators
 	//
@@ -326,31 +374,13 @@ class MScrollBarBdFactory
 	{
 		if (_upArrow == null)
 		{
-			_upArrow = new BitmapData(10, 6, true, 0x00000000);
-			
-			var line = [
-				4, 0, 5, 0,
-				3, 1, 4, 1, 5, 1, 6, 1,
-				2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2,
-				1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 7, 3, 8, 3,
-				0, 4, 1, 4, 2, 4, 3, 4, 6, 4, 7, 4, 8, 4, 9, 4,
-				0, 5, 1, 5, 8, 5, 9, 5
-			];
-			var i = line.length - 1;
-			do
-			{
-				_upArrow.setPixel32(line[i - 1], line[i], arrowColor);
-				i -= 2;
-			}
-			while (i > 0);
+			_upArrow = MArrowBdFactory.newUpArrow(arrowColor);
 		}
 		return _upArrow;
 	}
 	
 	static function newArrow(horizontal:Bool, left:Bool, state:CButtonState)
 	{
-		MBdFactoryUtil.qualityOn();
-		
 		var bitmapData = getBg(horizontal, state).clone();
 		var arrow = getUpArrow();
 		
@@ -392,7 +422,6 @@ class MScrollBarBdFactory
 			bitmapData.draw(arrow, new Matrix(1, 0, 0, -1, tx, ty), transform);
 		}
 		
-		MBdFactoryUtil.qualityOff();
 		return bitmapData;
 	}
 	
@@ -508,6 +537,50 @@ class MScrollBarBdFactory
 				bd.fillRect(rect, thumbCenterDarkColor);
 			}
 		}
+		return bd;
+	}
+	
+	static function newScrollBg(horizontal:Bool, down:Bool)
+	{
+		var bgColor = down ? 0xffcccccc : 0xffeeeeee;
+		var bd = new BitmapData(arrowSize, arrowSize, true, bgColor);
+		var rect = new Rectangle();
+		if (horizontal)
+		{
+			rect.height = 1;
+			rect.width = arrowSize;
+		}
+		else
+		{
+			rect.width = 1;
+			rect.height = arrowSize;
+		}
+		
+		var darkColor = 0xffd0d0d0;
+		var lightColor = 0xffffffff;
+		if (horizontal)
+		{
+			rect.y = 0;
+			bd.fillRect(rect, darkColor);
+			rect.y = 1;
+			bd.fillRect(rect, lightColor);
+			rect.y = arrowSize - 2;
+			bd.fillRect(rect, lightColor);
+			rect.y = arrowSize - 1;
+			bd.fillRect(rect, darkColor);
+		}
+		else
+		{
+			rect.x = 0;
+			bd.fillRect(rect, darkColor);
+			rect.x = 1;
+			bd.fillRect(rect, lightColor);
+			rect.x = arrowSize - 2;
+			bd.fillRect(rect, lightColor);
+			rect.x = arrowSize - 1;
+			bd.fillRect(rect, darkColor);
+		}
+		
 		return bd;
 	}
 }

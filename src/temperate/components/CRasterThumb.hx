@@ -24,13 +24,17 @@ class CRasterThumb extends ACButton
 	override function init()
 	{
 		_parameters = [];
-		_minSize = 20;
+		minSize = 10;
+		minSizeWithIcon = 20;
 		
 		iconOffsetX = 0;
 		iconOffsetY = 0;
 		
 		_bg = new Shape();
 		addChild(_bg);
+		
+		_iconBitmap = new Bitmap();
+		addChild(_iconBitmap);
 		
 		_drawer = new Scale3GridDrawer(_horizontal, _bg.graphics);
 	}
@@ -96,11 +100,11 @@ class CRasterThumb extends ACButton
 			
 			if (_horizontal)
 			{
-				_width = CMath.max(_isCompactWidth ? 0 : _settedWidth, _minSize);
+				_width = CMath.max(_isCompactWidth ? 0 : _settedWidth, minSize);
 			}
 			else
 			{
-				_height = CMath.max(_isCompactHeight ? 0 : _settedHeight, _minSize);
+				_height = CMath.max(_isCompactHeight ? 0 : _settedHeight, minSize);
 			}
 			
 			_view_valid = false;
@@ -141,11 +145,11 @@ class CRasterThumb extends ACButton
 				_bg.alpha = 1;
 			}
 			
-			if (_iconBitmap != null)
-			{
-				_iconBitmap.x = (Std.int(_width - _iconBitmap.width) >> 1) + iconOffsetX;
-				_iconBitmap.y = (Std.int(_height - _iconBitmap.height) >> 1) + iconOffsetY;
-			}
+			_iconBitmap.x = (Std.int(_width - _iconBitmap.width) >> 1) + iconOffsetX;
+			_iconBitmap.y = (Std.int(_height - _iconBitmap.height) >> 1) + iconOffsetY;
+			_iconBitmap.visible = _horizontal ?
+				_width > minSizeWithIcon :
+				_height > minSizeWithIcon;
 		}
 	}
 	
@@ -156,21 +160,15 @@ class CRasterThumb extends ACButton
 		postponeSize();
 	}
 	
-	public var minSize(get_minSize, set_minSize):Float;
-	var _minSize:Float;
-	function get_minSize()
+	public var minSize(default, null):Float;
+	public var minSizeWithIcon(default, null):Float;
+	
+	public function setMinSizeParams(minSize:Float, minSizeWithIcon:Float)
 	{
-		return _minSize;
-	}
-	function set_minSize(value)
-	{
-		if (_minSize != value)
-		{
-			_minSize = value;
-			_size_valid = false;
-			postponeSize();
-		}
-		return _minSize;
+		this.minSize = minSize;
+		this.minSizeWithIcon = minSizeWithIcon;
+		_size_valid = false;
+		postponeSize();
 	}
 	
 	var _iconBitmap:Bitmap;
@@ -184,22 +182,7 @@ class CRasterThumb extends ACButton
 		this.icon = icon;
 		iconOffsetX = offsetX;
 		iconOffsetY = offsetY;
-		if (icon != null)
-		{
-			if (_iconBitmap == null)
-			{
-				_iconBitmap = new Bitmap();
-				addChild(_iconBitmap);
-			}
-			_iconBitmap.bitmapData = icon;
-		}
-		else
-		{
-			if (_iconBitmap != null)
-			{
-				_iconBitmap.bitmapData = null;
-			}
-		}
+		_iconBitmap.bitmapData = icon;
 		_view_valid = false;
 		postponeView();
 	}

@@ -15,39 +15,6 @@ import temperate.core.CMath;
 class MCommonBdFactory 
 {	
 	/*
-	static var _knockoutShape:BitmapData;
-
-	public static function getKnockoutShape()
-	{
-		if (_knockoutShape == null)
-		{
-			var innerStrength = 1.7;
-			var outerStrength = 1.5;
-			
-			var g = shape.graphics;
-			g.clear();
-			
-			g.beginFill(outerGlowColor, .1);
-			g.drawRoundRect(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 8);
-			g.drawRoundRect(1, 1, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 6);
-			g.endFill();
-			
-			g.beginFill(outerGlowColor, .5);
-			g.drawRoundRect(1, 1, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 6);
-			g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 4);
-			g.endFill();
-			
-			g.beginFill(innerGlowColor, .5);
-			g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 4);
-			g.drawRoundRect(4, 4, DEFAULT_WIDTH - 8, DEFAULT_HEIGHT - 8, 4);
-			g.endFill();
-			
-			_knockoutShape = new BitmapData(DEFAULT_WIDTH, DEFAULT_HEIGHT, true, 0x0);
-			_knockoutShape.draw(shape);
-		}
-		return _knockoutShape;
-	}
-
 	static function newStriae(color:UInt, backgroundColor:UInt, space:Int, size:Int)
 	{
 		var g = shape.graphics;
@@ -71,119 +38,6 @@ class MCommonBdFactory
 	public static function getPanelStriae()
 	{
 		return newStriae(0xc0c0c0, 0xd0d0d0, 3, 1);
-	}
-	
-	static var ROUND_SIZE = 18;
-	
-	public static function newToggleShape(isRound:Bool, enabled:Bool)
-	{
-		var innerStrength = 1.7;
-		var outerStrength = .5;
-
-		var g = shape.graphics;
-		g.clear();
-		
-		var halfRoundSize = ROUND_SIZE >> 1;
-		
-		g.beginFill(enabled ? textBgColor : textBgColorDisabled);
-		if (isRound)
-		{
-			g.drawCircle(halfRoundSize, halfRoundSize, halfRoundSize - 3);
-		}
-		else
-		{
-			g.drawRect(2, 2, ROUND_SIZE - 4, ROUND_SIZE - 4);
-		}
-		g.endFill();
-		
-		var bitmapData:BitmapData = new BitmapData(ROUND_SIZE, ROUND_SIZE, true, 0x0);
-		bitmapData.draw(shape);
-		bitmapData.applyFilter(
-			bitmapData, bitmapData.rect, new Point(),
-			new GlowFilter(
-				textInnerGlowColor, 1, 2, 2, innerStrength, BitmapFilterQuality.HIGH, true)
-		);
-		bitmapData.applyFilter(
-			bitmapData, bitmapData.rect, new Point(),
-			new GlowFilter(textOuterGlowColor, 1, 3, 3, outerStrength, BitmapFilterQuality.HIGH));
-		return bitmapData;
-	}
-
-	static function newScrollBg(down:Bool)
-	{
-		var defaultScrollThickness = 18;
-		
-		var g = shape.graphics;
-		g.clear();
-		
-		g.beginFill(down ? 0xc0c0c0 : 0xa1a1a1);
-		g.drawRect(0, 0, DEFAULT_WIDTH, defaultScrollThickness);
-		g.endFill();
-		g.lineStyle(1, 0x8f8f8f);
-		var y = 0;
-		while (y <= defaultScrollThickness)
-		{
-			g.moveTo(0, y);
-			g.lineTo(DEFAULT_WIDTH, y);
-			y += 2;
-		}
-		
-		var bitmapData = new BitmapData(DEFAULT_WIDTH, defaultScrollThickness, true, 0x00efefef);
-		bitmapData.draw(shape);
-		return bitmapData;
-	}
-	
-	private static var _scrollBgUp:BitmapData;
-	
-	public static function getScrollBgUp()
-	{
-		if (_scrollBgUp == null)
-		{
-			_scrollBgUp = newScrollBg(false);
-		}
-		return _scrollBgUp;
-	}
-	
-	private static var _scrollBgDown:BitmapData;
-
-	public static function getScrollBgDown()
-	{
-		if (_scrollBgDown == null)
-		{
-			_scrollBgDown = newScrollBg(true);
-		}
-		return _scrollBgDown;
-	}
-	
-	private var _thumbIcon:BitmapData;
-
-	public function getThumbIcon()
-	{
-		if (_thumbIcon == null)
-		{
-			var defaultScrollThickness = 18;
-			
-			var g = shape.graphics;
-			g.clear();
-			
-			for (i in 0 ... 4)
-			{
-				g.beginFill(0x000000, .4);
-				g.drawRect(2 + i * 3, 3, 2, defaultScrollThickness - 6);
-				g.endFill();
-			}
-			
-			var innerStrength = 1.7;
-			
-			_thumbIcon = new BitmapData(
-				defaultScrollThickness - 4, defaultScrollThickness - 2, true, 0x00efefef);
-			_thumbIcon.draw(shape);
-			_thumbIcon.applyFilter(
-				_thumbIcon, _thumbIcon.rect, new Point(),
-				new GlowFilter(0xffffff, 1, 2, 2, innerStrength, BitmapFilterQuality.HIGH)
-			);
-		}
-		return _thumbIcon;
 	}
 	*/
 	
@@ -460,44 +314,38 @@ class MCommonBdFactory
 	
 	static function newArrow(horizontal:Bool, left:Bool, color:UInt)
 	{
-		MBdFactoryUtil.qualityOn();
-		var shape = MBdFactoryUtil.getShape();
-		
-		var g = shape.graphics;
-		g.clear();
-		
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.moveTo(3, 1);
-		g.lineTo(8, 7);
-		g.lineTo(3, 13);
-		g.lineTo(1, 11);
-		g.lineTo(4, 7);
-		g.lineTo(1, 3);
-		g.endFill();
-		
-		var innerStrength = 1.7;
+		var arrow = MArrowBdFactory.newUpArrow(color);
 		
 		var width = horizontal ? 13 : 14;
 		var height = horizontal ? 14 : 13;
 		var bitmapData = new BitmapData(width, height, true, 0x00000000);
-		if (horizontal && !left)
+		var offsetX = (width - arrow.width) >> 1;
+		var offsetY = (height - arrow.height) >> 1;
+		var indent = 2;
+		if (horizontal && left)
 		{
-			bitmapData.draw(shape);
+			var tx = offsetY;
+			var ty = offsetX + 1;
+			bitmapData.draw(arrow, new Matrix(0, 1, 1, 0, tx, ty));
 		}
-		else if (horizontal && left)
+		else if (horizontal && !left)
 		{
-			bitmapData.draw(shape, new Matrix(-1, 0, 0, 1, width, 0));
+			var tx = offsetY + arrow.height + 1;
+			var ty = offsetX + 1;
+			bitmapData.draw(arrow, new Matrix(0, 1, -1, 0, tx, ty));
 		}
-		else if (!horizontal && !left)
+		else if (!horizontal && left)
 		{
-			bitmapData.draw(shape, new Matrix(0, 1, -1, 0, width, 0));
+			var tx = offsetX;
+			var ty = offsetY + indent;
+			bitmapData.draw(arrow, new Matrix(1, 0, 0, 1, tx, ty));
 		}
 		else
 		{
-			bitmapData.draw(shape, new Matrix(0, -1, 1, 0, 0, height));
+			var tx = offsetX;
+			var ty = offsetY + arrow.height + 1 - indent;
+			bitmapData.draw(arrow, new Matrix(1, 0, 0, -1, tx, ty));
 		}
-		
-		MBdFactoryUtil.qualityOff();
 		return bitmapData;
 	}
 	
