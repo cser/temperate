@@ -10,9 +10,9 @@ import temperate.windows.CPopUpManager;
 
 class ColorsWindow extends MWindow
 {
-	public function new(manager:CPopUpManager) 
+	public function new() 
 	{
-		super(manager);
+		super();
 		title = "Colors";
 		
 		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
@@ -20,6 +20,6 @@ class ColorsWindow extends MWindow
 	
 	function onCloseClick(event:MouseEvent)
 	{
-		close(false);
+		manager.remove(this);
 	}
 }

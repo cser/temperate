@@ -40,9 +40,9 @@ class Rect extends flash.display.BitmapData { public function new() { super(0, 0
 
 class ToolsWindow extends MWindow
 {
-	public function new(manager:CPopUpManager) 
+	public function new() 
 	{
-		super(manager);
+		super();
 		
 		_baseSkin.title = "Tools";
 		
@@ -126,9 +126,9 @@ class ToolsWindow extends MWindow
 	{
 		if (_colorsWindow == null)
 		{
-			_colorsWindow = new ColorsWindow(_manager);
+			_colorsWindow = new ColorsWindow();
 		}
-		_colorsWindow.open(false);
+		manager.add(_colorsWindow, false);
 	}
 	
 	var _color:UInt;
@@ -152,14 +152,14 @@ class ToolsWindow extends MWindow
 	
 	function onOpenClick(event:MouseEvent)
 	{
-		var window = new OpenWindow(_manager);
+		var window = new OpenWindow();
 		window.setSize(200, 150);
-		window.open(true);
+		manager.add(window, true);
 	}
 	
 	function onSaveClick(event:MouseEvent)
 	{
-		var window = new SaveWindow(_manager);
-		window.open(true);
+		var window = new SaveWindow();
+		manager.add(window, true);
 	}
 }

@@ -10,10 +10,10 @@ class CWindowConstraintsComponent extends ACWindowComponent
 	override public function move(x:Int, y:Int):Void
 	{
 		var manager = _getManager();
-		var width = getWidth();
-		var height = getHeight();
 		if (manager != null)
 		{
+			var width = getWidth();
+			var height = getHeight();
 			if (x < manager.areaX - width * .5)
 			{
 				x = Std.int(manager.areaX - width * .5);
@@ -30,7 +30,7 @@ class CWindowConstraintsComponent extends ACWindowComponent
 			{
 				y = Std.int(manager.areaY + manager.areaHeight - _skin.headHeight);
 			}
-			super.move(x, y);
 		}
+		super.move(x, y);
 	}
 }

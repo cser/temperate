@@ -66,6 +66,7 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		_popUps.push(popUp);
 		_isModal.set(popUp, modal);
 		updateModal();
+		popUp.manager = this;
 		popUp.animateShow(fast);
 	}
 	
@@ -88,6 +89,7 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 			_isModal.delete(popUp);
 			updateModal();
 			popUp.animateHide(fast, onAnimateCloseComplete);
+			popUp.manager = null;
 		}
 	}
 	

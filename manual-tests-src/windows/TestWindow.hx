@@ -1,22 +1,23 @@
 package windows;
-import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFormatFactory;
+import temperate.skins.CDefaultWindowSkin;
+import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
-import temperate.windows.CPopUpManager;
 
 class TestWindow extends ACWindow
 {
-	public function new(manager:CPopUpManager) 
+	public function new() 
 	{
-		super(manager);
-		/*
+		super();
+		
+		_main = new CVBox();
+		_skin.addChild(_main);
 		_main.setIndents(10, 10, 10, 10);
-		addChild(_main);
 		
 		_title = MFormatFactory.WINDOW_TITLE.newAutoSized();
 		_title.text = "Test window";
@@ -32,71 +33,45 @@ class TestWindow extends ACWindow
 		
 		var button = new MFlatButton();
 		button.text = "OK";
+		button.addEventListener(MouseEvent.CLICK, onOKClick);
 		_buttonBox.add(button).setAlign(.5);
 		
 		var button = new MFlatButton();
 		button.text = "Cancel";
+		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		_buttonBox.add(button).setAlign(.5);
 		
-		_size_valid = false;
-		postponeSize();*/
+		var width = _main.width;
+		var height = _main.height;
+		_skin.setSize(width, height);
+		
+		var g = _main.graphics;
+		g.clear();
+		g.lineStyle(2, 0x000000);
+		g.beginFill(0xeeeeee);
+		g.drawRoundRect(0, 0, width, height, 10);
+		g.endFill();
 	}
 	
-	/*var _main:CVBox;
+	var _main:CVBox;
 	var _buttonBox:CHBox;
 	var _title:TextField;
 	var _description:TextField;
+	var _skin:CDefaultWindowSkin;
 	
-	override function doValidateSize()
+	override function newSkin():ICWindowSkin
 	{
-		if (!_size_valid)
-		{
-			_size_valid = true;
-			
-			_main.width = getNeededWidth();
-			_main.height = getNeededHeight();
-			_width = _main.width;
-			_height = _main.height;
-			
-			_view_valid = false;
-			postponeView();
-		}
+		_skin = new CDefaultWindowSkin();
+		return _skin;
 	}
 	
-	override function doValidateView()
+	function onOKClick(event:MouseEvent)
 	{
-		if (!_view_valid)
-		{
-			_view_valid = true;
-			
-			var g = graphics;
-			g.clear();
-			g.lineStyle(2, 0x000000);
-			g.beginFill(0xeeeeee);
-			g.drawRoundRect(0, 0, _width, _height, 10);
-			g.endFill();
-		}
-	}*/
-	
-	/*var _owner:ICWindowOwner;
-	
-	override public function subscribe(owner:ICWindowOwner):Void 
-	{
-		super.subscribe(owner);
-		_owner = owner;
-		addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		manager.remove(this);
 	}
 	
-	override public function unsubscribe(owner:ICWindowOwner):Void 
+	function onCancelClick(event:MouseEvent)
 	{
-		super.unsubscribe(owner);
-		_owner = null;
-		removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		manager.remove(this);
 	}
-	
-	function onMouseDown(event:Event)
-	{
-		_owner.windowStartDrag(this, true);
-	}
-	*/
 }

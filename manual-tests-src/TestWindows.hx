@@ -1,6 +1,7 @@
 package ;
 import flash.display.Sprite;
 import flash.events.Event;
+import temperate.windows.CPopUpManager;
 import windows.TestWindow;
 
 class TestWindows extends Sprite
@@ -10,11 +11,11 @@ class TestWindows extends Sprite
 		super();
 	}
 	
-	/*var _manager:CWindowManager;
+	var _manager:CPopUpManager;
 	
 	public function init()
 	{
-		_manager = new CWindowManager(this);
+		_manager = new CPopUpManager(this);
 		stage.addEventListener(Event.RESIZE, onStageResize);
 		onStageResize();
 		
@@ -22,15 +23,14 @@ class TestWindows extends Sprite
 		_manager.add(window, true);
 		
 		var window = new TestWindow();
-		window.x = 15;
-		window.y = 20;
+		window.move(15, 20);
 		_manager.add(window, true);
 	}
 	
 	function onStageResize(event:Event = null)
 	{
-		_manager.setBounds(10, stage.stageWidth - 10, 10, stage.stageHeight - 10);
-	}*/
+		_manager.setArea(10, 10, stage.stageWidth - 10, stage.stageHeight - 10);
+	}
 }
 /*
 Окно-контейнер

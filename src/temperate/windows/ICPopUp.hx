@@ -12,6 +12,8 @@ interface ICPopUp
 	
 	var isActive(get_isActive, set_isActive):Bool;
 	
+	var manager:CPopUpManager;
+	
 	function animateShow(fast:Bool):Void;
 	
 	function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void;

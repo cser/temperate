@@ -6,21 +6,19 @@ import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import temperate.collections.CPriorityList;
-import temperate.skins.CNullWindowSkin;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.components.ACWindowComponent;
-import temperate.windows.components.CBaseWindowComponent;
-import temperate.windows.components.CMoveWindowComponent;
+import temperate.windows.components.CWindowBaseComponent;
 import temperate.windows.components.CWindowConstraintsComponent;
 import temperate.windows.components.CWindowMaximizeComponent;
+import temperate.windows.components.CWindowMoveComponent;
 import temperate.windows.docks.CAlignedPopUpDock;
 import temperate.windows.docks.ICPopUpDock;
 
 class ACWindow implements ICPopUp
 {
-	function new(manager:CPopUpManager) 
+	function new() 
 	{
-		_manager = manager;
 		innerDispatcher = new EventDispatcher();
 		dock = new CAlignedPopUpDock();
 		
@@ -36,12 +34,12 @@ class ACWindow implements ICPopUp
 		view.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 	}
 	
-	var _manager:CPopUpManager;
-	
 	function getManager()
 	{
-		return _manager;
+		return manager;
 	}
+	
+	public var manager:CPopUpManager;
 	
 	public var view(default, null):DisplayObject;
 	
@@ -78,21 +76,10 @@ class ACWindow implements ICPopUp
 		return _baseSkin.isActive = value;
 	}
 	
-	public function open(modal:Bool, fast:Bool = false)
-	{
-		onManagerResize();
-		_manager.add(this, modal, fast);
-	}
-	
-	public function close(fast:Bool = false)
-	{
-		_manager.remove(this, fast);
-	}
-	
 	function onManagerResize(event:Event = null)
 	{
-		dock.arrange(Std.int(width), Std.int(height), _manager.areaWidth, _manager.areaHeight);
-		move(_manager.areaX + dock.x, _manager.areaY + dock.y);
+		dock.arrange(Std.int(width), Std.int(height), manager.areaWidth, manager.areaHeight);
+		move(manager.areaX + dock.x, manager.areaY + dock.y);
 	}
 	
 	public var dock(get_dock, set_dock):ICPopUpDock;
@@ -109,7 +96,7 @@ class ACWindow implements ICPopUp
 	
 	function onMouseDown(event:MouseEvent)
 	{
-		_manager.moveToTop(this);
+		manager.moveToTop(this);
 	}
 	
 	var _baseContainer:Sprite;
@@ -123,14 +110,14 @@ class ACWindow implements ICPopUp
 	
 	function newSkin():ICWindowSkin
 	{
-		return CNullWindowSkin.getInstance();
+		return null;
 	}
 	
 	var _mover:ACWindowComponent;
 	
 	function newMover():ACWindowComponent
 	{
-		return new CMoveWindowComponent(_baseSkin.head, get_dock);
+		return new CWindowMoveComponent(_baseSkin.head, get_dock);
 	}
 	
 	public var x(get_x, null):Int;
@@ -248,7 +235,7 @@ class ACWindow implements ICPopUp
 	{
 		_components = new CPriorityList();
 		
-		_base = new CBaseWindowComponent();
+		_base = new CWindowBaseComponent();
 		_base.priority = CWindowComponentPriority.BASE;
 		addComponent(_base);
 		

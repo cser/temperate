@@ -1,7 +1,7 @@
 package temperate.windows.components;
 import temperate.windows.ICPopUp;
 
-class CBaseWindowComponent extends ACWindowComponent
+class CWindowBaseComponent extends ACWindowComponent
 {
 	public function new() 
 	{

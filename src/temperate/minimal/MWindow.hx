@@ -9,9 +9,9 @@ import temperate.windows.CPopUpManager;
 
 class MWindow extends ACWindow
 {
-	public function new(manager:CPopUpManager)
+	public function new()
 	{
-		super(manager);
+		super();
 		animator = new MWindowScaleAnimator();
 	}
 	

@@ -1,12 +1,10 @@
 package temperate.windows.components;
 import flash.display.DisplayObject;
-import flash.display.GradientType;
-import flash.display.Graphics;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import temperate.windows.docks.ICPopUpDock;
 
-class CMoveWindowComponent extends ACWindowComponent
+class CWindowMoveComponent extends ACWindowComponent
 {
 	public function new(target:DisplayObject, getDock:Void->ICPopUpDock)
 	{
@@ -70,22 +68,24 @@ class CMoveWindowComponent extends ACWindowComponent
 		var dock = _getDock();
 		var manager = _getManager();
 		dock.arrange(
-			width, height, manager.areaWidth, manager.areaHeight
-		);
+			width, height, manager.areaWidth, manager.areaHeight);
 		super.move(dock.x + manager.areaX, dock.y + manager.areaY);
 		super.animateShow(fast);
 	}
 	
 	override public function move(x:Int, y:Int):Void
 	{
-		var width = getWidth();
-		var height = getHeight();
-		var dock = _getDock();
 		var manager = _getManager();
-		dock.move(
-			width, height, manager.areaWidth, manager.areaHeight,
-			x - manager.areaX, y - manager.areaY
-		);
+		if (manager != null)
+		{
+			var width = getWidth();
+			var height = getHeight();
+			var dock = _getDock();
+			dock.move(
+				width, height, manager.areaWidth, manager.areaHeight,
+				x - manager.areaX, y - manager.areaY
+			);
+		}
 		super.move(x, y);
 	}
 }

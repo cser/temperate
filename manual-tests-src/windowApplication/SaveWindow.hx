@@ -11,9 +11,9 @@ import temperate.windows.CPopUpManager;
 
 class SaveWindow extends MWindow 
 {
-	public function new(manager:CPopUpManager) 
+	public function new() 
 	{
-		super(manager);
+		super();
 		
 		_baseSkin.title = "Save file";
 		
@@ -48,11 +48,11 @@ class SaveWindow extends MWindow
 	
 	function onSaveClick(event:MouseEvent)
 	{
-		close();
+		manager.remove(this);
 	}
 	
 	function onCancelClick(event:MouseEvent)
 	{
-		close();
+		manager.remove(this);
 	}
 }
