@@ -1,19 +1,16 @@
 package ;
 import flash.display.Sprite;
+import flash.text.TextField;
 import flash.text.TextFieldType;
-import haxe.Timer;
 import helpers.Scaler;
 import temperate.components.CScrollPolicy;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
-import temperate.core.CValidator;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MLabel;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.MTextArea;
 import temperate.minimal.skins.MFieldRectSkin;
-import temperate.skins.CNullRectSkin;
-import temperate.text.CDefaultFormatFactory;
 import temperate.text.CTextArea;
 
 class TestTextArea extends Sprite
@@ -128,13 +125,22 @@ class TestTextArea extends Sprite
 			area.worldWrap = true;
 			var scaler = new Scaler(area);
 			line.add(scaler).setIndents(0, 50, 0, 50);
+			
+			new MLabel().setText("Native").addTo(line);
+			
+			var tf = new TextField();
+			tf.type = TextFieldType.INPUT;
+			tf.multiline = true;
+			tf.border = true;
+			line.add(tf);
 		}
+		
+		//new FPSMonitor().addTo(this);
 		
 		/*
 		TODO
 		Отступы у текста
 		Починить скроллинг при вводе текста (вылазить за пределы видимости)
-		Починить неправильное определение величины скроллирования при горизонтальном скроллере
 		*/
 	}
 	
@@ -159,7 +165,7 @@ class TestScrollBarBug extends temperate.minimal.MScrollBar
 		maxValue = 7;
 		pageSize = 6;
 		value = 8;
-		Timer.delay(onDelay, 100);
+		haxe.Timer.delay(onDelay, 100);
 	}
 	
 	function onDelay()

@@ -7,8 +7,9 @@ class MTextArea extends CTextArea
 	public function new() 
 	{
 		super(newHScrollBar, newVScrollBar, new MFieldRectSkin());
-		_layout.minWidth = 51;
-		_layout.minHeight = 51;
+		minWidth = 51;
+		minHeight = 51;
+		format = MFormatFactory.LABEL;
 	}
 	
 	function newHScrollBar()

@@ -28,33 +28,46 @@ class ScrollTextLayout implements IScrollTextLayout
 		}
 		tf.width = width;
 		tf.height = height;
-		
-		var vScrollBar = tryScrollV(tf, showVScrollBar, hideVScrollBar);
-		var hasV = vScrollBar != null;
-		if (hasV)
+		if (tf.wordWrap)
 		{
-			tf.width = width - vScrollBar.width;
-		}
-		
-		var max = tf.maxScrollH;
-		var hScrollBar = tryScrollH(tf, showHScrollBar, hideHScrollBar);
-		var hasH = hScrollBar != null;
-		if (hasH)
-		{
-			tf.height = height - hScrollBar.height;
-			if (!hasV)
+			var sb = tryScrollV(tf, showVScrollBar, hideVScrollBar);
+			if (sb != null)
 			{
-				// Second try
-				vScrollBar = tryScrollV(tf, showVScrollBar, hideVScrollBar);
-				hasV = vScrollBar != null;
+				tf.width = width - sb.width;
+				tf.scrollH;
+				tf.scrollV;
+				sb.height = height;
 			}
-			hScrollBar.width = hasV ? width - vScrollBar.width : width;
 		}
-		
-		if (hasV)
+		else
 		{
-			vScrollBar.height = hasH ? height - hScrollBar.height : height;
-			tf.width = width - vScrollBar.width;
+			var vScrollBar = tryScrollV(tf, showVScrollBar, hideVScrollBar);
+			var hasV = vScrollBar != null;
+			if (hasV)
+			{
+				tf.width = width - vScrollBar.width;
+			}
+			
+			var max = tf.maxScrollH;
+			var hScrollBar = tryScrollH(tf, showHScrollBar, hideHScrollBar);
+			var hasH = hScrollBar != null;
+			if (hasH)
+			{
+				tf.height = height - hScrollBar.height;
+				if (!hasV)
+				{
+					// Second try
+					vScrollBar = tryScrollV(tf, showVScrollBar, hideVScrollBar);
+					hasV = vScrollBar != null;
+				}
+				hScrollBar.width = hasV ? width - vScrollBar.width : width;
+			}
+			
+			if (hasV)
+			{
+				vScrollBar.height = hasH ? height - hScrollBar.height : height;
+				//tf.width = width - vScrollBar.width;
+			}
 		}
 	}
 	
@@ -69,10 +82,9 @@ class ScrollTextLayout implements IScrollTextLayout
 				hideHScrollBar();
 				return null;
 			case CScrollPolicy.AUTO:
-				var min = 1;
 				tf.maxScrollV;// flashplayer bug spigot
 				var max = tf.maxScrollH;
-				if (max > min)
+				if (max > 0)
 				{
 					return showHScrollBar();
 				}
@@ -95,10 +107,9 @@ class ScrollTextLayout implements IScrollTextLayout
 				hideVScrollBar();
 				return null;
 			case CScrollPolicy.AUTO:
-				var min = 1;
 				tf.maxScrollH;// flashplayer bug spigot
 				var max = tf.maxScrollV;
-				if (max > min)
+				if (max > 1)
 				{
 					return showVScrollBar();
 				}

@@ -81,19 +81,31 @@ class Scaler extends Sprite
 		_round.y = _target.y + _target.height;
 	}
 	
+	var _oldX:Int;
+	var _oldY:Int;
+	var _oldWidth:Int;
+	var _oldHeight:Int;
+	
 	function redraw()
 	{
-		var g = _top.graphics;
-		g.clear();
-		g.lineStyle(0, 0xff0000);
-		
-		var x = _target.x;
-		var y = _target.y;
-		var width = _target.width;
-		var height = _target.height;
-		g.moveTo(x, y);
-		g.lineTo(x + width * .5, y);
-		g.moveTo(x + width * .5, y + height);
-		g.lineTo(x + width, y + height);
+		var x = Std.int(_target.x);
+		var y = Std.int(_target.y);
+		var width = Std.int(_target.width);
+		var height = Std.int(_target.height);
+		if (x != _oldX || y != _oldY || width != _oldWidth || height != _oldHeight)
+		{
+			_oldX = x;
+			_oldY = y;
+			_oldWidth = width;
+			_oldHeight = height;
+			
+			var g = _top.graphics;
+			g.clear();
+			g.lineStyle(0, 0xff0000);
+			g.moveTo(x, y);
+			g.lineTo(x + width * .5, y);
+			g.moveTo(x + width * .5, y + height);
+			g.lineTo(x + width, y + height);
+		}
 	}
 }
