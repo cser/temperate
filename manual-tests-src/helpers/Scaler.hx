@@ -1,5 +1,6 @@
 package helpers;
 import flash.display.DisplayObject;
+import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -8,6 +9,7 @@ class Scaler extends Sprite
 {
 	var _target:DisplayObject;
 	var _round:Sprite;
+	var _top:Shape;
 	
 	public function new(target:DisplayObject)
 	{
@@ -20,9 +22,12 @@ class Scaler extends Sprite
 		_round.addEventListener(MouseEvent.MOUSE_DOWN, onRoundMouseDown);
 		addChild(_round);
 		
+		_top = new Shape();
+		addChild(_top);
+		
 		var g = _round.graphics;
 		g.beginFill(0xff0000);
-		g.drawCircle(0, 0, 10);
+		g.drawCircle(0, 0, 8);
 		g.endFill();
 		
 		addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
@@ -78,9 +83,17 @@ class Scaler extends Sprite
 	
 	function redraw()
 	{
-		var g = graphics;
+		var g = _top.graphics;
 		g.clear();
 		g.lineStyle(0, 0xff0000);
-		g.drawRect(_target.x, _target.y, _target.width, _target.height);
+		
+		var x = _target.x;
+		var y = _target.y;
+		var width = _target.width;
+		var height = _target.height;
+		g.moveTo(x, y);
+		g.lineTo(x + width * .5, y);
+		g.moveTo(x + width * .5, y + height);
+		g.lineTo(x + width, y + height);
 	}
 }

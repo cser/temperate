@@ -1,7 +1,6 @@
 package temperate.text;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
-import flash.errors.Error;
 import flash.events.Event;
 import flash.text.TextField;
 import flash.text.TextFieldType;
@@ -11,6 +10,7 @@ import temperate.core.CMath;
 import temperate.core.CSprite;
 import temperate.layouts.IScrollTextLayout;
 import temperate.layouts.ScrollTextLayout;
+import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
 
 class CTextArea extends CSprite
@@ -30,6 +30,7 @@ class CTextArea extends CSprite
 		
 		_html = false;
 		_hLineScrollSize = 5;
+		_editable = false;
 		
 		_layout = new ScrollTextLayout();
 		
@@ -45,6 +46,9 @@ class CTextArea extends CSprite
 		_layout.vScrollPolicy = CScrollPolicy.AUTO;
 		
 		set_format(CDefaultFormatFactory.getDefaultFormat());
+		
+		updateTextType();
+		updateControlsEnabled();
 		
 		_settedWidth = 100;
 		_settedHeight = 100;
@@ -65,6 +69,7 @@ class CTextArea extends CSprite
 		if (_hScrollBar == null)
 		{
 			_hScrollBar = _newHScrollBar();
+			_hScrollBar.enabled = _enabled;
 			_hScrollBar.lineScrollSize = _hLineScrollSize;
 			_hScrollBar.addEventListener(Event.SCROLL, onHScroll);
 		}
@@ -90,6 +95,7 @@ class CTextArea extends CSprite
 		if (_vScrollBar == null)
 		{
 			_vScrollBar = _newVScrollBar();
+			_vScrollBar.enabled = _enabled;
 			_vScrollBar.addEventListener(Event.SCROLL, onVScroll);
 		}
 		if (_vScrollBar.parent != this)
@@ -145,7 +151,7 @@ class CTextArea extends CSprite
 			
 			if (_hScrollAvailable)
 			{
-				_hScrollBar.minValue = 1;
+				_hScrollBar.minValue = 0;
 				_hScrollBar.maxValue = _tf.maxScrollH;
 				_hScrollBar.pageSize = CMath.max(_tf.width, 1);
 			}
@@ -203,17 +209,64 @@ class CTextArea extends CSprite
 	{
 		_size_valid = false;
 		postponeSize();
+		dispatchEvent(new Event(Event.CHANGE));
 	}
 	
-	public var type(get_type, set_type):TextFieldType;
-	function get_type()
+	function updateTextType()
 	{
-		return _tf.type;
+		_tf.type = _enabled && _editable ?
+			_tf.type = TextFieldType.INPUT :
+			_tf.type = TextFieldType.DYNAMIC;
 	}
-	function set_type(value)
+	
+	function updateControlsEnabled()
 	{
-		_tf.type = value;
-		return value;
+		if (_vScrollBar != null)
+		{
+			_vScrollBar.enabled = _enabled;
+		}
+		if (_hScrollBar != null)
+		{
+			_hScrollBar.enabled = _enabled;
+		}
+		if (_enabled)
+		{
+			_bgSkin.state = _editable ? CSkinState.NORMAL : CSkinState.INACTIVE;
+		}
+		else
+		{
+			_bgSkin.state = CSkinState.DISABLED;
+		}
+	}
+	
+	public var editable(get_editable, set_editable):Bool;
+	var _editable:Bool;
+	function set_editable(value)
+	{
+		if (value != _editable)
+		{
+			_editable = value;
+			updateTextType();
+			updateControlsEnabled();
+		}
+		return _editable;
+	}
+	function get_editable()
+	{
+		return _editable;
+	}
+	
+	override function set_enabled(value)
+	{
+		if (_enabled != value)
+		{
+			_enabled = value;
+			updateControlsEnabled();
+			
+			_view_valid = false;
+			postponeView();
+		}
+		return _enabled;
 	}
 	
 	public var worldWrap(get_worldWrap, set_worldWrap):Bool;
@@ -380,6 +433,7 @@ class CTextArea extends CSprite
 			
 			_size_valid = false;
 			postponeSize();
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 		return _text;
 	}
@@ -424,6 +478,17 @@ class CTextArea extends CSprite
 	function set_restrict(value)
 	{
 		_tf.restrict = value;
+		return value;
+	}
+	
+	public var selectable(get_selectable, set_selectable):Bool;
+	function get_selectable()
+	{
+		return _tf.selectable;
+	}
+	function set_selectable(value)
+	{
+		_tf.selectable = value;
 		return value;
 	}
 	
