@@ -34,8 +34,9 @@ class TestMain
 		var test = new TestMCharts();
 		var test = new TestText();
 		var test = new TestMTween();
-		
 		var test = new TestTooltips();
+		
+		var test = new TestScrollBar();
 		Lib.current.addChild(test);
 		test.init();
 	}

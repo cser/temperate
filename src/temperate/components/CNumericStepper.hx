@@ -697,7 +697,7 @@ class CNumericStepper extends CSprite
 		return this;
 	}
 	
-	public function addChangeHandler(handler:MouseEvent->Dynamic)
+	public function addChangeHandler(handler:Event->Dynamic)
 	{
 		addEventListener(Event.CHANGE, handler);
 		return this;
