@@ -7,6 +7,7 @@ import flash.geom.Rectangle;
 import temperate.components.helpers.CChangingTimerHelper;
 import temperate.core.CMath;
 import temperate.core.CSprite;
+import temperate.errors.CArgumentError;
 import temperate.skins.ICScrollSkin;
 
 class CScrollBar extends CSprite
@@ -36,7 +37,7 @@ class CScrollBar extends CSprite
 		_value = 0;
 		
 		_lineScrollSize = 1;
-		_pageSize = 1;
+		_pageSize = Math.NaN;
 		_pageScrollSize = Math.NaN;
 		
 		init();
@@ -399,9 +400,9 @@ class CScrollBar extends CSprite
 	
 	function updateThumbSize()
 	{
-		var conditionalPageSize = Math.isNaN(_pageSize) || _pageSize <= 0 ? 1 : _pageSize;
+		var pageSize = this.pageSize;
 		var delta = _maxValue - _minValue > 0 ? _maxValue - _minValue : 1;
-		var size = _guideSize * conditionalPageSize / delta;
+		var size = _guideSize * pageSize / delta;
 		if (_horizontal)
 		{
 			_thumb.width = Std.int(size);
@@ -535,12 +536,16 @@ class CScrollBar extends CSprite
 	var _pageSize:Float;
 	function get_pageSize()
 	{
-		return _pageSize;
+		return Math.isFinite(_pageSize) ? _pageSize : _lineScrollSize;
 	}
 	function set_pageSize(value)
 	{
 		if (_pageSize != value)
 		{
+			if (value <= 0)
+			{
+				throw new CArgumentError("pageSize mast be positive or NaN");
+			}
 			_pageSize = value;
 			_size_pageValid = false;
 			_view_positionValid = false;
@@ -553,16 +558,16 @@ class CScrollBar extends CSprite
 	var _pageScrollSize:Float;
 	function get_pageScrollSize()
 	{
-		if (Math.isNaN(_pageScrollSize))
-		{
-			return _pageSize;
-		}
-		return _pageScrollSize;
+		return Math.isFinite(_pageScrollSize) ? _pageScrollSize : pageSize;
 	}
 	function set_pageScrollSize(value)
 	{
 		if (_pageScrollSize != value)
 		{
+			if (value <= 0)
+			{
+				throw new CArgumentError("pageScrollSize mast be positive or NaN");
+			}
 			_pageScrollSize = value;
 			_size_pageValid = false;
 			_view_positionValid = false;
@@ -579,8 +584,16 @@ class CScrollBar extends CSprite
 	}
 	function set_lineScrollSize(value)
 	{
+		if (!Math.isFinite(value))
+		{
+			throw new CArgumentError("lineScrollSize mast be finite");
+		}
 		if (_lineScrollSize != value)
 		{
+			if (value <= 0)
+			{
+				throw new CArgumentError("lineScrollSize mast be positive");
+			}
 			_lineScrollSize = value;
 			_size_pageValid = false;
 			_view_positionValid = false;

@@ -10,6 +10,7 @@ Allowed shortenings:
 	rectangle	rect		rect, scrollRect
 	geometry	geom		GeomUtil
 	utility		util		GeomUtil
+	graphics	g			var g = graphis;
 	
 	All other shortenings are strongly forbidden,
 	exclude abreviatures or variables for complex mathematic calculations.
