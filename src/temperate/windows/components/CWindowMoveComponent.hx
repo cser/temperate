@@ -77,11 +77,9 @@ class CWindowMoveComponent extends ACWindowComponent
 		{
 			var width = getWidth();
 			var height = getHeight();
-			var dock = _getDock();
-			dock.move(
+			moveDock(
 				width, height, manager.areaWidth, manager.areaHeight,
-				x - manager.areaX, y - manager.areaY, needSave
-			);
+				x - manager.areaX, y - manager.areaY, needSave);
 		}
 		super.move(x, y, needSave);
 	}

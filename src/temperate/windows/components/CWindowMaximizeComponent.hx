@@ -49,4 +49,9 @@ class CWindowMaximizeComponent extends ACWindowComponent
 	override public function setSize(width:Int, height:Int):Void
 	{
 	}
+	
+	override public function moveDock(
+		width:Int, height:Int, mainWidth:Int, mainHeight:Int, x:Int, y:Int, needSave:Bool):Void
+	{
+	}
 }

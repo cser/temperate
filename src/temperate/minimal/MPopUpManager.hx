@@ -41,12 +41,6 @@ class MPopUpManager extends CPopUpManager
 	override public function add(popUp:ICPopUp, modal:Bool, fast:Bool = false)
 	{
 		super.add(popUp, modal, fast);
-		var indices = [];
-		for (popUpI in _popUps)
-		{
-			indices.push(container.getChildIndex(popUpI.view));
-		}
-		trace("indices: " + indices);
 		var index = container.getChildIndex(_popUps[0].view);
 		var lockView = _lockArea.container;
 		if (lockView.parent != container)
@@ -61,11 +55,5 @@ class MPopUpManager extends CPopUpManager
 				container.setChildIndex(_lockArea, index);
 			}
 		}
-		var indices = [];
-		for (i in 0 ... container.numChildren)
-		{
-			indices.push(container.getChildAt(i));
-		}
-		trace(indices);
 	}
 }

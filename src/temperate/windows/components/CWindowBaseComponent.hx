@@ -51,4 +51,11 @@ class CWindowBaseComponent extends ACWindowComponent
 		_view.x = x;
 		_view.y = y;
 	}
+	
+	override public function moveDock(
+		width:Int, height:Int, mainWidth:Int, mainHeight:Int, x:Int, y:Int, needSave:Bool):Void
+	{
+		var dock = _getDock();
+		dock.move(width, height, mainWidth, mainHeight, x, y, needSave);
+	}
 }
