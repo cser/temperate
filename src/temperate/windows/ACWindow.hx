@@ -31,8 +31,8 @@ class ACWindow implements ICPopUp
 		
 		initComponents();
 		
-		_mover = newMover();
 		addComponent(new CWindowConstraintsComponent());
+		_mover = newMover();
 		addComponent(_mover);
 		
 		view.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -237,7 +237,7 @@ class ACWindow implements ICPopUp
 			}
 			current = current.next;
 		}
-		component.unsubscribe(this);
+		component.unsubscribe();
 		component.next = null;
 	}
 }

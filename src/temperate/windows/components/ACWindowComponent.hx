@@ -24,7 +24,7 @@ class ACWindowComponent
 		doSubscribe();
 	}
 	
-	public function unsubscribe(popUp:ICPopUp):Void
+	public function unsubscribe():Void
 	{
 		doUnsubscribe();
 		_popUp = null;
@@ -77,7 +77,7 @@ class ACWindowComponent
 		}
 	}
 	
-	public function animateShow(fast:Bool)
+	public function animateShow(fast:Bool):Void
 	{
 		if (next != null)
 		{
@@ -85,7 +85,7 @@ class ACWindowComponent
 		}
 	}
 	
-	public function animateHide(fast:Bool, onComplete:ICPopUp->Void)
+	public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
 	{
 		if (next != null)
 		{

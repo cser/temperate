@@ -2,9 +2,7 @@ package temperate.windows.components;
 import flash.display.DisplayObject;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
-import temperate.windows.CPopUpManager;
 import temperate.windows.docks.ICPopUpDock;
-import temperate.windows.ICPopUp;
 
 class CMoveWindowComponent extends ACWindowComponent
 {
@@ -63,7 +61,20 @@ class CMoveWindowComponent extends ACWindowComponent
 		_stage = null;
 	}
 	
-	override public function move(x:Int, y:Int)
+	override public function animateShow(fast:Bool):Void 
+	{
+		var width = getWidth();
+		var height = getHeight();
+		var dock = _getDock();
+		var manager = _getManager();
+		dock.arrange(
+			width, height, manager.areaWidth, manager.areaHeight
+		);
+		super.move(dock.x + manager.areaX, dock.y + manager.areaY);
+		super.animateShow(fast);
+	}
+	
+	override public function move(x:Int, y:Int):Void
 	{
 		var width = getWidth();
 		var height = getHeight();

@@ -39,4 +39,16 @@ class FakePopUp implements ICPopUp
 		_isActive = value;
 		return _isActive;
 	}
+	
+	public function animateShow(fast:Bool):Void
+	{
+	}
+	
+	public function animateHide(fast:Bool, onComplete:ICPopUp->Void):Void
+	{
+		if (onComplete != null)
+		{
+			onComplete(this);
+		}
+	}
 }
