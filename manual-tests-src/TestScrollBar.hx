@@ -61,12 +61,20 @@ class TestScrollBar extends Sprite
 		line.add(new Bitmap(MScrollBarBdFactory.getBottomOver()));
 		
 		var line = new CHBox().addTo(column);
-		line.add(newShape(true, MScrollBarBdFactory.getHThumbUp()));
-		line.add(newShape(false, MScrollBarBdFactory.getVThumbUp()));
+		line.add(new Bitmap(MScrollBarBdFactory.getLeftDown()));
+		line.add(new Bitmap(MScrollBarBdFactory.getRightDown()));
+		line.add(new Bitmap(MScrollBarBdFactory.getTopDown()));
+		line.add(new Bitmap(MScrollBarBdFactory.getBottomDown()));
 		
-		var line = new CHBox().addTo(column);
-		line.add(newShape(true, MScrollBarBdFactory.getHThumbOver()));
-		line.add(newShape(false, MScrollBarBdFactory.getVThumbOver()));
+		var subBox = new CVBox().addTo(column);
+		subBox.add(newShape(true, MScrollBarBdFactory.getHThumbUp()));
+		subBox.add(newShape(true, MScrollBarBdFactory.getHThumbOver()));
+		subBox.add(newShape(true, MScrollBarBdFactory.getHThumbDown()));
+		
+		var subBox = new CHBox().addTo(column);
+		subBox.add(newShape(false, MScrollBarBdFactory.getVThumbUp()));
+		subBox.add(newShape(false, MScrollBarBdFactory.getVThumbOver()));
+		subBox.add(newShape(false, MScrollBarBdFactory.getVThumbDown()));
 		
 		return column;
 	}

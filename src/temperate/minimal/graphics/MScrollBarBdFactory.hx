@@ -1,7 +1,7 @@
 package temperate.minimal.graphics;
 import flash.display.BitmapData;
 import flash.display.GradientType;
-import flash.display.Graphics;
+import flash.geom.ColorTransform;
 import flash.geom.Matrix;
 import flash.geom.Rectangle;
 import temperate.components.CButtonState;
@@ -10,7 +10,7 @@ import temperate.core.CMath;
 class MScrollBarBdFactory 
 {
 	public static var arrowSize = 17;
-	public static var arrowColor:UInt = 0xff508000;
+	public static var arrowColor:UInt = 0xff385900;
 	public static var bgColor:UInt = 0xff80f000;
 	
 	public static var thumbCenterLightColor:UInt = 0xeeffffff;
@@ -119,7 +119,55 @@ class MScrollBarBdFactory
 	}
 	
 	//----------------------------------------------------------------------------------------------
-	// Thumb
+	// Arrow down
+	//----------------------------------------------------------------------------------------------
+	
+	static var _leftDown:BitmapData;
+	
+	public static function getLeftDown()
+	{
+		if (_leftDown == null)
+		{
+			_leftDown = newArrow(true, true, CButtonState.DOWN);
+		}
+		return _leftDown;
+	}
+	
+	static var _rightDown:BitmapData;
+	
+	public static function getRightDown()
+	{
+		if (_rightDown == null)
+		{
+			_rightDown = newArrow(true, false, CButtonState.DOWN);
+		}
+		return _rightDown;
+	}
+	
+	static var _topDown:BitmapData;
+	
+	public static function getTopDown()
+	{
+		if (_topDown == null)
+		{
+			_topDown = newArrow(false, true, CButtonState.DOWN);
+		}
+		return _topDown;
+	}
+	
+	static var _bottomDown:BitmapData;
+	
+	public static function getBottomDown()
+	{
+		if (_bottomDown == null)
+		{
+			_bottomDown = newArrow(false, false, CButtonState.DOWN);
+		}
+		return _bottomDown;
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	// Thumb horizontal
 	//----------------------------------------------------------------------------------------------
 	
 	static var _hThumbUp:BitmapData;
@@ -144,6 +192,21 @@ class MScrollBarBdFactory
 		return _hThumbOver;
 	}
 	
+	static var _hThumbDown:BitmapData;
+	
+	public static function getHThumbDown()
+	{
+		if (_hThumbDown == null)
+		{
+			_hThumbDown = getBg(true, CButtonState.DOWN);
+		}
+		return _hThumbDown;
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	// Thumb vertical
+	//----------------------------------------------------------------------------------------------
+	
 	static var _vThumbUp:BitmapData;
 	
 	public static function getVThumbUp()
@@ -166,8 +229,19 @@ class MScrollBarBdFactory
 		return _vThumbOver;
 	}
 	
+	static var _vThumbDown:BitmapData;
+	
+	public static function getVThumbDown()
+	{
+		if (_vThumbDown == null)
+		{
+			_vThumbDown = getBg(false, CButtonState.DOWN);
+		}
+		return _vThumbDown;
+	}
+	
 	//----------------------------------------------------------------------------------------------
-	// Thumb over
+	// Thumb center
 	//----------------------------------------------------------------------------------------------
 	
 	static var _hThumbCenter:BitmapData;
@@ -232,108 +306,52 @@ class MScrollBarBdFactory
 		var bitmapData = getBg(horizontal, state).clone();
 		var arrow = getUpArrow();
 		
+		var transform;
+		switch (state)
+		{
+			case CButtonState.OVER:
+				transform = new ColorTransform(1.5, 1.5, 1.5);
+			default:
+				transform = new ColorTransform();
+		}
+		
 		var offsetX = (arrowSize - arrow.width) >> 1;
 		var offsetY = (arrowSize - arrow.height) >> 1;
-		
 		if (horizontal && left)
 		{
-			bitmapData.draw(
-				arrow, new Matrix(0, 1, 1, 0, offsetY, offsetX + 1));
+			var tx = offsetY;
+			var ty = offsetX + 1;
+			bitmapData.draw(arrow, new Matrix(0, 1, 1, 0, tx, ty), transform);
 		}
 		else if (horizontal && !left)
 		{
-			bitmapData.draw(
-				arrow, new Matrix(0, 1, -1, 0, offsetY + arrow.height + 1, offsetX + 1));
+			var tx = offsetY + arrow.height + 1;
+			var ty = offsetX + 1;
+			bitmapData.draw(arrow, new Matrix(0, 1, -1, 0, tx, ty), transform);
 		}
 		else if (!horizontal && left)
 		{
-			bitmapData.draw(arrow, new Matrix(1, 0, 0, 1, offsetX, offsetY));
+			var tx = offsetX;
+			var ty = offsetY;
+			bitmapData.draw(arrow, new Matrix(1, 0, 0, 1, tx, ty), transform);
 		}
 		else
 		{
-			bitmapData.draw(arrow, new Matrix(1, 0, 0, -1, offsetX, offsetY + arrow.height + 1));
+			var tx = offsetX;
+			var ty = offsetY + arrow.height + 1;
+			bitmapData.draw(arrow, new Matrix(1, 0, 0, -1, tx, ty), transform);
 		}
 		
 		MBdFactoryUtil.qualityOff();
 		return bitmapData;
 	}
 	
-	/*static function newThumb(horizontal:Bool, state:CButtonState)
-	{
-		MBdFactoryUtil.qualityOn();
-		var shape = MBdFactoryUtil.getShape();
-		
-		var bd = new BitmapData(arrowSize, arrowSize, true, 0x00000000);
-		var shape = MBdFactoryUtil.getShape();
-		var g = shape.graphics;
-		
-		g.clear();
-		
-		var color = 0xff407020;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(0, 0, arrowSize, arrowSize, 6);
-		g.drawRoundRect(0, 0, arrowSize - 1, arrowSize - 1, 6);
-		g.endFill();
-		
-		var color = 0xffc0e0a0;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(0, 0, arrowSize, arrowSize, 6);
-		g.drawRoundRect(1, 1, arrowSize - 1, arrowSize - 1, 6);
-		g.endFill();
-		
-		var color = 0xffffffff;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 2);
-		g.endFill();
-		
-		{
-			var boxHeight = 20;
-			var matrix = new Matrix();
-			matrix.createGradientBox(
-				boxHeight, boxHeight, 0, -3, -3);
-			
-			var colors = [];
-			var alphas = [];
-			var sourceColors;
-			switch (state)
-			{
-				case CButtonState.OVER:
-					sourceColors = [ 0xffe0ff80, 0xffc0ee30 ];
-				default:
-					sourceColors = [ 0xffc0ff50, 0xff80cc00 ];
-			}
-			MBdFactoryUtil.getColorsAndAlphas(sourceColors, colors, alphas);
-			
-			var ratios = [ 0, 255 ];
-			
-			g.beginGradientFill(GradientType.RADIAL, colors, alphas, ratios, matrix);
-			g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 2);
-			g.endFill();
-		}
-		
-		var color = 0x8050a030;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 4);
-		g.drawRoundRect(3, 3, arrowSize - 6, arrowSize - 6, 4);
-		g.endFill();
-		
-		var color = 0xf050a030;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-		g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 2);
-		g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 2);
-		g.endFill();
-			
-		bd.draw(shape);
-		
-		MBdFactoryUtil.qualityOff();
-		return bd;
-	}*/
-	
 	static var _bgByState:Array<BitmapData> = [];
 	
 	static function getBg(horizontal:Bool, state:CButtonState)
 	{
-		var bd = _bgByState[state.index];
+		var key = state.index * 2 + (horizontal ? 1 : 0);
+		var bd = _bgByState[key];
 		if (bd == null)
 		{
 			bd = new BitmapData(arrowSize, arrowSize, true, 0x00000000);
@@ -358,7 +376,7 @@ class MScrollBarBdFactory
 				var boxHeight = 20;
 				var matrix = new Matrix();
 				matrix.createGradientBox(
-					boxHeight, boxHeight, horizontal ? 0 : Math.PI * .5, -3, -3);
+					boxHeight, boxHeight, horizontal ? Math.PI * .5 : 0, -3, -3);
 				
 				var colors = [];
 				var alphas = [];
@@ -367,34 +385,19 @@ class MScrollBarBdFactory
 				{
 					case CButtonState.OVER:
 						sourceColors = [ 0xffe0ff80, 0xffc0ee30 ];
+					case CButtonState.DOWN:
+						sourceColors = [ 0xff80af00, 0xffb0d030 ];
 					default:
-						sourceColors = [ 0xffc0ff00, 0xff70c000 ];
+						sourceColors = [ 0xffaae030, 0xff80c000 ];
 				}
 				MBdFactoryUtil.getColorsAndAlphas(sourceColors, colors, alphas);
 				
-				var ratios = [ 0, 255 ];
+				var ratios = [ 100, 255 ];
 				
 				g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
 				g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 4);
 				g.endFill();
 			}
-			
-			/*{
-				var boxHeight = 20;
-				var matrix = new Matrix();
-				matrix.createGradientBox(boxHeight, boxHeight, Math.PI * .5, -3, -3);
-				
-				var colors = [];
-				var alphas = [];
-				var sourceColors = [ 0xffffffff, 0x80ffffff ];
-				MBdFactoryUtil.getColorsAndAlphas(sourceColors, colors, alphas);
-				
-				var ratios = [ 0, 255 ];
-				g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
-				g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 4);
-				g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
-				g.endFill();
-			}*/
 			
 			var color = 0xffffffff;
 			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
@@ -402,20 +405,8 @@ class MScrollBarBdFactory
 			g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
 			g.endFill();
 			
-			/*var color = 0x8050a030;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-			g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 6);
-			g.drawRoundRect(3, 3, arrowSize - 6, arrowSize - 6, 6);
-			g.endFill();*/
-			
-			/*var color = 0xf050a030;
-			g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
-			g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
-			g.drawRoundRect(3, 3, arrowSize - 5, arrowSize - 5, 4);
-			g.endFill();*/
-			
 			bd.draw(shape);
-			_bgByState[state.index] = bd;
+			_bgByState[key] = bd;
 		}
 		return bd;
 	}
