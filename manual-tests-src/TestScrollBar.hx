@@ -36,8 +36,8 @@ class TestScrollBar extends Sprite
 		
 		var scrollBar = newScrollBar(true).addTo(this, 0, 120);
 		scrollBar.pageSize = 50;
-		scrollBar.useHandCursor = false;
-		MTooltipFactory.newText(scrollBar, "useHandCursor = false");
+		scrollBar.useHandCursor = true;
+		MTooltipFactory.newText(scrollBar, "useHandCursor = true");
 		var scrollBar = newScrollBar(false).addTo(this, 100, 120);
 		scrollBar.pageSize = 50;
 		
@@ -55,8 +55,8 @@ class TestScrollBar extends Sprite
 		
 		var scrollBar = new MScrollBar(true).addTo(this, 300, 100);
 		scrollBar.pageSize = 50;
-		scrollBar.useHandCursor = false;
-		MTooltipFactory.newText(scrollBar, "useHandCursor = false");
+		scrollBar.useHandCursor = true;
+		MTooltipFactory.newText(scrollBar, "useHandCursor = true");
 		addChild(new Scaler(scrollBar));
 		
 		var scrollBar = new MScrollBar(false).addTo(this, 410, 100);

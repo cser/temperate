@@ -19,7 +19,7 @@ class MScrollBarBdFactory
 	
 	public static var arrowUpColor:UInt = 0xff305000;
 	public static var arrowOverColor:UInt = 0xff508020;
-	public static var arrowDisabledColor:UInt = 0xffa0bb80;
+	public static var arrowDisabledColor:UInt = 0x75808080;
 	
 	public static var bgRatiosUp:Array<Int> = [ 0, 138, 140, 250 ];
 	public static var bgRatiosOver:Array<Int> = [ 0, 138, 140, 250 ];
@@ -29,7 +29,7 @@ class MScrollBarBdFactory
 	public static var bgColorsUp:Array<UInt> = [ 0xffd0f060, 0xff80c020, 0xff60a000, 0xffa0c000 ];
 	public static var bgColorsOver:Array<UInt> = [ 0xffbfef50, 0xffafcf50, 0xff8fbf30, 0xffafcf30 ];
 	public static var bgColorsDown:Array<UInt> = [ 0xff506f00, 0xffc0ff30 ];
-	public static var bgColorsDisabled:Array<UInt> = [ 0xffe8fac0, 0xffaacc80 ];
+	public static var bgColorsDisabled:Array<UInt> = [ 0xffeeeeee, 0xffcccccc ];
 	
 	public static var bgBottomRightColor:UInt = 0xff105000;
 	public static var bgBottomRightDisabledColor:UInt = 0xffbabaaa;

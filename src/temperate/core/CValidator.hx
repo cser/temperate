@@ -73,8 +73,8 @@ class CValidator
 	function onExitFrame(event:Event)
 	{
 		_shape.removeEventListener(Event.EXIT_FRAME, onExitFrame);
-		
 		var sizeListeners = _sizeListeners;
+		
 		_sizeListeners = new TypedDictionary();
 		for (listener in sizeListeners)
 		{

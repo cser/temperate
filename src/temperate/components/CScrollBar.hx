@@ -45,7 +45,6 @@ class CScrollBar extends CSprite
 		
 		super();
 		
-		_useHandCursor = true;
 		_minValue = 0;
 		_maxValue = 100;
 		_value = 0;
@@ -81,6 +80,8 @@ class CScrollBar extends CSprite
 		_pageTimerHelper.onDecrease = onPageDecrease;
 		
 		updateEnabledListeners();
+		
+		setUseHandCursor(false);
 		
 		_settedWidth = _horizontal ? 100 : 0;
 		_settedHeight = _horizontal ? 0 : 100;
@@ -310,23 +311,28 @@ class CScrollBar extends CSprite
 	
 	override function doValidateSize()
 	{
-		var needSizeValidation = !_size_valid;
-		_size_valid = true;
-		if (needSizeValidation)
+		if (!_size_valid)
 		{
+			_size_valid = true;
+			
 			updateSize();
 			updateBaseArrange();
+			
 			_size_pageValid = false;
+			_view_positionValid = false;
+			_view_valid = false;
 		}
 		if (!_size_pageValid)
 		{
 			_size_pageValid = true;
+			
 			updateThumbSize();
-		}
-		if (needSizeValidation)
-		{
+			updateThumbVisible();
+			
 			_view_positionValid = false;
-			_view_valid = false;
+		}
+		if (!_view_positionValid || !_view_valid)
+		{
 			postponeView();
 		}
 	}
@@ -401,21 +407,22 @@ class CScrollBar extends CSprite
 			_guideDirectOffset = Std.int(_leftArrow.height);
 			_guideSize = Std.int(_height - _leftArrow.height - _rightArrow.height);
 		}
-		
-		updateThumbVisible();
 	}
 	
 	function updateThumbVisible()
 	{
 		var thumbSize = _horizontal ? _thumb.width : _thumb.height;
-		_thumb.visible = _enabled && thumbSize < _guideSize;
+		_thumb.visible = _enabled && thumbSize < _guideSize && _maxValue > _minValue;
 	}
 	
 	function setThumbPositionByValue()
 	{
 		var thumbSize = Std.int(_horizontal ? _thumb.width : _thumb.height);
-		var thumbOffset = Std.int(_guideDirectOffset + 
-			(_guideSize - thumbSize) * (_value - _minValue) / (_maxValue - _minValue));
+		var delta = _maxValue - _minValue;
+		var thumbOffset = _guideDirectOffset + 
+			(delta > 0 ?
+				Std.int((_guideSize - thumbSize) * (_value - _minValue) / (_maxValue - _minValue)) :
+				0);
 		if (_horizontal)
 		{
 			_thumb.x = thumbOffset;
@@ -463,15 +470,19 @@ class CScrollBar extends CSprite
 	function updateThumbSize()
 	{
 		var pageSize = this.pageSize;
-		var delta = _maxValue - _minValue > 0 ? _maxValue - _minValue : 1;
-		var size = _guideSize * pageSize / delta;
+		var delta = _maxValue - _minValue + pageSize;
+		var size = Std.int(_guideSize * pageSize / delta);
+		if (size < 0 || size > _guideSize)
+		{
+			size = CMath.intMax(_guideSize - 1, 0);
+		}
 		if (_horizontal)
 		{
-			_thumb.width = Std.int(size);
+			_thumb.width = size;
 		}
 		else
 		{
-			_thumb.height = Std.int(size);
+			_thumb.height = size;
 		}
 	}
 	
@@ -523,11 +534,16 @@ class CScrollBar extends CSprite
 	{
 		if (_useHandCursor != value)
 		{
-			_useHandCursor = value;
-			_leftArrow.useHandCursor = _useHandCursor;
-			_rightArrow.useHandCursor = _useHandCursor;
-			_thumb.useHandCursor = _useHandCursor;
+			setUseHandCursor(value);
 		}
+	}
+	
+	function setUseHandCursor(value:Bool)
+	{
+		_useHandCursor = value;
+		_leftArrow.useHandCursor = _useHandCursor;
+		_rightArrow.useHandCursor = _useHandCursor;
+		_thumb.useHandCursor = _useHandCursor;
 	}
 	
 	//----------------------------------------------------------------------------------------------
@@ -544,16 +560,32 @@ class CScrollBar extends CSprite
 	{
 		return _value;
 	}
-	function set_value(value)
+	function set_value(value:Float)
+	{
+		setValue(value, true);
+		return _value;
+	}
+	
+	function setValue(value:Float, needDispatch:Bool)
 	{
 		var newValue = fixedValue(value);
 		if (_value != newValue)
 		{
 			_value = newValue;
 			setThumbPositionByValue();
-			dispatchEvent(new Event(Event.SCROLL));
+			if (needDispatch)
+			{
+				dispatchEvent(new Event(Event.SCROLL));
+			}
 		}
-		return _value;
+	}
+	
+	/**
+	 * Equals to value setter, but dont't dispatch event
+	 */
+	public function initValue(value:Float)
+	{
+		setValue(value, false);
 	}
 	
 	public var minValue(get_minValue, set_minValue):Float;
@@ -562,7 +594,7 @@ class CScrollBar extends CSprite
 	{
 		return _minValue;
 	}
-	function set_minValue(value)
+	function set_minValue(value:Float)
 	{
 		if (_minValue != value)
 		{
@@ -581,7 +613,7 @@ class CScrollBar extends CSprite
 	{
 		return _maxValue;
 	}
-	function set_maxValue(value)
+	function set_maxValue(value:Float)
 	{
 		if (_maxValue != value)
 		{
@@ -600,7 +632,7 @@ class CScrollBar extends CSprite
 	{
 		return Math.isFinite(_pageSize) ? _pageSize : _lineScrollSize;
 	}
-	function set_pageSize(value)
+	function set_pageSize(value:Float)
 	{
 		if (_pageSize != value)
 		{

@@ -190,6 +190,7 @@ class CLabel extends CSprite
 	
 	public function setText(text:String)
 	{
+		html = false;
 		this.text = text;
 		return this;
 	}

@@ -35,14 +35,16 @@ class TestMain
 		var test = new TestText();
 		var test = new TestMTween();
 		var test = new TestTooltips();
-		
 		var test = new TestScrollBar();
+		
+		var test = new TestTextArea();
 		Lib.current.addChild(test);
 		test.init();
 	}
 	
 	public static function trace( v : Dynamic, ?infos : PosInfos )
 	{
-		Lib.trace(infos.className + ": " + v);
+		Lib.trace(
+			"src/" + ~/\./g.replace(infos.className, "/") + ".hx:" + infos.lineNumber + ": " + v);
 	}
 }
