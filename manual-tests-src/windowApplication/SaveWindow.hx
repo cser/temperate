@@ -1,6 +1,8 @@
 package windowApplication;
+import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.text.TextField;
+import flash.ui.Keyboard;
 import temperate.containers.CHBox;
 import temperate.minimal.MButton;
 import temperate.minimal.MInputField;
@@ -41,6 +43,7 @@ class SaveWindow extends MWindow
 		buttonBox.add(button);
 		
 		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCancelClick);
+		innerDispatcher.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 	}
 	
 	var _title:TextField;
@@ -54,5 +57,13 @@ class SaveWindow extends MWindow
 	function onCancelClick(event:MouseEvent)
 	{
 		manager.remove(this);
+	}
+	
+	function onKeyDown(event:KeyboardEvent)
+	{
+		if (event.keyCode == Keyboard.ESCAPE)
+		{
+			manager.remove(this);
+		}
 	}
 }

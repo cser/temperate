@@ -39,6 +39,8 @@ class TestWindows extends Sprite
 		var window = new TestWindow();
 		_manager.add(window, false);
 		window.move(100, 100);
+		
+		_manager.keyboardDispatcher = stage;
 	}
 	
 	function onStageResize(event:Event = null)
@@ -61,7 +63,7 @@ class TestWindows extends Sprite
 	}
 }
 /*
-Починить дрейф выравнивания при изменении размеров границ
+[done]Починить дрейф выравнивания при изменении размеров границ
 Окно-контейнер
 Скинование окон с целью отвязать внешний вид окна от иерархии наследования
 Возможность добавления отображаемых объектов, не являющихся окнами

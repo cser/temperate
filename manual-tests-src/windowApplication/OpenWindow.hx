@@ -1,7 +1,9 @@
 package windowApplication;
 import flash.events.Event;
+import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.text.TextField;
+import flash.ui.Keyboard;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MButton;
@@ -49,6 +51,7 @@ class OpenWindow extends MWindow
 		
 		_skin.addHeadButton(_skin.maximizeButton).addEventListener(Event.CHANGE, onMaximizeChange);
 		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCancelClick);
+		innerDispatcher.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 	}
 	
 	var _buttonBox:CHBox;
@@ -68,5 +71,13 @@ class OpenWindow extends MWindow
 	function onMaximizeChange(event:Event)
 	{
 		maximized = _skin.maximizeButton.selected;
+	}
+	
+	function onKeyDown(event:KeyboardEvent)
+	{
+		if (event.keyCode == Keyboard.ESCAPE)
+		{
+			manager.remove(this);
+		}
 	}
 }

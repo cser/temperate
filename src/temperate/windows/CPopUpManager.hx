@@ -3,6 +3,8 @@ import flash.display.DisplayObjectContainer;
 import flash.errors.ArgumentError;
 import flash.events.Event;
 import flash.events.EventDispatcher;
+import flash.events.IEventDispatcher;
+import flash.events.KeyboardEvent;
 import flash.utils.TypedDictionary;
 import temperate.core.ICArea;
 using temperate.core.ArrayUtil;
@@ -118,4 +120,37 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 	}
 	
 	public var modal(default, null):Bool;
+	
+	public var keyboardDispatcher(get_keyboardDispatcher, set_keyboardDispatcher):IEventDispatcher;
+	var _keyboardDispatcher:IEventDispatcher;
+	function get_keyboardDispatcher()
+	{
+		return _keyboardDispatcher;
+	}
+	function set_keyboardDispatcher(value)
+	{
+		if (_keyboardDispatcher != null)
+		{
+			_keyboardDispatcher.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		}
+		_keyboardDispatcher = value;
+		if (_keyboardDispatcher != null)
+		{
+			_keyboardDispatcher.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		}
+		return _keyboardDispatcher;
+	}
+	
+	function onKeyDown(event:KeyboardEvent)
+	{
+		var length = _popUps.length;
+		if (length > 0)
+		{
+			// Mast don't bubbles
+			_popUps[length - 1].innerDispatcher.dispatchEvent(
+				new KeyboardEvent(
+					KeyboardEvent.KEY_DOWN, false, false, event.charCode, event.keyCode,
+					event.keyLocation, event.ctrlKey, event.altKey, event.shiftKey));
+		}
+	}
 }

@@ -28,6 +28,7 @@ class TestWindowApplication extends Sprite
 		onStageResize();
 		
 		_windowManager.add(new ToolsWindow(), false, true);
+		_windowManager.keyboardDispatcher = stage;
 	}
 	
 	function onStageResize(event:Event = null)

@@ -97,7 +97,10 @@ class ACWindow implements ICPopUp
 	
 	function onMouseDown(event:MouseEvent)
 	{
-		manager.moveToTop(this);
+		if (manager != null)
+		{
+			manager.moveToTop(this);
+		}
 	}
 	
 	var _baseContainer:Sprite;

@@ -1,6 +1,8 @@
 package windows;
+import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.text.TextField;
+import flash.ui.Keyboard;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MFlatButton;
@@ -51,6 +53,8 @@ class TestWindow extends ACWindow
 		g.beginFill(0xeeeeee);
 		g.drawRoundRect(0, 0, width, height, 10);
 		g.endFill();
+		
+		innerDispatcher.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 	}
 	
 	var _main:CVBox;
@@ -73,5 +77,13 @@ class TestWindow extends ACWindow
 	function onCancelClick(event:MouseEvent)
 	{
 		manager.remove(this);
+	}
+	
+	function onKeyDown(event:KeyboardEvent)
+	{
+		if (event.keyCode == Keyboard.ESCAPE)
+		{
+			manager.remove(this);
+		}
 	}
 }
