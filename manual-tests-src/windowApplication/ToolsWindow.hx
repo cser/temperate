@@ -12,6 +12,7 @@ import temperate.minimal.MCursorManager;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MSeparator;
+import temperate.minimal.MWindow;
 import temperate.minimal.skins.MWindowSkin;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
@@ -36,7 +37,7 @@ class Pencil extends flash.display.BitmapData { public function new() { super(0,
 @:bitmap("manual-tests-src/windowApplication/rect.png")
 class Rect extends flash.display.BitmapData { public function new() { super(0, 0); }}
 
-class ToolsWindow extends ACWindow
+class ToolsWindow extends MWindow
 {
 	public function new(manager:CPopUpManager) 
 	{
@@ -113,8 +114,6 @@ class ToolsWindow extends ACWindow
 		
 		dock = new CAbsolutePopUpDock(10, 50);
 		
-		MCursorManager.newHover(0).setTarget(_baseSkin.head).setValue(new MHandCursor(true));
-		
 		setColor(0x00ff00);
 	}
 	
@@ -161,18 +160,5 @@ class ToolsWindow extends ACWindow
 	{
 		var window = new SaveWindow(_manager);
 		window.open(true);
-	}
-	
-	var _main:CVBox;
-	
-	override function newContainer():Sprite
-	{
-		_main = new CVBox();
-		return _main;
-	}
-	
-	override function newSkin():ICWindowSkin
-	{
-		return new MWindowSkin();
 	}
 }

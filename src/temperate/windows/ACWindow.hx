@@ -46,6 +46,17 @@ class ACWindow implements ICPopUp
 	
 	public var innerDispatcher(default, null):IEventDispatcher;
 	
+	public var title(get_title, set_title):String;
+	function get_title()
+	{
+		return _baseSkin.title;
+	}
+	function set_title(value)
+	{
+		_baseSkin.title = value;
+		return value;
+	}
+	
 	public var isLocked(get_isLocked, set_isLocked):Bool;
 	function get_isLocked()
 	{
@@ -66,15 +77,15 @@ class ACWindow implements ICPopUp
 		return _baseSkin.isActive = value;
 	}
 	
-	public function open(modal:Bool)
+	public function open(modal:Bool, fast:Bool = false)
 	{
 		onManagerResize();
-		_manager.add(this, modal);
+		_manager.add(this, modal, fast);
 	}
 	
-	public function close()
+	public function close(fast:Bool = false)
 	{
-		_manager.remove(this);
+		_manager.remove(this, fast);
 	}
 	
 	function onManagerResize(event:Event = null)

@@ -10,13 +10,14 @@ import temperate.minimal.MCursorManager;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.MSeparator;
+import temperate.minimal.MWindow;
 import temperate.minimal.skins.MWindowSkin;
 import temperate.minimal.windows.MWindowScaleAnimator;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
 
-class OpenWindow extends ACWindow
+class OpenWindow extends MWindow
 {
 	public function new(manager:CPopUpManager) 
 	{
@@ -51,13 +52,8 @@ class OpenWindow extends ACWindow
 		button.text = "Cancel";
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
-		
-		MCursorManager.newHover(0).setTarget(_baseSkin.head).setValue(new MHandCursor(true));
-		
-		animator = new MWindowScaleAnimator();
 	}
 	
-	var _main:CVBox;
 	var _buttonBox:CHBox;
 	var _title:TextField;
 	var _description:TextField;
@@ -70,16 +66,5 @@ class OpenWindow extends ACWindow
 	function onCancelClick(event:MouseEvent)
 	{
 		close();
-	}
-	
-	override function newSkin():ICWindowSkin
-	{
-		return new MWindowSkin();
-	}
-	
-	override function newContainer():Sprite
-	{
-		_main = new CVBox();
-		return _main;
 	}
 }

@@ -31,6 +31,8 @@ class MWindowSkin extends ACWindowSkin
 			10, 12, 10, 12, MWindowBdFactory.FRAME_CENTER_TOP + CENTER_TOP_OFFSET, 2);
 		
 		_head = new Sprite();
+		_head.useHandCursor = true;
+		_head.buttonMode = true;
 		addChild(_head);
 		
 		head = _head;

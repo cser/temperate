@@ -11,12 +11,13 @@ import temperate.minimal.MFlatButton;
 import temperate.minimal.MInputField;
 import temperate.minimal.MLabel;
 import temperate.minimal.MSeparator;
+import temperate.minimal.MWindow;
 import temperate.minimal.skins.MWindowSkin;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
 
-class SaveWindow extends ACWindow 
+class SaveWindow extends MWindow 
 {
 	public function new(manager:CPopUpManager) 
 	{
@@ -50,11 +51,8 @@ class SaveWindow extends ACWindow
 		var button = new MFlatButton().setText("X");
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		_skin.addHeadButton(button);
-		
-		MCursorManager.newHover(0).setTarget(_baseSkin.head).setValue(new MHandCursor(true));
 	}
 	
-	var _main:CVBox;
 	var _title:TextField;
 	var _input:MInputField;
 	
@@ -66,19 +64,5 @@ class SaveWindow extends ACWindow
 	function onCancelClick(event:MouseEvent)
 	{
 		close();
-	}
-	
-	var _skin:MWindowSkin;
-	
-	override function newSkin():ICWindowSkin
-	{
-		_skin = new MWindowSkin();
-		return _skin;
-	}
-	
-	override function newContainer():Sprite
-	{
-		_main = new CVBox();
-		return _main;
 	}
 }

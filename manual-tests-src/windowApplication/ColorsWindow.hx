@@ -1,30 +1,17 @@
 package windowApplication;
 import flash.display.Sprite;
 import temperate.containers.CVBox;
+import temperate.minimal.MWindow;
 import temperate.minimal.skins.MWindowSkin;
 import temperate.skins.ICWindowSkin;
 import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
 
-class ColorsWindow extends ACWindow
+class ColorsWindow extends MWindow
 {
 	public function new(manager:CPopUpManager) 
 	{
 		super(manager);
-		
-		_baseSkin.title = "Colors";
-	}
-	
-	var _main:CVBox;
-	
-	override function newContainer():Sprite
-	{
-		_main = new CVBox();
-		return _main;
-	}
-	
-	override function newSkin():ICWindowSkin
-	{
-		return new MWindowSkin();
+		title = "Colors";
 	}
 }
