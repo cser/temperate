@@ -5,7 +5,7 @@ import temperate.text.CTextFormat;
 
 class AMBoundableChart extends AMChart
 {
-	public function new(labelFormat:CTextFormat) 
+	function new(labelFormat:CTextFormat) 
 	{
 		super(labelFormat);
 		

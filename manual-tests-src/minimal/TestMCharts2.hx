@@ -3,6 +3,7 @@ import flash.display.Sprite;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.charts.MBarChart;
+import temperate.minimal.charts.MLineChart;
 import temperate.minimal.charts.MPieChart;
 
 class TestMCharts2 extends Sprite
@@ -75,6 +76,21 @@ class TestMCharts2 extends Sprite
 		chart.values = [10., 1, 2, -3];
 		chart.lineColor = 0xffffffff;
 		chart.lineWidth = 2;
+		box.add(chart);
+		
+		var chart = new MPieChart();
+		chart.values = [10.];
+		chart.includedValue = 0;
+		box.add(chart);
+		
+		var chart = new MBarChart();
+		chart.values = [10.];
+		chart.includedValue = 0;
+		box.add(chart);
+		
+		var chart = new MLineChart();
+		chart.values = [10.];
+		chart.includedValue = 0;
 		box.add(chart);
 		
 		var g = main.graphics;

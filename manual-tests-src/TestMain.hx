@@ -9,6 +9,7 @@ import minimal.TestMCharts;
 import minimal.TestMCheckBox;
 import minimal.TestMTooltips;
 import minimal.TestMTween;
+import signals.TestSignalPerformance;
 
 class TestMain
 {
@@ -45,6 +46,7 @@ class TestMain
 		var test = new TestSimpleButtonWrapper();
 		
 		var test = new TestScrollPane();
+		var test = new TestSignalPerformance();
 		Lib.current.addChild(test);
 		test.init();
 	}

@@ -10,10 +10,10 @@ import temperate.text.CTextFormat;
 	
 class AMChart extends CSprite
 {
-	private static var MIN_WIDTH:Int = 10;
-	private static var MIN_HEIGHT:Int = 10;
+	static var MIN_WIDTH:Int = 10;
+	static var MIN_HEIGHT:Int = 10;
 	
-	public function new(labelFormat:CTextFormat)
+	function new(labelFormat:CTextFormat)
 	{
 		super();
 		
@@ -22,6 +22,7 @@ class AMChart extends CSprite
 			CDefaultFormatFactory.getDefaultFormat();
 		_settedMinValue = 0;
 		_settedMaxValue = 100;
+		_includedValue = Math.NaN;
 		_autoScale = true;
 		_labelPrecision = 0;
 		_lineColor = 0xff5f5f5f;
@@ -112,6 +113,11 @@ class AMChart extends CSprite
 				_maxValue = value;
 				_minValue = value;
 			}
+			if (Math.isFinite(_includedValue))
+			{
+				_maxValue = CMath.max(_includedValue, _maxValue);
+				_minValue = CMath.min(_includedValue, _minValue);
+			}
 			for (i in 0 ... _values.length)
 			{
 				var value = Math.isFinite(_values[i]) ? _values[i] : 0;
@@ -127,6 +133,11 @@ class AMChart extends CSprite
 		{
 			_minValue = _settedMinValue;
 			_maxValue = _settedMaxValue;
+			if (Math.isFinite(_includedValue))
+			{
+				_maxValue = CMath.max(_includedValue, _maxValue);
+				_minValue = CMath.min(_includedValue, _minValue);
+			}
 		}
 	}
 	
@@ -302,6 +313,24 @@ class AMChart extends CSprite
 			postponeView();
 		}
 		return _labels;
+	}
+	
+	public var includedValue(get_includedValue, set_includedValue):Float;
+	var _includedValue:Float;
+	function get_includedValue()
+	{
+		return _includedValue;
+	}
+	function set_includedValue(value)
+	{
+		if (_includedValue != value)
+		{
+			_includedValue = value;
+			_view_valid = false;
+			_minAndMaxValid = false;
+			postponeView();
+		}
+		return _includedValue;
 	}
 	
 	public var showValueLabels(get_showValueLabels, set_showValueLabels):Bool;
