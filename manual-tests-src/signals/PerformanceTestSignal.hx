@@ -1,32 +1,38 @@
-package temperate.signals;
-import flash.utils.Dictionary;
+package signals;
 
-class CSignal< TListener >
+class PerformanceTestSignal< TListener >
 {
-	var _listeners:Dictionary;
+	var _listeners:Array< TListener >;
 	
 	public function new() 
 	{
-		_listeners = new Dictionary();
+		_listeners = [];
 		dispatch = cast privateDispatch;
 	}
 	
 	public function add(listener:TListener):Void
 	{
-		untyped _listeners[listener] = listener;
+		for (listenerI in _listeners)
+		{
+			if (listenerI == listener)
+			{
+				return;
+			}
+		}
+		_listeners.push(listener);
 	}
 	
 	public function remove(listener:TListener):Void
 	{
-		untyped __delete__(_listeners, listener);
+		_listeners.remove(listener);
 	}
 	
 	public var dispatch(default, null):TListener;
 	
 	function privateDispatch(__arguments__):Void
 	{
-		var keys:Array<TListener> = untyped __keys__(_listeners);
-		for (listener in keys)
+		var listeners = _listeners.copy();		
+		for (listener in _listeners)
 		{
 			Reflect.callMethod(null, listener, __arguments__);
 		}
