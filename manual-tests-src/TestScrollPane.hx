@@ -74,7 +74,8 @@ class TestScrollPane extends Sprite
 				.setContingencies(0, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
 			newScrollPaneBlock(
 				line, CScrollPolicy.ON, CScrollPolicy.AUTO, new MButton().setText("Button"))
-				.setPercents(100, 100);
+				.setPercents(100, 100)
+				.setContingencies(0, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
 		}
 	}
 	

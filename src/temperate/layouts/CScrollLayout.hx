@@ -140,17 +140,17 @@ class CScrollLayout implements ICScrollLayout
 		}
 		else if (!isHAuto && isVAuto)
 		{
-			if (height < vsbHeight)
+			if (width < vsbWidth + hsbWidth)
 			{
-				height = vsbHeight;
+				width = vsbWidth + hsbWidth;
 			}
-			if (width < vsbWidth)
+			if (height < vsbHeight + hsbHeight)
 			{
-				width = vsbWidth;
+				height = vsbHeight + hsbHeight;
 			}
-			if (!isHOn)
+			if (wrapper != null)
 			{
-				if (wrapper != null)
+				if (!isHOn)
 				{
 					var minWrapperWidth = if (!Math.isNaN(wrapper.widthPortion))
 					{
@@ -174,27 +174,46 @@ class CScrollLayout implements ICScrollLayout
 					{
 						hideVScrollBar();
 					}
-					else
+					else if (!Math.isNaN(wrapper.widthPortion))
 					{
-						if (!Math.isNaN(wrapper.widthPortion))
-						{
-							wrapper.setWidth(width - vsbWidth);
-						}
+						wrapper.setWidth(width - vsbWidth);
 					}
 				}
 				else
 				{
-					hideVScrollBar();
+					if (!Math.isNaN(wrapper.widthPortion))
+					{
+						wrapper.setWidth(width);
+					}
+					if (!Math.isNaN(wrapper.heightPortion))
+					{
+						wrapper.setHeight(height - hsbHeight);
+					}
+					if (wrapper.getHeight() <= height - hsbHeight)
+					{
+						hideVScrollBar();
+					}
+					else if (!Math.isNaN(wrapper.widthPortion))
+					{
+						wrapper.setWidth(width - vsbWidth);
+					}
 				}
 			}
 			else
 			{
-				hideHScrollBar();
 				hideVScrollBar();
 			}
 		}
 		else
 		{
+			if (width < vsbWidth + hsbWidth)
+			{
+				width = vsbWidth + hsbWidth;
+			}
+			if (height < vsbHeight + hsbHeight)
+			{
+				height = vsbHeight + hsbHeight;
+			}
 			hideHScrollBar();
 			hideVScrollBar();
 		}
