@@ -221,15 +221,21 @@ class ACWindow implements ICPopUp
 	
 	function addComponent(component:ACWindowComponent)
 	{
-		_components.add(component);
-		component.subscribe(this, getManager, _baseSkin);
-		_head = _components.head;
+		if (!_components.exists(component))
+		{
+			_components.add(component);
+			component.subscribe(this, getManager, _baseSkin);
+			_head = _components.head;
+		}
 	}
 	
 	function removeComponent(component:ACWindowComponent)
 	{
-		component.unsubscribe();
-		_components.remove(component);
-		_head = _components.head;
+		if (_components.exists(component))
+		{
+			component.unsubscribe();
+			_components.remove(component);
+			_head = _components.head;
+		}
 	}
 }

@@ -536,9 +536,56 @@ class CPriorityListTest
 	
 	//----------------------------------------------------------------------------------------------
 	//
-	//  Iteration
+	//  Other
 	//
 	//----------------------------------------------------------------------------------------------
+	
+	@Test
+	public function massiveExistsCases()
+	{
+		var node =
+			[new FakePriorityNode("0"), new FakePriorityNode("1"), new FakePriorityNode("2"),
+			new FakePriorityNode("3"), new FakePriorityNode("4")];
+		_list.add(node[0]);
+		_list.add(node[1]);
+		_list.add(node[2]);
+		_list.add(node[3]);
+		_list.add(node[4]);
+		
+		var missingNode = new FakePriorityNode("missing");
+		Assert.areEqual(false, _list.exists(missingNode));
+		
+		Assert.areEqual(true, _list.exists(node[0]));
+		Assert.areEqual(true, _list.exists(node[1]));
+		Assert.areEqual(true, _list.exists(node[2]));
+		Assert.areEqual(true, _list.exists(node[3]));
+		Assert.areEqual(true, _list.exists(node[4]));
+		
+		_list.remove(node[2]);
+		Assert.areEqual(false, _list.exists(node[2]));
+		
+		_list.remove(node[1]);
+		Assert.areEqual(false, _list.exists(node[1]));
+		
+		_list.remove(node[3]);
+		Assert.areEqual(false, _list.exists(node[3]));
+	}
+	
+	@Test
+	public function severalNodesExistsCases()
+	{
+		var node = [new FakePriorityNode("0"), new FakePriorityNode("1")];
+		_list.add(node[0]);
+		Assert.areEqual(true, _list.exists(node[0]));
+		
+		_list.remove(node[0]);
+		Assert.areEqual(false, _list.exists(node[0]));
+		
+		_list.add(node[0]);
+		_list.add(node[1]);
+		Assert.areEqual(true, _list.exists(node[0]));
+		Assert.areEqual(true, _list.exists(node[1]));
+	}
 	
 	@Test
 	public function iteratorNormalCase()

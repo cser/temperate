@@ -1,7 +1,9 @@
 package temperate.collections;
-import flash.utils.TypedDictionary;
-import temperate.core.CMath;
 
+/**
+ * Works incorrect if added or checked node that exists in other list.
+ * For safely work remove node before added to other list
+ */
 class CPriorityList< T:ACPriorityListNode<T> >
 {
 	public function new() 
@@ -9,7 +11,9 @@ class CPriorityList< T:ACPriorityListNode<T> >
 	}
 	
 	/**
-	 * Adds node or move to highest position with new priority
+	 * Adds node or move to highest position with new priority.
+	 * Note! Expected that you remove node from another list before addition.
+	 * But method works correctly if node exists
 	 * @param	node
 	 * @param	priority
 	 */
@@ -58,7 +62,9 @@ class CPriorityList< T:ACPriorityListNode<T> >
 	}
 	
 	/**
-	 * Removes node, if node is not exists do nothing
+	 * Removes node.
+	 * Note! If node is not exists do nothing.
+	 * I.e. you can call this method even if you don't no exists node or not
 	 * @param	node
 	 */
 	public function remove(node:T):Void
@@ -84,7 +90,8 @@ class CPriorityList< T:ACPriorityListNode<T> >
 	}
 	
 	/**
-	 * Move existent node to nearest place where new priority is correct
+	 * Move existent node to nearest place where new priority is correct.
+	 * Note! Works incorrectly if node is not exists
 	 * @param	node
 	 * @param	priority
 	 */
@@ -147,6 +154,16 @@ class CPriorityList< T:ACPriorityListNode<T> >
 				current = current.next;
 			}
 		}
+	}
+	
+	/**
+	 * Note! Works incorrectly if node exists in another list. It's makes for performance
+	 * @param	node
+	 * @return
+	 */
+	inline public function exists(node:T):Bool
+	{
+		return node.prev != null || node.next != null || node == head;
 	}
 	
 	/**
