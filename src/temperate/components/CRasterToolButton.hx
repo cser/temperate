@@ -1,6 +1,7 @@
 package temperate.components;
 import flash.display.Bitmap;
 import flash.display.DisplayObject;
+import flash.events.Event;
 import flash.events.MouseEvent;
 import temperate.components.parametrization.CImageParams;
 import temperate.components.parametrization.CRasterParams;
@@ -367,5 +368,34 @@ class CRasterToolButton extends CSprite, implements ICButton
 	function getStateImage()
 	{
 		return CImageParams.getImage(_imageParams, _state);
+	}
+	
+	public var toggle(get_toggle, set_toggle):Bool;
+	var _toggle:Bool;
+	function get_toggle()
+	{
+		return _toggle;
+	}
+	function set_toggle(value)
+	{
+		if (_toggle != value)
+		{
+			_toggle = value;
+			if (_toggle)
+			{
+				addEventListener(MouseEvent.CLICK, onClick, false, CMath.INT_MAX_VALUE - 1);
+			}
+			else
+			{
+				removeEventListener(MouseEvent.CLICK, onClick);
+			}
+		}
+		return _toggle;
+	}
+	
+	function onClick(event:MouseEvent)
+	{
+		selected = !selected;
+		dispatchEvent(new Event(Event.CHANGE));
 	}
 }

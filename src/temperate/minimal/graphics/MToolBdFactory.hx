@@ -55,10 +55,14 @@ class MToolBdFactory
 			color.bgRatiosDown = [ 0, 250 ];
 			color.bgRatiosDisabled = [ 0, 250 ];
 
-			color.bgColorsUp = [ 0xffe0fe00, 0xffc0a000 ];
+			/*color.bgColorsUp = [ 0xffe0fe00, 0xffc0a000 ];
 			color.bgColorsOver = [ 0xfffffe00, 0xffcac000 ];
 			color.bgColorsDown = [ 0xffaa8000, 0xfffffe00 ];
-			color.bgColorsDisabled = [ 0xffeeeecc, 0xffcccc82 ];
+			color.bgColorsDisabled = [ 0xffeeeecc, 0xffcccc82 ];*/
+			color.bgColorsUp = [ 0xff506f00, 0xffc0ff30 ];
+			color.bgColorsOver = [ 0xff5a8000, 0xffd0ff50 ];
+			color.bgColorsDown = [ 0xff506f00, 0xffc0ff30 ];
+			color.bgColorsDisabled = [ 0xff808080, 0xffefefef ];
 
 			color.bgInnerTopLeftColor = 0xa0ffffff;
 			color.bgInnerBottomRightColor = 0x30000000;

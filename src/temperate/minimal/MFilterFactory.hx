@@ -4,16 +4,16 @@ import flash.filters.ColorMatrixFilter;
 class MFilterFactory 
 {
 	public static var LIGHT = [ new ColorMatrixFilter([
-		1.1, 0, 0, 0, 0,
-		0, 1.1, 0, 0, 0,
-		0, 0, 1, 0, 0,
+		1.1, 0, 0, 0, 10,
+		0, 1.1, 0, 0, 10,
+		0, 0, 1, 0, 10,
 		0, 0, 0, 1, 0,
 	]) ];
 	
-	public static var LIGHT_HARD = [ new ColorMatrixFilter([
-		1.05, 0, 0, 0, 30,
-		0, 1.05, 0, 0, 30,
-		0, 0, 1, 0, 10,
+	public static var LIGHT_AMPLIFIED = [ new ColorMatrixFilter([
+		1.2, 0, 0, 0, 20,
+		0, 1.2, 0, 0, 20,
+		0, 0, 1, 0, 20,
 		0, 0, 0, 1, 0,
 	]) ];
 	

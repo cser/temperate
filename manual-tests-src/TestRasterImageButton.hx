@@ -19,6 +19,7 @@ import temperate.minimal.MFilterFactory;
 import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MImageButton;
+import temperate.minimal.MToolButton;
 
 class TestRasterImageButton extends Sprite
 {
@@ -166,7 +167,7 @@ class TestRasterImageButton extends Sprite
 			var button = newToolButton();
 			button.setImageIndents(5, 5, 5, 5);
 			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0x800000));
-			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT_HARD);
+			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT_AMPLIFIED);
 			button.getImage(CButtonState.DOWN).setOffset(0, 1);
 			line.add(button);
 			
@@ -174,6 +175,22 @@ class TestRasterImageButton extends Sprite
 			button.selected = true;
 			button.setImageAlign(1, 1);
 			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0x800000));
+			line.add(button);
+			
+			var button = new MToolButton();
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0x808080));
+			button.toggle = true;
+			line.add(button);
+			
+			var button = new MToolButton();
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0x808080));
+			button.isEnabled = false;
+			line.add(button);
+			
+			var button = new MToolButton();
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0x808080));
+			button.isEnabled = false;
+			button.selected = true;
 			line.add(button);
 		}
 	}
