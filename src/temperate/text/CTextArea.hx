@@ -2,7 +2,6 @@ package temperate.text;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.events.Event;
-import flash.events.TextEvent;
 import flash.text.TextField;
 import flash.text.TextFieldType;
 import temperate.components.CScrollBar;
@@ -182,11 +181,14 @@ class CTextArea extends CSprite
 			if (_vScrollAvailable)
 			{
 				_vScrollBar.x = _width - _vScrollBar.width;
+				_vScrollBar.initValue(_tf.scrollV);
 			}
 			if (_hScrollAvailable)
 			{
 				_hScrollBar.y = _height - _hScrollBar.height;
+				_hScrollBar.initValue(_tf.scrollH);
 			}
+			
 			_tf.x = textIndentLeft;
 			_tf.y = textIndentTop;
 			_bgSkin.setBounds(
