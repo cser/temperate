@@ -2,6 +2,7 @@ package temperate.components;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
+import flash.errors.ArgumentError;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import temperate.components.helpers.CTimerChanger;
@@ -9,7 +10,6 @@ import temperate.components.helpers.ICTimerChanger;
 import temperate.core.CMath;
 import temperate.core.CMouseWheelUtil;
 import temperate.core.CSprite;
-import temperate.errors.CArgumentError;
 import temperate.skins.ICScrollSkin;
 
 /**
@@ -698,7 +698,7 @@ class CScrollBar extends CSprite, implements ICSlider
 		{
 			if (value <= 0)
 			{
-				throw new CArgumentError("pageSize mast be positive or NaN");
+				throw new ArgumentError("pageSize mast be positive or NaN");
 			}
 			_pageSize = value;
 			_size_pageValid = false;
@@ -720,7 +720,7 @@ class CScrollBar extends CSprite, implements ICSlider
 		{
 			if (value <= 0)
 			{
-				throw new CArgumentError("pageScrollSize mast be positive or NaN");
+				throw new ArgumentError("pageScrollSize mast be positive or NaN");
 			}
 			_pageStep = value;
 			_size_pageValid = false;
@@ -740,13 +740,13 @@ class CScrollBar extends CSprite, implements ICSlider
 	{
 		if (!Math.isFinite(value))
 		{
-			throw new CArgumentError("step mast be finite");
+			throw new ArgumentError("step mast be finite");
 		}
 		if (_step != value)
 		{
 			if (value <= 0)
 			{
-				throw new CArgumentError("step mast be positive");
+				throw new ArgumentError("step mast be positive");
 			}
 			_step = value;
 			_size_pageValid = false;
