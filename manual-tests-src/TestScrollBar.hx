@@ -4,16 +4,19 @@ import flash.display.BitmapData;
 import flash.display.Sprite;
 import flash.display.StageQuality;
 import flash.errors.Error;
+import flash.events.Event;
 import helpers.Scaler;
 import temperate.components.CScrollBar;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
+import temperate.minimal.MLabel;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.MTooltipFactory;
 import temperate.minimal.skins.MFieldRectSkin;
 import temperate.raster.Scale3GridDrawer;
+import temperate.text.CLabel;
 
 class TestScrollBar extends Sprite
 {
@@ -48,6 +51,8 @@ class TestScrollBar extends Sprite
 		
 		var scrollBar = new MScrollBar(true).addTo(this, 300, 100);
 		scrollBar.pageSize = 50;
+		scrollBar.useHandCursor = false;
+		MTooltipFactory.newText(scrollBar, "useHandCursor = false");
 		addChild(new Scaler(scrollBar));
 		
 		var scrollBar = new MScrollBar(false).addTo(this, 410, 100);
@@ -69,6 +74,8 @@ class TestScrollBar extends Sprite
 			throw new Error("Quality mast steel be low");
 		}
 		stage.quality = StageQuality.HIGH;
+		
+		initChangingBlock();
 	}
 	
 	function newButtonsBlock()
@@ -141,13 +148,31 @@ class TestScrollBar extends Sprite
 		sprite.addChild(bitmap);
 		return sprite;
 	}
+	
+	var _scrollBar:CScrollBar;
+	var _scrollBarLabel:CLabel;
+	
+	function initChangingBlock()
+	{
+		var box = new CVBox().addTo(this, 300, 300);
+		_scrollBar = new MScrollBar(true).addTo(box);
+		_scrollBar.width = 200;
+		_scrollBar.minValue = 2;
+		_scrollBar.maxValue = 12;
+		_scrollBar.lineScrollSize = .5;
+		_scrollBar.pageSize = 2;
+		_scrollBar.addEventListener(Event.SCROLL, onScroll);
+		_scrollBarLabel = new MLabel().addTo(box);
+		onScroll();
+	}
+	
+	function onScroll(event:Event = null)
+	{
+		_scrollBarLabel.text = Std.string(_scrollBar.value);
+	}
 }
 /*
 TODO
 Обработка клика по линии
 Параметризация цветов
-Другой тип выбора состояний для движка
-Сброс движка на кратную позицию при отпускании
-Починить возникающий зазор между движком и кнопкой
-Разобраться с useHandCursor
 */
