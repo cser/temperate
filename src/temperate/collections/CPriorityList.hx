@@ -14,6 +14,7 @@ class CPriorityList< T:ACPriorityListNode<T> >
 		if (head == null)
 		{
 			head = node;
+			tail = node;
 		}
 		else
 		{
@@ -39,6 +40,7 @@ class CPriorityList< T:ACPriorityListNode<T> >
 				{
 					current.next = node;
 					node.prev = current;
+					tail = node;
 					break;
 				}
 				current = current.next;
@@ -51,6 +53,10 @@ class CPriorityList< T:ACPriorityListNode<T> >
 		if (node == head)
 		{
 			head = node.next;
+		}
+		if (node == tail)
+		{
+			tail = node.prev;
 		}
 		if (node.prev != null)
 		{
@@ -71,4 +77,9 @@ class CPriorityList< T:ACPriorityListNode<T> >
 	public var head(default, null):T;
 	
 	public var tail(default, null):T;
+	
+	public function iterator():Iterator<T>
+	{
+		return new CPriorityListIterator<T>(head);
+	}
 }

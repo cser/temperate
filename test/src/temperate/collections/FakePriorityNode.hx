@@ -10,11 +10,20 @@ class FakePriorityNode extends ACPriorityListNode<FakePriorityNode>
 	
 	var _value:String;
 	
-	public function getValues():String
+	public function getHeadValues():String
 	{
 		if (next != null)
 		{
-			return _value + "&" + next.getValues();
+			return _value + "&" + next.getHeadValues();
+		}
+		return _value;
+	}
+	
+	public function getTailValues():String
+	{
+		if (prev != null)
+		{
+			return prev.getTailValues() + "&" + _value;
 		}
 		return _value;
 	}
