@@ -29,9 +29,15 @@ class CNullRectSkin implements ICRectSkin
 	{
 	}
 	
-	public var minWidth(default, null):Int;
+	public function getFixedWidth():Float
+	{
+		return Math.NaN;
+	}
 	
-	public var minHeight(default, null):Int;
+	public function getFixedHeight():Float
+	{
+		return Math.NaN;
+	}
 	
 	public var state:CSkinState;
 	

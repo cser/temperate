@@ -1,6 +1,8 @@
 package temperate.components;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
+import flash.display.Graphics;
+import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Rectangle;
@@ -8,11 +10,15 @@ import temperate.core.CMath;
 import temperate.core.CSprite;
 import temperate.skins.ICRectSkin;
 
+/**
+ * @dispatch flash.events.Event.CHANGE
+ */
 class CSlider extends CSprite, implements ICSlider
 {
 	var _horizontal:Bool;
 	var _thumb:ACButton;
 	var _bgSkin:ICRectSkin;
+	var _bg:Sprite;
 	
 	public function new(horizontal:Bool, thumb:ACButton, bgSkin:ICRectSkin) 
 	{
@@ -31,8 +37,11 @@ class CSlider extends CSprite, implements ICSlider
 		_step = 0;
 		_mouseWheelStep = 10;
 		
+		_bg = new Sprite();
+		addChild(_bg);
+		
 		addChild(_thumb);
-		_bgSkin.link(addChildAt0, removeChild, graphics);
+		_bgSkin.link(addChildToBg, _bg.removeChild, _bg.graphics);
 		
 		updateOnMove = false;
 		
@@ -50,9 +59,9 @@ class CSlider extends CSprite, implements ICSlider
 	
 	public var view(default, null):DisplayObject;
 	
-	function addChildAt0(child:DisplayObject)
+	function addChildToBg(child:DisplayObject)
 	{
-		addChildAt(child, 0);
+		_bg.addChildAt(child, 0);
 	}
 	
 	var _guideCrossOffset:Int;
@@ -206,7 +215,21 @@ class CSlider extends CSprite, implements ICSlider
 	
 	function updateBg()
 	{
-		_bgSkin.setBounds(0, 0, Std.int(_width), Std.int(_height));
+		var g = graphics;
+		g.clear();
+		g.beginFill(0x000000, 0);
+		g.drawRect(0, 0, _width, _height);
+		g.endFill();
+		
+		var fixedWidth = _bgSkin.getFixedWidth();
+		var fixedHeight = _bgSkin.getFixedHeight();
+		var lineWidth = Math.isNaN(fixedWidth) ? _width : fixedWidth;
+		var lineHeight = Math.isNaN(fixedHeight) ? _height : fixedHeight;
+		_bgSkin.setBounds(
+			Std.int(_width - lineWidth) >> 1,
+			Std.int(_height - lineHeight) >> 1,
+			Std.int(lineWidth),
+			Std.int(lineHeight));
 		_bgSkin.redraw();
 	}
 	
@@ -214,6 +237,7 @@ class CSlider extends CSprite, implements ICSlider
 	{
 		_useHandCursor = value;
 		_thumb.useHandCursor = _useHandCursor;
+		_bg.useHandCursor = _useHandCursor;
 	}
 	
 	//----------------------------------------------------------------------------------------------
@@ -406,7 +430,6 @@ class CSlider extends CSprite, implements ICSlider
 /*
 TODO
 - наполнить минимальные размеры скина внятной логикой
-- перемещение мышью
 - выставление положения движка при изменении значения
 - значение должно быть кратным шагу
 - при любом шаге должно высталвяться минимальное и максимальное значение
@@ -415,5 +438,6 @@ TODO
 - отправка события только при действиях пользователя
 - реализовтаь useHandCursor поле
 - если шаг нулевой или неконечный - он не учитывается
-- правильное состояние кнопки движка при отводе нажатой мыши
+- протестить изменение позиции движка при изменении размеров
+- событие завершения перемещения движка
 */

@@ -305,15 +305,17 @@ class CInputField extends CSprite
 		{
 			_size_valid = true;
 			
+			var fixedWidth = _bg.getFixedWidth();
+			var fixedHeight = _bg.getFixedHeight();
 			_width = CMath.max3(
 				_settedWidth,
 				_tfMinWidth + textIndentLeft + textIndentRight,
-				_bg.minWidth
+				Math.isNaN(fixedWidth) ? 0 : fixedWidth
 			);
 			_height = CMath.max3(
 				_multiline ? _settedHeight : 0,
 				_tfMinHeight + textIndentTop + textIndentBottom,
-				_bg.minHeight
+				Math.isNaN(fixedHeight) ? 0 : fixedHeight
 			);
 			
 			_view_valid = false;

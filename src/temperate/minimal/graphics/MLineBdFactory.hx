@@ -3,7 +3,7 @@ import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import temperate.core.CMath;
 
-class MSliderBdFactory 
+class MLineBdFactory 
 {
 	public static var borderColor = 0xff707070;
 	public static var fillColor = 0xffaaaaaa;

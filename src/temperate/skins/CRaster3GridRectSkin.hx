@@ -8,13 +8,17 @@ import temperate.raster.Scale9GridDrawer;
 
 class CRaster3GridRectSkin implements ICRectSkin
 {
+	var _horizontal:Bool;
+	
 	public function new(horizontal:Bool) 
 	{
+		_horizontal = horizontal;
+		
 		state = CSkinState.NORMAL;
 		_parameters = [];
 		
 		_shape = new Shape();
-		_drawer = new Scale3GridDrawer(horizontal, _shape.graphics);
+		_drawer = new Scale3GridDrawer(_horizontal, _shape.graphics);
 	}
 	
 	var _shape:Shape;
@@ -34,9 +38,15 @@ class CRaster3GridRectSkin implements ICRectSkin
 		_removeChild(_shape);
 	}
 	
-	public var minWidth(default, null):Int;
+	public function getFixedWidth():Float
+	{
+		return _horizontal ? Math.NaN : _parameters[CSkinState.NORMAL.index].bitmapData.width;
+	}
 	
-	public var minHeight(default, null):Int;
+	public function getFixedHeight():Float
+	{
+		return _horizontal ? _parameters[CSkinState.NORMAL.index].bitmapData.height : Math.NaN;
+	}
 	
 	public var state:CSkinState;
 	
@@ -80,13 +90,6 @@ class CRaster3GridRectSkin implements ICRectSkin
 	//  Parametrization
 	//
 	//----------------------------------------------------------------------------------------------
-	
-	public function setMinSize(width:Int, height:Int)
-	{
-		minWidth = width;
-		minHeight = height;
-		return this;
-	}
 	
 	public function setGrid3Insets(left:Int, right:Int)
 	{

@@ -74,6 +74,16 @@ class CRaster9GridRectSkin implements ICRectSkin
 		_drawer.redraw();
 	}
 	
+	public function getFixedWidth():Float
+	{
+		return Math.NaN;
+	}
+	
+	public function getFixedHeight():Float
+	{
+		return Math.NaN;
+	}
+	
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Parametrization
