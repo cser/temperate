@@ -31,6 +31,7 @@ class CTextArea extends CSprite
 		_html = false;
 		_hLineScrollSize = 5;
 		_editable = false;
+		_updateOnMove = false;
 		
 		_layout = new ScrollTextLayout();
 		
@@ -71,6 +72,7 @@ class CTextArea extends CSprite
 			_hScrollBar = _newHScrollBar();
 			_hScrollBar.enabled = _enabled;
 			_hScrollBar.lineScrollSize = _hLineScrollSize;
+			_hScrollBar.updateOnMove = _updateOnMove;
 			_hScrollBar.addEventListener(Event.SCROLL, onHScroll);
 		}
 		if (_hScrollBar.parent != this)
@@ -96,6 +98,7 @@ class CTextArea extends CSprite
 		{
 			_vScrollBar = _newVScrollBar();
 			_vScrollBar.enabled = _enabled;
+			_vScrollBar.updateOnMove = _updateOnMove;
 			_vScrollBar.addEventListener(Event.SCROLL, onVScroll);
 		}
 		if (_vScrollBar.parent != this)
@@ -126,11 +129,11 @@ class CTextArea extends CSprite
 		{
 			_size_valid = true;
 			
+			_isArrangeInProcess = true;
 			_layout.isCompactWidth = isCompactWidth;
 			_layout.isCompactHeight = isCompactHeight;
 			_layout.width = _settedWidth;
 			_layout.height = _settedHeight;
-			_tf.removeEventListener(Event.SCROLL, onTfScroll);
 			_layout.arrange(
 				_tf,
 				showHScrollBar,
@@ -138,23 +141,21 @@ class CTextArea extends CSprite
 				showVScrollBar,
 				hideVScrollBar
 			);
-			_tf.addEventListener(Event.SCROLL, onTfScroll);
 			_width = _layout.width;
 			_height = _layout.height;
-			
 			if (_vScrollAvailable)
 			{
 				_vScrollBar.minValue = 1;
 				_vScrollBar.maxValue = _tf.maxScrollV;
 				_vScrollBar.pageSize = CMath.max(_tf.bottomScrollV - _tf.scrollV, 1);
 			}
-			
 			if (_hScrollAvailable)
 			{
 				_hScrollBar.minValue = 0;
 				_hScrollBar.maxValue = _tf.maxScrollH;
 				_hScrollBar.pageSize = CMath.max(_tf.width, 1);
 			}
+			_isArrangeInProcess = false;
 			
 			_view_valid = false;
 		}
@@ -185,7 +186,7 @@ class CTextArea extends CSprite
 	
 	function onHScroll(event:Event)
 	{
-		_tf.scrollH  = Std.int(_hScrollBar.value);
+		_tf.scrollH = Std.int(_hScrollBar.value);
 	}
 	
 	function onVScroll(event:Event)
@@ -193,8 +194,15 @@ class CTextArea extends CSprite
 		_tf.scrollV = Std.int(_vScrollBar.value);
 	}
 	
+	var _isArrangeInProcess:Bool;
+	
 	function onTfScroll(event:Event)
 	{
+		if (_isArrangeInProcess)
+		{
+			return;
+		}
+		
 		if (_vScrollAvailable)
 		{
 			_vScrollBar.initValue(_tf.scrollV);
@@ -392,6 +400,29 @@ class CTextArea extends CSprite
 		_size_valid = false;
 		postponeSize();
 		return value;
+	}
+	
+	public var updateOnMove(get_updateOnMove, set_updateOnMove):Bool;
+	var _updateOnMove:Bool;
+	function get_updateOnMove()
+	{
+		return _updateOnMove;
+	}
+	function set_updateOnMove(value:Bool)
+	{
+		if (_updateOnMove != value)
+		{
+			_updateOnMove = value;
+			if (_vScrollAvailable)
+			{
+				_vScrollBar.updateOnMove = _updateOnMove;
+			}
+			if (_hScrollAvailable)
+			{
+				_hScrollBar.updateOnMove = _updateOnMove;
+			}
+		}
+		return _updateOnMove;
 	}
 	
 	//----------------------------------------------------------------------------------------------

@@ -39,7 +39,8 @@ class TestTextArea extends Sprite
 			
 			var area = new CTextArea(newHScrollBar, newVScrollBar, new MFieldRectSkin());
 			area.editable = true;
-			area.text = "Line 1 text text\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
+			area.updateOnMove = true;
+			area.text = "updateOnMove = true\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
 				"\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3";
 			var scaler = new Scaler(area);
 			line.add(scaler).setIndents(0, 50, 0, 50);
@@ -140,7 +141,7 @@ class TestTextArea extends Sprite
 		/*
 		TODO
 		Отступы у текста
-		Починить скроллинг при вводе текста (вылазить за пределы видимости)
+		Починить скроллинг при вводе текста (вылазиет за пределы видимости)
 		*/
 	}
 	
