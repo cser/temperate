@@ -2,9 +2,12 @@ package ;
 import flash.display.Shape;
 import flash.display.Sprite;
 import helpers.Scaler;
+import temperate.components.CScrollPolicy;
 import temperate.containers.CHBox;
 import temperate.containers.CScrollPane;
 import temperate.containers.CVBox;
+import temperate.minimal.MButton;
+import temperate.minimal.MLabel;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.skins.MFieldRectSkin;
 
@@ -22,22 +25,75 @@ class TestScrollPane extends Sprite
 		{
 			var line = new CHBox().addTo(main);
 			
-			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
-			scrollPane.set(newShape(300, 200));
-			line.add(scrollPane);
-			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("Default").addTo(column);
 			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
 			scrollPane.set(newShape(100, 100));
 			scrollPane.setSize(80, 80);
 			var scaler = new Scaler(scrollPane);
-			line.add(scaler);
+			column.add(scaler);
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("CScrollPolicy.OFF\nCScrollPolicy.OFF").addTo(column);
+			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+			scrollPane.hScrollPolicy = CScrollPolicy.OFF;
+			scrollPane.vScrollPolicy = CScrollPolicy.OFF;
+			scrollPane.set(newShape(100, 100));
+			scrollPane.setSize(80, 80);
+			var scaler = new Scaler(scrollPane);
+			column.add(scaler);
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("CScrollPolicy.OFF\nCScrollPolicy.OFF").addTo(column);
+			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+			scrollPane.hScrollPolicy = CScrollPolicy.OFF;
+			scrollPane.vScrollPolicy = CScrollPolicy.OFF;
+			scrollPane.set(new MButton().setText("Button")).setPercents(100, 100);
+			scrollPane.setSize(80, 80);
+			var scaler = new Scaler(scrollPane);
+			column.add(scaler);
 		}
 		
 		{
 			var line = new CHBox().addTo(main);
 			
-			line.add(newShape(300, 200));
-			line.add(newShape(100, 100));
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("CScrollPolicy.AUTO\nCScrollPolicy.OFF").addTo(column);
+			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+			scrollPane.vScrollPolicy = CScrollPolicy.OFF;
+			scrollPane.set(newShape(100, 100));
+			scrollPane.setSize(80, 80);
+			var scaler = new Scaler(scrollPane);
+			column.add(scaler);
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("CScrollPolicy.AUTO\nCScrollPolicy.OFF").addTo(column);
+			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+			scrollPane.vScrollPolicy = CScrollPolicy.OFF;
+			scrollPane.set(new MButton().setText("Button")).setPercents(100, 100);
+			scrollPane.setSize(80, 80);
+			var scaler = new Scaler(scrollPane);
+			column.add(scaler);
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("CScrollPolicy.ON\nCScrollPolicy.ON").addTo(column);
+			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+			scrollPane.hScrollPolicy = CScrollPolicy.ON;
+			scrollPane.vScrollPolicy = CScrollPolicy.ON;
+			scrollPane.set(newShape(100, 100));
+			scrollPane.setSize(80, 80);
+			var scaler = new Scaler(scrollPane);
+			column.add(scaler);
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("CScrollPolicy.ON\nCScrollPolicy.ON").addTo(column);
+			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+			scrollPane.hScrollPolicy = CScrollPolicy.ON;
+			scrollPane.vScrollPolicy = CScrollPolicy.ON;
+			scrollPane.set(new MButton().setText("Button")).setPercents(100, 100);
+			scrollPane.setSize(80, 80);
+			var scaler = new Scaler(scrollPane);
+			column.add(scaler);
 		}
 	}
 	
