@@ -4,6 +4,7 @@ class ACPriorityListNode< T:ACPriorityListNode<T> >
 {
 	function new()
 	{
+		priority = 0;
 	}
 	
 	public var prev:T;

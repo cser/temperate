@@ -193,6 +193,46 @@ class CPriorityListTest
 		assertLinking(5);
 	}
 	
+	@Test
+	public function onAdditionNewNodeWithExistsPriorityNewNodePutsNearerToHead()
+	{
+		var node = 
+			[new FakePriorityNode("0"), new FakePriorityNode("1"), new FakePriorityNode("2"),
+			new FakePriorityNode("3"), new FakePriorityNode("4")];
+		
+		_list.add(node[0], 0);
+		_list.add(node[1], 0);
+		assertHeadAndTail(node[1], node[0]);
+		assertLinking(2);
+		
+		_list.add(node[0], 0);
+		_list.add(node[1], 0);
+		_list.add(node[2], 0);
+		assertHeadAndTail(node[2], node[0]);
+		assertLinking(3);
+		
+		_list.add(node[0], 0);
+		_list.add(node[1], 1);
+		_list.add(node[2], 2);
+		assertHeadAndTail(node[2], node[0]);
+		assertLinking(3);
+		
+		_list.add(node[3], 1);
+		assertHeadAndTail(node[2], node[0]);
+		Assert.areEqual("2&3&1&0", _list.head.getHeadValues());
+		assertLinking(4);
+		
+		_list.add(node[4], 1);
+		assertHeadAndTail(node[2], node[0]);
+		Assert.areEqual("2&4&3&1&0", _list.head.getHeadValues());
+		assertLinking(5);
+		
+		_list.add(node[3], 1);
+		assertHeadAndTail(node[2], node[0]);
+		Assert.areEqual("2&3&4&1&0", _list.head.getHeadValues());
+		assertLinking(5);
+	}
+	
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Priority
@@ -252,6 +292,248 @@ class CPriorityListTest
 		Assert.areEqual("12&11&10&2&1&0", _list.tail.getTailValues());
 	}
 	
+	@Test
+	public function massivePriorityChanging()
+	{
+		var node =
+			[new FakePriorityNode("0"), new FakePriorityNode("1"), new FakePriorityNode("2"),
+			new FakePriorityNode("3"), new FakePriorityNode("4")];
+		_list.add(node[0], 0);
+		_list.add(node[1], -10);
+		_list.add(node[2], -20);
+		_list.add(node[3], -30);
+		_list.add(node[4], -40);
+		
+		// node[4]
+		
+		_list.setPriority(node[4], 1);
+		assertLinking(5);
+		Assert.areEqual("4&0&1&2&3", _list.head.getHeadValues());
+		
+		_list.setPriority(node[4], -40);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		// node[3]
+		
+		_list.setPriority(node[3], -41);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&4&3", _list.head.getHeadValues());
+		
+		_list.setPriority(node[3], -30);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		// node[1]
+		
+		_list.setPriority(node[1], 1);
+		assertLinking(5);
+		Assert.areEqual("1&0&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[1], -40);
+		assertLinking(5);
+		Assert.areEqual("0&2&3&1&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[1], -10);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		// node[2]
+		
+		_list.setPriority(node[2], 0);
+		assertLinking(5);
+		Assert.areEqual("0&2&1&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[2], -41);
+		assertLinking(5);
+		Assert.areEqual("0&1&3&4&2", _list.head.getHeadValues());
+		
+		_list.setPriority(node[2], -20);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+	}
+	
+	@Test
+	public function massiveDontNeededMovingOnPrioirtyChangeCases()
+	{
+		var node =
+			[new FakePriorityNode("0"), new FakePriorityNode("1"), new FakePriorityNode("2"),
+			new FakePriorityNode("3"), new FakePriorityNode("4")];
+		_list.add(node[0], 0);
+		_list.add(node[1], -10);
+		_list.add(node[2], -20);
+		_list.add(node[3], -30);
+		_list.add(node[4], -40);
+		
+		// node[0]
+		
+		_list.setPriority(node[0], -1);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[0], -10);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[0], 0);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		// node[1]
+		
+		_list.setPriority(node[1], 0);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[1], -20);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[1], -10);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		// node[2]
+		
+		_list.setPriority(node[2], -10);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[2], -30);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[2], -20);
+		
+		// node[3]
+		
+		_list.setPriority(node[3], -20);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[3], -40);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[3], -30);
+		
+		// node[4]
+		
+		_list.setPriority(node[4], -30);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[4], -50);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[4], -30);
+		
+		// node[5]
+		
+		_list.setPriority(node[4], -40);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+		
+		_list.setPriority(node[4], -51);
+		assertLinking(5);
+		Assert.areEqual("0&1&2&3&4", _list.head.getHeadValues());
+	}
+	
+	@Test
+	public function oneNodePriorityChange()
+	{
+		var node = new FakePriorityNode("0");
+		_list.add(node, 1);
+		assertHeadAndTail(node, node);
+		assertLinking(1);
+		
+		_list.setPriority(node, 1);
+		assertHeadAndTail(node, node);
+		assertLinking(1);
+		
+		_list.setPriority(node, 2);
+		assertHeadAndTail(node, node);
+		assertLinking(1);
+		
+		_list.setPriority(node, 0);
+		assertHeadAndTail(node, node);
+		assertLinking(1);
+	}
+	
+	@Test
+	public function twoNodesPriorityChange()
+	{
+		var node = [new FakePriorityNode("0"), new FakePriorityNode("1")];
+		_list.add(node[0], 0);
+		_list.add(node[1], -1);
+		assertHeadAndTail(node[0], node[1]);
+		assertLinking(2);
+		
+		_list.setPriority(node[0], 1);
+		assertHeadAndTail(node[0], node[1]);
+		assertLinking(2);
+		
+		_list.setPriority(node[0], -1);
+		assertHeadAndTail(node[0], node[1]);
+		assertLinking(2);
+		
+		_list.setPriority(node[0], -2);
+		assertHeadAndTail(node[1], node[0]);
+		assertLinking(2);
+		
+		_list.setPriority(node[0], -1);
+		assertHeadAndTail(node[1], node[0]);
+		assertLinking(2);
+		
+		_list.setPriority(node[0], 0);
+		assertHeadAndTail(node[0], node[1]);
+		assertLinking(2);
+	}
+	
+	@Test
+	public function twoExistsNodeAdditionToNewPriority()
+	{
+		var node = [new FakePriorityNode("0"), new FakePriorityNode("1")];
+		_list.add(node[0], 0);
+		_list.add(node[1], -1);
+		assertHeadAndTail(node[0], node[1]);
+		assertLinking(2);
+		
+		_list.add(node[0], 1);
+		assertHeadAndTail(node[0], node[1]);
+		assertLinking(2);
+		
+		_list.add(node[0], -1);
+		assertHeadAndTail(node[0], node[1]);
+		assertLinking(2);
+		
+		_list.add(node[0], -2);
+		assertHeadAndTail(node[1], node[0]);
+		assertLinking(2);
+		
+		_list.add(node[0], -1);
+		assertHeadAndTail(node[0], node[1]);
+		assertLinking(2);
+		
+		_list.add(node[0], 0);
+		assertHeadAndTail(node[0], node[1]);
+		assertLinking(2);
+	}
+	
+	@Test
+	public function prioritySettingBeforeAddition()
+	{
+		var node = [new FakePriorityNode("0"), new FakePriorityNode("1")];
+		_list.add(node[0], 0);
+		
+		node[1].priority = -1;
+		_list.add(node[1]);
+		Assert.areEqual( -1, node[1].priority);
+		assertHeadAndTail(node[0], node[1]);
+		assertLinking(2);
+	}
+	
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Iteration
@@ -277,12 +559,3 @@ class CPriorityListTest
 		ArrayAssert.equalToArray(node, array);
 	}
 }
-/*
-- При добавлени компонента с тем же индексом новый ложится после старого
-- При попытке добавить компонент в другой контейнер он удаляется из старого
-- При попытке добавить существующий компонент в новый индекс он перемещается в новый индекс
-- Изменение приоритета
-- Удаление элементов при итерации
-- Удаление текущего элемента при итерации
-- Добавление элементов при итерации
-*/
