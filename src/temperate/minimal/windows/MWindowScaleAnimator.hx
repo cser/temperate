@@ -40,6 +40,8 @@ class MWindowScaleAnimator extends ACWindowComponent
 		var y = getY();
 		_hideVars.x = x + width * .5;
 		_hideVars.y = y + height * .5;
+		_showVars.x = x;
+		_showVars.y = y;
 		MTween.apply(_view, _hideVars);
 		var view = _view;
 		if (fast)

@@ -1,5 +1,7 @@
 package temperate.windows.components;
 import flash.display.DisplayObject;
+import flash.display.GradientType;
+import flash.display.Graphics;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import temperate.windows.docks.ICPopUpDock;
