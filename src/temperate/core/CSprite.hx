@@ -111,6 +111,7 @@ class CSprite extends Sprite
 	
 	/**
 	 * Call if need validate view in this moment (For draw component on BitmapData for example)
+	 * Also it mast be called if components size invalidated in view validation stack
 	 */
 	public function validate()
 	{

@@ -339,15 +339,25 @@ class CScrollBar extends CSprite
 	
 	override function doValidateView()
 	{
+		var needValidateComponents = false;
 		if (!_view_positionValid)
 		{
 			_view_positionValid = true;
 			setThumbPositionByValue();
+			needValidateComponents = true;
 		}
 		if (!_view_valid)
 		{
 			_view_valid = true;
 			updateBg();
+			needValidateComponents = true;
+		}
+		if (needValidateComponents)
+		{
+			// Validation system is not ideal :(
+			_thumb.validate();
+			_leftArrow.validate();
+			_rightArrow.validate();
 		}
 	}
 	
@@ -724,3 +734,7 @@ class CScrollBar extends CSprite
 		return this;
 	}
 }
+/*
+TODO
+Починить баги с валидацией отображения размеров движка (вылазиет при дописывании текста);
+*/

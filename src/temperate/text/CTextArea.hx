@@ -64,7 +64,7 @@ class CTextArea extends CSprite
 		postponeSize();
 	}
 	
-	var _size_firstValid:Bool;
+	var _view_firstValid:Bool;
 	
 	var _layout:IScrollTextLayout;
 	var _tf:TextField;
@@ -137,36 +137,16 @@ class CTextArea extends CSprite
 		{
 			_size_valid = true;
 			
-			_isArrangeInProcess = true;
-			_layout.isCompactWidth = isCompactWidth;
-			_layout.isCompactHeight = isCompactHeight;
-			_layout.width = _settedWidth;
-			_layout.height = _settedHeight;
-			_layout.arrange(
-				showHScrollBar,
-				hideHScrollBar,
-				showVScrollBar,
-				hideVScrollBar,
-				textIndentLeft + textIndentRight,
-				textIndentTop + textIndentBottom,
-				!_size_firstValid
-			);
-			_size_firstValid = true;
-			_width = _layout.width;
-			_height = _layout.height;
-			if (_vScrollAvailable)
+			_width = isCompactWidth ? 0 : _settedWidth;
+			if (_width < _layout.minWidth)
 			{
-				_vScrollBar.minValue = 1;
-				_vScrollBar.maxValue = _tf.maxScrollV;
-				_vScrollBar.pageSize = CMath.max(_tf.bottomScrollV - _tf.scrollV, 1);
+				_width = _layout.minWidth;
 			}
-			if (_hScrollAvailable)
+			_height = isCompactHeight ? 0 : _settedHeight;
+			if (_height < _layout.minHeight)
 			{
-				_hScrollBar.minValue = 0;
-				_hScrollBar.maxValue = _tf.maxScrollH;
-				_hScrollBar.pageSize = CMath.max(_tf.width, 1);
+				_height = _layout.minHeight;
 			}
-			_isArrangeInProcess = false;
 			
 			_view_valid = false;
 		}
@@ -182,15 +162,47 @@ class CTextArea extends CSprite
 		{
 			_view_valid = true;
 			
+			_isArrangeInProcess = true;
+			_layout.isCompactWidth = isCompactWidth;
+			_layout.isCompactHeight = isCompactHeight;
+			_layout.width = _settedWidth;
+			_layout.height = _settedHeight;
+			_layout.arrange(
+				showHScrollBar,
+				hideHScrollBar,
+				showVScrollBar,
+				hideVScrollBar,
+				textIndentLeft + textIndentRight,
+				textIndentTop + textIndentBottom,
+				!_view_firstValid
+			);
+			_view_firstValid = true;
+			_width = _layout.width;
+			_height = _layout.height;
+			if (_vScrollAvailable)
+			{
+				_vScrollBar.minValue = 1;
+				_vScrollBar.maxValue = _tf.maxScrollV;
+				_vScrollBar.pageSize = CMath.max(_tf.bottomScrollV - _tf.scrollV, 1);
+			}
+			if (_hScrollAvailable)
+			{
+				_hScrollBar.minValue = 0;
+				_hScrollBar.maxValue = _tf.maxScrollH;
+				_hScrollBar.pageSize = CMath.max(_tf.width, 1);
+			}
+			_isArrangeInProcess = false;
 			if (_vScrollAvailable)
 			{
 				_vScrollBar.x = _width - _vScrollBar.width;
 				_vScrollBar.initValue(_tf.scrollV);
+				_vScrollBar.validate();// Not clean, but size validated in view tick
 			}
 			if (_hScrollAvailable)
 			{
 				_hScrollBar.y = _height - _hScrollBar.height;
 				_hScrollBar.initValue(_tf.scrollH);
+				_hScrollBar.validate();// Not clean, but size validated in view tick
 			}
 			
 			_tf.x = textIndentLeft;
