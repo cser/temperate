@@ -2,8 +2,9 @@ package temperate.skins;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
 import flash.display.Graphics;
+import flash.geom.Matrix;
 
-class CRasterScrollSkin implements ICScrollSkin
+class CRasterScrollTiledSkin implements ICScrollSkin
 {
 	var _horizontalUp:BitmapData;
 	var _verticalUp:BitmapData;
@@ -19,15 +20,20 @@ class CRasterScrollSkin implements ICScrollSkin
 		_verticalDown = verticalDown;
 		_horizontalDown = horizontalDown;
 		
-		leftIndent = 3;
-		rightIndent = 3;
+		leftIndent = 0;
+		rightIndent = 0;
+		crossIndent = 0;
 	}
 	
 	var leftIndent:Int;
 	var rightIndent:Int;
+	var crossIndent:Int;
 	
-	public function setIndents(leftIndent:Int, rightIndent:Int)
+	public function setIndents(leftIndent:Int, rightIndent:Int, crossIndent:Int)
 	{
+		this.leftIndent = leftIndent;
+		this.rightIndent = rightIndent;
+		this.crossIndent = crossIndent;
 		return this;
 	}
 	
@@ -65,16 +71,39 @@ class CRasterScrollSkin implements ICScrollSkin
 		var bd = _horizontal ? _horizontalUp : _verticalUp;
 		var bdWidth = _horizontal ? bd.height : bd.width;
 		_graphics.clear();
-		_graphics.beginBitmapFill(bd);
+		_graphics.beginBitmapFill(bd, getMatrix());
 		if (_horizontal)
 		{
-			_graphics.drawRect(leftIndent, 0, _size - leftIndent - rightIndent, bdWidth);
+			_graphics.drawRect(leftIndent, crossIndent, _size - leftIndent - rightIndent, bdWidth);
 		}
 		else
 		{
-			_graphics.drawRect(0, leftIndent, bdWidth, _size - leftIndent - rightIndent);
+			_graphics.drawRect(crossIndent, leftIndent, bdWidth, _size - leftIndent - rightIndent);
 		}
 		_graphics.endFill();
+	}
+	
+	private var _matrix:Matrix;
+	
+	function getMatrix()
+	{
+		if (crossIndent == 0)
+		{
+			return null;
+		}
+		if (_matrix == null)
+		{
+			_matrix = new Matrix();
+		}
+		if (_horizontal)
+		{
+			_matrix.ty = crossIndent;
+		}
+		else
+		{
+			_matrix.tx = crossIndent;
+		}
+		return _matrix;
 	}
 	
 	public function redrawDown(isLeft:Bool, thumbCenter:Int)
@@ -101,24 +130,25 @@ class CRasterScrollSkin implements ICScrollSkin
 			bdLeft = _horizontal ? _horizontalUp : _verticalUp;
 			bdRight = _horizontal ? _horizontalDown : _verticalDown;
 		}
+		var matrix = getMatrix();
 		if (_horizontal)
 		{
-			_graphics.beginBitmapFill(bdLeft);
-			_graphics.drawRect(leftIndent, 0, thumbCenter, bdWidth);
+			_graphics.beginBitmapFill(bdLeft, matrix);
+			_graphics.drawRect(leftIndent, crossIndent, thumbCenter, bdWidth);
 			_graphics.endFill();
-			_graphics.beginBitmapFill(bdRight);
+			_graphics.beginBitmapFill(bdRight, matrix);
 			_graphics.drawRect(
-				thumbCenter, 0, _size - rightIndent - thumbCenter, bdWidth);
+				thumbCenter, crossIndent, _size - rightIndent - thumbCenter, bdWidth);
 			_graphics.endFill();
 		}
 		else
 		{
-			_graphics.beginBitmapFill(bdLeft);
-			_graphics.drawRect(0, leftIndent, bdWidth, thumbCenter);
+			_graphics.beginBitmapFill(bdLeft, matrix);
+			_graphics.drawRect(crossIndent, leftIndent, bdWidth, thumbCenter);
 			_graphics.endFill();
-			_graphics.beginBitmapFill(bdRight);
+			_graphics.beginBitmapFill(bdRight, matrix);
 			_graphics.drawRect(
-				0, thumbCenter, bdWidth, _size - rightIndent - thumbCenter);
+				crossIndent, thumbCenter, bdWidth, _size - rightIndent - thumbCenter);
 			_graphics.endFill();
 		}
 	}

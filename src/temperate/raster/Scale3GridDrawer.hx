@@ -142,4 +142,12 @@ class Scale3GridDrawer implements IDrawer
 			}
 		}
 	}
+	
+	public function clear()
+	{
+		if (graphics != null)
+		{
+			graphics.clear();
+		}
+	}
 }

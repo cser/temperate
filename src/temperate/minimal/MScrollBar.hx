@@ -4,8 +4,7 @@ import temperate.components.CRasterFixedButton;
 import temperate.components.CRasterThumb;
 import temperate.components.CScrollBar;
 import temperate.minimal.graphics.MScrollBarBdFactory;
-import temperate.skins.CNullRectSkin;
-import temperate.skins.CRasterScrollSkin;
+import temperate.skins.CRasterScrollTiledSkin;
 
 class MScrollBar extends CScrollBar
 {
@@ -50,10 +49,10 @@ class MScrollBar extends CScrollBar
 		}
 		thumb.setGrid3Insets(5, 5);
 		thumb.setMinSizeParams(10, 16);
-		var bg = new CRasterScrollSkin(
+		var bg = new CRasterScrollTiledSkin(
 			MScrollBarBdFactory.getHBgUp(), MScrollBarBdFactory.getVBgUp(),
 			MScrollBarBdFactory.getHBgDown(), MScrollBarBdFactory.getVBgDown()
-		);
+		).setIndents(3, 3, 0);
 		super(horizontal, leftArrow, rightArrow, thumb, bg);
 	}
 }

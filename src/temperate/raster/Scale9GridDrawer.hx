@@ -156,4 +156,12 @@ class Scale9GridDrawer implements IDrawer
 			g.endFill();
 		}
 	}
+	
+	public function clear()
+	{
+		if (graphics != null)
+		{
+			graphics.clear();
+		}
+	}
 }

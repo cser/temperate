@@ -16,7 +16,8 @@ import temperate.minimal.MLabel;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.MTooltipFactory;
 import temperate.raster.Scale3GridDrawer;
-import temperate.skins.CRasterScrollSkin;
+import temperate.raster.Scale9GridDrawer;
+import temperate.skins.CRasterScrollDrawedSkin;
 import temperate.text.CLabel;
 
 class TestScrollBar extends Sprite
@@ -128,7 +129,8 @@ class TestScrollBar extends Sprite
 			horizontal, new MButton().setText("-"),
 			new MButton().setText("+"),
 			new MButton().setText("::"),
-			new CRasterScrollSkin(MCommonBdFactory.getTextBg(), MCommonBdFactory.getTextBg())
+			new CRasterScrollDrawedSkin(
+				MCommonBdFactory.getTextBg(), new Scale9GridDrawer(), 18).setIndents(0, 0, 2)
 		);
 	}
 	
@@ -174,8 +176,3 @@ class TestScrollBar extends Sprite
 		_scrollBarLabel.text = Std.string(_scrollBar.value);
 	}
 }
-/*
-TODO
-Скин с растягиванием
-Уменьшение неопределенности и увеличение гибкости в применении скина
-*/

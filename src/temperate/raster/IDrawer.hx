@@ -25,4 +25,6 @@ interface IDrawer
 	function setBitmapData(bitmapData:BitmapData):IDrawer;
 	
 	function redraw():Void;
+	
+	function clear():Void;
 }
