@@ -172,6 +172,8 @@ class TestRasterImageButton extends Sprite
 			
 			var button = newToolButton();
 			button.selected = true;
+			button.setImageAlign(1, 1);
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0x800000));
 			line.add(button);
 		}
 	}

@@ -13,6 +13,8 @@ class CRasterToolButton extends CSprite, implements ICButton
 	{
 		super();
 		
+		imageAlignX = .5;
+		imageAlignY = .5;
 		imageIndentLeft = 4;
 		imageIndentRight = 4;
 		imageIndentTop = 4;
@@ -304,11 +306,11 @@ class CRasterToolButton extends CSprite, implements ICButton
 			if (_currentImage != null)
 			{
 				_currentImage.x = imageIndentLeft + Std.int(
-					(_width - imageIndentLeft - imageIndentRight - _currentImage.width) * .5) +
-					imageOffsetX;
+					(_width - imageIndentLeft - imageIndentRight - _currentImage.width) *
+					imageAlignX) + imageOffsetX;
 				_currentImage.y = imageIndentTop + Std.int(
-					(_height - imageIndentTop - imageIndentBottom - _currentImage.height) * .5) +
-					imageOffsetY;
+					(_height - imageIndentTop - imageIndentBottom - _currentImage.height) *
+					imageAlignY) + imageOffsetY;
 			}
 		}
 	}
