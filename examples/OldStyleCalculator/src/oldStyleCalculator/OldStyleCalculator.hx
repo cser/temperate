@@ -5,6 +5,7 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.filters.DropShadowFilter;
 import flash.Lib;
 import flash.text.TextFormatAlign;
 import temperate.components.ACButton;
@@ -13,9 +14,9 @@ import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.minimal.MButton;
 import temperate.minimal.MFlatButton;
-import temperate.minimal.MFormatFactory;
 import temperate.minimal.MInputField;
 import temperate.minimal.MTooltipFactory;
+import temperate.minimal.renderers.MTextTooltip;
 import temperate.text.CTextFormat;
 
 class OldStyleCalculator extends Sprite
@@ -61,21 +62,22 @@ class OldStyleCalculator extends Sprite
 		var button = new MButton();
 		button.text = "Backspace";
 		button.addEventListener(MouseEvent.CLICK, onBackspaceClick);
-		MTooltipFactory.newText(button, "Delete last symbol");
+		MTooltipFactory.newText(button, "Delete last symbol").setTooltipMethod(newTextTooltip);
 		line.add(button).setPercents(100);
 		
 		var button = new MButton();
 		button.text = "CE";
 		button.selected = true;
 		button.addEventListener(MouseEvent.CLICK, onCEClick);
-		MTooltipFactory.newText(button, "Clear current number\nwithout clear other operations");
+		MTooltipFactory.newText(button, "Clear current number\nwithout clear other operations")
+			.setTooltipMethod(newTextTooltip);
 		line.add(button).setPercents(100);
 		
 		var button = new MButton();
 		button.text = "C";
 		button.selected = true;
 		button.addEventListener(MouseEvent.CLICK, onCClick);
-		MTooltipFactory.newText(button, "Reset calculator");
+		MTooltipFactory.newText(button, "Reset calculator").setTooltipMethod(newTextTooltip);
 		line.add(button).setPercents(100);
 		
 		{
@@ -132,6 +134,13 @@ class OldStyleCalculator extends Sprite
 		
 		stage.addEventListener(Event.RESIZE, onResize);
 		onResize();
+	}
+	
+	function newTextTooltip()
+	{
+		var tooltip = new MTextTooltip();
+		tooltip.filters = [ new DropShadowFilter(4, 45, 0x000000, .5) ];
+		return tooltip;
 	}
 	
 	function onResize(event:Event = null)
