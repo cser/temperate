@@ -322,13 +322,18 @@ class CScrollBar extends CSprite
 		if (!_size_pageValid)
 		{
 			_size_pageValid = true;
+			
 			updateThumbSize();
 			updateThumbVisible();
+			_view_positionValid = false;
 		}
 		if (!oldSize_valid)
 		{
 			_view_positionValid = false;
 			_view_valid = false;
+		}
+		if (!_view_positionValid || !_view_valid)
+		{
 			postponeView();
 		}
 	}
@@ -558,7 +563,6 @@ class CScrollBar extends CSprite
 	}
 	function set_value(value:Float)
 	{
-		trace("set_value(" + value + ")");
 		var newValue = fixedValue(value);
 		if (_value != newValue)
 		{
@@ -577,7 +581,6 @@ class CScrollBar extends CSprite
 	}
 	function set_minValue(value:Float)
 	{
-		trace("set_minValue(" + value + ")");
 		if (_minValue != value)
 		{
 			_minValue = value;
@@ -597,7 +600,6 @@ class CScrollBar extends CSprite
 	}
 	function set_maxValue(value:Float)
 	{
-		trace("set_maxValue(" + value + ")");
 		if (_maxValue != value)
 		{
 			_maxValue = value;
@@ -617,7 +619,6 @@ class CScrollBar extends CSprite
 	}
 	function set_pageSize(value:Float)
 	{
-		trace("set_pageSize(" + value + ")");
 		if (_pageSize != value)
 		{
 			if (value <= 0)
