@@ -1,0 +1,63 @@
+BarChart.as				MBarChart
+Chart.as				AMChart
+LineChart.as			MLineChart
+PieChart.as				MPieChart
+
+Component.as			CSprite
+FPSMeter.as				FPSMonitor
+PushButton.as			MButton
+RadioButton.as			MRadioButton && CButtonSelector
+CheckBox.as				MCheckBox
+Style.as				MFormatFactory && MBitmapDataFactory
+HBox.as					CHBox (Allow percentage scaling)
+VBox.as					CVBox (Allow percentage scaling)
+Label.as				MLabel || (TextField && CTextFormat)
+TextArea.as				-
+Text.as					MInputText (multiline = true)
+InputText.as			MInputText
+
+NumericStepper.as		MNumericStepper (Not allow float values)
+
+HRangeSlider.as			-
+HScrollBar.as			-
+HSlider.as				-
+HUISlider.as			-
+VRangeSlider.as			-
+VScrollBar.as			-
+VSlider.as				-
+VUISlider.as			-
+ScrollBar.as			-
+ScrollPane.as			-
+Slider.as				-
+UISlider.as				-
+RangeSlider.as			-
+
+ProgressBar.as			-
+
+ComboBox.as				-
+List.as					-
+ListItem.as				-
+
+Panel.as				-
+Window.as				-
+Accordion.as			-
+
+Calendar.as				-
+ColorChooser.as			-
+
+IndicatorLight.as		-
+Knob.as					-
+RotarySelector.as		-
+Meter.as				-
+WheelMenu.as			-
+
+MinimalConfigurator.as	-
+
+Was not existed in Minimalcomps:
+	MCursorManager
+	MTooltipFactory
+	MTween
+
+TODO:
+	CNavBar
+	CTabNavigator

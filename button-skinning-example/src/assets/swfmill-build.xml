@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--File was generated.-->
+<!--Any modifications you make may be lost.-->
+<movie version="9" width="800" height="600" framerate="30">
+	<background color="#FFFFFF" />
+	<frame>
+		<library>
+			<bitmap id="assets.generated.ButtonDisabled" 
+				name="button-skinning-example.src.assets.images.button_disabled.png" 
+				import="button-skinning-example/src/assets/images/button_disabled.png" />
+			<bitmap id="assets.generated.ButtonDisabledSelected" 
+				name="button-skinning-example.src.assets.images.button_disabled_selected.png" 
+				import="button-skinning-example/src/assets/images/button_disabled_selected.png" />
+			<bitmap id="assets.generated.ButtonDown" 
+				name="button-skinning-example.src.assets.images.button_down.png" 
+				import="button-skinning-example/src/assets/images/button_down.png" />
+			<bitmap id="assets.generated.ButtonDownSelected" 
+				name="button-skinning-example.src.assets.images.button_down_selected.png" 
+				import="button-skinning-example/src/assets/images/button_down_selected.png" />
+			<bitmap id="assets.generated.ButtonOver" 
+				name="button-skinning-example.src.assets.images.button_over.png" 
+				import="button-skinning-example/src/assets/images/button_over.png" />
+			<bitmap id="assets.generated.ButtonOverSelected" 
+				name="button-skinning-example.src.assets.images.button_over_selected.png" 
+				import="button-skinning-example/src/assets/images/button_over_selected.png" />
+			<bitmap id="assets.generated.ButtonUp" 
+				name="button-skinning-example.src.assets.images.button_up.png" 
+				import="button-skinning-example/src/assets/images/button_up.png" />
+			<bitmap id="assets.generated.ButtonUpSelected" 
+				name="button-skinning-example.src.assets.images.button_up_selected.png" 
+				import="button-skinning-example/src/assets/images/button_up_selected.png" />
+		</library>
+	</frame>
+</movie>

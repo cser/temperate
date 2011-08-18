@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--File was generated.-->
+<!--Any modifications you make may be lost.-->
+<movie version="9" width="800" height="600" framerate="30">
+	<background color="#FFFFFF" />
+	<frame>
+		<library>
+			<bitmap id="assets.Button" 
+				name="assets.button.png" 
+				import="assets/button.png" />
+			<bitmap id="assets.ButtonNormal" 
+				name="assets.button_normal.png" 
+				import="assets/button_normal.png" />
+			<bitmap id="assets.ButtonOver" 
+				name="assets.button_over.png" 
+				import="assets/button_over.png" />
+			<bitmap id="assets.subAssets.ButtonDisabled" 
+				name="assets.subAssets.button_disabled.png" 
+				import="assets/subAssets/button_disabled.png" />
+			<bitmap id="assets.subAssets.ButtonDisabledSelected" 
+				name="assets.subAssets.button_disabled_selected.png" 
+				import="assets/subAssets/button_disabled_selected.png" />
+			<bitmap id="assets.subAssets.ButtonDown" 
+				name="assets.subAssets.button_down.png" 
+				import="assets/subAssets/button_down.png" />
+			<bitmap id="assets.subAssets.ButtonDownSelected" 
+				name="assets.subAssets.button_down_selected.png" 
+				import="assets/subAssets/button_down_selected.png" />
+			<bitmap id="assets.subAssets.ButtonOver" 
+				name="assets.subAssets.button_over.png" 
+				import="assets/subAssets/button_over.png" />
+			<bitmap id="assets.subAssets.ButtonOverSelected" 
+				name="assets.subAssets.button_over_selected.png" 
+				import="assets/subAssets/button_over_selected.png" />
+			<bitmap id="assets.subAssets.ButtonUp" 
+				name="assets.subAssets.button_up.png" 
+				import="assets/subAssets/button_up.png" />
+			<bitmap id="assets.subAssets.ButtonUpSelected" 
+				name="assets.subAssets.button_up_selected.png" 
+				import="assets/subAssets/button_up_selected.png" />
+		</library>
+	</frame>
+</movie>
