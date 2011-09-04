@@ -14,18 +14,18 @@ class CChangingTimerHelper
 	
 	var _timer:Timer;
 	
-	public function increaseDown()
+	public function increaseDown(useSecondDelay:Bool)
 	{
 		onIncrease();
 		_timer.addEventListener(TimerEvent.TIMER, increaseValueHandler);
-		startTimer();
+		startTimer(useSecondDelay);
 	}
 	
-	public function decreaseDown()
+	public function decreaseDown(useSecondDelay:Bool)
 	{
 		onDecrease();
 		_timer.addEventListener(TimerEvent.TIMER, decreaseValueHandler);
-		startTimer();
+		startTimer(useSecondDelay);
 	}
 	
 	public function up()
@@ -35,9 +35,9 @@ class CChangingTimerHelper
 		_timer.removeEventListener(TimerEvent.TIMER, decreaseValueHandler);
 	}
 	
-	function startTimer()
+	function startTimer(useSecondDelay:Bool)
 	{
-		_timer.delay = firstDelay;
+		_timer.delay = useSecondDelay ? secondDelay : firstDelay;
 		_timer.start();
 	}
 	

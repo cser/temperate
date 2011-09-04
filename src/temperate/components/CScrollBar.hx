@@ -75,12 +75,7 @@ class CScrollBar extends CSprite
 		_timerHelper.onDecrease = onDecrease;
 		
 		_leftArrow.addEventListener(MouseEvent.MOUSE_DOWN, onLeftMouseDown);
-		_leftArrow.addEventListener(MouseEvent.MOUSE_UP, buttonStopScrollHandler);
-		_leftArrow.addEventListener(MouseEvent.MOUSE_OUT, buttonStopScrollHandler);
-		
 		_rightArrow.addEventListener(MouseEvent.MOUSE_DOWN, onRightMouseDown);
-		_rightArrow.addEventListener(MouseEvent.MOUSE_UP, buttonStopScrollHandler);
-		_rightArrow.addEventListener(MouseEvent.MOUSE_OUT, buttonStopScrollHandler);
 		
 		_thumb.addEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		
@@ -102,15 +97,52 @@ class CScrollBar extends CSprite
 	
 	function onLeftMouseDown(event:MouseEvent)
 	{
-		_timerHelper.decreaseDown();
+		stage.addEventListener(MouseEvent.MOUSE_UP, onStageLeftMouseUp);
+		_leftArrow.addEventListener(MouseEvent.ROLL_OVER, onLeftRollOver);
+		_leftArrow.addEventListener(MouseEvent.ROLL_OUT, onLeftRollOut);
+		_timerHelper.decreaseDown(false);
+	}
+	
+	function onStageLeftMouseUp(event:MouseEvent)
+	{
+		stage.removeEventListener(MouseEvent.MOUSE_UP, onStageLeftMouseUp);
+		_leftArrow.removeEventListener(MouseEvent.ROLL_OVER, onLeftRollOver);
+		_leftArrow.removeEventListener(MouseEvent.ROLL_OUT, onLeftRollOut);
+		_timerHelper.up();
+	}
+	
+	function onLeftRollOver(event:MouseEvent)
+	{
+		_timerHelper.decreaseDown(true);
+	}
+	
+	function onLeftRollOut(event:MouseEvent)
+	{
+		_timerHelper.up();
 	}
 	
 	function onRightMouseDown(event:MouseEvent)
 	{
-		_timerHelper.increaseDown();
+		stage.addEventListener(MouseEvent.MOUSE_UP, onStageRightMouseUp);
+		_rightArrow.addEventListener(MouseEvent.ROLL_OVER, onRightRollOver);
+		_rightArrow.addEventListener(MouseEvent.ROLL_OUT, onRightRollOut);
+		_timerHelper.increaseDown(false);
 	}
 	
-	function buttonStopScrollHandler(event:MouseEvent = null)
+	function onStageRightMouseUp(event:MouseEvent)
+	{
+		stage.removeEventListener(MouseEvent.MOUSE_UP, onStageRightMouseUp);
+		_rightArrow.removeEventListener(MouseEvent.ROLL_OVER, onRightRollOver);
+		_rightArrow.removeEventListener(MouseEvent.ROLL_OUT, onRightRollOut);
+		_timerHelper.up();
+	}
+	
+	function onRightRollOver(event:MouseEvent)
+	{
+		_timerHelper.increaseDown(true);
+	}
+	
+	function onRightRollOut(event:MouseEvent)
 	{
 		_timerHelper.up();
 	}
@@ -137,29 +169,6 @@ class CScrollBar extends CSprite
 	function onPageIncrease()
 	{
 		checkPageMouseAndChange(true);
-	}
-	
-	var _isBgDown:Bool;
-	var _isBgDownLeft:Bool;
-	
-	function onBgMouseDown(event:MouseEvent)
-	{
-		var mousePosition = _horizontal ? _bg.mouseX : _bg.mouseY;
-		var thumbCenter = _horizontal ?
-			_thumb.x + _thumb.width * .5 :
-			_thumb.y + _thumb.height * .5;
-		_isBgDown = true;
-		_isBgDownLeft = mousePosition < thumbCenter;
-		if (_isBgDownLeft)
-		{
-			_pageTimerHelper.decreaseDown();
-		}
-		else
-		{
-			_pageTimerHelper.increaseDown();
-		}
-		redrawBg();
-		stage.addEventListener(MouseEvent.MOUSE_UP, onStagePageMouseUp);
 	}
 	
 	function checkPageMouseAndChange(isIncrease:Bool)
@@ -192,7 +201,50 @@ class CScrollBar extends CSprite
 		}
 	}
 	
+	var _isBgDown:Bool;
+	var _isBgDownLeft:Bool;
+	
+	function onBgMouseDown(event:MouseEvent)
+	{
+		doBgMouseDown(false);
+		stage.addEventListener(MouseEvent.MOUSE_UP, onStagePageMouseUp);
+		_bg.addEventListener(MouseEvent.ROLL_OVER, onBgRollOver);
+		_bg.addEventListener(MouseEvent.ROLL_OUT, onBgRollOut);
+	}
+	
+	function doBgMouseDown(useSecondDelay:Bool)
+	{
+		var mousePosition = _horizontal ? _bg.mouseX : _bg.mouseY;
+		var thumbCenter = _horizontal ?
+			_thumb.x + _thumb.width * .5 :
+			_thumb.y + _thumb.height * .5;
+		_isBgDown = true;
+		_isBgDownLeft = mousePosition < thumbCenter;
+		if (_isBgDownLeft)
+		{
+			_pageTimerHelper.decreaseDown(useSecondDelay);
+		}
+		else
+		{
+			_pageTimerHelper.increaseDown(useSecondDelay);
+		}
+		redrawBg();
+	}
+	
 	function onStagePageMouseUp(event:MouseEvent)
+	{
+		_bg.removeEventListener(MouseEvent.ROLL_OVER, onBgRollOver);
+		_bg.removeEventListener(MouseEvent.ROLL_OUT, onBgRollOut);
+		_pageTimerHelper.up();
+		doPageUp();
+	}
+	
+	function onBgRollOver(event:MouseEvent)
+	{
+		doBgMouseDown(true);
+	}
+	
+	function onBgRollOut(event:MouseEvent)
 	{
 		_pageTimerHelper.up();
 		doPageUp();
