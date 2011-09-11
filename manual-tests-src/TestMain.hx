@@ -44,6 +44,7 @@ class TestMain
 	
 	public static function trace( v : Dynamic, ?infos : PosInfos )
 	{
-		Lib.trace(infos.className + ": " + v);
+		Lib.trace(
+			"src/" + ~/\./g.replace(infos.className, "/") + ".hx:" + infos.lineNumber + ": " + v);
 	}
 }

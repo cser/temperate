@@ -41,6 +41,10 @@ class CTextArea extends CSprite
 		_layout.hScrollPolicy = CScrollPolicy.AUTO;
 		_layout.vScrollPolicy = CScrollPolicy.AUTO;
 		
+		_html = false;
+		
+		set_format(CDefaultFormatFactory.getDefaultFormat());
+		
 		_settedWidth = 100;
 		_settedHeight = 100;
 		
@@ -108,32 +112,14 @@ class CTextArea extends CSprite
 		addChildAt(child, 0);
 	}
 	
-	public var text(get_text, set_text):String;
-	var _text:String;
-	function get_text()
-	{
-		return _text;
-	}
-	function set_text(value)
-	{
-		if (_text != value)
-		{
-			_text = value;
-			_tf.text = text;
-			
-			_size_valid = false;
-			postponeSize();
-		}
-		return _text;
-	}
-	
 	override function doValidateSize()
 	{
 		if (!_size_valid)
 		{
-			trace("doValidateSize {");
 			_size_valid = true;
 			
+			_layout.isCompactWidth = isCompactWidth;
+			_layout.isCompactHeight = isCompactHeight;
 			_layout.width = _settedWidth;
 			_layout.height = _settedHeight;
 			_layout.arrange(
@@ -150,7 +136,6 @@ class CTextArea extends CSprite
 			{
 				_vScrollBar.minValue = 1;
 				_vScrollBar.maxValue = _tf.maxScrollV;
-				trace("set parameters min = " + 1 + ", max = " + _tf.maxScrollV);
 				_vScrollBar.pageSize = CMath.max(_tf.bottomScrollV, 1);
 			}
 			
@@ -162,7 +147,6 @@ class CTextArea extends CSprite
 			}
 			
 			_view_valid = false;
-			trace("} doValidateSize");
 		}
 		if (!_view_valid)
 		{
@@ -304,6 +288,107 @@ class CTextArea extends CSprite
 		return value;
 	}
 	
+	public var minWidth(get_minWidth, set_minWidth):Int;
+	function get_minWidth()
+	{
+		return _layout.minWidth;
+	}
+	function set_minWidth(value:Int)
+	{
+		_layout.minWidth = value;
+		_size_valid = false;
+		postponeSize();
+		return value;
+	}
+	
+	public var minHeight(get_minHeight, set_minHeight):Int;
+	function get_minHeight()
+	{
+		return _layout.minHeight;
+	}
+	function set_minHeight(value:Int)
+	{
+		_layout.minHeight = value;
+		_size_valid = false;
+		postponeSize();
+		return value;
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Text
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	public var format(get_format, set_format):CTextFormat;
+	var _format:CTextFormat;
+	function get_format()
+	{
+		return _format;
+	}
+	function set_format(value)
+	{
+		if (_format != value)
+		{
+			_format = value;
+			_format.applyTo(_tf);
+			_size_valid = false;
+			postponeSize();
+		}
+		return _format;
+	}
+	
+	public var text(get_text, set_text):String;
+	var _text:String;
+	function get_text()
+	{
+		return _text;
+	}
+	function set_text(value)
+	{
+		if (_text != value)
+		{
+			_text = value;
+			updateTfByText();
+			
+			_size_valid = false;
+			postponeSize();
+		}
+		return _text;
+	}
+	
+	public var html(get_html, set_html):Bool;
+	var _html:Bool;
+	function get_html()
+	{
+		return _html;
+	}
+	function set_html(value)
+	{
+		if (_html != value)
+		{
+			_html = value;
+			updateTfByText();
+			
+			_size_valid = false;
+			postponeSize();
+		}
+		return _html;
+	}
+	
+	function updateTfByText()
+	{
+		var settedText = _text != null ? _text : "";
+		if (_html)
+		{
+			_tf.htmlText = settedText;
+		}
+		else
+		{
+			_tf.text = settedText;
+		}
+	}
+	
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Helped
@@ -312,6 +397,14 @@ class CTextArea extends CSprite
 	
 	public function setText(text:String)
 	{
+		html = false;
+		this.text = text;
+		return this;
+	}
+	
+	public function setHtmlText(text:String)
+	{
+		html = true;
 		this.text = text;
 		return this;
 	}
@@ -324,7 +417,3 @@ class CTextArea extends CSprite
 		return this;
 	}
 }
-/*
-TODO
-Починить некорректное определение размера скроллирования при изменении размеров
-*/

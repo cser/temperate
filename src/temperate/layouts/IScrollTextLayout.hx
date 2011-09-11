@@ -22,6 +22,10 @@ interface IScrollTextLayout
 	
 	var isCompactHeight:Bool;
 	
+	var minWidth:Int;
+	
+	var minHeight:Int;
+	
 	var width:Float;
 	
 	var height:Float;

@@ -7,7 +7,9 @@ class ScrollTextLayout implements IScrollTextLayout
 {
 	public function new()
 	{
-		minTextWidth = 10;
+		minTextWidth = 0;
+		minWidth = 50;
+		minHeight = 50;
 	}
 	
 	public function arrange(
@@ -17,6 +19,14 @@ class ScrollTextLayout implements IScrollTextLayout
 		showVScrollBar:Void->DisplayObject,
 		hideVScrollBar:Void->Void):Void
 	{
+		if (width < minWidth || isCompactWidth)
+		{
+			width = minWidth;
+		}
+		if (height < minHeight || isCompactHeight)
+		{
+			height = minHeight;
+		}
 		tf.width = width;
 		tf.height = height;
 		
@@ -27,6 +37,7 @@ class ScrollTextLayout implements IScrollTextLayout
 			tf.width = width - vScrollBar.width;
 		}
 		
+		var max = tf.maxScrollH;
 		var hScrollBar = tryScrollH(tf, showHScrollBar, hideHScrollBar);
 		var hasH = hScrollBar != null;
 		if (hasH)
@@ -44,6 +55,7 @@ class ScrollTextLayout implements IScrollTextLayout
 		if (hasV)
 		{
 			vScrollBar.height = hasH ? height - hScrollBar.height : height;
+			tf.width = width - vScrollBar.width;
 		}
 	}
 	
@@ -59,6 +71,7 @@ class ScrollTextLayout implements IScrollTextLayout
 				return null;
 			case CScrollPolicy.AUTO:
 				var min = 1;
+				tf.maxScrollV;// flashplayer bug spigot
 				var max = tf.maxScrollH;
 				if (max > min)
 				{
@@ -84,8 +97,8 @@ class ScrollTextLayout implements IScrollTextLayout
 				return null;
 			case CScrollPolicy.AUTO:
 				var min = 1;
+				tf.maxScrollH;// flashplayer bug spigot
 				var max = tf.maxScrollV;
-				trace(min + ", " + max);
 				if (max > min)
 				{
 					return showVScrollBar();
@@ -103,6 +116,10 @@ class ScrollTextLayout implements IScrollTextLayout
 	public var vScrollPolicy:CScrollPolicy;
 		
 	public var minTextWidth:Int;
+	
+	public var minWidth:Int;
+	
+	public var minHeight:Int;
 	
 	public var isCompactWidth:Bool;
 	
