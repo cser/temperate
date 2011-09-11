@@ -562,14 +562,30 @@ class CScrollBar extends CSprite
 	}
 	function set_value(value:Float)
 	{
+		setValue(value, true);
+		return _value;
+	}
+	
+	function setValue(value:Float, needDispatch:Bool)
+	{
 		var newValue = fixedValue(value);
 		if (_value != newValue)
 		{
 			_value = newValue;
 			setThumbPositionByValue();
-			dispatchEvent(new Event(Event.SCROLL));
+			if (needDispatch)
+			{
+				dispatchEvent(new Event(Event.SCROLL));
+			}
 		}
-		return _value;
+	}
+	
+	/**
+	 * Equals to value setter, but dont't dispatch event
+	 */
+	public function initValue(value:Float)
+	{
+		setValue(value, false);
 	}
 	
 	public var minValue(get_minValue, set_minValue):Float;

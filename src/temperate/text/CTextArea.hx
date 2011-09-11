@@ -28,6 +28,9 @@ class CTextArea extends CSprite
 		_newVScrollBar = newVScrollBar;
 		_bgSkin = bgSkin;
 		
+		_html = false;
+		_hLineScrollSize = 5;
+		
 		_layout = new ScrollTextLayout();
 		
 		_tf = new TextField();
@@ -40,8 +43,6 @@ class CTextArea extends CSprite
 		
 		_layout.hScrollPolicy = CScrollPolicy.AUTO;
 		_layout.vScrollPolicy = CScrollPolicy.AUTO;
-		
-		_html = false;
 		
 		set_format(CDefaultFormatFactory.getDefaultFormat());
 		
@@ -64,6 +65,7 @@ class CTextArea extends CSprite
 		if (_hScrollBar == null)
 		{
 			_hScrollBar = _newHScrollBar();
+			_hScrollBar.lineScrollSize = _hLineScrollSize;
 			_hScrollBar.addEventListener(Event.SCROLL, onHScroll);
 		}
 		if (_hScrollBar.parent != this)
@@ -122,6 +124,7 @@ class CTextArea extends CSprite
 			_layout.isCompactHeight = isCompactHeight;
 			_layout.width = _settedWidth;
 			_layout.height = _settedHeight;
+			_tf.removeEventListener(Event.SCROLL, onTfScroll);
 			_layout.arrange(
 				_tf,
 				showHScrollBar,
@@ -129,6 +132,7 @@ class CTextArea extends CSprite
 				showVScrollBar,
 				hideVScrollBar
 			);
+			_tf.addEventListener(Event.SCROLL, onTfScroll);
 			_width = _layout.width;
 			_height = _layout.height;
 			
@@ -187,11 +191,11 @@ class CTextArea extends CSprite
 	{
 		if (_vScrollAvailable)
 		{
-			_vScrollBar.value = _tf.scrollV;
+			_vScrollBar.initValue(_tf.scrollV);
 		}
 		if (_hScrollAvailable)
 		{
-			_hScrollBar.value = _tf.scrollH;
+			_hScrollBar.initValue(_tf.scrollH);
 		}
 	}
 	
@@ -243,6 +247,25 @@ class CTextArea extends CSprite
 	{
 		_vScrollBar.value = value;
 		return value;
+	}
+	
+	public var hLineScrollSize(get_hLineScrollSize, set_hLineScrollSize):Int;
+	var _hLineScrollSize:Int;
+	function get_hLineScrollSize()
+	{
+		return _hLineScrollSize;
+	}
+	function set_hLineScrollSize(value:Int)
+	{
+		if (_hLineScrollSize != value)
+		{
+			_hLineScrollSize = value;
+			if (_hScrollBar != null)
+			{
+				_hScrollBar.lineScrollSize = _hLineScrollSize;
+			}
+		}
+		return _hLineScrollSize;
 	}
 	
 	public var hMaxScrollValue(get_hMaxScrollValue, null):Int;
