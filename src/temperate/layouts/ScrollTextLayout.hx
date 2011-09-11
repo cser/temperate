@@ -7,7 +7,6 @@ class ScrollTextLayout implements IScrollTextLayout
 {
 	public function new()
 	{
-		minTextWidth = 0;
 		minWidth = 50;
 		minHeight = 50;
 	}
@@ -114,8 +113,6 @@ class ScrollTextLayout implements IScrollTextLayout
 	public var hScrollPolicy:CScrollPolicy;
 	
 	public var vScrollPolicy:CScrollPolicy;
-		
-	public var minTextWidth:Int;
 	
 	public var minWidth:Int;
 	

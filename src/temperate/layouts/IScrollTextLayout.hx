@@ -16,8 +16,6 @@ interface IScrollTextLayout
 	
 	var vScrollPolicy:CScrollPolicy;
 	
-	var minTextWidth:Int;
-	
 	var isCompactWidth:Bool;
 	
 	var isCompactHeight:Bool;

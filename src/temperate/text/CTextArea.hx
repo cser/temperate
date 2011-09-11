@@ -136,7 +136,7 @@ class CTextArea extends CSprite
 			{
 				_vScrollBar.minValue = 1;
 				_vScrollBar.maxValue = _tf.maxScrollV;
-				_vScrollBar.pageSize = CMath.max(_tf.bottomScrollV, 1);
+				_vScrollBar.pageSize = CMath.max(_tf.bottomScrollV - _tf.scrollV, 1);
 			}
 			
 			if (_hScrollAvailable)
@@ -188,6 +188,10 @@ class CTextArea extends CSprite
 		if (_vScrollAvailable)
 		{
 			_vScrollBar.value = _tf.scrollV;
+		}
+		if (_hScrollAvailable)
+		{
+			_hScrollBar.value = _tf.scrollH;
 		}
 	}
 	
@@ -387,6 +391,17 @@ class CTextArea extends CSprite
 		{
 			_tf.text = settedText;
 		}
+	}
+	
+	public var restrict(get_restrict, set_restrict):String;
+	function get_restrict()
+	{
+		return _tf.restrict;
+	}
+	function set_restrict(value)
+	{
+		_tf.restrict = value;
+		return value;
 	}
 	
 	//----------------------------------------------------------------------------------------------
