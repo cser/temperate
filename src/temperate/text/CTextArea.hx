@@ -320,29 +320,29 @@ class CTextArea extends CSprite
 		return value;
 	}
 	
-	/*
 	public var hScrollValue(get_hScrollValue, set_hScrollValue):Int;
 	function get_hScrollValue()
 	{
-		return Std.int(_vScrollBar.value);
+		return _tf.scrollH;
 	}
 	function set_hScrollValue(value:Int)
 	{
-		_vScrollBar.value = value;
-		return value;
+		validate();
+		_tf.scrollH = value;
+		return _tf.scrollH;
 	}
 	
 	public var vScrollValue(get_vScrollValue, set_vScrollValue):Int;
 	function get_vScrollValue()
 	{
-		return Std.int(_vScrollBar.value);
+		return _tf.scrollV;
 	}
 	function set_vScrollValue(value:Int)
 	{
-		_vScrollBar.value = value;
-		return value;
+		validate();
+		_tf.scrollV = value;
+		return _tf.scrollV;
 	}
-	*/
 	
 	public var hLineScrollSize(get_hLineScrollSize, set_hLineScrollSize):Int;
 	var _hLineScrollSize:Int;
