@@ -76,7 +76,7 @@ class CScrollBar extends CSprite
 		
 		_thumb.addEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		
-		_pageTimerChanger = newTimerChanger();
+		_pageTimerChanger = newPageTimerChanger();
 		_pageTimerChanger.onIncrease = onPageIncrease;
 		_pageTimerChanger.onDecrease = onPageDecrease;
 		
@@ -95,6 +95,11 @@ class CScrollBar extends CSprite
 	function newTimerChanger():ICTimerChanger
 	{
 		return new CTimerChanger();
+	}
+	
+	function newPageTimerChanger():ICTimerChanger
+	{
+		return newTimerChanger();
 	}
 	
 	function onIncrease()
