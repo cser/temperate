@@ -1,11 +1,16 @@
 package temperate.components.helpers;
+import flash.events.TimerEvent;
+import flash.utils.Timer;
+import temperate.core.CMath;
 
 class CSmoothTimerChanger implements ICTimerChanger
 {
 	public function new()
 	{
-		firstDelay = 200;
-		secondDelay = 50;
+		firstDelay = 300;
+		secondDelay = 100;
+		minDelay = 10;
+		nextDelayRatio = .5;
 		
 		_timer = new Timer(1000);
 	}
@@ -35,34 +40,45 @@ class CSmoothTimerChanger implements ICTimerChanger
 	
 	function startTimer(useSecondDelay:Bool)
 	{
-		_timer.delay = useSecondDelay ? secondDelay : firstDelay;
+		_timer.delay = useSecondDelay ? getNextDelay(_timer.delay) : firstDelay;
 		_timer.start();
 	}
 	
 	function increaseValueHandler(event:TimerEvent)
 	{
 		onIncrease();
-		_timer.delay = getNextDelay();
+		_timer.delay = getNextDelay(_timer.delay);
 	}
 	
 	function decreaseValueHandler(event:TimerEvent)
 	{
 		onDecrease();
-		_timer.delay = getNextDelay();
+		_timer.delay = getNextDelay(_timer.delay);
 	}
 	
-	public var firstDelay:Int;
-	public var secondDelay:Int;
+	public var minDelay(default, null):Int;
+	public var firstDelay(default, null):Int;
+	public var secondDelay(default, null):Int;
+	public var nextDelayRatio(default, null):Float;
+	
+	public function setDelays(firstDelay:Int, secondDelay:Int, minDelay:Int, nextDelayRatio:Float)
+	{
+		this.firstDelay = firstDelay;
+		this.secondDelay = secondDelay;
+		this.minDelay = minDelay;
+		this.nextDelayRatio = nextDelayRatio;
+		return this;
+	}
 	
 	public var onIncrease:Void->Void;
 	public var onDecrease:Void->Void;
 	
-	function getNextDelay()
+	function getNextDelay(current:Float):Float
 	{
-		if (_timer.delay > 400)
+		if (current > secondDelay)
 		{
-			return 100.;
+			return secondDelay;
 		}
-		return CMath.max(_timer.delay * .5, _minDelay);
+		return CMath.max(current * nextDelayRatio, minDelay);
 	}
 }

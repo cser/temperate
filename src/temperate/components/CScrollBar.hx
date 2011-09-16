@@ -24,8 +24,8 @@ class CScrollBar extends CSprite
 	var _size_pageValid:Bool;
 	var _view_positionValid:Bool;
 	
-	var _timerHelper:ICTimerChanger;
-	var _pageTimerHelper:ICTimerChanger;
+	var _timerChanger:ICTimerChanger;
+	var _pageTimerChanger:ICTimerChanger;
 	
 	var _isBgDown:Bool;
 	var _isBgDownLeft:Bool;
@@ -67,18 +67,18 @@ class CScrollBar extends CSprite
 		addChild(_leftArrow);
 		addChild(_rightArrow);
 		
-		_timerHelper = newTimerHelper();
-		_timerHelper.onIncrease = onIncrease;
-		_timerHelper.onDecrease = onDecrease;
+		_timerChanger = newTimerChanger();
+		_timerChanger.onIncrease = onIncrease;
+		_timerChanger.onDecrease = onDecrease;
 		
 		_leftArrow.addEventListener(MouseEvent.MOUSE_DOWN, onLeftMouseDown);
 		_rightArrow.addEventListener(MouseEvent.MOUSE_DOWN, onRightMouseDown);
 		
 		_thumb.addEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		
-		_pageTimerHelper = newTimerHelper();
-		_pageTimerHelper.onIncrease = onPageIncrease;
-		_pageTimerHelper.onDecrease = onPageDecrease;
+		_pageTimerChanger = newTimerChanger();
+		_pageTimerChanger.onIncrease = onPageIncrease;
+		_pageTimerChanger.onDecrease = onPageDecrease;
 		
 		updateEnabledListeners();
 		
@@ -92,7 +92,7 @@ class CScrollBar extends CSprite
 		postponeSize();
 	}
 	
-	function newTimerHelper():ICTimerChanger
+	function newTimerChanger():ICTimerChanger
 	{
 		return new CTimerChanger();
 	}
@@ -112,7 +112,7 @@ class CScrollBar extends CSprite
 		stage.addEventListener(MouseEvent.MOUSE_UP, onStageLeftMouseUp);
 		_leftArrow.addEventListener(MouseEvent.ROLL_OVER, onLeftRollOver);
 		_leftArrow.addEventListener(MouseEvent.ROLL_OUT, onLeftRollOut);
-		_timerHelper.decreaseDown(false);
+		_timerChanger.decreaseDown(false);
 	}
 	
 	function onStageLeftMouseUp(event:MouseEvent)
@@ -120,17 +120,17 @@ class CScrollBar extends CSprite
 		stage.removeEventListener(MouseEvent.MOUSE_UP, onStageLeftMouseUp);
 		_leftArrow.removeEventListener(MouseEvent.ROLL_OVER, onLeftRollOver);
 		_leftArrow.removeEventListener(MouseEvent.ROLL_OUT, onLeftRollOut);
-		_timerHelper.up();
+		_timerChanger.up();
 	}
 	
 	function onLeftRollOver(event:MouseEvent)
 	{
-		_timerHelper.decreaseDown(true);
+		_timerChanger.decreaseDown(true);
 	}
 	
 	function onLeftRollOut(event:MouseEvent)
 	{
-		_timerHelper.up();
+		_timerChanger.up();
 	}
 	
 	function onRightMouseDown(event:MouseEvent)
@@ -138,7 +138,7 @@ class CScrollBar extends CSprite
 		stage.addEventListener(MouseEvent.MOUSE_UP, onStageRightMouseUp);
 		_rightArrow.addEventListener(MouseEvent.ROLL_OVER, onRightRollOver);
 		_rightArrow.addEventListener(MouseEvent.ROLL_OUT, onRightRollOut);
-		_timerHelper.increaseDown(false);
+		_timerChanger.increaseDown(false);
 	}
 	
 	function onStageRightMouseUp(event:MouseEvent)
@@ -146,17 +146,17 @@ class CScrollBar extends CSprite
 		stage.removeEventListener(MouseEvent.MOUSE_UP, onStageRightMouseUp);
 		_rightArrow.removeEventListener(MouseEvent.ROLL_OVER, onRightRollOver);
 		_rightArrow.removeEventListener(MouseEvent.ROLL_OUT, onRightRollOut);
-		_timerHelper.up();
+		_timerChanger.up();
 	}
 	
 	function onRightRollOver(event:MouseEvent)
 	{
-		_timerHelper.increaseDown(true);
+		_timerChanger.increaseDown(true);
 	}
 	
 	function onRightRollOut(event:MouseEvent)
 	{
-		_timerHelper.up();
+		_timerChanger.up();
 	}
 	
 	function updateEnabledListeners()
@@ -203,7 +203,7 @@ class CScrollBar extends CSprite
 		if (isIncrease && mousePosition < thumbPosition + thumbSize ||
 			!isIncrease && mousePosition > thumbPosition)
 		{
-			_pageTimerHelper.up();
+			_pageTimerChanger.up();
 			_isBgDown = false;
 			redrawBg();
 		}
@@ -230,11 +230,11 @@ class CScrollBar extends CSprite
 		_isBgDownLeft = getMousePosition() < getThumbCenter();
 		if (_isBgDownLeft)
 		{
-			_pageTimerHelper.decreaseDown(false);
+			_pageTimerChanger.decreaseDown(false);
 		}
 		else
 		{
-			_pageTimerHelper.increaseDown(false);
+			_pageTimerChanger.increaseDown(false);
 		}
 		redrawBg();
 		
@@ -247,7 +247,7 @@ class CScrollBar extends CSprite
 	{
 		_bg.removeEventListener(MouseEvent.ROLL_OVER, onBgRollOver);
 		_bg.removeEventListener(MouseEvent.ROLL_OUT, onBgRollOut);
-		_pageTimerHelper.up();
+		_pageTimerChanger.up();
 		_isBgDown = false;
 		redrawBg();
 	}
@@ -263,18 +263,18 @@ class CScrollBar extends CSprite
 		_isBgDown = true;
 		if (_isBgDownLeft)
 		{
-			_pageTimerHelper.decreaseDown(true);
+			_pageTimerChanger.decreaseDown(true);
 		}
 		else
 		{
-			_pageTimerHelper.increaseDown(true);
+			_pageTimerChanger.increaseDown(true);
 		}
 		redrawBg();
 	}
 	
 	function onBgRollOut(event:MouseEvent)
 	{
-		_pageTimerHelper.up();
+		_pageTimerChanger.up();
 		_isBgDown = false;
 		redrawBg();
 	}

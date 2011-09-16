@@ -53,8 +53,15 @@ class CTimerChanger implements ICTimerChanger
 		_timer.delay = secondDelay;
 	}
 	
-	public var firstDelay:Int;
-	public var secondDelay:Int;
+	public var firstDelay(default, null):Int;
+	public var secondDelay(default, null):Int;
+	
+	public function setDelays(firstDelay:Int, secondDelay:Int)
+	{
+		this.firstDelay = firstDelay;
+		this.secondDelay = secondDelay;
+		return this;
+	}
 	
 	public var onIncrease:Void->Void;
 	public var onDecrease:Void->Void;
