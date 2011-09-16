@@ -5,12 +5,12 @@ import flash.events.Event;
 import flash.events.FocusEvent;
 import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
-import flash.events.TimerEvent;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFieldType;
 import flash.ui.Keyboard;
-import flash.utils.Timer;
+import temperate.components.helpers.CSmoothTimerChanger;
+import temperate.components.helpers.ICTimerChanger;
 import temperate.core.CMath;
 import temperate.core.CSprite;
 import temperate.skins.CSkinState;
@@ -24,8 +24,6 @@ class CNumericStepper extends CSprite
 	{
 		super();
 		
-		_firstDelay = 500;
-		_minDelay = 10;
 		_step = 1;
 		_editable = true;
 		
@@ -52,8 +50,6 @@ class CNumericStepper extends CSprite
 		_down.addEventListener(MouseEvent.MOUSE_UP, buttonStopTimerHandler);
 		_down.addEventListener(MouseEvent.MOUSE_OUT, buttonStopTimerHandler);
 		addChild(_down);
-		
-		_timer = new Timer(100);
 		
 		_tf = new TextField();
 		_tf.restrict = valueRestrict;
@@ -104,6 +100,36 @@ class CNumericStepper extends CSprite
 	//
 	//----------------------------------------------------------------------------------------------
 	
+	public var timerChanger(get_timerChanger, set_timerChanger):ICTimerChanger;
+	var _timerChanger:ICTimerChanger;
+	function get_timerChanger()
+	{
+		if (_timerChanger == null)
+		{
+			set_timerChanger(new CSmoothTimerChanger());
+		}
+		return _timerChanger;
+	}
+	function set_timerChanger(value:ICTimerChanger)
+	{
+		if (_timerChanger != value)
+		{
+			if (_timerChanger != null)
+			{
+				_timerChanger.up();
+				_timerChanger.onIncrease = null;
+				_timerChanger.onDecrease = null;
+			}
+			_timerChanger = value;
+			if (_timerChanger != null)
+			{
+				_timerChanger.onIncrease = onIncrease;
+				_timerChanger.onDecrease = onDecrease;
+			}
+		}
+		return _timerChanger;
+	}
+	
 	public var valueRestrict(default, null):String;
 	public var valueTranslator(default, null):Int->String;
 	public var valueParser(default, null):String->Int;
@@ -137,31 +163,7 @@ class CNumericStepper extends CSprite
 		_step = value;
 		return _step;
 	}
-	
-	public var firstDelay(get_firstDelay, set_firstDelay):Int;
-	var _firstDelay:Int;
-	function get_firstDelay()
-	{
-		return _firstDelay;
-	}
-	function set_firstDelay(value)
-	{
-		_firstDelay = value;
-		return _firstDelay;
-	}
-	
-	public var minTimerDelay(get_minDelay, set_minDelay):Int;
-	var _minDelay:Int;
-	function get_minDelay():Int
-	{
-		return _minDelay;
-	}
-	function set_minDelay(value:Int)
-	{
-		_minDelay = value;
-		return _minDelay;
-	}
-	
+		
 	public var value(get_value, set_value):Int;
 	var _value:Int;
 	function set_value(value)
@@ -516,52 +518,27 @@ class CNumericStepper extends CSprite
 	
 	function doUpMouseDown()
 	{
-		value += _step;
-		_timer.addEventListener(TimerEvent.TIMER, increaseValueHandler);
-		startTimer();
+		timerChanger.increaseDown(false);
 	}
 	
 	function doDownMouseDown()
 	{
-		value -= _step;
-		_timer.addEventListener(TimerEvent.TIMER, decreaseValueHandler);
-		startTimer();
+		timerChanger.decreaseDown(false);
 	}
 	
-	var _timer:Timer;
-	
-	function startTimer()
-	{
-		_timer.delay = _firstDelay;
-		_timer.start();
-	}
-	
-	function increaseValueHandler(event:TimerEvent)
+	function onIncrease()
 	{
 		value += _step;
-		_timer.delay = getNextDelay();
 	}
 	
-	function decreaseValueHandler(event:TimerEvent)
+	function onDecrease()
 	{
-		value -= step;
-		_timer.delay = getNextDelay();
-	}
-	
-	function getNextDelay()
-	{
-		if (_timer.delay > 400)
-		{
-			return 100.;
-		}
-		return CMath.max(_timer.delay * .5, _minDelay);
+		value -= _step;
 	}
 	
 	function buttonStopTimerHandler(event:MouseEvent = null)
 	{
-		_timer.stop();
-		_timer.removeEventListener(TimerEvent.TIMER, increaseValueHandler);
-		_timer.removeEventListener(TimerEvent.TIMER, decreaseValueHandler);
+		timerChanger.up();
 	}
 	
 	//----------------------------------------------------------------------------------------------

@@ -19,6 +19,10 @@ class TestMain
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		Log.trace = trace;
 		
+		/*
+		Only one test runs at one time.
+		But at least _all_ tests compilationable checked on any test run
+		*/
 		var test = new TestDebugMonitor();
 		var test = new TestMButton();
 		var test = new TestFrameEvent();
