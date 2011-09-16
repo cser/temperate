@@ -1,8 +1,6 @@
 package temperate.components.helpers;
-import flash.events.TimerEvent;
-import flash.utils.Timer;
 
-class CChangingTimerHelper
+class CSmoothTimerChanger implements ICTimerChanger
 {
 	public function new()
 	{
@@ -44,13 +42,13 @@ class CChangingTimerHelper
 	function increaseValueHandler(event:TimerEvent)
 	{
 		onIncrease();
-		_timer.delay = secondDelay;
+		_timer.delay = getNextDelay();
 	}
 	
 	function decreaseValueHandler(event:TimerEvent)
 	{
 		onDecrease();
-		_timer.delay = secondDelay;
+		_timer.delay = getNextDelay();
 	}
 	
 	public var firstDelay:Int;
@@ -58,4 +56,13 @@ class CChangingTimerHelper
 	
 	public var onIncrease:Void->Void;
 	public var onDecrease:Void->Void;
+	
+	function getNextDelay()
+	{
+		if (_timer.delay > 400)
+		{
+			return 100.;
+		}
+		return CMath.max(_timer.delay * .5, _minDelay);
+	}
 }

@@ -11,6 +11,7 @@ import flash.text.TextFieldAutoSize;
 import flash.text.TextFieldType;
 import flash.ui.Keyboard;
 import flash.utils.Timer;
+import temperate.components.helpers.ICTimerChanger;
 import temperate.core.CMath;
 import temperate.core.CSprite;
 import temperate.skins.CSkinState;
@@ -103,6 +104,8 @@ class CNumericStepper extends CSprite
 	//  Parametrization
 	//
 	//----------------------------------------------------------------------------------------------
+	
+	private var _timerHelper:ICTimerChanger;
 	
 	public var valueRestrict(default, null):String;
 	public var valueTranslator(default, null):Int->String;

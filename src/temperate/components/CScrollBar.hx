@@ -4,7 +4,8 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Rectangle;
-import temperate.components.helpers.CChangingTimerHelper;
+import temperate.components.helpers.CTimerChanger;
+import temperate.components.helpers.ICTimerChanger;
 import temperate.core.CMath;
 import temperate.core.CSprite;
 import temperate.errors.CArgumentError;
@@ -23,8 +24,8 @@ class CScrollBar extends CSprite
 	var _size_pageValid:Bool;
 	var _view_positionValid:Bool;
 	
-	var _timerHelper:CChangingTimerHelper;
-	var _pageTimerHelper:CChangingTimerHelper;
+	var _timerHelper:ICTimerChanger;
+	var _pageTimerHelper:ICTimerChanger;
 	
 	var _isBgDown:Bool;
 	var _isBgDownLeft:Bool;
@@ -66,7 +67,7 @@ class CScrollBar extends CSprite
 		addChild(_leftArrow);
 		addChild(_rightArrow);
 		
-		_timerHelper = new CChangingTimerHelper();
+		_timerHelper = newTimerHelper();
 		_timerHelper.onIncrease = onIncrease;
 		_timerHelper.onDecrease = onDecrease;
 		
@@ -75,7 +76,7 @@ class CScrollBar extends CSprite
 		
 		_thumb.addEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		
-		_pageTimerHelper = new CChangingTimerHelper();
+		_pageTimerHelper = newTimerHelper();
 		_pageTimerHelper.onIncrease = onPageIncrease;
 		_pageTimerHelper.onDecrease = onPageDecrease;
 		
@@ -89,6 +90,11 @@ class CScrollBar extends CSprite
 		_size_valid = false;
 		_view_valid = false;
 		postponeSize();
+	}
+	
+	function newTimerHelper():ICTimerChanger
+	{
+		return new CTimerChanger();
 	}
 	
 	function onIncrease()
