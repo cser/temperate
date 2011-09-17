@@ -40,8 +40,9 @@ class TestMain
 		var test = new TestMTween();
 		var test = new TestTooltips();
 		var test = new TestScrollBar();
-		
 		var test = new TestTextArea();
+		
+		var test = new TestSlider();
 		Lib.current.addChild(test);
 		test.init();
 	}
