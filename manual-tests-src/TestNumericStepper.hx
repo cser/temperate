@@ -109,6 +109,16 @@ class TestNumericStepper extends Sprite
 			MTooltipFactory.newText(stepper, "MNumericStepper with minDelay=100");
 			box.add(stepper);
 		}
+		
+		{
+			var box = new CHBox();
+			main.addChild(box);
+			
+			var stepper = new MNumericStepper();
+			stepper.useHandCursor = true;
+			MTooltipFactory.newText(stepper, "MNumericStepper with useHandCursor=true");
+			box.add(stepper);
+		}
 	}
 	
 	var _stepper:CNumericStepper;

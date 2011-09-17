@@ -67,6 +67,8 @@ class CNumericStepper extends CSprite
 		updateControlsEnabled();
 		updateEnabled();
 		
+		setUseHandCursor(false);
+		
 		_settedWidth = 80;
 		_size_valid = false;
 		postponeSize();
@@ -362,6 +364,30 @@ class CNumericStepper extends CSprite
 			postponeView();
 		}
 		return _formatDisabled;
+	}
+	
+	var _useHandCursor:Bool;
+	
+	@:getter(useHandCursor)
+	function get_useHandCursor()
+	{
+		return _useHandCursor;
+	}
+	
+	@:setter(useHandCursor)
+	function set_useHandCursor(value)
+	{
+		if (_useHandCursor != value)
+		{
+			setUseHandCursor(value);
+		}
+	}
+	
+	function setUseHandCursor(value:Bool)
+	{
+		_useHandCursor = value;
+		_up.useHandCursor = _useHandCursor;
+		_down.useHandCursor = _useHandCursor;
 	}
 	
 	//----------------------------------------------------------------------------------------------
