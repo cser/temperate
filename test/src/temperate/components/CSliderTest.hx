@@ -137,6 +137,100 @@ class CSliderTest
 	{
 		_log.push("complete");
 	}
+	
+	@Test
+	public function valueMastBeDiscreteToStep()
+	{
+		for (horizontal in [ true, false ])
+		{
+			var slider = new TestSlider(horizontal);
+			slider.step = .5;
+			slider.setValues(0, 10);
+			
+			slider.value = .7;
+			Assert.areEqual(.5, slider.value);
+			
+			slider.value = .5;
+			Assert.areEqual(.5, slider.value);
+			
+			slider.value = 1;
+			Assert.areEqual(1, slider.value);
+			
+			slider.step = .5;
+			slider.setValues(.2, 10);
+			
+			slider.value = .7;
+			Assert.areEqual(.5, slider.value);
+			
+			slider.value = .8;
+			Assert.areEqual(1, slider.value);
+			
+			slider.value = .5;
+			Assert.areEqual(.5, slider.value);
+			
+			slider.value = 1;
+			Assert.areEqual(1, slider.value);
+			
+			slider.value = 9.8;
+			Assert.areEqual(10, slider.value);
+		}
+	}
+	
+	@Test
+	public function ifStepIsZeroOrNotFinite_itsIgnored()
+	{
+		for (horizontal in [ true, false ])
+		{
+			var slider = new TestSlider(horizontal);
+			
+			slider.step = 0;
+			slider.setValues(0, 10);
+			
+			slider.value = .7;
+			Assert.areEqual(.7, slider.value);
+			
+			slider.value = .758;
+			Assert.areEqual(.758, slider.value);
+			
+			slider.step = Math.NaN;
+			slider.value = 1.358;
+			Assert.areEqual(1.358, slider.value);
+			
+			slider.step = Math.POSITIVE_INFINITY;
+			slider.value = 1.358;
+			Assert.areEqual(1.358, slider.value);
+		}
+	}
+	
+	@Test
+	public function maxAndMinValuesMastSettedForAnyStep()
+	{
+		for (horizontal in [ true, false ])
+		{
+			var slider = new TestSlider(horizontal);
+			
+			slider.step = .5;
+			slider.setValues(.1, 1.85);
+			
+			slider.value = .1;
+			Assert.areEqual(.1, slider.value);
+			
+			slider.value = 0;
+			Assert.areEqual(.1, slider.value);
+			
+			slider.value = 1.85;
+			Assert.areEqual(1.85, slider.value);
+			
+			slider.value = 1.86;
+			Assert.areEqual(1.85, slider.value);
+			
+			slider.value = 1.1;
+			Assert.areEqual(1, slider.value);
+			
+			slider.value = 1.6;
+			Assert.areEqual(1.5, slider.value);
+		}
+	}
 }
 class TestSlider extends CSlider
 {

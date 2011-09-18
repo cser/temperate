@@ -112,7 +112,7 @@ class CSlider extends CSprite, implements ICSlider
 		{
 			return _maxValue;
 		}
-		if (_step > 0)
+		if (Math.isFinite(_step) && _step > 0)
 		{
 			value = Math.round(value / _step) * _step;
 			if (value < _minValue)
@@ -439,7 +439,7 @@ class CSlider extends CSprite, implements ICSlider
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	public function setValues(minValue:Int, maxValue:Int = CMath.INT_MAX_VALUE, value:Int = 0)
+	public function setValues(minValue:Float, maxValue:Float, value:Float = 0)
 	{
 		this.minValue = minValue;
 		this.maxValue = maxValue;
@@ -461,9 +461,3 @@ class CSlider extends CSprite, implements ICSlider
 		return this;
 	}
 }
-/*
-TODO
-- значение должно быть кратным шагу
-- при любом шаге должно высталвяться минимальное и максимальное значение
-- если шаг нулевой или неконечный - он не учитывается
-*/

@@ -732,7 +732,7 @@ class CScrollBar extends CSprite, implements ICSlider
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	public function setValues(minValue:Int, maxValue:Int = CMath.INT_MAX_VALUE, value:Int = 0)
+	public function setValues(minValue:Float, maxValue:Float, value:Float = 0)
 	{
 		this.minValue = minValue;
 		this.maxValue = maxValue;

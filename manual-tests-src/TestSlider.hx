@@ -11,6 +11,7 @@ import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MLabel;
 import temperate.minimal.MScrollBar;
+import temperate.minimal.MSeparator;
 import temperate.minimal.MSlider;
 import temperate.minimal.MTooltipFactory;
 import temperate.minimal.skins.MFieldRectSkin;
@@ -38,6 +39,8 @@ class TestSlider extends Sprite
 		scrollBar.value = 20;
 		MTooltipFactory.newText(scrollBar, "It here just for skin comarision");
 		
+		main.add(new MSeparator(true)).setPercents(100);
+		
 		{
 			var line = new CHBox().addTo(main);
 			line.add(new Bitmap(MLineBdFactory.getHBg()));
@@ -55,6 +58,8 @@ class TestSlider extends Sprite
 			line.add(new Bitmap(MScrollBarBdFactory.getSliderVThumbDown()));
 			line.add(new Bitmap(MScrollBarBdFactory.getSliderVThumbDisabled()));
 		}
+		
+		main.add(new MSeparator(true)).setPercents(100);
 		
 		{
 			var line = new CHBox().addTo(main);
@@ -95,6 +100,8 @@ class TestSlider extends Sprite
 			slider.value = 50;
 		}
 		
+		main.add(new MSeparator(true)).setPercents(100);
+		
 		{
 			var line = new CHBox().addTo(main);
 			line.add(new Scaler(new MSlider(true)));
@@ -102,6 +109,14 @@ class TestSlider extends Sprite
 			
 			line.add(new TestSliderEventsBlock(true));
 			line.add(new TestSliderEventsBlock(false));
+			
+			line.add(new TestSliderStepEventsBlock(true));
+			line.add(new TestSliderStepEventsBlock(false));
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("Compact").addTo(column);
+			new MSlider(true).addTo(column).setCompact(true, true);
+			new MSlider(false).addTo(column).setCompact(true, true);
 		}
 	}
 }
@@ -118,6 +133,47 @@ class TestSliderEventsBlock extends CVBox
 		_slider = new MSlider(horizontal);
 		_slider.addEventListener(Event.CHANGE, onChange);
 		_slider.addEventListener(Event.COMPLETE, onComplete);
+		add(_slider);
+		
+		_changeLabel = new MLabel();
+		_changeLabel.width = 100;
+		add(_changeLabel);
+		onChange();
+		
+		_completeLabel = new MLabel();
+		_completeLabel.width = 100;
+		add(_completeLabel);
+		onComplete();
+	}
+	
+	function onChange(event:Event = null)
+	{
+		_changeLabel.text = "CHANGE: " + _slider.value;
+	}
+	
+	function onComplete(event:Event = null)
+	{
+		_completeLabel.text = "COMPLETE: " + _slider.value;
+	}
+}
+class TestSliderStepEventsBlock extends CVBox
+{
+	var _slider:MSlider;
+	var _changeLabel:MLabel;
+	var _completeLabel:MLabel;
+	
+	public function new(horizontal:Bool)
+	{
+		super();
+		
+		_slider = new MSlider(horizontal);
+		_slider.setSize(150, 150);
+		_slider.addEventListener(Event.CHANGE, onChange);
+		_slider.addEventListener(Event.COMPLETE, onComplete);
+		_slider.minValue = 0;
+		_slider.maxValue = 1;
+		_slider.value = .5;
+		_slider.step = .1;
 		add(_slider);
 		
 		_changeLabel = new MLabel();
