@@ -13,7 +13,8 @@ import temperate.errors.CArgumentError;
 import temperate.skins.ICScrollSkin;
 
 /**
- * @dispatch flash.events.Event.CHANGE
+ * Events:
+ * flash.events.Event.CHANGE
  */
 class CScrollBar extends CSprite, implements ICSlider
 {

@@ -3,7 +3,8 @@ import flash.display.DisplayObject;
 import flash.events.IEventDispatcher;
 
 /**
- * @dispatch flash.events.Event.CHANGE
+ * Events:
+ * flash.events.Event.CHANGE
  */
 interface ICSlider implements IEventDispatcher
 {

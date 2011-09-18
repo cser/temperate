@@ -1,6 +1,8 @@
 package ;
 import flash.display.Bitmap;
 import flash.display.Sprite;
+import flash.events.Event;
+import helpers.Scaler;
 import temperate.components.CSlider;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
@@ -92,5 +94,50 @@ class TestSlider extends Sprite
 			slider.enabled = false;
 			slider.value = 50;
 		}
+		
+		{
+			var line = new CHBox().addTo(main);
+			line.add(new Scaler(new MSlider(true)));
+			line.add(new Scaler(new MSlider(false)));
+			
+			line.add(new TestSliderEventsBlock(true));
+			line.add(new TestSliderEventsBlock(false));
+		}
+	}
+}
+class TestSliderEventsBlock extends CVBox
+{
+	var _slider:MSlider;
+	var _changeLabel:MLabel;
+	var _completeLabel:MLabel;
+	
+	public function new(horizontal:Bool)
+	{
+		super();
+		
+		_slider = new MSlider(horizontal);
+		_slider.addEventListener(Event.CHANGE, onChange);
+		_slider.addEventListener(Event.COMPLETE, onComplete);
+		add(_slider);
+		
+		_changeLabel = new MLabel();
+		_changeLabel.width = 100;
+		add(_changeLabel);
+		onChange();
+		
+		_completeLabel = new MLabel();
+		_completeLabel.width = 100;
+		add(_completeLabel);
+		onComplete();
+	}
+	
+	function onChange(event:Event = null)
+	{
+		_changeLabel.text = "CHANGE: " + _slider.value;
+	}
+	
+	function onComplete(event:Event = null)
+	{
+		_completeLabel.text = "COMPLETE: " + _slider.value;
 	}
 }

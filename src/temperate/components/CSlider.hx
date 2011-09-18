@@ -12,7 +12,9 @@ import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
 
 /**
- * @dispatch flash.events.Event.CHANGE
+ * Events:
+ * flash.events.Event.CHANGE
+ * flash.events.Event.COMPLETE
  */
 class CSlider extends CSprite, implements ICSlider
 {
@@ -162,6 +164,7 @@ class CSlider extends CSprite, implements ICSlider
 		stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
 		_thumb.stopDrag();
 		setThumbPositionByValue();
+		dispatchEvent(new Event(Event.COMPLETE));
 	}
 	
 	function onMouseWheel(event:MouseEvent)
@@ -437,6 +440,4 @@ TODO
 - при любом шаге должно высталвяться минимальное и максимальное значение
 - отправка события только при действиях пользователя
 - если шаг нулевой или неконечный - он не учитывается
-- протестить изменение позиции движка при изменении размеров
-- событие завершения перемещения движка
 */
