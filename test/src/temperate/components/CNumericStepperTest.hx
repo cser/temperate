@@ -2,7 +2,7 @@ package temperate.components;
 
 import flash.events.Event;
 import massive.munit.Assert;
-import temperate.skins.CRasterRectSkin;
+import temperate.skins.CRaster9GridRectSkin;
 
 class CNumericStepperTest
 {
@@ -151,7 +151,7 @@ class ExtendedTestNumericStepper extends CNumericStepper
 	{
 		eventLog = [];
 		addEventListener(Event.CHANGE, onChange);
-		super(new ACButton(), new ACButton(), new CRasterRectSkin());
+		super(new ACButton(), new ACButton(), new CRaster9GridRectSkin());
 	}
 	
 	public var eventLog:Array<String>;

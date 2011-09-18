@@ -20,6 +20,7 @@ class ACButton extends CSprite
 		_isOver = false;
 		_toggle = false;
 		_state = CButtonState.UP;
+		selectState = CButtonState.selectStateNormal;
 		
 		init();
 		updateEnabled();
@@ -164,27 +165,15 @@ class ACButton extends CSprite
 	
 	var _state:CButtonState;
 	
+	public dynamic function selectState(
+		isDown:Bool, isOver:Bool, selected:Bool, enabled:Bool):CButtonState
+	{
+		return null;
+	}
+	
 	function updateState()
 	{
-		if (_enabled)
-		{
-			if (_isDown && _isOver)
-			{
-				_state = _selected ? CButtonState.DOWN_SELECTED : CButtonState.DOWN;
-			}
-			else if (_isDown || _isOver)
-			{
-				_state = _selected ? CButtonState.OVER_SELECTED : CButtonState.OVER;
-			}
-			else
-			{
-				_state = _selected ? CButtonState.UP_SELECTED : CButtonState.UP;
-			}
-		}
-		else
-		{
-			_state = _selected ? CButtonState.DISABLED_SELECTED : CButtonState.DISABLED;
-		}
+		_state = selectState(_isDown, _isOver, _selected, _enabled);
 		doUpdateState();
 	}
 	

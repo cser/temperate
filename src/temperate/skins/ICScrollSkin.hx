@@ -2,8 +2,10 @@ package temperate.skins;
 import flash.display.DisplayObject;
 import flash.display.Graphics;
 
-interface ICScrollSkin 
+interface ICScrollSkin
 {
+	function redrawDown(isLeft:Bool, thumbCenter:Int):Void;
+	
 	function link(
 		horizontal:Bool, addChildAt0:DisplayObject->Dynamic, removeChild:DisplayObject->Dynamic,
 		graphics:Graphics
@@ -14,6 +16,4 @@ interface ICScrollSkin
 	function setSize(scrollLeft:Int, scrollSize:Int, size:Int):Void;
 	
 	function redrawUp():Void;
-	
-	function redrawDown(isLeft:Bool, thumbCenter:Int):Void;
 }

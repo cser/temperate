@@ -137,7 +137,7 @@ class Scale3GridDrawer implements IDrawer
 			{
 				var k = (h - padding) / (bitmapHeight - padding);
 				g.beginBitmapFill(bitmapData, getMatrix(1, k, x, y + (1 - k) * left));
-				g.drawRect(x, y + left, bitmapHeight, h - padding);
+				g.drawRect(x, y + left, bitmapWidth, h - padding);
 				g.endFill();
 			}
 		}

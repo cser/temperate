@@ -12,7 +12,6 @@ import massive.munit.Assert;
 import temperate.errors.CArgumentError;
 import temperate.raster.Scale3GridDrawer;
 import temperate.skins.CNullScrollSkin;
-import temperate.skins.CRasterRectSkin;
 import temperate.skins.CRasterScrollDrawedSkin;
 import temperate.skins.CSkinState;
 
@@ -49,69 +48,69 @@ class CScrollBarScrollParamsTest
 		for (sb in [newScrollBar(true), newScrollBar(false)])
 		{
 			Assert.areEqual(1, sb.pageSize);
-			Assert.areEqual(1, sb.pageScrollSize);
-			Assert.areEqual(1, sb.lineScrollSize);
+			Assert.areEqual(1, sb.pageStep);
+			Assert.areEqual(1, sb.step);
 		}
 	}
 	
 	@Test
-	public function lineScrollSize_setterNormalCases()
+	public function step_setterNormalCases()
 	{
 		for (sb in [newScrollBar(true), newScrollBar(false)])
 		{
-			sb.lineScrollSize = 2;
-			Assert.areEqual(2, sb.lineScrollSize);
-			sb.lineScrollSize = .1;
-			Assert.areEqual(.1, sb.lineScrollSize);
+			sb.step = 2;
+			Assert.areEqual(2, sb.step);
+			sb.step = .1;
+			Assert.areEqual(.1, sb.step);
 		}
 	}
 	
 	@Test
-	public function lineScrollSize_mastBeFiniteAndMoreThanZero()
+	public function step_mastBeFiniteAndMoreThanZero()
 	{
 		for (sb in [newScrollBar(true), newScrollBar(false)])
 		{
 			try
 			{
-				sb.lineScrollSize = Math.NaN;
+				sb.step = Math.NaN;
 				Assert.fail("Exception mast throws");
 			}
 			catch (error:CArgumentError)
 			{
 				Assert.isTrue(Std.string(error.message).indexOf("mast be finite") != -1);
-				Assert.areEqual(1, sb.lineScrollSize);
+				Assert.areEqual(1, sb.step);
 			}
 			
 			for (value in [0., -.1])
 			{
 				try
 				{
-					sb.lineScrollSize = value;
+					sb.step = value;
 					Assert.fail("Exception mast throws");
 				}
 				catch (error:CArgumentError)
 				{
 					Assert.isTrue(Std.string(error.message).indexOf("mast be positive") != -1);
-					Assert.areEqual(1, sb.lineScrollSize);
+					Assert.areEqual(1, sb.step);
 				}
 			}
 		}
 	}
 	
 	@Test
-	public function pageSize_isEqualTo_lineScrollSize_ifItsNotSettedOrSettedNaN()
+	public function pageSize_isEqualTo_step_ifItsNotSettedOrSettedNaN()
 	{
 		for (sb in [newScrollBar(true), newScrollBar(false)])
 		{
-			sb.lineScrollSize = 2;
+			sb.step = 2;
 			Assert.areEqual(2, sb.pageSize);
-			sb.lineScrollSize = .1;
+			sb.step = .1;
 			Assert.areEqual(.1, sb.pageSize);
 		}
 		
 		for (sb in [newScrollBar(true), newScrollBar(false)])
 		{
-			sb.lineScrollSize = 2;
+			sb.step = 2;
 			
 			sb.pageSize = 1;
 			Assert.areEqual(1, sb.pageSize);
@@ -132,10 +131,10 @@ class CScrollBarScrollParamsTest
 			Assert.areEqual(.1, sb.pageSize);
 			
 			sb.pageSize = Math.NaN;
-			Assert.areEqual(sb.lineScrollSize, sb.pageSize);
+			Assert.areEqual(sb.step, sb.pageSize);
 			
 			sb.pageSize = Math.POSITIVE_INFINITY;
-			Assert.areEqual(sb.lineScrollSize, sb.pageSize);
+			Assert.areEqual(sb.step, sb.pageSize);
 			
 			for (value in [0., -.1])
 			{
@@ -158,43 +157,43 @@ class CScrollBarScrollParamsTest
 	}
 	
 	@Test
-	public function pageScrollSize_isEqualTo_pageSize_ifItsNotSettedOrSettedNaN()
+	public function pageStep_isEqualTo_pageSize_ifItsNotSettedOrSettedNaN()
 	{
 		for (sb in [newScrollBar(true), newScrollBar(false)])
 		{
-			sb.lineScrollSize = .1;
-			Assert.areEqual(.1, sb.pageScrollSize);
+			sb.step = .1;
+			Assert.areEqual(.1, sb.pageStep);
 			sb.pageSize = 1.5;
-			sb.lineScrollSize = .2;
-			Assert.areEqual(1.5, sb.pageScrollSize);
+			sb.step = .2;
+			Assert.areEqual(1.5, sb.pageStep);
 			
-			sb.pageScrollSize = 3.1;
-			Assert.areEqual(3.1, sb.pageScrollSize);
-			sb.pageScrollSize = Math.NaN;
+			sb.pageStep = 3.1;
+			Assert.areEqual(3.1, sb.pageStep);
+			sb.pageStep = Math.NaN;
 			Assert.areEqual(1.5, sb.pageSize);
 		}
 	}
 	
 	@Test
-	public function pageScrollSize_canBeSettedOnlyPositiveOrNotFiniteValues()
+	public function pageStep_canBeSettedOnlyPositiveOrNotFiniteValues()
 	{
 		for (sb in [newScrollBar(true), newScrollBar(false)])
 		{
-			sb.pageScrollSize = .1;
-			Assert.areEqual(.1, sb.pageScrollSize);
+			sb.pageStep = .1;
+			Assert.areEqual(.1, sb.pageStep);
 			
-			sb.pageScrollSize = Math.NaN;
-			Assert.areEqual(sb.pageSize, sb.pageScrollSize);
+			sb.pageStep = Math.NaN;
+			Assert.areEqual(sb.pageSize, sb.pageStep);
 			
 			sb.pageSize = Math.POSITIVE_INFINITY;
-			Assert.areEqual(sb.pageSize, sb.pageScrollSize);
+			Assert.areEqual(sb.pageSize, sb.pageStep);
 			
 			for (value in [0., -.1])
 			{
 				try
 				{
-					sb.pageScrollSize = 1.1;
-					sb.pageScrollSize = value;
+					sb.pageStep = 1.1;
+					sb.pageStep = value;
 					Assert.fail("Exception mast throws");
 				}
 				catch (error:CArgumentError)
@@ -203,7 +202,7 @@ class CScrollBarScrollParamsTest
 					Assert.isTrue(
 						text.indexOf("mast be positive") != -1 && text.indexOf("NaN") != -1
 					);
-					Assert.areEqual(1.1, sb.pageScrollSize);
+					Assert.areEqual(1.1, sb.pageStep);
 				}
 			}
 		}
@@ -216,7 +215,7 @@ class CScrollBarScrollParamsTest
 		{
 			_log = [];
 			
-			sb.addEventListener(Event.SCROLL, onScroll);
+			sb.addEventListener(Event.CHANGE, onScroll);
 			sb.minValue = 10;
 			sb.maxValue = 100;
 			Assert.areEqual(10, sb.value);
@@ -277,7 +276,7 @@ class CScrollBarScrollParamsTest
 			sb.value = 45;
 			sb.validate();
 			
-			sb.addEventListener(Event.SCROLL, onScroll);
+			sb.addEventListener(Event.CHANGE, onScroll);
 			_log = [];
 			{
 				var object =

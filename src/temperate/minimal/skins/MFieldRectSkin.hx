@@ -1,9 +1,9 @@
 package temperate.minimal.skins;
 import temperate.minimal.graphics.MCommonBdFactory;
-import temperate.skins.CRasterRectSkin;
+import temperate.skins.CRaster9GridRectSkin;
 import temperate.skins.CSkinState;
 
-class MFieldRectSkin extends CRasterRectSkin
+class MFieldRectSkin extends CRaster9GridRectSkin
 {
 	public function new() 
 	{

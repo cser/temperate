@@ -22,9 +22,9 @@ ScrollBar.as			MScrollBar
 HScrollBar.as			MScrollBar(true)
 VScrollBar.as			MScrollBar(false)
 ScrollPane.as			-
-Slider.as				-
-HSlider.as				-
-VSlider.as				-
+Slider.as				MSlider
+HSlider.as				MSlider(true)
+VSlider.as				MSlider(false)
 UISlider.as				-
 HUISlider.as			-
 VUISlider.as			-

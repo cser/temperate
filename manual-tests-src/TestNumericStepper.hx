@@ -12,7 +12,7 @@ import temperate.minimal.MFormatFactory;
 import temperate.minimal.MLabel;
 import temperate.minimal.MNumericStepper;
 import temperate.minimal.MTooltipFactory;
-import temperate.skins.CRasterRectSkin;
+import temperate.skins.CRaster9GridRectSkin;
 import temperate.skins.CSkinState;
 import temperate.text.CLabel;
 
@@ -131,7 +131,7 @@ class TestNumericStepper extends Sprite
 	
 	function newNumericStepper()
 	{
-		var bg = new CRasterRectSkin();
+		var bg = new CRaster9GridRectSkin();
 		bg.getState(CSkinState.NORMAL).setBitmapData(MCommonBdFactory.getTextBg());
 		
 		var up = new MButton();

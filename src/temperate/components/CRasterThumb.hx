@@ -14,6 +14,7 @@ class CRasterThumb extends ACButton
 	{
 		_horizontal = horizontal;
 		super();
+		selectState = CButtonState.selectStateThumb;
 	}
 	
 	var _size_upValid:Bool;
@@ -185,29 +186,5 @@ class CRasterThumb extends ACButton
 		_iconBitmap.bitmapData = icon;
 		_view_valid = false;
 		postponeView();
-	}
-	
-	override function updateState()
-	{
-		if (_enabled)
-		{
-			if (_isDown)
-			{
-				_state = _selected ? CButtonState.DOWN_SELECTED : CButtonState.DOWN;
-			}
-			else if (_isOver)
-			{
-				_state = _selected ? CButtonState.OVER_SELECTED : CButtonState.OVER;
-			}
-			else
-			{
-				_state = _selected ? CButtonState.UP_SELECTED : CButtonState.UP;
-			}
-		}
-		else
-		{
-			_state = _selected ? CButtonState.DISABLED_SELECTED : CButtonState.DISABLED;
-		}
-		doUpdateState();
 	}
 }
