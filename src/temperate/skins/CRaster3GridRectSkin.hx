@@ -3,21 +3,22 @@ import flash.display.DisplayObject;
 import flash.display.Graphics;
 import flash.display.Shape;
 import temperate.components.parametrization.CRasterParameters;
+import temperate.raster.Scale3GridDrawer;
 import temperate.raster.Scale9GridDrawer;
 
-class CRasterRectSkin implements ICRectSkin
-{	
-	public function new() 
+class CRaster3GridRectSkin implements ICRectSkin
+{
+	public function new(horizontal:Bool) 
 	{
 		state = CSkinState.NORMAL;
 		_parameters = [];
 		
 		_shape = new Shape();
-		_drawer = new Scale9GridDrawer(_shape.graphics);
+		_drawer = new Scale3GridDrawer(horizontal, _shape.graphics);
 	}
 	
 	var _shape:Shape;
-	var _drawer:Scale9GridDrawer;
+	var _drawer:Scale3GridDrawer;
 	var _removeChild:DisplayObject->Dynamic;
 	
 	public function link(
@@ -87,9 +88,9 @@ class CRasterRectSkin implements ICRectSkin
 		return this;
 	}
 	
-	public function setGrid9Insets(left:Int, right:Int, top:Int, bottom:Int)
+	public function setGrid3Insets(left:Int, right:Int)
 	{
-		_drawer.setInsets(left, right, top, bottom);
+		_drawer.setInsets(left, right);
 	}
 	
 	var _parameters:Array<CRasterParameters>;

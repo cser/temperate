@@ -12,7 +12,6 @@ import massive.munit.Assert;
 import temperate.errors.CArgumentError;
 import temperate.raster.Scale3GridDrawer;
 import temperate.skins.CNullScrollSkin;
-import temperate.skins.CRasterRectSkin;
 import temperate.skins.CRasterScrollDrawedSkin;
 import temperate.skins.CSkinState;
 
