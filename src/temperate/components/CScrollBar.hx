@@ -446,40 +446,6 @@ class CScrollBar extends CSprite, implements ICSlider
 		_thumb.visible = _enabled && thumbSize < _guideSize && _maxValue > _minValue;
 	}
 	
-	function setThumbPositionByValue()
-	{
-		var thumbSize = Std.int(_horizontal ? _thumb.width : _thumb.height);
-		var delta = _maxValue - _minValue;
-		var thumbOffset = _guideDirectOffset + 
-			(delta > 0 ?
-				Std.int((_guideSize - thumbSize) * (_value - _minValue) / (_maxValue - _minValue)) :
-				0);
-		if (_horizontal)
-		{
-			_thumb.x = thumbOffset;
-			_thumb.y = _guideCrossOffset;
-		}
-		else
-		{
-			_thumb.x = _guideCrossOffset;
-			_thumb.y = thumbOffset;
-		}
-	}
-	
-	function setValueByThumbPosition()
-	{
-		var thumbSize = Std.int(_horizontal ? _thumb.width : _thumb.height);
-		var thumbOffset = Std.int(_horizontal ? _thumb.x : _thumb.y);
-		var rawValue = _minValue +  (thumbOffset - _guideDirectOffset)
-			* (_maxValue - _minValue) / (_guideSize - thumbSize);
-		var newValue = fixedValue(rawValue);
-		if (_value != newValue)
-		{
-			_value = newValue;
-			dispatchEvent(new Event(Event.CHANGE));
-		}
-	}
-	
 	function updateBg()
 	{
 		_bgSkin.setSize(_guideDirectOffset, _guideSize, Std.int(_horizontal ? _width : _height));
@@ -575,6 +541,46 @@ class CScrollBar extends CSprite, implements ICSlider
 		_leftArrow.useHandCursor = _useHandCursor;
 		_rightArrow.useHandCursor = _useHandCursor;
 		_thumb.useHandCursor = _useHandCursor;
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Convertion between value and position
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	function setThumbPositionByValue()
+	{
+		var thumbSize = Std.int(_horizontal ? _thumb.width : _thumb.height);
+		var delta = _maxValue - _minValue;
+		var thumbOffset = _guideDirectOffset + 
+			(delta > 0 ?
+				Std.int((_guideSize - thumbSize) * (_value - _minValue) / (_maxValue - _minValue)) :
+				0);
+		if (_horizontal)
+		{
+			_thumb.x = thumbOffset;
+			_thumb.y = _guideCrossOffset;
+		}
+		else
+		{
+			_thumb.x = _guideCrossOffset;
+			_thumb.y = thumbOffset;
+		}
+	}
+	
+	function setValueByThumbPosition()
+	{
+		var thumbSize = Std.int(_horizontal ? _thumb.width : _thumb.height);
+		var thumbOffset = Std.int(_horizontal ? _thumb.x : _thumb.y);
+		var rawValue = _minValue +  (thumbOffset - _guideDirectOffset)
+			* (_maxValue - _minValue) / (_guideSize - thumbSize);
+		var newValue = fixedValue(rawValue);
+		if (_value != newValue)
+		{
+			_value = newValue;
+			dispatchEvent(new Event(Event.CHANGE));
+		}
 	}
 	
 	//----------------------------------------------------------------------------------------------

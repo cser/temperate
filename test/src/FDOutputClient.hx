@@ -46,6 +46,7 @@ class FDOutputClient implements ITestResultClient
 	
 	private var failures:String;
 	private var errors:String;
+	private var ignored:String;
 	private var output:String;
 	private var currentTestClass:String;
 	private var originalTrace:Dynamic;
@@ -75,6 +76,7 @@ class FDOutputClient implements ITestResultClient
 		output = "";
 		failures = "";
 		errors = "";
+		ignored = "";
 		currentTestClass = "";
 		newline = "\n";
 		
@@ -123,6 +125,19 @@ class FDOutputClient implements ITestResultClient
 	}
 	
 	/**
+	 * Called when a test has been ignored.
+	 *
+	 * @param	result			an ignored test
+	 */
+	public function addIgnore(result:TestResult):Void
+	{
+		checkForNewTestClass(result);
+		print(",");
+		ignored += "\ntest/src/" + result.className.split(".").join("/") + ".hx" +
+			":0:Ignored: " + result.location + " - " + result.description;
+	}
+	
+	/**
 	 * Called when a test triggers an unexpected exception.
 	 *  
 	 * @param	result			an erroneous test result
@@ -143,15 +158,35 @@ class FDOutputClient implements ITestResultClient
 	 * @param	time			number of milliseconds taken for all tests to be executed
 	 * @return	collated test result data
 	 */
-	public function reportFinalStatistics(testCount:Int, passCount:Int, failCount:Int,
-		errorCount:Int, time:Float):Dynamic
+	public function reportFinalStatistics(
+		testCount:Int, passCount:Int, failCount:Int, errorCount:Int, ignoreCount:Int, time:Float
+	):Dynamic
 	{
 		printExceptions();
-		print(newline + newline);
+		
+		if (ignoreCount > 0)
+		{
+			print("------------------------------");
+			print("Ignored tests:" + ignored);
+			print("------------------------------");
+		}
+		else
+		{
+			print(newline + newline);
+		}
+		
 		print((passCount == testCount) ? "PASSED" : "3:FAILED");
-		print(newline + "Tests: " + testCount + "  Passed: " + passCount + "  Failed: " +
-			failCount + " Errors: " + errorCount + " Time: " + MathUtil.round(time, 5) + newline);
+		
+		var text = newline + "Tests: " + testCount + "  Passed: " + passCount + "  Failed: " +
+			failCount + " Errors: " + errorCount + " Time: " + MathUtil.round(time, 5) + newline;
+		if (ignoreCount > 0)
+		{
+			text += " |  Ignored: " + ignoreCount;
+		}
+		
+		print(text);
 		print("==============================" + newline);
+		
 		haxe.Log.trace = originalTrace;
 		if (completionHandler != null) completionHandler(this); 
 		processComplete();
