@@ -1,7 +1,7 @@
 package temperate.components;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
-import flash.display.Graphics;
+import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -22,6 +22,7 @@ class CSlider extends CSprite, implements ICSlider
 	var _thumb:ACButton;
 	var _bgSkin:ICRectSkin;
 	var _bg:Sprite;
+	var _bgShape:Shape;
 	
 	public function new(horizontal:Bool, thumb:ACButton, bgSkin:ICRectSkin) 
 	{
@@ -42,6 +43,9 @@ class CSlider extends CSprite, implements ICSlider
 		
 		_bg = new Sprite();
 		addChild(_bg);
+		
+		_bgShape = new Shape();
+		_bg.addChild(_bgShape);
 		
 		addChild(_thumb);
 		_bgSkin.link(addChildToBg, _bg.removeChild, _bg.graphics);
@@ -91,6 +95,8 @@ class CSlider extends CSprite, implements ICSlider
 		{
 			_view_valid = true;
 			
+			_thumb.validate();
+			
 			updateBg();
 			setThumbPositionByValue();
 		}
@@ -126,15 +132,31 @@ class CSlider extends CSprite, implements ICSlider
 		if (_enabled)
 		{
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+			_bg.addEventListener(MouseEvent.MOUSE_DOWN, onBgMouseDown);
 			_thumb.addEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		}
 		else
 		{
 			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+			_bg.removeEventListener(MouseEvent.MOUSE_DOWN, onBgMouseDown);
 			_thumb.removeEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		}
 		_view_valid = false;
 		_bgSkin.state = _enabled ? CSkinState.NORMAL : CSkinState.DISABLED;
+	}
+	
+	function onBgMouseDown(event:MouseEvent)
+	{
+		var thumbOffset = Std.int(
+			_horizontal ? mouseX - _thumb.width * .5 : mouseY - _thumb.height * .5);
+		var newValue = getValueByPosition(thumbOffset);
+		if (_value != newValue)
+		{
+			_value = newValue;
+			setThumbPositionByValue();
+			dispatchEvent(new Event(Event.CHANGE));
+			dispatchEvent(new Event(Event.COMPLETE));
+		}
 	}
 	
 	function onThumbMouseDown(event:MouseEvent)
@@ -222,7 +244,7 @@ class CSlider extends CSprite, implements ICSlider
 	
 	function updateBg()
 	{
-		var g = graphics;
+		var g = _bgShape.graphics;
 		g.clear();
 		g.beginFill(0x000000, 0);
 		g.drawRect(0, 0, _width, _height);
@@ -273,14 +295,19 @@ class CSlider extends CSprite, implements ICSlider
 	function setValueByThumbPosition()
 	{
 		var thumbOffset = Std.int(_horizontal ? _thumb.x : _thumb.y);
-		var rawValue = _minValue +  (thumbOffset - _guideDirectOffset)
-			* (_maxValue - _minValue) / _guideSize;
-		var newValue = fixedValue(rawValue);
+		var newValue = getValueByPosition(thumbOffset);
 		if (_value != newValue)
 		{
 			_value = newValue;
 			dispatchEvent(new Event(Event.CHANGE));
 		}
+	}
+	
+	function getValueByPosition(thumbOffset:Int)
+	{
+		var rawValue = _minValue +  (thumbOffset - _guideDirectOffset)
+			* (_maxValue - _minValue) / _guideSize;
+		return fixedValue(rawValue);
 	}
 	
 	//----------------------------------------------------------------------------------------------
@@ -438,6 +465,5 @@ class CSlider extends CSprite, implements ICSlider
 TODO
 - значение должно быть кратным шагу
 - при любом шаге должно высталвяться минимальное и максимальное значение
-- отправка события только при действиях пользователя
 - если шаг нулевой или неконечный - он не учитывается
 */

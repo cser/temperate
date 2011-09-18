@@ -1,5 +1,8 @@
 package temperate.components;
 
+import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.Lib;
 import massive.munit.Assert;
 import temperate.skins.CNullRectSkin;
 
@@ -9,10 +12,12 @@ class CSliderTest
 	{
 	}
 	
+	var _log:Array<String>;
+	
 	@Before
 	public function setUp():Void
 	{
-		
+		_log = [];
 	}
 	
 	@After
@@ -72,6 +77,65 @@ class CSliderTest
 			slider.validate();
 			Assert.areEqual(100, horizontal ? slider.thumb.x : slider.thumb.y);
 		}
+	}
+	
+	@Test
+	public function noEventDispatchedOnValueChange()
+	{
+		for (horizontal in [ true, false ])
+		{
+			var slider = new TestSlider(horizontal);
+			slider.setValues(0, 100, 50);
+			slider.validate();// Just for certainty
+			slider.addEventListener(Event.CHANGE, onChange);
+			slider.addEventListener(Event.COMPLETE, onComplete);
+			slider.value = 50;
+			ArrayAssert.areEqual([], _log);
+		}
+	}
+	
+	@Test
+	public function onThumbMoveEventDispatched()
+	{
+		for (horizontal in [ true, false ])
+		{
+			var slider = new TestSlider(horizontal);
+			Lib.current.addChild(slider);
+			
+			_log = [];
+			
+			slider.setValues(0, 100, 50);
+			slider.setSize(100, 100);
+			slider.validate();
+			slider.addEventListener(Event.CHANGE, onChange);
+			slider.addEventListener(Event.COMPLETE, onComplete);
+			slider.thumb.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true));
+			if (horizontal)
+			{
+				slider.thumb.x = 10;
+			}
+			else
+			{
+				slider.thumb.y = 10;
+			}
+			slider.thumb.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_MOVE, true));
+			ArrayAssert.areEqual(["change"], _log);
+			
+			slider.thumb.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP, true));
+			ArrayAssert.areEqual(["change", "complete"], _log);
+			
+			Lib.current.removeChild(slider);
+		}
+	}
+	
+	function onChange(event:Event)
+	{
+		_log.push("change");
+	}
+	
+	function onComplete(event:Event)
+	{
+		_log.push("complete");
 	}
 }
 class TestSlider extends CSlider
