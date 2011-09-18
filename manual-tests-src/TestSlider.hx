@@ -82,6 +82,15 @@ class TestSlider extends Sprite
 			new MLabel().setText("useHandCursor = true").addTo(column);
 			new MSlider(true).addTo(column).useHandCursor = true;
 			new MSlider(false).addTo(column).useHandCursor = true;
+			
+			var column = new CVBox().addTo(line);
+			new MLabel().setText("enabled = false, value = 50").addTo(column);
+			var slider = new MSlider(true).addTo(column);
+			slider.enabled = false;
+			slider.value = 50;
+			var slider = new MSlider(false).addTo(column);
+			slider.enabled = false;
+			slider.value = 50;
 		}
 	}
 }

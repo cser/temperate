@@ -8,6 +8,7 @@ import flash.events.MouseEvent;
 import flash.geom.Rectangle;
 import temperate.core.CMath;
 import temperate.core.CSprite;
+import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
 
 /**
@@ -45,7 +46,7 @@ class CSlider extends CSprite, implements ICSlider
 		
 		updateOnMove = false;
 		
-		updateEnabledListeners();
+		updateEnabled();
 		
 		setUseHandCursor(false);
 		
@@ -118,7 +119,7 @@ class CSlider extends CSprite, implements ICSlider
 		return value;
 	}
 	
-	function updateEnabledListeners()
+	function updateEnabled()
 	{
 		if (_enabled)
 		{
@@ -130,6 +131,8 @@ class CSlider extends CSprite, implements ICSlider
 			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			_thumb.removeEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 		}
+		_view_valid = false;
+		_bgSkin.state = _enabled ? CSkinState.NORMAL : CSkinState.DISABLED;
 	}
 	
 	function onThumbMouseDown(event:MouseEvent)
@@ -378,7 +381,7 @@ class CSlider extends CSprite, implements ICSlider
 		{
 			_enabled = value;
 			_thumb.enabled = _enabled;
-			updateEnabledListeners();
+			updateEnabled();
 		}
 		return _enabled;
 	}
@@ -432,7 +435,6 @@ class CSlider extends CSprite, implements ICSlider
 TODO
 - значение должно быть кратным шагу
 - при любом шаге должно высталвяться минимальное и максимальное значение
-- реализовать disabled состояние
 - отправка события только при действиях пользователя
 - если шаг нулевой или неконечный - он не учитывается
 - протестить изменение позиции движка при изменении размеров
