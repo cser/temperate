@@ -20,7 +20,7 @@ import temperate.text.CTextFormat;
 
 class CNumericStepper extends CSprite
 {
-	public function new(up:ACButton, down:ACButton, bg:ICRectSkin)
+	public function new(up:ICButton, down:ICButton, bg:ICRectSkin)
 	{
 		super();
 		
@@ -43,13 +43,13 @@ class CNumericStepper extends CSprite
 		_up.addEventListener(MouseEvent.MOUSE_DOWN, onUpMouseDown);
 		_up.addEventListener(MouseEvent.MOUSE_UP, buttonStopTimerHandler);
 		_up.addEventListener(MouseEvent.MOUSE_OUT, buttonStopTimerHandler);
-		addChild(_up);
+		addChild(_up.view);
 		
 		_down = down;
 		_down.addEventListener(MouseEvent.MOUSE_DOWN, onDownMouseDown);
 		_down.addEventListener(MouseEvent.MOUSE_UP, buttonStopTimerHandler);
 		_down.addEventListener(MouseEvent.MOUSE_OUT, buttonStopTimerHandler);
-		addChild(_down);
+		addChild(_down.view);
 		
 		_tf = new TextField();
 		_tf.restrict = valueRestrict;
@@ -88,8 +88,8 @@ class CNumericStepper extends CSprite
 		return ~/^\-?\d*$/.match(text);
 	}
 	
-	var _up:ACButton;
-	var _down:ACButton;
+	var _up:ICButton;
+	var _down:ICButton;
 	var _bg:ICRectSkin;
 	var _tf:TextField;
 	
@@ -622,7 +622,7 @@ class CNumericStepper extends CSprite
 	
 	function updateSize()
 	{
-		var minWidth = _tfMinWidth + Math.max(_up.width, _down.width) + TEXT_INDENT * 2;
+		var minWidth = _tfMinWidth + Math.max(_up.view.width, _down.view.width) + TEXT_INDENT * 2;
 		_height = _tfMinHeight + TEXT_INDENT * 2;
 		if (_isCompactWidth)
 		{
@@ -639,15 +639,15 @@ class CNumericStepper extends CSprite
 		var centerY:Int = Std.int(_height * .5);
 		
 		_tf.height = _tfMinHeight + 2;
-		_tf.width = _width - Math.max(_up.width, _down.width) - TEXT_INDENT;
+		_tf.width = _width - Math.max(_up.view.width, _down.view.width) - TEXT_INDENT;
 		_tf.x = TEXT_INDENT;
 		_tf.y = centerY - (_tfMinHeight >> 1);
 		
-		_up.x = _width - _up.width;
-		_up.y = centerY - _up.height;
+		_up.view.x = _width - _up.view.width;
+		_up.view.y = centerY - _up.view.height;
 		
-		_down.x = _width - _down.width;
-		_down.y = centerY;
+		_down.view.x = _width - _down.view.width;
+		_down.view.y = centerY;
 		
 		_bg.setBounds(0, 0, Std.int(_tf.width) + TEXT_INDENT, Std.int(_height));
 	}

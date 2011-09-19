@@ -62,11 +62,11 @@ class MNumericStepper extends CNumericStepper
 		_tf.x = TEXT_INDENT;
 		_tf.y = centerY - (_tfMinHeight >> 1);
 		
-		_up.x = _width - _buttonsWidth;
-		_up.y = centerY - _up.height;
+		_up.view.x = _width - _buttonsWidth;
+		_up.view.y = centerY - _up.view.height;
 		
-		_down.x = _width - _buttonsWidth;
-		_down.y = centerY;
+		_down.view.x = _width - _buttonsWidth;
+		_down.view.y = centerY;
 		
 		_bg.setBounds(0, 0, Std.int(_width), Std.int(_height));
 	}

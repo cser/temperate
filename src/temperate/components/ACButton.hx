@@ -1,4 +1,5 @@
 package temperate.components;
+import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -6,11 +7,13 @@ import temperate.components.CButtonState;
 import temperate.core.CMath;
 import temperate.core.CSprite;
 
-class ACButton extends CSprite
+class ACButton extends CSprite, implements ICButton
 {
 	public function new() 
 	{
 		super();
+		
+		view = this;
 		
 		mouseEnabled = true;
 		mouseChildren = false;
@@ -25,6 +28,8 @@ class ACButton extends CSprite
 		init();
 		updateEnabled();
 	}
+	
+	public var view(default, null):DisplayObject;
 	
 	private var _isDown:Bool;
 	
