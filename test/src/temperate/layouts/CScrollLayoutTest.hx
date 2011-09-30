@@ -1421,51 +1421,75 @@ class CScrollLayoutTest
 		assertScrollBarsShowedSoft(false, false);
 	}
 	
-	/*
 	@Test
 	public function hAutoVAuto_noScale_cases()
 	{
 		_layout.wrapper = _wrapper;
 		setLayoutScrollPolicy(CScrollPolicy.AUTO, CScrollPolicy.AUTO);
 		
-		setWrapperSize(5, 8);
-		
 		resetScrollBars();
+		setWrapperSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, V.MIN_HEIGHT + H.MIN_HEIGHT - 1);
 		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, V.MIN_HEIGHT + H.MIN_HEIGHT - 1);
 		_layout.arrange();
 		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
-		assertWrapperSize(5, 8);
+		assertWrapperSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, V.MIN_HEIGHT + H.MIN_HEIGHT - 1);
+		assertScrollBarsShowedSoft(false, false);
+		
+		resetScrollBars();
+		setWrapperSize(H.MIN_WIDTH + V.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
+		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, V.MIN_HEIGHT + H.MIN_HEIGHT);
+		_layout.arrange();
+		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
+		assertWrapperSize(H.MIN_WIDTH + V.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
+		assertScrollBarsShowedSoft(false, false);
+		
+		resetScrollBars();
+		setWrapperSize(H.MIN_WIDTH + V.MIN_WIDTH + 1, V.MIN_HEIGHT);
+		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
+		_layout.arrange();
+		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
+		assertWrapperSize(H.MIN_WIDTH + V.MIN_WIDTH + 1, V.MIN_HEIGHT);
 		assertScrollBarsShowedSoft(true, false);
 		
 		resetScrollBars();
-		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 1, V.MIN_HEIGHT + H.MIN_HEIGHT);
+		setWrapperSize(H.MIN_WIDTH + V.MIN_WIDTH + 1, V.MIN_HEIGHT + 1);
+		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 1, V.MIN_HEIGHT + H.MIN_HEIGHT);
-		assertWrapperSize(5, 8);
-		assertScrollBarsShowedSoft(true, false);
-		
-		resetScrollBars();
-		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT + 1);
-		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT + 1);
-		assertWrapperSize(5, 8);
-		assertScrollBarsShowedSoft(true, false);
-		
-		setWrapperSize(5, V.MIN_HEIGHT + 2);
-		
-		resetScrollBars();
-		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 10, V.MIN_HEIGHT + H.MIN_HEIGHT + 1);
-		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 10, V.MIN_HEIGHT + H.MIN_HEIGHT + 1);
-		assertWrapperSize(5, V.MIN_HEIGHT + 2);
+		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
+		assertWrapperSize(H.MIN_WIDTH + V.MIN_WIDTH + 1, V.MIN_HEIGHT + 1);
 		assertScrollBarsShowedSoft(true, true);
 		
 		resetScrollBars();
-		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 10, V.MIN_HEIGHT + H.MIN_HEIGHT + 2);
+		setWrapperSize(100 + 1, 200);
+		setLayoutSize(100, 200 + H.MIN_HEIGHT);
 		_layout.arrange();
-		assertLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 10, V.MIN_HEIGHT + H.MIN_HEIGHT + 2);
-		assertWrapperSize(5, V.MIN_HEIGHT + 2);
+		assertLayoutSize(100, 200 + H.MIN_HEIGHT);
+		assertWrapperSize(100 + 1, 200);
 		assertScrollBarsShowedSoft(true, false);
+		
+		resetScrollBars();
+		setWrapperSize(100 + 1, 200);
+		setLayoutSize(100, 200 + H.MIN_HEIGHT - 1);
+		_layout.arrange();
+		assertLayoutSize(100, 200 + H.MIN_HEIGHT - 1);
+		assertWrapperSize(100 + 1, 200);
+		assertScrollBarsShowedSoft(true, true);
+		
+		resetScrollBars();
+		setWrapperSize(100, 200 + 1);
+		setLayoutSize(100 + V.MIN_WIDTH, 200);
+		_layout.arrange();
+		assertLayoutSize(100 + V.MIN_WIDTH, 200);
+		assertWrapperSize(100, 200 + 1);
+		assertScrollBarsShowedSoft(false, true);
+		
+		resetScrollBars();
+		setWrapperSize(100, 200 + 1);
+		setLayoutSize(100 + V.MIN_WIDTH - 1, 200);
+		_layout.arrange();
+		assertLayoutSize(100 + V.MIN_WIDTH - 1, 200);
+		assertWrapperSize(100, 200 + 1);
+		assertScrollBarsShowedSoft(true, true);
 	}
 	
 	@Test
@@ -1477,49 +1501,33 @@ class CScrollLayoutTest
 		_wrapper.setPercents(-1, 100);
 		
 		resetScrollBars();
-		setWrapperSize(H.MIN_WIDTH - 2, 0);
-		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, V.MIN_HEIGHT + H.MIN_HEIGHT - 1);
+		setWrapperSize(100 - 1, 0);
+		setLayoutSize(100, 200);
 		_layout.arrange();
-		assertLayoutSize(V.MIN_WIDTH + H.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
-		assertWrapperSize(H.MIN_WIDTH - 2, V.MIN_HEIGHT);
+		assertLayoutSize(100, 200);
+		assertWrapperSize(100 - 1, 200);
+		assertScrollBarsShowedSoft(false, false);
+		
+		resetScrollBars();
+		setWrapperSize(100, 0);
+		setLayoutSize(100, 200);
+		_layout.arrange();
+		assertLayoutSize(100, 200);
+		assertWrapperSize(100, 200);
+		assertScrollBarsShowedSoft(false, false);
+		
+		/*
+		resetScrollBars();
+		setWrapperSize(100 + 1, 0);
+		setLayoutSize(100, 200);
+		_layout.arrange();
+		assertLayoutSize(100, 200);
+		assertWrapperSize(100 + 1, 200 - H.MIN_HEIGHT);
 		assertScrollBarsShowedSoft(true, false);
-		
-		resetScrollBars();
-		setWrapperSize(H.MIN_WIDTH + 2, 0);
-		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH + 1, V.MIN_HEIGHT + H.MIN_HEIGHT + 1);
-		_layout.arrange();
-		assertLayoutSize(V.MIN_WIDTH + H.MIN_WIDTH + 1, V.MIN_HEIGHT + H.MIN_HEIGHT + 1);
-		assertWrapperSize(H.MIN_WIDTH + 2, V.MIN_HEIGHT + 1);
-		assertScrollBarsShowedSoft(true, false);
-		
-		_wrapper.setPercents(100, -1);
-		
-		resetScrollBars();
-		setWrapperSize(0, V.MIN_HEIGHT - 2);
-		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, V.MIN_HEIGHT + H.MIN_HEIGHT - 1);
-		_layout.arrange();
-		assertLayoutSize(V.MIN_WIDTH + H.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
-		assertWrapperSize(V.MIN_WIDTH + H.MIN_WIDTH, V.MIN_HEIGHT - 2);
-		assertScrollBarsShowedSoft(true, false);
-		
-		resetScrollBars();
-		setWrapperSize(0, V.MIN_HEIGHT + 1);
-		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, V.MIN_HEIGHT + H.MIN_HEIGHT - 1);
-		_layout.arrange();
-		assertLayoutSize(V.MIN_WIDTH + H.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT);
-		assertWrapperSize(H.MIN_WIDTH, V.MIN_HEIGHT + 1);
-		assertScrollBarsShowedSoft(true, true);
-		
-		resetScrollBars();
-		setWrapperSize(0, V.MIN_HEIGHT + 2);
-		setLayoutSize(H.MIN_WIDTH + V.MIN_WIDTH - 1, V.MIN_HEIGHT + H.MIN_HEIGHT + 1);
-		_layout.arrange();
-		assertLayoutSize(V.MIN_WIDTH + H.MIN_WIDTH, V.MIN_HEIGHT + H.MIN_HEIGHT + 1);
-		assertWrapperSize(H.MIN_WIDTH, V.MIN_HEIGHT + 2);
-		assertScrollBarsShowedSoft(true, true);
+		*/
 	}
 	
-	@Test
+	/*@Test
 	public function hAutoVAuto_constrainedScale_cases()
 	{
 		_layout.wrapper = _wrapper.setPercents(100, 100).setContingencies(100, 150, 200, 250);
