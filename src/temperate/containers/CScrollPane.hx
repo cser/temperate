@@ -26,6 +26,10 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		addChild(_container);
 		
 		_layout = newScrollLayout();
+		_layout.showHScrollBar = showHScrollBar;
+		_layout.hideHScrollBar = hideHScrollBar;
+		_layout.showVScrollBar = showVScrollBar;
+		_layout.hideVScrollBar = hideVScrollBar;
 		
 		_hScrollStep = 10;
 		_vScrollStep = 10;
@@ -157,7 +161,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 			_layout.isCompactHeight = isCompactHeight;
 			_layout.width = _settedWidth;
 			_layout.height = _settedHeight;
-			_layout.arrange(showHScrollBar, hideHScrollBar, showVScrollBar, hideVScrollBar);
+			_layout.arrange();
 			_width = _layout.width;
 			_height = _layout.height;
 			
@@ -319,7 +323,10 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		{
 			_vScrollValue = _vMaxScrollValue;
 		}
-		_vScrollBar.value = _vScrollValue;
+		if (_vScrollBar != null)
+		{
+			_vScrollBar.value = _vScrollValue;
+		}
 		_scrollRect.y = _vScrollValue;
 		_container.scrollRect = _scrollRect;
 	}

@@ -5,11 +5,12 @@ import temperate.layouts.parametrization.CChildWrapper;
 
 interface ICScrollLayout 
 {
-	function arrange(
-		showHScrollBar:Void->DisplayObject,
-		hideHScrollBar:Void->Void,
-		showVScrollBar:Void->DisplayObject,
-		hideVScrollBar:Void->Void):Void;
+	var showHScrollBar:Void->DisplayObject;
+	var hideHScrollBar:Void->Void;
+	var showVScrollBar:Void->DisplayObject;
+	var hideVScrollBar:Void->Void;
+	
+	function arrange():Void;
 		
 	var wrapper:CChildWrapper;
 	
