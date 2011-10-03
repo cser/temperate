@@ -31,7 +31,8 @@ class CSignal< TListener >
 	
 	function privateDispatch(__arguments__):Void
 	{
-		for (listener in _listeners)
+		var listeners = _listeners.copy();
+		for (listener in listeners)
 		{
 			Reflect.callMethod(null, listener, __arguments__);
 		}

@@ -46,24 +46,24 @@ class ArrayAssert
 		{
 			return "[" + actual + "] getted, but expected [" + expected + "]";
 		}
-		var countByValue:Dictionary = new Dictionary();
+		var countByValue = new flash.utils.TypedDictionary<Dynamic, Int>();
 		for (value in actual)
 		{
-			var count:Int = untyped countByValue[cast value];
+			var count:Int = countByValue.get(value);
 			count++;
-			untyped countByValue[cast value] = count;
+			countByValue.set(value, count);
 		}
 		
 		for (value in expected)
 		{
-			var count:Int = untyped countByValue[cast value];
+			var count:Int = countByValue.get(value);
 			count--;
-			untyped countByValue[cast value] = count;
+			countByValue.set(value, count);
 		}
-		var keys:Array<Dynamic> = untyped __keys__(countByValue);
-		for (key in keys)
+		
+		for (key in countByValue.keys())
 		{
-			var count:Int = untyped countByValue[cast key];
+			var count:Int = countByValue.get(key);
 			if (count != 0)
 			{
 				return "[" + actual + "] getted, but expected [" + expected + "]";

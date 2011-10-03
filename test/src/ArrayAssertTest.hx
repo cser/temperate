@@ -39,5 +39,14 @@ class ArrayAssertTest
 		Assert.isNotNull(_assert.checkEqualIgnoringOrder([], [1]));
 		Assert.isNotNull(_assert.checkEqualIgnoringOrder([1, 2], [3, 2]));
 		Assert.isNotNull(_assert.checkEqualIgnoringOrder([1, 2, 1], [2, 1, 2]));
+		Assert.isNotNull(_assert.checkEqualIgnoringOrder([1, 2, 1], [1, 2, 2]));
+	}
+	
+	@Test
+	public function notIntValuesCases()
+	{
+		Assert.isNull(_assert.checkEqualIgnoringOrder(["&1", "&2", "&1"], ["&1", "&1", "&2"]));
+		Assert.isNotNull(_assert.checkEqualIgnoringOrder(["&1", "&2sd"], ["&1", "&2"]));
+		Assert.isNotNull(_assert.checkEqualIgnoringOrder(["&1", "&2", "&1"], ["&1", "&2", "&2"]));
 	}
 }

@@ -23,6 +23,7 @@ class MainTestSuite extends TestSuite
 		add(temperate.core.CMouseWheelUtilTest);
 		add(temperate.docks.RightDockTest);
 		add(temperate.minimal.charts.MChartTest);
+		add(temperate.signals.CSignalActionInListenerTest);
 		add(temperate.signals.CSignalTest);
 		add(temperate.text.CInputFieldTest);
 		add(temperate.text.CLabelTest);
