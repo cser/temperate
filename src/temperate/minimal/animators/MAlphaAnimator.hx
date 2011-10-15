@@ -44,7 +44,7 @@ class MAlphaAnimator< T > implements ICTooltipAnimator<T>
 		}
 		else
 		{
-			MTween.to(view, { alpha:1 }, _showDuration);
+			MTween.to(view, _showDuration, { alpha:1 });
 		}
 	}
 	
@@ -62,7 +62,7 @@ class MAlphaAnimator< T > implements ICTooltipAnimator<T>
 		}
 		else
 		{
-			MTween.to(view, { alpha:0 }, _hideDuration).setOnComplete(onTweenHideComplete);
+			MTween.to(view, _hideDuration, { alpha:0 }).setOnComplete(onTweenHideComplete);
 		}
 	}
 	

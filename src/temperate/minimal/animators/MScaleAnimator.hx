@@ -103,7 +103,7 @@ class MScaleAnimator< T > implements ICTooltipAnimator<T>
 		}
 		else
 		{
-			_tween = MTween.to(view, _showVars, _showDuration)
+			_tween = MTween.to(view, _showDuration, _showVars)
 				.setEase(MBack.typical.easeIn)
 				.setOnComplete(onTweenShowComplete);
 		}
@@ -125,7 +125,7 @@ class MScaleAnimator< T > implements ICTooltipAnimator<T>
 		}
 		else
 		{
-			_tween = MTween.to(view, _hideVars, _hideDuration)
+			_tween = MTween.to(view, _hideDuration, _hideVars)
 				.setOnComplete(onTweenHideComplete);
 		}
 	}

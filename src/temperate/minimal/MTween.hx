@@ -73,9 +73,9 @@ class MTween< T >
 	 * @return	tween object (for additional parametrization or stop,
 	 * parametrization is _not_ damage tween if it in this frame)
 	 */
-	public static function to<T>(target:T, vars:Dynamic, duration:Int)
+	public static function to<T>(target:T, duration:Int, vars:Dynamic)
 	{
-		return new MTween(target, vars, duration);
+		return new MTween(target, duration, vars);
 	}
 	
 	public static function apply<T>(target:T, vars:Dynamic)
@@ -95,7 +95,7 @@ class MTween< T >
 	
 	var _startTime:Int;
 	
-	function new(target:T, vars:Dynamic<Float>, duration:Int)
+	function new(target:T, duration:Int, vars:Dynamic<Float>)
 	{
 		this.target = target;
 		_vars = vars;
