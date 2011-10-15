@@ -148,11 +148,27 @@ class MTween< T >
 		return this;
 	}
 	
+	var _voidOnComplete:Void->Void;
+	
+	public function setVoidOnComplete(voidOnComplete:Void->Void)
+	{
+		_voidOnComplete = voidOnComplete;
+		return this;
+	}
+	
 	var _onUpdate:MTween<T>->Void;
 	
 	public function setOnUpdate(onUpdate:MTween<T>->Void)
 	{
 		_onUpdate = onUpdate;
+		return this;
+	}
+	
+	var _voidOnUpdate:Void->Void;
+	
+	public function setVoidOnUpdate(voidOnUpdate:Void->Void)
+	{
+		_voidOnUpdate = voidOnUpdate;
 		return this;
 	}
 	
@@ -171,6 +187,10 @@ class MTween< T >
 			if (_onUpdate != null)
 			{
 				_onUpdate(this);
+			}
+			if (_voidOnUpdate != null)
+			{
+				_voidOnUpdate();
 			}
 			kill(true);
 		}
@@ -197,9 +217,16 @@ class MTween< T >
 			_enterFrameDispatcher.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		unregister(target, this);
-		if (callComplete && _onComplete != null)
+		if (callComplete)
 		{
-			_onComplete(this);
+			if (_onComplete != null)
+			{
+				_onComplete(this);
+			}
+			if (_voidOnComplete != null)
+			{
+				_voidOnComplete();
+			}
 		}
 	}
 	

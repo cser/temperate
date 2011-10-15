@@ -39,14 +39,14 @@ class TestMain
 		var test = new TestMCharts();
 		var test = new TestText();
 		var test = new TestMTween();
-		
+		var test = new TestTooltips();
 		var test = new TestScrollBar();
 		var test = new TestTextArea();
 		var test = new TestSlider();
 		var test = new TestSimpleButtonWrapper();
+		var test = new TestSignalPerformance();
 		
 		var test = new TestScrollPane();
-		var test = new TestSignalPerformance();var test = new TestTooltips();
 		Lib.current.addChild(test);
 		test.init();
 	}
