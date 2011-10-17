@@ -7,6 +7,7 @@ import temperate.layouts.parametrization.CChildWrapper;
  * Rules:
  * If on/auto ScrollBar - size is constraints by minimal ScrollBars sizes
  * If no ScrollBar - size is constraints by content size
+ * If no wrapper - size has no constraints else minimal ScrollBar sizes
  */
 class CScrollLayout implements ICScrollLayout
 {
@@ -24,7 +25,7 @@ class CScrollLayout implements ICScrollLayout
 	{
 		width = isCompactWidth ? 0 : width;
 		height = isCompactHeight ? 0 : height;
-		if (vScrollPolicy == CScrollPolicy.ON && hScrollPolicy == CScrollPolicy.ON)
+		if (hScrollPolicy == CScrollPolicy.ON && vScrollPolicy == CScrollPolicy.ON)
 		{
 			var hsb = showHScrollBar();
 			hsb.width = 0;
@@ -56,7 +57,7 @@ class CScrollLayout implements ICScrollLayout
 				}
 			}
 		}
-		else if (vScrollPolicy == CScrollPolicy.OFF && hScrollPolicy == CScrollPolicy.OFF)
+		else if (hScrollPolicy == CScrollPolicy.OFF && vScrollPolicy == CScrollPolicy.OFF)
 		{
 			if (width < 0)
 			{
@@ -81,6 +82,36 @@ class CScrollLayout implements ICScrollLayout
 			}
 			hideHScrollBar();
 			hideVScrollBar();
+		}
+		else if (hScrollPolicy == CScrollPolicy.ON && vScrollPolicy == CScrollPolicy.OFF)
+		{
+			var hsb = showHScrollBar();
+			hsb.width = 0;
+			var hsbWidth = hsb.width;
+			var hsbHeight = hsb.height;
+			hideVScrollBar();
+			
+			if (width < hsbWidth)
+			{
+				width = hsbWidth;
+			}
+			if (height < hsbHeight)
+			{
+				height = hsbHeight;
+			}
+			
+			if (wrapper != null)
+			{
+				if (!Math.isNaN(wrapper.widthPortion))
+				{
+					wrapper.setWidth(width);
+				}
+				if (!Math.isNaN(wrapper.heightPortion))
+				{
+					wrapper.setHeight(height - hsbHeight);
+				}
+				height = wrapper.getHeight() + hsbHeight;
+			}
 		}
 		else
 		{
