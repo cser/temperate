@@ -76,6 +76,15 @@ class TestScrollPane extends Sprite
 			column.add(scaler);
 			
 			var column = new CVBox().addTo(line);
+			new MLabel().setText("CScrollPolicy.AUTO\nCScrollPolicy.ON").addTo(column);
+			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
+			scrollPane.vScrollPolicy = CScrollPolicy.ON;
+			scrollPane.set(new MButton().setText("Button")).setPercents(100, 100);
+			scrollPane.setSize(80, 80);
+			var scaler = new Scaler(scrollPane);
+			column.add(scaler);
+			
+			var column = new CVBox().addTo(line);
 			new MLabel().setText("CScrollPolicy.ON\nCScrollPolicy.ON").addTo(column);
 			var scrollPane = new CScrollPane(newHScrollBar, newVScrollBar, new MFieldRectSkin());
 			scrollPane.hScrollPolicy = CScrollPolicy.ON;
