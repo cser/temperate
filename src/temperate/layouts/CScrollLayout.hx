@@ -101,54 +101,35 @@ class CScrollLayout implements ICScrollLayout
 			}
 			if (wrapper != null)
 			{
-				if (!isVOn)
-				{				
-					if (!Math.isNaN(wrapper.widthPortion))
+				if (!Math.isNaN(wrapper.widthPortion))
+				{
+					wrapper.setWidth(width - vsbWidth);
+				}
+				if (wrapper.getWidth() <= width - vsbWidth)
+				{
+					hideHScrollBar();
+					if (!Math.isNaN(wrapper.heightPortion))
 					{
-						wrapper.setWidth(width);
+						wrapper.setHeight(height);
 					}
-					if (wrapper.getWidth() <= width)
+					if (!isVOn)
 					{
-						hideHScrollBar();
-						if (!Math.isNaN(wrapper.heightPortion))
-						{
-							wrapper.setHeight(height);
-						}
 						height = wrapper.getHeight();
-					}
-					else
-					{
-						if (!Math.isNaN(wrapper.heightPortion))
-						{
-							wrapper.setHeight(height - hsbHeight);
-						}
-						height = wrapper.getHeight() + hsbHeight;
 					}
 				}
 				else
 				{
-					if (!Math.isNaN(wrapper.widthPortion))
+					if (isVOn && height <= vsbHeight + hsbHeight)
 					{
-						wrapper.setWidth(width - vsbWidth);
+						height = vsbHeight + hsbHeight;
 					}
-					if (wrapper.getWidth() <= width - vsbWidth)
+					if (!Math.isNaN(wrapper.heightPortion))
 					{
-						if (!Math.isNaN(wrapper.heightPortion))
-						{
-							wrapper.setHeight(height);
-						}
-						hideHScrollBar();
+						wrapper.setHeight(height - hsbHeight);
 					}
-					else
-					{
-						if (height <= vsbHeight + hsbHeight)
-						{
-							height = vsbHeight + hsbHeight;
-						}
-						if (!Math.isNaN(wrapper.heightPortion))
-						{
-							wrapper.setHeight(height - hsbHeight);
-						}
+					if (!isVOn)
+					{						
+						height = wrapper.getHeight() + hsbHeight;
 					}
 				}
 			}
