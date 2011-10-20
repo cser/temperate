@@ -140,8 +140,23 @@ class CScrollLayout implements ICScrollLayout
 		}
 		else if (!isHAuto && isVAuto)
 		{
-			hideHScrollBar();
-			hideVScrollBar();
+			if (height < vsbHeight)
+			{
+				height = vsbHeight;
+			}
+			if (!isHOn)
+			{
+				width = wrapper.getWidth() + vsbWidth;
+				if (wrapper.getHeight() <= height)
+				{
+					hideVScrollBar();
+				}
+			}
+			else
+			{
+				hideHScrollBar();
+				hideVScrollBar();
+			}
 		}
 		else
 		{
