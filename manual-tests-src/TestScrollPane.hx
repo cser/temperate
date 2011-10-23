@@ -38,7 +38,8 @@ class TestScrollPane extends Sprite
 			newScrollPaneBlock(line, CScrollPolicy.OFF, CScrollPolicy.OFF, newShape(100, 100));
 			newScrollPaneBlock(
 				line, CScrollPolicy.OFF, CScrollPolicy.OFF, new MButton().setText("Button"))
-				.setPercents(100, 100);
+				.setPercents(100, 100)
+				.setContingencies(75, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
 				
 			var column = new CVBox().addTo(line);
 			new MLabel().setText("MScrollPane").addTo(column);
@@ -57,14 +58,17 @@ class TestScrollPane extends Sprite
 			newScrollPaneBlock(line, CScrollPolicy.AUTO, CScrollPolicy.ON, newShape(100, 100));
 			newScrollPaneBlock(
 				line, CScrollPolicy.AUTO, CScrollPolicy.OFF, new MButton().setText("Button"))
-				.setPercents(100, 100);
+				.setPercents(100, 100)
+				.setContingencies(75, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
 			newScrollPaneBlock(
 				line, CScrollPolicy.AUTO, CScrollPolicy.ON, new MButton().setText("Button"))
-				.setPercents(100, 100);
+				.setPercents(100, 100)
+				.setContingencies(75, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
 			newScrollPaneBlock(line, CScrollPolicy.ON, CScrollPolicy.ON, newShape(100, 100));
 			newScrollPaneBlock(
 				line, CScrollPolicy.ON, CScrollPolicy.ON, new MButton().setText("Button"))
-				.setPercents(100, 100);
+				.setPercents(100, 100)
+				.setContingencies(75, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
 		}
 		
 		{
@@ -75,11 +79,11 @@ class TestScrollPane extends Sprite
 			newScrollPaneBlock(
 				line, CScrollPolicy.OFF, CScrollPolicy.AUTO, new MButton().setText("Button"))
 				.setPercents(100, 100)
-				.setContingencies(0, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
+				.setContingencies(75, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
 			newScrollPaneBlock(
 				line, CScrollPolicy.ON, CScrollPolicy.AUTO, new MButton().setText("Button"))
 				.setPercents(100, 100)
-				.setContingencies(0, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
+				.setContingencies(75, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
 		}
 	}
 	

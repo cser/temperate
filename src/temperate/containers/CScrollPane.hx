@@ -172,6 +172,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 			_areaHeight = Std.int(_height - (_hScrollAvailable ? _hScrollBar.height : 0));
 			_hMaxScrollValue = CMath.intMax(Std.int(_wrapper.getWidth() - _areaWidth), 0);
 			_vMaxScrollValue = CMath.intMax(Std.int(_wrapper.getHeight() - _areaHeight), 0);
+			fixScrollValue();
 			
 			_view_valid = false;
 		}
@@ -243,13 +244,15 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	
 	override function onHScroll(event:Event)
 	{
-		_scrollRect.x = _hScrollBar.value;
+		_hScrollValue = Std.int(_hScrollBar.value);
+		_scrollRect.x = _hScrollValue;
 		_container.scrollRect = _scrollRect;
 	}
 	
 	override function onVScroll(event:Event)
 	{
-		_scrollRect.y = _vScrollBar.value;
+		_vScrollValue = Std.int(_vScrollBar.value);
+		_scrollRect.y = _vScrollValue;
 		_container.scrollRect = _scrollRect;
 	}
 	
@@ -291,11 +294,13 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	
 	override function get_hMaxScrollValue()
 	{
+		validateSize();
 		return _hMaxScrollValue;
 	}
 	
 	override function get_vMaxScrollValue()
 	{
+		validateSize();
 		return _vMaxScrollValue;
 	}
 	
@@ -310,7 +315,10 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		{
 			_hScrollValue = _hMaxScrollValue;
 		}
-		_hScrollBar.value = _hScrollValue;
+		if (_hScrollBar != null)
+		{
+			_hScrollBar.value = _hScrollValue;
+		}
 		_scrollRect.x = _hScrollValue;
 		_container.scrollRect = _scrollRect;
 	}
@@ -359,15 +367,33 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 		postponeSize();
 		return value;
 	}
+	
+	function fixScrollValue()
+	{
+		if (_hScrollValue < 0)
+		{
+			_hScrollValue = 0;
+		}
+		else if (_hScrollValue > _hMaxScrollValue)
+		{
+			_hScrollValue = _hMaxScrollValue;
+		}
+		if (_vScrollValue < 0)
+		{
+			_vScrollValue = 0;
+		}
+		else if (_vScrollValue > _vMaxScrollValue)
+		{
+			_vScrollValue = _vMaxScrollValue;
+		}
+	}
 }
 /*
 TODO
-Проверить глушени колеса мыши
 Установка значений скроллинга, в том числе вначале
 Обновление при изменении контента
 Обновление при девалидации
 Отступы и политики размеров для контента
 Отступы относительно скроллируемой области
 Неактивное состояние
-Изменять положение скроллирования при изменении размеров
 */
