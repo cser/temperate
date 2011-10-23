@@ -31,6 +31,10 @@ class TestScrollPane extends Sprite
 			var line = new CHBox().addTo(main);
 			
 			newScrollPaneBlock(line, CScrollPolicy.AUTO, CScrollPolicy.AUTO, newShape(100, 100));
+			newScrollPaneBlock(
+				line, CScrollPolicy.AUTO, CScrollPolicy.AUTO, new MButton().setText("Button"))
+				.setPercents(100, 100)
+				.setContingencies(100, CMath.INT_MAX_VALUE, 50, CMath.INT_MAX_VALUE);
 			newScrollPaneBlock(line, CScrollPolicy.OFF, CScrollPolicy.OFF, newShape(100, 100));
 			newScrollPaneBlock(
 				line, CScrollPolicy.OFF, CScrollPolicy.OFF, new MButton().setText("Button"))
@@ -85,6 +89,7 @@ class TestScrollPane extends Sprite
 	):CChildWrapper
 	{
 		var column = new CVBox();
+		column.setIndents(0, 20, 0, 10);
 		new MLabel().setText(
 			"hScrollPolicy=" + hScrollPolicy + "\nvScrollPolicy=" + vScrollPolicy
 		).addTo(column);

@@ -227,35 +227,49 @@ class CScrollLayout implements ICScrollLayout
 				var needHsb = false;
 				var needVsb = false;
 				
+				// (needHsb: false, needVsb: false)
 				if (!Math.isNaN(wrapper.widthPortion))
 				{
 					wrapper.setWidth(width);
 				}
-				if (!Math.isNaN(wrapper.heightPortion))
+				if (wrapper.getWidth() > width)
 				{
-					wrapper.setHeight(height);
-				}
-				needHsb = wrapper.getWidth() > width;
-				if (wrapper.getHeight() > height - (needHsb ? hsbHeight : 0))
-				{
-					needVsb = true;
-				}
-				if (!Math.isNaN(wrapper.widthPortion))
-				{
-					if (needVsb)
-					{
-						wrapper.setWidth(width - vsbWidth);
-					}
-				}
-				if (needVsb && wrapper.getWidth() > width - vsbWidth)
-				{
+					// (needHsb: true, needVsb: false)
 					needHsb = true;
-				}
-				if (!Math.isNaN(wrapper.heightPortion))
-				{
-					if (needHsb)
+					if (!Math.isNaN(wrapper.heightPortion))
 					{
 						wrapper.setHeight(height - hsbHeight);
+					}
+					if (wrapper.getHeight() > height - hsbHeight)
+					{
+						// (needHsb: true, needVsb: true)
+						needVsb = true;
+						if (!Math.isNaN(wrapper.widthPortion))
+						{
+							wrapper.setWidth(width - vsbWidth);
+						}
+					}
+				}
+				else
+				{
+					// (needHsb: false, needVsb: false)
+					if (!Math.isNaN(wrapper.heightPortion))
+					{
+						wrapper.setHeight(height);
+					}
+					if (wrapper.getHeight() > height)
+					{
+						// (needHsb: false, needVsb: true)
+						needVsb = true;
+						if (!Math.isNaN(wrapper.widthPortion))
+						{
+							wrapper.setWidth(width - vsbWidth);
+						}
+						if (wrapper.getWidth() > width - vsbWidth)
+						{
+							// (needHsb: true, needVsb: true)
+							needHsb = true;
+						}
 					}
 				}
 				if (!needHsb)
