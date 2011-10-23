@@ -1,19 +1,15 @@
 package temperate.components;
 
-import flash.display.Bitmap;
 import flash.display.BitmapData;
-import flash.display.DisplayObject;
-import flash.display.Sprite;
+import flash.errors.ArgumentError;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Point;
 import flash.Lib;
 import massive.munit.Assert;
-import temperate.errors.CArgumentError;
 import temperate.raster.CScale3GridDrawer;
 import temperate.skins.CNullScrollSkin;
 import temperate.skins.CRasterScrollDrawedSkin;
-import temperate.skins.CSkinState;
 
 class CScrollBarScrollParamsTest
 {
@@ -75,7 +71,7 @@ class CScrollBarScrollParamsTest
 				sb.step = Math.NaN;
 				Assert.fail("Exception mast throws");
 			}
-			catch (error:CArgumentError)
+			catch (error:ArgumentError)
 			{
 				Assert.isTrue(Std.string(error.message).indexOf("mast be finite") != -1);
 				Assert.areEqual(1, sb.step);
@@ -88,7 +84,7 @@ class CScrollBarScrollParamsTest
 					sb.step = value;
 					Assert.fail("Exception mast throws");
 				}
-				catch (error:CArgumentError)
+				catch (error:ArgumentError)
 				{
 					Assert.isTrue(Std.string(error.message).indexOf("mast be positive") != -1);
 					Assert.areEqual(1, sb.step);
@@ -144,7 +140,7 @@ class CScrollBarScrollParamsTest
 					sb.pageSize = value;
 					Assert.fail("Exception mast throws");
 				}
-				catch (error:CArgumentError)
+				catch (error:ArgumentError)
 				{
 					var text = Std.string(error.message);
 					Assert.isTrue(
@@ -196,7 +192,7 @@ class CScrollBarScrollParamsTest
 					sb.pageStep = value;
 					Assert.fail("Exception mast throws");
 				}
-				catch (error:CArgumentError)
+				catch (error:ArgumentError)
 				{
 					var text = Std.string(error.message);
 					Assert.isTrue(
@@ -284,7 +280,8 @@ class CScrollBarScrollParamsTest
 				
 				object.dispatchEvent(
 					new MouseEvent(
-						MouseEvent.MOUSE_WHEEL, true, false, 0, 0, null, false, false, false, false, 3
+						MouseEvent.MOUSE_WHEEL, true, false, 0, 0, null, false, false, false, false,
+						3
 					)
 				);
 				ArrayAssert.areEqual(["scroll"], _log);
