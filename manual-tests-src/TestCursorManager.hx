@@ -72,7 +72,7 @@ class TestCursorManager extends Sprite
 			button.setSize(200, 150);
 			button.addTo(this, -5, 300);
 			
-			_manager.newHover().setTarget(button).setValue(new CCursor().setNative("native"));
+			_manager.newHover().setTarget(button).setValue(new CCursor().setSystem("native"));
 			
 			#end
 		}

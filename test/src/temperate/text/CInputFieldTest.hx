@@ -62,7 +62,7 @@ class CInputFieldTest
 	public function sizeIsNotLessSkinMinSize()
 	{
 		{
-			var skin = new FakeSkin().setMinSize(211, 0);
+			var skin = new FakeSkin().setFixedSize(211, Math.NaN);
 			var input = new ExtendedInputField(skin);
 			var measuredTf = newSpaceTf(input);
 			
@@ -74,7 +74,7 @@ class CInputFieldTest
 		}
 		
 		{
-			var skin = new FakeSkin().setMinSize(0, 111);
+			var skin = new FakeSkin().setFixedSize(Math.NaN, 111);
 			var input = new ExtendedInputField(skin);
 			var measuredTf = newSpaceTf(input);
 			
@@ -142,10 +142,23 @@ class FakeSkin extends CNullRectSkin
 		super();
 	}
 	
-	public function setMinSize(width:Int, height:Int)
+	var _fixedWidth:Float;
+	var _fixedHeight:Float;
+	
+	override public function getFixedWidth():Float
 	{
-		minWidth = width;
-		minHeight = height;
+		return _fixedWidth;
+	}
+	
+	override public function getFixedHeight():Float
+	{
+		return _fixedHeight;
+	}
+	
+	public function setFixedSize(width:Float, height:Float)
+	{
+		_fixedWidth = width;
+		_fixedHeight = height;
 		return this;
 	}
 }

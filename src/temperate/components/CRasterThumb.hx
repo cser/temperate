@@ -4,7 +4,7 @@ import flash.display.BitmapData;
 import flash.display.Shape;
 import temperate.components.parametrization.CRasterParameters;
 import temperate.core.CMath;
-import temperate.raster.Scale3GridDrawer;
+import temperate.raster.CScale3GridDrawer;
 
 class CRasterThumb extends ACButton
 {
@@ -14,11 +14,12 @@ class CRasterThumb extends ACButton
 	{
 		_horizontal = horizontal;
 		super();
+		selectState = CButtonState.selectStateThumb;
 	}
 	
 	var _size_upValid:Bool;
 	
-	var _drawer:Scale3GridDrawer;
+	var _drawer:CScale3GridDrawer;
 	var _bg:Shape;
 	
 	override function init()
@@ -36,7 +37,7 @@ class CRasterThumb extends ACButton
 		_iconBitmap = new Bitmap();
 		addChild(_iconBitmap);
 		
-		_drawer = new Scale3GridDrawer(_horizontal, _bg.graphics);
+		_drawer = new CScale3GridDrawer(_horizontal, _bg.graphics);
 	}
 	
 	var _parameters:Array<CRasterParameters>;
@@ -185,29 +186,5 @@ class CRasterThumb extends ACButton
 		_iconBitmap.bitmapData = icon;
 		_view_valid = false;
 		postponeView();
-	}
-	
-	override function updateState()
-	{
-		if (_enabled)
-		{
-			if (_isDown)
-			{
-				_state = _selected ? CButtonState.DOWN_SELECTED : CButtonState.DOWN;
-			}
-			else if (_isOver)
-			{
-				_state = _selected ? CButtonState.OVER_SELECTED : CButtonState.OVER;
-			}
-			else
-			{
-				_state = _selected ? CButtonState.UP_SELECTED : CButtonState.UP;
-			}
-		}
-		else
-		{
-			_state = _selected ? CButtonState.DISABLED_SELECTED : CButtonState.DISABLED;
-		}
-		doUpdateState();
 	}
 }

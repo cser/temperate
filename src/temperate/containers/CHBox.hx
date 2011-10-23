@@ -1,10 +1,10 @@
 package temperate.containers;
-import temperate.layouts.HLayout;
+import temperate.layouts.CHLayout;
 
 class CHBox extends ACLineBox
 {
 	public function new() 
 	{
-		super(new HLayout());
+		super(new CHLayout());
 	}
 }

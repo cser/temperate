@@ -7,7 +7,7 @@ import temperate.minimal.graphics.MCursorBdFactory;
 class MWaitCursor extends CCursor
 {
 	public function new(
-		updateOnMove:Bool = false, hideSystem:Bool = false, system:MouseCursor = null) 
+		updateOnMove:Bool = false, hideSystem:Bool = false, system:String = null) 
 	{
 		super();
 		

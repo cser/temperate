@@ -10,9 +10,9 @@ interface ICRectSkin
 	
 	function unlink():Void;
 	
-	var minWidth(default, null):Int;
+	function getFixedWidth():Float;
 	
-	var minHeight(default, null):Int;
+	function getFixedHeight():Float;
 	
 	var state:CSkinState;
 	

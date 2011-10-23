@@ -34,8 +34,8 @@ class CButtonSelectorTest
 		_switcher = new CButtonSelector(0);
 		_switcher.addEventListener(Event.CHANGE, test1_onSwitcherChange);
 		
-		_button1 = new ACButton();
-		_button2 = new ACButton();
+		_button1 = new FakeEmptyButton();
+		_button2 = new FakeEmptyButton();
 		_switcher.add(_button1, 1);
 		_switcher.add(_button2, 2);
 		Assert.areEqual(0, _switcher.value);
@@ -62,8 +62,8 @@ class CButtonSelectorTest
 		_switcher = new CButtonSelector(0, true);
 		_switcher.addEventListener(Event.CHANGE, default_onSwitchChange);
 		
-		_button1 = new ACButton();
-		_button2 = new ACButton();
+		_button1 = new FakeEmptyButton();
+		_button2 = new FakeEmptyButton();
 		_switcher.add(_button1, 1);
 		_switcher.add(_button2, 2);
 		Assert.areEqual(0, _switcher.value);
@@ -80,8 +80,8 @@ class CButtonSelectorTest
 		_switcher = new CButtonSelector(0);
 		_switcher.addEventListener(Event.CHANGE, default_onSwitchChange);
 		
-		_button1 = new ACButton();
-		_button2 = new ACButton();
+		_button1 = new FakeEmptyButton();
+		_button2 = new FakeEmptyButton();
 		_switcher.add(_button1, 1);
 		_switcher.add(_button2, 2);
 		Assert.areEqual(0, _switcher.value);
@@ -123,7 +123,7 @@ class CButtonSelectorTest
 			var switcher = new CButtonSelector<String>(null);
 			Assert.areEqual(null, switcher.value);
 			
-			var button = new ACButton();
+			var button = new FakeEmptyButton();
 			Assert.areEqual(false, button.selected);
 			
 			switcher.add(button, null);
@@ -135,7 +135,7 @@ class CButtonSelectorTest
 			var switcher = new CButtonSelector<Int>(0);
 			Assert.areEqual(0, switcher.value);
 			
-			var button = new ACButton();
+			var button = new FakeEmptyButton();
 			Assert.areEqual(false, button.selected);
 			
 			switcher.add(button, 0);
@@ -164,8 +164,8 @@ class CButtonSelectorTest
 		var switcher = new CButtonSelector(0);
 		switcher.addEventListener(Event.CHANGE, default_onSwitchChange);
 		
-		var button1 = new ACButton();
-		var button2 = new ACButton();
+		var button1 = new FakeEmptyButton();
+		var button2 = new FakeEmptyButton();
 		switcher.add(button1, 1);
 		switcher.add(button2, 2);
 		Assert.areEqual(false, button1.selected);
@@ -191,8 +191,8 @@ class CButtonSelectorTest
 	public function isNoButtonWithValue_selectionRemovesFromAllButtons()
 	{
 		var switcher = new CButtonSelector(1);
-		var button1 = new ACButton();
-		var button2 = new ACButton();
+		var button1 = new FakeEmptyButton();
+		var button2 = new FakeEmptyButton();
 		switcher.add(button1, 1);
 		switcher.add(button2, 2);
 		Assert.areEqual(true, button1.selected);
@@ -210,8 +210,8 @@ class CButtonSelectorTest
 		var switcher = new CButtonSelector(0);
 		Assert.areEqual(0, switcher.value);
 		
-		var button1 = new ACButton();
-		var button2 = new ACButton();
+		var button1 = new FakeEmptyButton();
+		var button2 = new FakeEmptyButton();
 		
 		switcher.add(button1, 1);
 		Assert.areEqual(0, switcher.value);
@@ -226,8 +226,8 @@ class CButtonSelectorTest
 		var switcher = new CButtonSelector(0);
 		switcher.addEventListener(Event.CHANGE, default_onSwitchChange);
 		
-		var button1 = new ACButton();
-		var button2 = new ACButton();
+		var button1 = new FakeEmptyButton();
+		var button2 = new FakeEmptyButton();
 		switcher.add(button1, 1);
 		switcher.add(button2, 2);
 		
@@ -242,8 +242,8 @@ class CButtonSelectorTest
 	{
 		var switcher = new CButtonSelector(0);
 		
-		var button1 = new ACButton();
-		var button2 = new ACButton();
+		var button1 = new FakeEmptyButton();
+		var button2 = new FakeEmptyButton();
 		switcher.add(button1, 1);
 		switcher.add(button2, 2);
 		
@@ -258,8 +258,8 @@ class CButtonSelectorTest
 	public function if_button_withEqualsToSelectedValue_removed_valueIsNotChanged()
 	{
 		var switcher = new CButtonSelector(0);
-		var button1 = new ACButton();
-		var button2 = new ACButton();
+		var button1 = new FakeEmptyButton();
+		var button2 = new FakeEmptyButton();
 		switcher.add(button1, 10);
 		switcher.add(button2, 1);
 		switcher.value = 10;
@@ -285,7 +285,7 @@ class CButtonSelectorTest
 		var switcher = new CButtonSelector(10);
 		switcher.addEventListener(Event.CHANGE, default_onSwitchChange);
 		
-		var button = new ACButton();
+		var button = new FakeEmptyButton();
 		switcher.add(button, 10);
 		
 		button.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
@@ -297,7 +297,7 @@ class CButtonSelectorTest
 	public function ifAddedSelectedButtonWithAnotherValue_selectionRemoves()
 	{
 		var switcher = new CButtonSelector(101);
-		var button = new ACButton();
+		var button = new FakeEmptyButton();
 		button.selected = true;
 		Assert.areEqual(true, button.selected);
 		
@@ -310,7 +310,7 @@ class CButtonSelectorTest
 	public function ifAddedButtonWithEqualsValue_itsSelected()
 	{
 		var switcher = new CButtonSelector(101);
-		var button = new ACButton();
+		var button = new FakeEmptyButton();
 		Assert.areEqual(false, button.selected);
 		
 		switcher.add(button, 101);
@@ -322,9 +322,9 @@ class CButtonSelectorTest
 	public function ifButtonsWithEqualsValuesExist_whileThisValueSelected_theyAllSelected()
 	{
 		var switcher = new CButtonSelector(0);
-		var button1 = new ACButton();
-		var button2 = new ACButton();
-		var button3 = new ACButton();
+		var button1 = new FakeEmptyButton();
+		var button2 = new FakeEmptyButton();
+		var button3 = new FakeEmptyButton();
 		switcher.add(button1, 1);
 		switcher.add(button2, 2);
 		switcher.add(button3, 1);

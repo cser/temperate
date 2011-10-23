@@ -2,15 +2,15 @@ package temperate.skins;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
 import flash.display.Graphics;
-import temperate.raster.IDrawer;
+import temperate.raster.ICDrawer;
 
 class CRasterScrollDrawedSkin implements ICScrollSkin
 {
 	var _up:BitmapData;
-	var _drawer:IDrawer;
+	var _drawer:ICDrawer;
 	var _crossSize:Int;
 	
-	public function new(up:BitmapData, drawer:IDrawer, crossSize:Int)
+	public function new(up:BitmapData, drawer:ICDrawer, crossSize:Int)
 	{
 		_up = up;
 		_drawer = drawer;

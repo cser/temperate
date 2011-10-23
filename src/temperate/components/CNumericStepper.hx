@@ -12,6 +12,7 @@ import flash.ui.Keyboard;
 import temperate.components.helpers.CSmoothTimerChanger;
 import temperate.components.helpers.ICTimerChanger;
 import temperate.core.CMath;
+import temperate.core.CMouseWheelUtil;
 import temperate.core.CSprite;
 import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
@@ -20,7 +21,7 @@ import temperate.text.CTextFormat;
 
 class CNumericStepper extends CSprite
 {
-	public function new(up:ACButton, down:ACButton, bg:ICRectSkin)
+	public function new(up:ICButton, down:ICButton, bg:ICRectSkin)
 	{
 		super();
 		
@@ -30,6 +31,7 @@ class CNumericStepper extends CSprite
 		_minValue = 0;
 		_maxValue = 100;
 		_value = 0;
+		_mouseWheelDimRatio = 1;
 		
 		valueRestrict = "\\-0-9";
 		valueTranslator = Std.string;
@@ -43,13 +45,13 @@ class CNumericStepper extends CSprite
 		_up.addEventListener(MouseEvent.MOUSE_DOWN, onUpMouseDown);
 		_up.addEventListener(MouseEvent.MOUSE_UP, buttonStopTimerHandler);
 		_up.addEventListener(MouseEvent.MOUSE_OUT, buttonStopTimerHandler);
-		addChild(_up);
+		addChild(_up.view);
 		
 		_down = down;
 		_down.addEventListener(MouseEvent.MOUSE_DOWN, onDownMouseDown);
 		_down.addEventListener(MouseEvent.MOUSE_UP, buttonStopTimerHandler);
 		_down.addEventListener(MouseEvent.MOUSE_OUT, buttonStopTimerHandler);
-		addChild(_down);
+		addChild(_down.view);
 		
 		_tf = new TextField();
 		_tf.restrict = valueRestrict;
@@ -88,8 +90,8 @@ class CNumericStepper extends CSprite
 		return ~/^\-?\d*$/.match(text);
 	}
 	
-	var _up:ACButton;
-	var _down:ACButton;
+	var _up:ICButton;
+	var _down:ICButton;
 	var _bg:ICRectSkin;
 	var _tf:TextField;
 	
@@ -247,11 +249,11 @@ class CNumericStepper extends CSprite
 		updateControlsEnabled();
 	}
 	
-	override function set_enabled(value)
+	override function set_isEnabled(value)
 	{
-		if (_enabled != value)
+		if (_isEnabled != value)
 		{
-			_enabled = value;
+			_isEnabled = value;
 			updateTextType();
 			updateControlsEnabled();
 			updateEnabled();
@@ -259,12 +261,12 @@ class CNumericStepper extends CSprite
 			_view_formatValid = false;
 			postponeView();
 		}
-		return _enabled;
+		return _isEnabled;
 	}
 	
 	function updateEnabled()
 	{
-		if (_enabled)
+		if (_isEnabled)
 		{
 			_tf.addEventListener(FocusEvent.FOCUS_IN, onTfFocusIn);
 			_tf.addEventListener(FocusEvent.FOCUS_OUT, onTfFocusOut);
@@ -386,8 +388,20 @@ class CNumericStepper extends CSprite
 	function setUseHandCursor(value:Bool)
 	{
 		_useHandCursor = value;
-		_up.useHandCursor = _useHandCursor;
-		_down.useHandCursor = _useHandCursor;
+		_up.setUseHandCursor(_useHandCursor);
+		_down.setUseHandCursor(_useHandCursor);
+	}
+	
+	public var mouseWheelDimRatio(get_mouseWheelDimRatio, set_mouseWheelDimRatio):Int;
+	var _mouseWheelDimRatio:Int;
+	function get_mouseWheelDimRatio()
+	{
+		return _mouseWheelDimRatio;
+	}
+	function set_mouseWheelDimRatio(value:Int)
+	{
+		_mouseWheelDimRatio = value;
+		return _mouseWheelDimRatio;
 	}
 	
 	//----------------------------------------------------------------------------------------------
@@ -398,16 +412,16 @@ class CNumericStepper extends CSprite
 	
 	function updateTextType()
 	{
-		_tf.type = _enabled && _editable && _maxValue > _minValue ?
+		_tf.type = _isEnabled && _editable && _maxValue > _minValue ?
 			_tf.type = TextFieldType.INPUT :
 			_tf.type = TextFieldType.DYNAMIC;
 	}
 	
 	function updateControlsEnabled()
 	{
-		_up.enabled = _value < _maxValue && _enabled;
-		_down.enabled = _value > _minValue && _enabled;
-		if (_enabled)
+		_up.isEnabled = _value < _maxValue && _isEnabled;
+		_down.isEnabled = _value > _minValue && _isEnabled;
+		if (_isEnabled)
 		{
 			_bg.state = _editable ? CSkinState.NORMAL : CSkinState.INACTIVE;
 		}
@@ -503,9 +517,7 @@ class CNumericStepper extends CSprite
 	
 	function onMouseWheel(event:MouseEvent)
 	{
-		var delta = event.delta;
-		var sign = delta > 0 ? 1 : -1;
-		value += sign * _step * CMath.intMax(1, Math.round(CMath.intAbs(delta) / 3));
+		value -= _step * CMouseWheelUtil.getDimDelta(event.delta, _mouseWheelDimRatio); 
 	}
 	
 	function onKeyDown(event:KeyboardEvent)
@@ -622,7 +634,7 @@ class CNumericStepper extends CSprite
 	
 	function updateSize()
 	{
-		var minWidth = _tfMinWidth + Math.max(_up.width, _down.width) + TEXT_INDENT * 2;
+		var minWidth = _tfMinWidth + Math.max(_up.view.width, _down.view.width) + TEXT_INDENT * 2;
 		_height = _tfMinHeight + TEXT_INDENT * 2;
 		if (_isCompactWidth)
 		{
@@ -639,15 +651,15 @@ class CNumericStepper extends CSprite
 		var centerY:Int = Std.int(_height * .5);
 		
 		_tf.height = _tfMinHeight + 2;
-		_tf.width = _width - Math.max(_up.width, _down.width) - TEXT_INDENT;
+		_tf.width = _width - Math.max(_up.view.width, _down.view.width) - TEXT_INDENT;
 		_tf.x = TEXT_INDENT;
 		_tf.y = centerY - (_tfMinHeight >> 1);
 		
-		_up.x = _width - _up.width;
-		_up.y = centerY - _up.height;
+		_up.view.x = _width - _up.view.width;
+		_up.view.y = centerY - _up.view.height;
 		
-		_down.x = _width - _down.width;
-		_down.y = centerY;
+		_down.view.x = _width - _down.view.width;
+		_down.view.y = centerY;
 		
 		_bg.setBounds(0, 0, Std.int(_tf.width) + TEXT_INDENT, Std.int(_height));
 	}
@@ -657,7 +669,7 @@ class CNumericStepper extends CSprite
 	function updateFormat()
 	{
 		var newFormat = null;
-		if (_enabled)
+		if (_isEnabled)
 		{
 			var text = _tf.text;
 			if (valueIsCorrect(text) && isTextValueInBounds(text))

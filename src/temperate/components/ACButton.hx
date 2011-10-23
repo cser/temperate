@@ -1,4 +1,5 @@
 package temperate.components;
+import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -6,11 +7,13 @@ import temperate.components.CButtonState;
 import temperate.core.CMath;
 import temperate.core.CSprite;
 
-class ACButton extends CSprite
+class ACButton extends CSprite, implements ICButton
 {
-	public function new() 
+	function new() 
 	{
 		super();
+		
+		view = this;
 		
 		mouseEnabled = true;
 		mouseChildren = false;
@@ -20,10 +23,13 @@ class ACButton extends CSprite
 		_isOver = false;
 		_toggle = false;
 		_state = CButtonState.UP;
+		selectState = CButtonState.selectStateNormal;
 		
 		init();
 		updateEnabled();
 	}
+	
+	public var view(default, null):DisplayObject;
 	
 	private var _isDown:Bool;
 	
@@ -34,11 +40,11 @@ class ACButton extends CSprite
 		
 	}
 	
-	override function set_enabled(value:Bool)
+	override function set_isEnabled(value:Bool)
 	{
-		if (_enabled != value)
+		if (_isEnabled != value)
 		{
-			_enabled = value;
+			_isEnabled = value;
 			updateEnabled();
 		}
 		return value;
@@ -46,8 +52,8 @@ class ACButton extends CSprite
 	
 	function updateEnabled()
 	{
-		buttonMode = _enabled;
-		if (_enabled)
+		buttonMode = _isEnabled;
+		if (_isEnabled)
 		{
 			removeEventListener(MouseEvent.CLICK, onBlockMouse);
 			removeEventListener(MouseEvent.MOUSE_DOWN, onBlockMouse);
@@ -85,7 +91,7 @@ class ACButton extends CSprite
 	
 	function onMouseDown(event:MouseEvent)
 	{
-		if (!_enabled)
+		if (!_isEnabled)
 		{
 			event.stopImmediatePropagation();
 			return;
@@ -103,7 +109,7 @@ class ACButton extends CSprite
 	function onStageMouseUp(event:MouseEvent)
 	{
 		stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-		if (!_enabled)
+		if (!_isEnabled)
 		{
 			event.stopImmediatePropagation();
 			return;
@@ -164,27 +170,15 @@ class ACButton extends CSprite
 	
 	var _state:CButtonState;
 	
+	public dynamic function selectState(
+		isDown:Bool, isOver:Bool, selected:Bool, enabled:Bool):CButtonState
+	{
+		return null;
+	}
+	
 	function updateState()
 	{
-		if (_enabled)
-		{
-			if (_isDown && _isOver)
-			{
-				_state = _selected ? CButtonState.DOWN_SELECTED : CButtonState.DOWN;
-			}
-			else if (_isDown || _isOver)
-			{
-				_state = _selected ? CButtonState.OVER_SELECTED : CButtonState.OVER;
-			}
-			else
-			{
-				_state = _selected ? CButtonState.UP_SELECTED : CButtonState.UP;
-			}
-		}
-		else
-		{
-			_state = _selected ? CButtonState.DISABLED_SELECTED : CButtonState.DISABLED;
-		}
+		_state = selectState(_isDown, _isOver, _selected, _isEnabled);
 		doUpdateState();
 	}
 	
@@ -196,6 +190,11 @@ class ACButton extends CSprite
 	inline function getCorrectLabel(raw:String)
 	{
 		return raw != null && raw != "" ? raw : " ";
+	}
+	
+	public function setUseHandCursor(value:Bool)
+	{
+		useHandCursor = value;
 	}
 	
 	//----------------------------------------------------------------------------------------------
@@ -237,7 +236,7 @@ class ACButton extends CSprite
 			_toggle = value;
 			if (_toggle)
 			{
-				addEventListener(MouseEvent.CLICK, onClick, false, CMath.INT_MAX_VALUE);
+				addEventListener(MouseEvent.CLICK, onClick, false, CMath.INT_MAX_VALUE - 1);
 			}
 			else
 			{

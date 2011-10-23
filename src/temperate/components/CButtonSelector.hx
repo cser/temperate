@@ -4,6 +4,10 @@ import flash.events.EventDispatcher;
 import flash.events.MouseEvent;
 import flash.utils.TypedDictionary;
 
+/**
+ * Events:
+ * flash.events.Event.CHANGE
+ */
 class CButtonSelector< T > extends EventDispatcher
 {
 	var _useMouseDown:Bool;
@@ -17,9 +21,9 @@ class CButtonSelector< T > extends EventDispatcher
 		_value = value;
 	}
 	
-	private var _values:TypedDictionary<ACButton, T>;
+	private var _values:TypedDictionary<ICButton, T>;
 	
-	public function add(button:ACButton, value:T)
+	public function add(button:ICButton, value:T)
 	{
 		_values.set(button, value);
 		button.selected = value == _value;
@@ -28,7 +32,7 @@ class CButtonSelector< T > extends EventDispatcher
 			onButtonEvent);
 	}
 	
-	public function remove(button:ACButton)
+	public function remove(button:ICButton)
 	{
 		_values.delete(button);
 		button.removeEventListener(
@@ -54,7 +58,7 @@ class CButtonSelector< T > extends EventDispatcher
 	
 	function onButtonEvent(event:MouseEvent)
 	{
-		var selectedButton = cast(event.target, ACButton);
+		var selectedButton = cast(event.target, ICButton);
 		value = _values.get(selectedButton);
 	}
 	

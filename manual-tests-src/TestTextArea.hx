@@ -48,15 +48,28 @@ class TestTextArea extends Sprite
 			var scaler = new Scaler(area);
 			line.add(scaler).setIndents(0, 50, 0, 0);
 			
-			new MLabel().setText("Scroll bar\nbug checking").addTo(line);
-			new TestScrollBarBug(true).addTo(line);
-			new TestScrollBarBug(false).addTo(line);
+			{
+				var column = new CVBox().addTo(line);
+				new MLabel().setText("Scroll bar\nbug checking").addTo(column);
+				new TestScrollBarBug(true).addTo(column);
+				new TestScrollBarBug(false).addTo(column);
+				var area = new MTextArea().addTo(column);
+				area.isEnabled = false;
+				area.selectable = false;
+				area.text = "Line 1 text text\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
+					"\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3";
+			}
 			
-			var area = new MTextArea().addTo(line);
-			area.enabled = false;
-			area.selectable = false;
-			area.text = "Line 1 text text\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
-				"\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3";
+			{
+				var column = new CVBox().addTo(line);
+				new MLabel().setText("mouseWheelDimRatio = 3").addTo(column);
+				var area = new MTextArea();
+				area.mouseWheelDimRatio = 3;
+				area.text = "Line 1 text text\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3" +
+					"\nLine 1\nLine 2\nLine 3\nLine 1\nLine 2\nLine 3";
+				var scaler = new Scaler(area);
+				column.add(scaler);
+			}
 		}
 		
 		{

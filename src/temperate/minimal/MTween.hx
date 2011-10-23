@@ -73,9 +73,9 @@ class MTween< T >
 	 * @return	tween object (for additional parametrization or stop,
 	 * parametrization is _not_ damage tween if it in this frame)
 	 */
-	public static function to<T>(target:T, vars:Dynamic, duration:Int)
+	public static function to<T>(target:T, duration:Int, vars:Dynamic)
 	{
-		return new MTween(target, vars, duration);
+		return new MTween(target, duration, vars);
 	}
 	
 	public static function apply<T>(target:T, vars:Dynamic)
@@ -95,7 +95,7 @@ class MTween< T >
 	
 	var _startTime:Int;
 	
-	function new(target:T, vars:Dynamic<Float>, duration:Int)
+	function new(target:T, duration:Int, vars:Dynamic<Float>)
 	{
 		this.target = target;
 		_vars = vars;
@@ -148,11 +148,27 @@ class MTween< T >
 		return this;
 	}
 	
+	var _voidOnComplete:Void->Void;
+	
+	public function setVoidOnComplete(voidOnComplete:Void->Void)
+	{
+		_voidOnComplete = voidOnComplete;
+		return this;
+	}
+	
 	var _onUpdate:MTween<T>->Void;
 	
 	public function setOnUpdate(onUpdate:MTween<T>->Void)
 	{
 		_onUpdate = onUpdate;
+		return this;
+	}
+	
+	var _voidOnUpdate:Void->Void;
+	
+	public function setVoidOnUpdate(voidOnUpdate:Void->Void)
+	{
+		_voidOnUpdate = voidOnUpdate;
 		return this;
 	}
 	
@@ -171,6 +187,10 @@ class MTween< T >
 			if (_onUpdate != null)
 			{
 				_onUpdate(this);
+			}
+			if (_voidOnUpdate != null)
+			{
+				_voidOnUpdate();
 			}
 			kill(true);
 		}
@@ -197,9 +217,16 @@ class MTween< T >
 			_enterFrameDispatcher.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		unregister(target, this);
-		if (callComplete && _onComplete != null)
+		if (callComplete)
 		{
-			_onComplete(this);
+			if (_onComplete != null)
+			{
+				_onComplete(this);
+			}
+			if (_voidOnComplete != null)
+			{
+				_voidOnComplete();
+			}
 		}
 	}
 	

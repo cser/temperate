@@ -15,8 +15,8 @@ import temperate.minimal.MButton;
 import temperate.minimal.MInputField;
 import temperate.minimal.MScrollBar;
 import temperate.minimal.MTooltipFactory;
-import temperate.raster.Scale3GridDrawer;
-import temperate.raster.Scale9GridDrawer;
+import temperate.raster.CScale3GridDrawer;
+import temperate.raster.CScale9GridDrawer;
 import temperate.skins.CRasterScrollDrawedSkin;
 import temperate.text.CInputField;
 
@@ -69,9 +69,9 @@ class TestScrollBar extends Sprite
 		new MScrollBar(false).addTo(this, 610, 100);
 		
 		var scrollBar = new MScrollBar(true).addTo(this, 650, 100);
-		scrollBar.enabled = false;
+		scrollBar.isEnabled = false;
 		var scrollBar = new MScrollBar(false).addTo(this, 760, 100);
-		scrollBar.enabled = false;
+		scrollBar.isEnabled = false;
 		
 		if (Std.string(stage.quality).toLowerCase() != Std.string(StageQuality.LOW))
 		{
@@ -130,7 +130,7 @@ class TestScrollBar extends Sprite
 			new MButton().setText("+"),
 			new MButton().setText("::"),
 			new CRasterScrollDrawedSkin(
-				MCommonBdFactory.getTextBg(), new Scale9GridDrawer(), 18).setIndents(0, 0, 2)
+				MCommonBdFactory.getTextBg(), new CScale9GridDrawer(), 18).setIndents(0, 0, 2)
 		);
 	}
 	
@@ -139,7 +139,7 @@ class TestScrollBar extends Sprite
 		var width = horizontal ? 100 : bd.width;
 		var height = horizontal ? bd.height : 100;
 		var sprite = new Sprite();
-		var drawer = new Scale3GridDrawer(horizontal, sprite.graphics);
+		var drawer = new CScale3GridDrawer(horizontal, sprite.graphics);
 		drawer.setBitmapData(bd);
 		drawer.setBounds(0, 0, width, height);
 		drawer.redraw();
@@ -164,9 +164,9 @@ class TestScrollBar extends Sprite
 		_scrollBar.width = 200;
 		_scrollBar.minValue = 2;
 		_scrollBar.maxValue = 12;
-		_scrollBar.lineScrollSize = .5;
+		_scrollBar.step = .5;
 		_scrollBar.pageSize = 2;
-		_scrollBar.addEventListener(Event.SCROLL, onScroll);
+		_scrollBar.addEventListener(Event.CHANGE, onScroll);
 		
 		_scrollBarInput = new MInputField().addTo(box);
 		_scrollBarInput.addEventListener(Event.CHANGE, onScrollBarInputChange);

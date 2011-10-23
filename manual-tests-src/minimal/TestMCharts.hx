@@ -1,5 +1,4 @@
 package minimal;
-import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.Event;
 import temperate.containers.CHBox;

@@ -37,4 +37,58 @@ class CButtonState
 	{
 		return "[CButtonState: " + _name + "]";
 	}
+	
+	public static function selectStateNormal(
+		isDown:Bool, isOver:Bool, selected:Bool, enabled:Bool
+	):CButtonState
+	{
+		var state;
+		if (enabled)
+		{
+			if (isDown && isOver)
+			{
+				state = selected ? DOWN_SELECTED : DOWN;
+			}
+			else if (isDown || isOver)
+			{
+				state = selected ? OVER_SELECTED : OVER;
+			}
+			else
+			{
+				state = selected ? UP_SELECTED : UP;
+			}
+		}
+		else
+		{
+			state = selected ? DISABLED_SELECTED : DISABLED;
+		}
+		return state;
+	}
+	
+	public static function selectStateThumb(
+		isDown:Bool, isOver:Bool, selected:Bool, enabled:Bool
+	):CButtonState
+	{
+		var state;
+		if (enabled)
+		{
+			if (isDown)
+			{
+				state = selected ? DOWN_SELECTED : DOWN;
+			}
+			else if (isOver)
+			{
+				state = selected ? OVER_SELECTED : OVER;
+			}
+			else
+			{
+				state = selected ? UP_SELECTED : UP;
+			}
+		}
+		else
+		{
+			state = selected ? DISABLED_SELECTED : DISABLED;
+		}
+		return state;
+	}
 }

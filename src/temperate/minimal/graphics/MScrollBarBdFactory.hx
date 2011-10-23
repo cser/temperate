@@ -1,7 +1,6 @@
 package temperate.minimal.graphics;
 import flash.display.BitmapData;
 import flash.display.GradientType;
-import flash.geom.ColorTransform;
 import flash.geom.Matrix;
 import flash.geom.Rectangle;
 import temperate.components.CButtonState;
@@ -612,6 +611,209 @@ class MScrollBarBdFactory
 			bd.fillRect(rect, scrollBgDarkColor);
 		}
 		
+		return bd;
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Slider
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	//----------------------------------------------------------------------------------------------
+	// Thumb horizontal
+	//----------------------------------------------------------------------------------------------
+	
+	static var _sliderHThumbUp:BitmapData;
+	
+	public static function getSliderHThumbUp()
+	{
+		if (_sliderHThumbUp == null)
+		{
+			_sliderHThumbUp = newSliderThumb(true, CButtonState.UP);
+		}
+		return _sliderHThumbUp;
+	}
+	
+	static var _sliderHThumbOver:BitmapData;
+	
+	public static function getSliderHThumbOver()
+	{
+		if (_sliderHThumbOver == null)
+		{
+			_sliderHThumbOver = newSliderThumb(true, CButtonState.OVER);
+		}
+		return _sliderHThumbOver;
+	}
+	
+	static var _sliderHThumbDown:BitmapData;
+	
+	public static function getSliderHThumbDown()
+	{
+		if (_sliderHThumbDown == null)
+		{
+			_sliderHThumbDown = newSliderThumb(true, CButtonState.DOWN);
+		}
+		return _sliderHThumbDown;
+	}
+	
+	static var _sliderHThumbDisabled:BitmapData;
+	
+	public static function getSliderHThumbDisabled()
+	{
+		if (_sliderHThumbDisabled == null)
+		{
+			_sliderHThumbDisabled = newSliderThumb(true, CButtonState.DISABLED);
+		}
+		return _sliderHThumbDisabled;
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	// Thumb vertical
+	//----------------------------------------------------------------------------------------------
+	
+	static var _sliderVThumbUp:BitmapData;
+	
+	public static function getSliderVThumbUp()
+	{
+		if (_sliderVThumbUp == null)
+		{
+			_sliderVThumbUp = newSliderThumb(false, CButtonState.UP);
+		}
+		return _sliderVThumbUp;
+	}
+	
+	static var _sliderVThumbOver:BitmapData;
+	
+	public static function getSliderVThumbOver()
+	{
+		if (_sliderVThumbOver == null)
+		{
+			_sliderVThumbOver = newSliderThumb(false, CButtonState.OVER);
+		}
+		return _sliderVThumbOver;
+	}
+	
+	static var _sliderVThumbDown:BitmapData;
+	
+	public static function getSliderVThumbDown()
+	{
+		if (_sliderVThumbDown == null)
+		{
+			_sliderVThumbDown = newSliderThumb(false, CButtonState.DOWN);
+		}
+		return _sliderVThumbDown;
+	}
+	
+	static var _sliderVThumbDisabled:BitmapData;
+	
+	public static function getSliderVThumbDisabled()
+	{
+		if (_sliderVThumbDisabled == null)
+		{
+			_sliderVThumbDisabled = newSliderThumb(false, CButtonState.DISABLED);
+		}
+		return _sliderVThumbDisabled;
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Slider generators
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	static function newSliderThumb(horizontal:Bool, state:CButtonState)
+	{
+		var directSize = 20;
+		var crossSize = 12;
+		var downOffsetX;
+		var downOffsetY;
+		var bdWidth;
+		var bdHeight;
+		if (horizontal)
+		{
+			downOffsetX = 0;
+			downOffsetY = state == CButtonState.DOWN ? 1 : 0;
+			bdWidth = directSize;
+			bdHeight = crossSize;
+		}
+		else
+		{
+			downOffsetX = state == CButtonState.DOWN ? 1 : 0;
+			downOffsetY = 0;
+			bdWidth = crossSize;
+			bdHeight = directSize;
+		}
+		var width = bdWidth - downOffsetX * 2;
+		var height = bdHeight - downOffsetY * 2;
+		
+		MBdFactoryUtil.qualityOn();
+		var bd = new BitmapData(bdWidth, bdHeight, true, 0x00000000);
+		var shape = MBdFactoryUtil.getShape();
+		var g = shape.graphics;
+		
+		g.clear();
+		
+		var enabled = state != CButtonState.DISABLED;
+		var diameter1 = 8;
+		var diameter2 = 6;
+		
+		var color = enabled ? bgBottomRightColor : bgBottomRightDisabledColor;
+		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.drawRoundRect(downOffsetX, downOffsetY, width, height, diameter1);
+		g.drawRoundRect(downOffsetX, downOffsetY, width - 1, height - 1, diameter1);
+		g.endFill();
+		
+		var color = enabled ? bgTopLeftColor : bgTopLeftDisabledColor;
+		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.drawRoundRect(downOffsetX, downOffsetY, width, height, diameter1);
+		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 1, height - 1, diameter1);
+		g.endFill();
+		
+		{
+			var boxHeight = 12;
+			var matrix = new Matrix();
+			matrix.createGradientBox(
+				boxHeight, boxHeight, horizontal ? Math.PI * .5 : 0, -1, -1);
+			
+			var colors = [];
+			var alphas = [];
+			var sourceColors;
+			var ratios;
+			switch (state)
+			{
+				case CButtonState.OVER, CButtonState.DOWN:
+					sourceColors = bgColorsOver;
+					ratios = bgRatiosOver;
+				case CButtonState.DISABLED:
+					sourceColors = bgColorsDisabled;
+					ratios = bgRatiosDisabled;
+				default:						
+					sourceColors = bgColorsUp;
+					ratios = bgRatiosUp;
+			}
+			MBdFactoryUtil.getColorsAndAlphas(sourceColors, colors, alphas);
+			
+			g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
+			g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2);
+			g.endFill();
+		}
+		
+		var color = bgInnerTopLeftColor;
+		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2);
+		g.drawRoundRect(downOffsetX + 2, downOffsetY + 2, width - 3, height - 3, diameter2);
+		g.endFill();
+		
+		var color = bgInnerBottomRightColor;
+		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2);
+		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 3, height - 3, diameter2);
+		g.endFill();
+		
+		bd.draw(shape);
+		
+		MBdFactoryUtil.qualityOff();
 		return bd;
 	}
 }

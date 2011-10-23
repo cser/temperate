@@ -168,7 +168,7 @@ class MChartTest
 	}
 	
 	@Test
-	public function ifDeltaValuesIsZeroOneSetted()
+	public function ifDeltaValuesIsZero_maxSettendMoreByOne()
 	{
 		var chart = new MBarChart();
 		chart.minValue = 5;
@@ -176,5 +176,51 @@ class MChartTest
 		chart.values = [21., 21, 21];
 		Assert.areEqual(21, chart.minValue);
 		Assert.areEqual(22, chart.maxValue);
+	}
+	
+	@Test
+	public function if_includedValue_isFiniteInAutoScaleMode_itsUsedInMinAndMaxValueCalculation()
+	{
+		var chart = new MBarChart();
+		Assert.isNaN(chart.includedValue);
+		
+		chart.includedValue = 0;
+		Assert.areEqual(0, chart.includedValue);
+		chart.values = [21., 21, 21];
+		Assert.areEqual(0, chart.minValue);
+		Assert.areEqual(21, chart.maxValue);
+		
+		chart.includedValue = 30.1;
+		Assert.areEqual(30.1, chart.includedValue);
+		chart.values = [21., 21, 21];
+		Assert.areEqual(21, chart.minValue);
+		Assert.areEqual(30.1, chart.maxValue);
+	}
+	
+	@Test
+	public function if_includedValue_isFiniteInFixedMode_itsUsedInMinAndMaxValueCalculation()
+	{
+		var chart = new MBarChart();
+		chart.autoScale = false;
+		chart.minValue = 10;
+		chart.maxValue = 100;
+
+		chart.values = [21., 21, 21];
+		Assert.areEqual(10, chart.minValue);
+		Assert.areEqual(100, chart.maxValue);
+		chart.includedValue = 0;
+		Assert.areEqual(0, chart.minValue);
+		Assert.areEqual(100, chart.maxValue);
+		chart.includedValue = 101;
+		Assert.areEqual(10, chart.minValue);
+		Assert.areEqual(101, chart.maxValue);
+		
+		chart.includedValue = Math.NaN;
+		Assert.areEqual(10, chart.minValue);
+		Assert.areEqual(100, chart.maxValue);
+		
+		chart.includedValue = Math.POSITIVE_INFINITY;
+		Assert.areEqual(10, chart.minValue);
+		Assert.areEqual(100, chart.maxValue);
 	}
 }

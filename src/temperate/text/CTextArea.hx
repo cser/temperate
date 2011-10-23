@@ -1,35 +1,27 @@
 package temperate.text;
-import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.events.Event;
 import flash.text.TextField;
 import flash.text.TextFieldType;
 import temperate.components.CScrollBar;
 import temperate.components.CScrollPolicy;
+import temperate.containers.ACScrollPane;
 import temperate.core.CMath;
-import temperate.core.CSprite;
-import temperate.layouts.IScrollTextLayout;
-import temperate.layouts.ScrollTextLayout;
+import temperate.layouts.CScrollTextLayout;
+import temperate.layouts.ICScrollTextLayout;
 import temperate.skins.CSkinState;
 import temperate.skins.ICRectSkin;
 
-class CTextArea extends CSprite
+class CTextArea extends ACScrollPane
 {
-	var _newHScrollBar:Void->CScrollBar;
-	var _newVScrollBar:Void->CScrollBar;
-	var _bgSkin:ICRectSkin;
-	
 	public function new(
 		newHScrollBar:Void->CScrollBar, newVScrollBar:Void->CScrollBar, bgSkin:ICRectSkin) 
 	{
-		super();
-		
-		_newHScrollBar = newHScrollBar;
-		_newVScrollBar = newVScrollBar;
-		_bgSkin = bgSkin;
+		super(newHScrollBar, newVScrollBar, bgSkin);
 		
 		_html = false;
-		_hLineScrollSize = 5;
+		_hScrollStep = 5;
+		_vScrollStep = 1;
 		_editable = false;
 		_updateOnMove = false;
 		
@@ -39,10 +31,8 @@ class CTextArea extends CSprite
 		_tf.addEventListener(Event.CHANGE, onTfChange);
 		addChild(_tf);
 		
-		_layout = new ScrollTextLayout();
+		_layout = new CScrollTextLayout();
 		_layout.tf = _tf;
-		
-		_bgSkin.link(addChildAt0, removeChild, graphics);
 		
 		_layout.hScrollPolicy = CScrollPolicy.AUTO;
 		_layout.vScrollPolicy = CScrollPolicy.AUTO;
@@ -57,79 +47,14 @@ class CTextArea extends CSprite
 		textIndentTop = 0;
 		textIndentBottom = 0;
 		
-		_settedWidth = 100;
-		_settedHeight = 100;
-		
 		_size_valid = false;
 		postponeSize();
 	}
 	
 	var _view_firstValid:Bool;
 	
-	var _layout:IScrollTextLayout;
+	var _layout:ICScrollTextLayout;
 	var _tf:TextField;
-	var _hScrollBar:CScrollBar;
-	var _hScrollAvailable:Bool;
-	var _vScrollBar:CScrollBar;
-	var _vScrollAvailable:Bool;
-	
-	function showHScrollBar()
-	{
-		if (_hScrollBar == null)
-		{
-			_hScrollBar = _newHScrollBar();
-			_hScrollBar.enabled = _enabled;
-			_hScrollBar.lineScrollSize = _hLineScrollSize;
-			_hScrollBar.updateOnMove = _updateOnMove;
-			_hScrollBar.addEventListener(Event.SCROLL, onHScroll);
-		}
-		if (_hScrollBar.parent != this)
-		{
-			addChild(_hScrollBar);
-			_hScrollAvailable = true;
-		}
-		return _hScrollBar;
-	}
-	
-	function hideHScrollBar()
-	{
-		if (_hScrollBar != null && _hScrollBar.parent == this)
-		{
-			removeChild(_hScrollBar);
-			_hScrollAvailable = false;
-		}
-	}
-	
-	function showVScrollBar()
-	{
-		if (_vScrollBar == null)
-		{
-			_vScrollBar = _newVScrollBar();
-			_vScrollBar.enabled = _enabled;
-			_vScrollBar.updateOnMove = _updateOnMove;
-			_vScrollBar.addEventListener(Event.SCROLL, onVScroll);
-		}
-		if (_vScrollBar.parent != this)
-		{
-			addChild(_vScrollBar);
-			_vScrollAvailable = true;
-		}
-		return _vScrollBar;
-	}
-	
-	function hideVScrollBar()
-	{
-		if (_vScrollBar != null && _vScrollBar.parent == this)
-		{
-			removeChild(_vScrollBar);
-			_vScrollAvailable = false;
-		}
-	}
-	
-	function addChildAt0(child:DisplayObject)
-	{
-		addChildAt(child, 0);
-	}
 	
 	override function doValidateSize()
 	{
@@ -216,12 +141,12 @@ class CTextArea extends CSprite
 		}
 	}
 	
-	function onHScroll(event:Event)
+	override function onHScroll(event:Event)
 	{
 		_tf.scrollH = Std.int(_hScrollBar.value);
 	}
 	
-	function onVScroll(event:Event)
+	override function onVScroll(event:Event)
 	{
 		_tf.scrollV = Std.int(_vScrollBar.value);
 	}
@@ -254,22 +179,20 @@ class CTextArea extends CSprite
 	
 	function updateTextType()
 	{
-		_tf.type = _enabled && _editable ?
-			_tf.type = TextFieldType.INPUT :
-			_tf.type = TextFieldType.DYNAMIC;
+		_tf.type = _isEnabled && _editable ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
 	}
 	
 	function updateControlsEnabled()
 	{
-		if (_vScrollBar != null)
-		{
-			_vScrollBar.enabled = _enabled;
-		}
 		if (_hScrollBar != null)
 		{
-			_hScrollBar.enabled = _enabled;
+			_hScrollBar.isEnabled = _isEnabled;
 		}
-		if (_enabled)
+		if (_vScrollBar != null)
+		{
+			_vScrollBar.isEnabled = _isEnabled;
+		}
+		if (_isEnabled)
 		{
 			_bgSkin.state = _editable ? CSkinState.NORMAL : CSkinState.INACTIVE;
 		}
@@ -288,6 +211,9 @@ class CTextArea extends CSprite
 			_editable = value;
 			updateTextType();
 			updateControlsEnabled();
+			
+			_view_valid = false;
+			postponeView();
 		}
 		return _editable;
 	}
@@ -296,17 +222,17 @@ class CTextArea extends CSprite
 		return _editable;
 	}
 	
-	override function set_enabled(value)
+	override function set_isEnabled(value)
 	{
-		if (_enabled != value)
+		if (_isEnabled != value)
 		{
-			_enabled = value;
+			_isEnabled = value;
 			updateControlsEnabled();
 			
 			_view_valid = false;
 			postponeView();
 		}
-		return _enabled;
+		return _isEnabled;
 	}
 	
 	public var worldWrap(get_worldWrap, set_worldWrap):Bool;
@@ -320,71 +246,46 @@ class CTextArea extends CSprite
 		return value;
 	}
 	
-	public var hScrollValue(get_hScrollValue, set_hScrollValue):Int;
-	function get_hScrollValue()
+	override function get_hScrollValue()
 	{
 		return _tf.scrollH;
 	}
-	function set_hScrollValue(value:Int)
+	override function set_hScrollValue(value:Int)
 	{
 		validate();
 		_tf.scrollH = value;
 		return _tf.scrollH;
 	}
 	
-	public var vScrollValue(get_vScrollValue, set_vScrollValue):Int;
-	function get_vScrollValue()
+	override function get_vScrollValue()
 	{
 		return _tf.scrollV;
 	}
-	function set_vScrollValue(value:Int)
+	override function set_vScrollValue(value:Int)
 	{
 		validate();
 		_tf.scrollV = value;
 		return _tf.scrollV;
 	}
 	
-	public var hLineScrollSize(get_hLineScrollSize, set_hLineScrollSize):Int;
-	var _hLineScrollSize:Int;
-	function get_hLineScrollSize()
+	override function get_hMaxScrollValue()
 	{
-		return _hLineScrollSize;
-	}
-	function set_hLineScrollSize(value:Int)
-	{
-		if (_hLineScrollSize != value)
-		{
-			_hLineScrollSize = value;
-			if (_hScrollBar != null)
-			{
-				_hScrollBar.lineScrollSize = _hLineScrollSize;
-			}
-		}
-		return _hLineScrollSize;
+		return _tf.maxScrollH;
 	}
 	
-	public var hMaxScrollValue(get_hMaxScrollValue, null):Int;
-	function get_hMaxScrollValue()
+	override function get_vMaxScrollValue()
 	{
-		return Std.int(_vScrollBar.maxValue);
+		return _tf.maxScrollV;
 	}
 	
-	public var vMaxScrollValue(get_vMaxScrollValue, null):Int;
-	function get_vMaxScrollValue()
+	override function get_hMinScrollValue()
 	{
-		return Std.int(_vScrollBar.maxValue);
+		return 0;
 	}
 	
-	public var hMinScrollValue(get_hMinScrollValue, null):Int;
-	function get_hMinScrollValue()
+	override function get_vMinScrollValue()
 	{
-		return Std.int(_vScrollBar.minValue);
-	}
-	
-	public var vMinScrollValue(get_vMinScrollValue, null):Int;
-	function get_vMinScrollValue()
-	{
-		return Std.int(_vScrollBar.minValue);
+		return 1;
 	}
 	
 	public var hScrollPolicy(get_hScrollPolicy, set_hScrollPolicy):CScrollPolicy;
@@ -395,11 +296,12 @@ class CTextArea extends CSprite
 	function set_hScrollPolicy(value)
 	{
 		_layout.hScrollPolicy = value;
+		_view_valid = false;
+		postponeView();
 		return value;
 	}
 	
 	public var vScrollPolicy(get_vScrollPolicy, set_vScrollPolicy):CScrollPolicy;
-	var _vScrollPolicy:CScrollPolicy;
 	function get_vScrollPolicy()
 	{
 		return _layout.vScrollPolicy;
@@ -407,6 +309,8 @@ class CTextArea extends CSprite
 	function set_vScrollPolicy(value)
 	{
 		_layout.vScrollPolicy = value;
+		_view_valid = false;
+		postponeView();
 		return value;
 	}
 	
@@ -434,29 +338,6 @@ class CTextArea extends CSprite
 		_size_valid = false;
 		postponeSize();
 		return value;
-	}
-	
-	public var updateOnMove(get_updateOnMove, set_updateOnMove):Bool;
-	var _updateOnMove:Bool;
-	function get_updateOnMove()
-	{
-		return _updateOnMove;
-	}
-	function set_updateOnMove(value:Bool)
-	{
-		if (_updateOnMove != value)
-		{
-			_updateOnMove = value;
-			if (_vScrollAvailable)
-			{
-				_vScrollBar.updateOnMove = _updateOnMove;
-			}
-			if (_hScrollAvailable)
-			{
-				_hScrollBar.updateOnMove = _updateOnMove;
-			}
-		}
-		return _updateOnMove;
 	}
 	
 	public var textIndentLeft(default, null):Int;
@@ -523,7 +404,7 @@ class CTextArea extends CSprite
 	
 	public function appendText(text:String)
 	{
-		_text += _text != null ? _text + text : text;
+		_text = _text != null ? _text + text : text;
 		if (_html)
 		{
 			_tf.htmlText = _text != null ? _text : "";
@@ -622,7 +503,3 @@ class CTextArea extends CSprite
 		return this;
 	}
 }
-/*
-TODO
-Сделат скроллирование
-*/

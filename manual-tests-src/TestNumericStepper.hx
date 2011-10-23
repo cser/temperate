@@ -12,7 +12,7 @@ import temperate.minimal.MFormatFactory;
 import temperate.minimal.MLabel;
 import temperate.minimal.MNumericStepper;
 import temperate.minimal.MTooltipFactory;
-import temperate.skins.CRasterRectSkin;
+import temperate.skins.CRaster9GridRectSkin;
 import temperate.skins.CSkinState;
 import temperate.text.CLabel;
 
@@ -69,13 +69,13 @@ class TestNumericStepper extends Sprite
 			
 			var stepper = new MNumericStepper().setValues( -10, 100);
 			stepper.setCompact(true, true);
-			stepper.enabled = false;
+			stepper.isEnabled = false;
 			MTooltipFactory.newText(stepper, "MNumericStepper disabled").setHideOnMouseDown(false);
 			box.add(stepper);
 			
 			var stepper = new MNumericStepper().setValues( -10, 100);
 			stepper.setCompact(true, true);
-			stepper.enabled = false;
+			stepper.isEnabled = false;
 			stepper.selectable = false;
 			MTooltipFactory.newText(stepper, "MNumericStepper disabled\n unselectable")
 				.setHideOnMouseDown(false);
@@ -131,7 +131,7 @@ class TestNumericStepper extends Sprite
 	
 	function newNumericStepper()
 	{
-		var bg = new CRasterRectSkin();
+		var bg = new CRaster9GridRectSkin();
 		bg.getState(CSkinState.NORMAL).setBitmapData(MCommonBdFactory.getTextBg());
 		
 		var up = new MButton();
