@@ -1,0 +1,7 @@
+<project name="temperate" url="https://github.com/cser/temperate" license="Public">
+	<user name="expl"/>
+	<tag v="flash"/>
+	<tag v="gui"/>
+	<description>Simple customizable GUI for flashplayer9+. Includes cursors and tooltips separated systems</description>
+	<version name="0.5">Initial release, 50% implemented, everything is working</version>
+</project>

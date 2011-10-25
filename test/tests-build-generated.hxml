@@ -1,0 +1,10 @@
+-cp test/src
+-cp src
+-swf9 test/bin/tests.swf 
+-swf-header 640:480:30:FFFFFF 
+--flash-strict
+-debug
+-D fdb
+-main MUnitMain
+-lib munit
+--no-inline
