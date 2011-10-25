@@ -33,12 +33,12 @@ class ButtonSkinningExample
 		box.add(button).setPercents(100);
 		
 		var button = newButton().setText("Disabled button");
-		button.enabled = false;
+		button.isEnabled = false;
 		box.add(button).setPercents(100);
 		
 		var button = newButton().setText("Selected disabled button");
 		button.selected = true;
-		button.enabled = false;
+		button.isEnabled = false;
 		box.add(button).setPercents(100);
 	}
 	
