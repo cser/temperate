@@ -5,6 +5,7 @@ import flash.display.Sprite;
 import flash.filters.ColorMatrixFilter;
 import flash.geom.Matrix;
 import flash.text.TextField;
+import temperate.components.ICButton;
 import temperate.core.CMath;
 import temperate.minimal.graphics.MWindowBdFactory;
 import temperate.minimal.MButton;
@@ -33,8 +34,11 @@ class MWindowSkin extends ACWindowSkin
 		addChild(_head);
 		
 		head = _head;
+		
+		_headButtons = [];
 	}
 	
+	var _view_headButtonsValid:Bool;
 	var _titleTF:TextField;
 	var _drawer:CVScale12GridDrawer;
 	var _head:Sprite;
@@ -107,6 +111,20 @@ class MWindowSkin extends ACWindowSkin
 			g.drawRect(0, 0, width, _lineTop);
 			g.endFill();
 		}
+		if (!_view_headButtonsValid)
+		{
+			_view_headButtonsValid = true;
+			
+			var x = _width - 2;
+			for (button in _headButtons)
+			{
+				var view = button.view;
+				x -= view.width;
+				view.x = x;
+				view.y = 2;
+				x -= 2;
+			}
+		}
 	}
 	
 	override function set_title(value:String) 
@@ -123,5 +141,25 @@ class MWindowSkin extends ACWindowSkin
 		super.updateIsLocked();
 		_view_valid = false;
 		postponeView();
+	}
+	
+	private var _headButtons:Array<ICButton>;
+	
+	public function addHeadButton(button:ICButton)
+	{
+		_headButtons.remove(button);
+		_headButtons.unshift(button);
+		addChild(button.view);
+		
+		_view_headButtonsValid = false;
+		postponeView();
+	}
+	
+	public function removeHeadButton(button:ICButton)
+	{
+		if (_headButtons.remove(button))
+		{
+			removeChild(button.view);
+		}
 	}
 }

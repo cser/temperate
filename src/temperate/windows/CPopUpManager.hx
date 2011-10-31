@@ -5,6 +5,8 @@ import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.utils.TypedDictionary;
 import temperate.core.ICArea;
+import temperate.core.ArrayUtil;
+using temperate.core.ArrayUtil;
 
 class CPopUpManager extends EventDispatcher, implements ICArea
 {	
@@ -71,16 +73,7 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 	
 	public function moveToTop(popUp:ICPopUp)
 	{
-		var exists = false;
-		for (popUpI in _popUps)
-		{
-			if (popUpI == popUp)
-			{
-				exists = true;
-				break;
-			}
-		}
-		if (!exists)
+		if (!_popUps.exists(popUp))
 		{
 			throw new ArgumentError("Missing popUp: " + popUp);
 		}

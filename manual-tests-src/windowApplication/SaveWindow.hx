@@ -7,6 +7,7 @@ import temperate.containers.CVBox;
 import temperate.minimal.cursors.MHandCursor;
 import temperate.minimal.MButton;
 import temperate.minimal.MCursorManager;
+import temperate.minimal.MFlatButton;
 import temperate.minimal.MInputField;
 import temperate.minimal.MLabel;
 import temperate.minimal.MSeparator;
@@ -46,6 +47,10 @@ class SaveWindow extends ACWindow
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
 		
+		var button = new MFlatButton().setText("X");
+		button.addEventListener(MouseEvent.CLICK, onCancelClick);
+		_skin.addHeadButton(button);
+		
 		MCursorManager.newHover(0).setTarget(_baseSkin.head).setValue(new MHandCursor(true));
 	}
 	
@@ -63,9 +68,12 @@ class SaveWindow extends ACWindow
 		close();
 	}
 	
+	var _skin:MWindowSkin;
+	
 	override function newSkin():ICWindowSkin
 	{
-		return new MWindowSkin();
+		_skin = new MWindowSkin();
+		return _skin;
 	}
 	
 	override function newContainer():Sprite
