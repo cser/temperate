@@ -37,7 +37,7 @@ class CChildWrapper
 	 */
 	public var heightPortion(default, null):Float;
 	
-	public function setPercents(percentsWidth:Int = -1, percentsHeight:Int = -1)
+	public function setPercents(percentsWidth:Int = -1, percentsHeight:Int = -1):CChildWrapper
 	{
 		widthPortion = percentsWidth != -1 ? CMath.max(.01, percentsWidth * .01) : Math.NaN;
 		heightPortion = percentsHeight != -1 ? CMath.max(.01, percentsHeight * .01) : Math.NaN;
@@ -49,7 +49,7 @@ class CChildWrapper
 		return _fixedWidth != -1 ? _fixedWidth : _child.width + _indentLeft + _indentRight;
 	}
 	
-	inline public function setWidth(value:Float)
+	inline public function setWidth(value:Float):Void
 	{
 		if (value < _minWidth)
 		{
@@ -70,7 +70,7 @@ class CChildWrapper
 		return _fixedHeight != -1 ? _fixedHeight : _child.height + _indentTop + _indentBottom;
 	}
 	
-	inline public function setHeight(value:Float)
+	inline public function setHeight(value:Float):Void
 	{
 		if (value < _minHeight)
 		{
@@ -94,7 +94,7 @@ class CChildWrapper
 	 * @param	alignX	0 - by left, 1 - by right, .5 - by center
 	 * @param	alignY	0 - by top, 1 - by bottom, .5 - by center
 	 */
-	public function setAlign(alignX:Float = 0, alignY:Float = 0)
+	public function setAlign(alignX:Float = 0, alignY:Float = 0):CChildWrapper
 	{
 		this.alignX = alignX;
 		this.alignY = alignY;
@@ -105,7 +105,7 @@ class CChildWrapper
 	
 	var _offsetY:Int;
 	
-	public function setOffsets(offsetX:Int = 0, offsetY:Int = 0)
+	public function setOffsets(offsetX:Int = 0, offsetY:Int = 0):CChildWrapper
 	{
 		_offsetX = offsetX;
 		_offsetY = offsetY;
@@ -120,7 +120,7 @@ class CChildWrapper
 	 * [optional] childAlignX (takes to account if fixedWidth exists)
 	 * [optional] childAlignY (takes to account if fixedHeight exists)
 	 */
-	public function setChildAlign(alignX:Float = 0, alignY:Float = 0)
+	public function setChildAlign(alignX:Float = 0, alignY:Float = 0):CChildWrapper
 	{
 		_childAlignX = alignX;
 		_childAlignY = alignY;
@@ -135,7 +135,7 @@ class CChildWrapper
 	 * [optional] fixedWidth
 	 * [optional] fixedHeight
 	 */
-	public function setFixedSize(fixedWidth:Int = -1, fixedHeight:Int = -1)
+	public function setFixedSize(fixedWidth:Int = -1, fixedHeight:Int = -1):CChildWrapper
 	{
 		_fixedWidth = fixedWidth;
 		_fixedHeight = fixedHeight;
@@ -155,8 +155,7 @@ class CChildWrapper
 	 */
 	public function setContingencies(
 		minWidth:Int = 0, maxWidth:Int = CMath.INT_MAX_VALUE,
-		minHeight:Int = 0, maxHeight:Int = CMath.INT_MAX_VALUE
-	)
+		minHeight:Int = 0, maxHeight:Int = CMath.INT_MAX_VALUE):CChildWrapper
 	{
 		_minWidth = minWidth;
 		_maxWidth = maxWidth;
@@ -173,7 +172,8 @@ class CChildWrapper
 	
 	var _indentBottom:Int;
 	
-	public function setIndents(left:Int = 0, right:Int = 0, top:Int = 0, bottom:Int = 0)
+	public function setIndents(
+		left:Int = 0, right:Int = 0, top:Int = 0, bottom:Int = 0):CChildWrapper
 	{
 		_indentLeft = left;
 		_indentRight = right;
@@ -182,7 +182,7 @@ class CChildWrapper
 		return this;
 	}
 	
-	public function updatePosition(globalOffsetX:Int, globalOffsetY:Int)
+	public function updatePosition(globalOffsetX:Int, globalOffsetY:Int):Void
 	{
 		_child.x = Std.int(
 			_fixedWidth == -1 ?

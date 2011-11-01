@@ -45,7 +45,7 @@
     <!-- example: <hidden path="..." /> -->
   </hiddenPaths>
   <!-- Executed before build -->
-  <preBuildCommand>haxe different-versions.hxml</preBuildCommand>
+  <preBuildCommand />
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->

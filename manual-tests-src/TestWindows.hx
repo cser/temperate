@@ -1,5 +1,6 @@
 package ;
 import flash.display.Sprite;
+import flash.events.Event;
 import temperate.windows.CWindowManager;
 import windows.TestWindow;
 
@@ -10,15 +11,31 @@ class TestWindows extends Sprite
 		super();
 	}
 	
+	var _manager:CWindowManager;
+	
 	public function init()
 	{
-		var manager = new CWindowManager();
+		_manager = new CWindowManager(this);
+		stage.addEventListener(Event.RESIZE, onStageResize);
+		onStageResize();
 		
 		var window = new TestWindow();
-		addChild(window);
+		_manager.add(window, true);
+		
+		var window = new TestWindow();
+		window.x = 15;
+		window.y = 20;
+		_manager.add(window, true);
+	}
+	
+	function onStageResize(event:Event = null)
+	{
+		_manager.setBounds(10, stage.stageWidth - 10, 10, stage.stageHeight - 10);
 	}
 }
 /*
+Окно-контейнер
+Скинование окон с целью отвязать внешний вид окна от иерархии наследования
 Возможность добавления отображаемых объектов, не являющихся окнами
 Независимая работа нескольких оконных систем на одном контейнере,
 который может содержать другие объекты

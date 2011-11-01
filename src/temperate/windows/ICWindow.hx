@@ -8,4 +8,8 @@ interface ICWindow
 	var isActive(get_isActive, set_isActive):Bool;
 	
 	var view(default, null):DisplayObject;
+	
+	function subscribe(owner:ICWindowOwner):Void;
+	
+	function unsubscribe(owner:ICWindowOwner):Void;
 }
