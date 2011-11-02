@@ -1,4 +1,4 @@
-package temperate.signals;
+package temperate.extra;
 
 import massive.munit.Assert;
 
@@ -28,7 +28,7 @@ class CSignalTest
 		var signal = new CSignal < Void->Void > ();
 		signal.add(onSimple);
 		signal.dispatch();
-		ArrayAssert.areEqual(["simple"], _log);
+		ArrayAssert.equalToArray(["simple"], _log);
 	}
 	
 	@Test
@@ -38,7 +38,7 @@ class CSignalTest
 		signal.add(onSimple);
 		signal.remove(onSimple);
 		signal.dispatch();
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 	}
 	
 	@Test
@@ -48,7 +48,7 @@ class CSignalTest
 		signal.add(onSimple);
 		signal.add(onSimple);
 		signal.dispatch();
-		ArrayAssert.areEqual(["simple"], _log);
+		ArrayAssert.equalToArray(["simple"], _log);
 	}
 	
 	@Test
@@ -59,7 +59,7 @@ class CSignalTest
 		signal.remove(onSimple);
 		signal.remove(onSimple);
 		signal.dispatch();
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 	}
 	
 	function onSimple()
@@ -74,13 +74,13 @@ class CSignalTest
 		var signal = new CSignal < String->Void > ();
 		signal.add(onOneParam);
 		signal.dispatch("param");
-		ArrayAssert.areEqual(["param"], _log);
+		ArrayAssert.equalToArray(["param"], _log);
 		
 		_log = [];
 		var signal = new CSignal < String->String->Void > ();
 		signal.add(onTwoParam);
 		signal.dispatch("param0", "param1");
-		ArrayAssert.areEqual(["param0-param1"], _log);
+		ArrayAssert.equalToArray(["param0-param1"], _log);
 	}
 	
 	@Test
@@ -90,7 +90,7 @@ class CSignalTest
 		signal.add(onOneParam);
 		signal.add(onOneParamWithStar);
 		signal.dispatch("text");
-		ArrayAssert.areEqualIgnoringOrder(["text", "text*"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["text", "text*"], _log);
 	}
 	
 	@Test
@@ -102,12 +102,12 @@ class CSignalTest
 		signal.add(onOneParamWithStar);
 		signal.remove(onOneParam);
 		signal.dispatch("text");
-		ArrayAssert.areEqual(["text*"], _log);
+		ArrayAssert.equalToArray(["text*"], _log);
 		
 		_log = [];
 		signal.remove(onOneParamWithStar);
 		signal.dispatch("text");
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 	}
 	
 	function onOneParam(arg:String)

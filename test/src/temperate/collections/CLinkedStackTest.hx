@@ -273,39 +273,39 @@ class CLinkedStackTest
 		var node2 = _stack.newSwitcher().setValue("value2");
 		
 		_log = [];
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		node0.on();
-		ArrayAssert.areEqual(["value0"], _log);
+		ArrayAssert.equalToArray(["value0"], _log);
 		Assert.areEqual("value0", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node01.on();
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		Assert.areEqual("value0", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node2.on();
-		ArrayAssert.areEqual(["value2"], _log);
+		ArrayAssert.equalToArray(["value2"], _log);
 		Assert.areEqual("value2", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node2.off();
-		ArrayAssert.areEqual(["value0"], _log);
+		ArrayAssert.equalToArray(["value0"], _log);
 		Assert.areEqual("value0", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node01.off();
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		Assert.areEqual("value0", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node0.off();
-		ArrayAssert.areEqual([null], _log);
+		ArrayAssert.equalToArray([null], _log);
 		Assert.areEqual(null, _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 	}
@@ -330,49 +330,49 @@ class CLinkedStackTest
 		
 		_log = [];
 		node0.value = "value1";
-		ArrayAssert.areEqual(["value1"], _log);
+		ArrayAssert.equalToArray(["value1"], _log);
 		Assert.areEqual("value1", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node0.value = "value1";
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		Assert.areEqual("value1", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node1.on();
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		Assert.areEqual("value1", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node1.value = "newValue1";
-		ArrayAssert.areEqual(["newValue1"], _log);
+		ArrayAssert.equalToArray(["newValue1"], _log);
 		Assert.areEqual("newValue1", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node0.off();
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		Assert.areEqual("newValue1", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node0.value = "value0NotInfluence";
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		Assert.areEqual("newValue1", _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node1.off();
-		ArrayAssert.areEqual([null], _log);
+		ArrayAssert.equalToArray([null], _log);
 		Assert.areEqual(null, _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 		
 		_log = [];
 		node1.value = "value1NotInfluence";
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		Assert.areEqual(null, _stack.value);
 		assertNoNodeCallbacksExcludeHead(_stack.getHead());
 	}

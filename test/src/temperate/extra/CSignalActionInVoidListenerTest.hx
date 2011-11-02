@@ -1,4 +1,4 @@
-package temperate.signals;
+package temperate.extra;
 
 import massive.munit.Assert;
 
@@ -31,32 +31,32 @@ class CSignalActionInVoidListenerTest
 		_signal.addVoid(listener_once);
 		_signal.dispatch("*");
 		_signal.dispatch("**");
-		ArrayAssert.areEqualIgnoringOrder(["once"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["once"], _log);
 		
 		_log = [];
 		_signal.addVoid(listener_once);
 		_signal.addVoid(listener1);
 		_signal.dispatch("*");
-		ArrayAssert.areEqualIgnoringOrder(["once", "1"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["once", "1"], _log);
 		
 		_log = [];
 		_signal.dispatch("&");
-		ArrayAssert.areEqualIgnoringOrder(["1"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["1"], _log);
 		
 		_log = [];
 		_signal.removeVoid(listener1);
-		ArrayAssert.areEqualIgnoringOrder([], _log);
+		ArrayAssert.equalToArrayIgnoringOrder([], _log);
 		
 		_log = [];
 		_signal.addVoid(listener1);
 		_signal.addVoid(listener_once);
 		_signal.addVoid(listener2);
 		_signal.dispatch("*");
-		ArrayAssert.areEqualIgnoringOrder(["1", "2", "once"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["1", "2", "once"], _log);
 		
 		_log = [];
 		_signal.dispatch("&");
-		ArrayAssert.areEqualIgnoringOrder(["1", "2"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["1", "2"], _log);
 	}
 	
 	function listener_once()
@@ -83,11 +83,11 @@ class CSignalActionInVoidListenerTest
 		_signal.addVoid(listener_remove1And2);
 		_signal.addVoid(listener2);
 		_signal.dispatch("*");
-		ArrayAssert.areEqualIgnoringOrder(["1", "2", "remove1And2"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["1", "2", "remove1And2"], _log);
 		
 		_log = [];
 		_signal.dispatch("&");
-		ArrayAssert.areEqualIgnoringOrder(["remove1And2"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["remove1And2"], _log);
 	}
 	
 	function listener_remove1And2()
@@ -103,11 +103,11 @@ class CSignalActionInVoidListenerTest
 		_log = [];
 		_signal.addVoid(listener_add1);
 		_signal.dispatch("*");
-		ArrayAssert.areEqualIgnoringOrder(["add1"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["add1"], _log);
 		
 		_log = [];
 		_signal.dispatch("&");
-		ArrayAssert.areEqualIgnoringOrder(["add1", "1"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["add1", "1"], _log);
 	}
 	
 	function listener_add1()
@@ -124,11 +124,11 @@ class CSignalActionInVoidListenerTest
 		_signal.add(notVoidListener_remove1And2);
 		_signal.addVoid(listener2);
 		_signal.dispatch("*");
-		ArrayAssert.areEqualIgnoringOrder(["1", "2", "*_remove1And2"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["1", "2", "*_remove1And2"], _log);
 		
 		_log = [];
 		_signal.dispatch("&");
-		ArrayAssert.areEqualIgnoringOrder(["&_remove1And2"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["&_remove1And2"], _log);
 	}
 	
 	function notVoidListener_remove1And2(arg:String)
@@ -146,11 +146,11 @@ class CSignalActionInVoidListenerTest
 		_signal.addVoid(listener_removeNotVoid1And2);
 		_signal.add(notVoidListener2);
 		_signal.dispatch("*");
-		ArrayAssert.areEqualIgnoringOrder(["*1", "*2", "removeNotVoid1And2"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["*1", "*2", "removeNotVoid1And2"], _log);
 		
 		_log = [];
 		_signal.dispatch("&");
-		ArrayAssert.areEqualIgnoringOrder(["removeNotVoid1And2"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["removeNotVoid1And2"], _log);
 	}
 	
 	function notVoidListener1(arg:String)

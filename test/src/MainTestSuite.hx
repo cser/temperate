@@ -22,12 +22,12 @@ class MainTestSuite extends TestSuite
 		add(temperate.core.CMathTest);
 		add(temperate.core.CMouseWheelUtilTest);
 		add(temperate.docks.RightDockTest);
+		add(temperate.extra.CSignalActionInListenerTest);
+		add(temperate.extra.CSignalActionInVoidListenerTest);
+		add(temperate.extra.CSignalTest);
+		add(temperate.extra.CSignalVoidListenersTest);
 		add(temperate.layouts.CScrollLayoutTest);
 		add(temperate.minimal.charts.MChartTest);
-		add(temperate.signals.CSignalActionInListenerTest);
-		add(temperate.signals.CSignalActionInVoidListenerTest);
-		add(temperate.signals.CSignalTest);
-		add(temperate.signals.CSignalVoidListenersTest);
 		add(temperate.text.CInputFieldTest);
 		add(temperate.text.CLabelTest);
 		add(temperate.text.CTextFormatTest);

@@ -1,4 +1,4 @@
-package temperate.signals;
+package temperate.extra;
 import flash.utils.Dictionary;
 
 class CSignal< TListener >

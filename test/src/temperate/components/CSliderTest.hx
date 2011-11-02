@@ -90,7 +90,7 @@ class CSliderTest
 			slider.addEventListener(Event.CHANGE, onChange);
 			slider.addEventListener(Event.COMPLETE, onComplete);
 			slider.value = 50;
-			ArrayAssert.areEqual([], _log);
+			ArrayAssert.equalToArray([], _log);
 		}
 	}
 	

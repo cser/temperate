@@ -1,4 +1,4 @@
-package temperate.signals;
+package temperate.extra;
 
 import massive.munit.Assert;
 
@@ -31,32 +31,32 @@ class CSignalActionInListenerTest
 		_signal.add(listener_once);
 		_signal.dispatch("*");
 		_signal.dispatch("**");
-		ArrayAssert.areEqualIgnoringOrder(["*_once"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["*_once"], _log);
 		
 		_log = [];
 		_signal.add(listener_once);
 		_signal.add(listener1);
 		_signal.dispatch("*");
-		ArrayAssert.areEqualIgnoringOrder(["*_once", "*1"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["*_once", "*1"], _log);
 		
 		_log = [];
 		_signal.dispatch("&");
-		ArrayAssert.areEqualIgnoringOrder(["&1"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["&1"], _log);
 		
 		_log = [];
 		_signal.remove(listener1);
-		ArrayAssert.areEqualIgnoringOrder([], _log);
+		ArrayAssert.equalToArrayIgnoringOrder([], _log);
 		
 		_log = [];
 		_signal.add(listener1);
 		_signal.add(listener_once);
 		_signal.add(listener2);
 		_signal.dispatch("*");
-		ArrayAssert.areEqualIgnoringOrder(["*1", "*2", "*_once"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["*1", "*2", "*_once"], _log);
 		
 		_log = [];
 		_signal.dispatch("&");
-		ArrayAssert.areEqualIgnoringOrder(["&1", "&2"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["&1", "&2"], _log);
 	}
 	
 	function listener_once(param:String)
@@ -83,11 +83,11 @@ class CSignalActionInListenerTest
 		_signal.add(listener_remove1And2);
 		_signal.add(listener2);
 		_signal.dispatch("*");
-		ArrayAssert.areEqualIgnoringOrder(["*1", "*2", "*_remove1And2"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["*1", "*2", "*_remove1And2"], _log);
 		
 		_log = [];
 		_signal.dispatch("&");
-		ArrayAssert.areEqualIgnoringOrder(["&_remove1And2"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["&_remove1And2"], _log);
 	}
 	
 	function listener_remove1And2(param:String)
@@ -103,11 +103,11 @@ class CSignalActionInListenerTest
 		_log = [];
 		_signal.add(listener_add1);
 		_signal.dispatch("*");
-		ArrayAssert.areEqualIgnoringOrder(["*_add1"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["*_add1"], _log);
 		
 		_log = [];
 		_signal.dispatch("&");
-		ArrayAssert.areEqualIgnoringOrder(["&_add1", "&1"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["&_add1", "&1"], _log);
 	}
 	
 	function listener_add1(param:String)

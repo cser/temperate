@@ -1,5 +1,4 @@
-package temperate.signals;
-import temperate.signals.CSignal;
+package temperate.extra;
 
 class CSignalVoidListenersTest
 {
@@ -27,7 +26,7 @@ class CSignalVoidListenersTest
 		var signal = new CSignal < Void->Void > ();
 		signal.addVoid(onSimple);
 		signal.dispatch();
-		ArrayAssert.areEqual(["simple"], _log);
+		ArrayAssert.equalToArray(["simple"], _log);
 	}
 	
 	@Test
@@ -37,7 +36,7 @@ class CSignalVoidListenersTest
 		signal.addVoid(onSimple);
 		signal.removeVoid(onSimple);
 		signal.dispatch();
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 	}
 	
 	@Test
@@ -47,7 +46,7 @@ class CSignalVoidListenersTest
 		signal.addVoid(onSimple);
 		signal.addVoid(onSimple);
 		signal.dispatch();
-		ArrayAssert.areEqual(["simple"], _log);
+		ArrayAssert.equalToArray(["simple"], _log);
 	}
 	
 	@Test
@@ -58,7 +57,7 @@ class CSignalVoidListenersTest
 		signal.removeVoid(onSimple);
 		signal.removeVoid(onSimple);
 		signal.dispatch();
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 	}
 	
 	function onSimple()
@@ -79,14 +78,14 @@ class CSignalVoidListenersTest
 		signal.add(onOneParam);
 		signal.addVoid(onSimple);
 		signal.dispatch("param");
-		ArrayAssert.areEqualIgnoringOrder(["param", "simple"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["param", "simple"], _log);
 		
 		_log = [];
 		var signal = new CSignal < String->String->Void > ();
 		signal.add(onTwoParam);
 		signal.addVoid(onSimple);
 		signal.dispatch("param0", "param1");
-		ArrayAssert.areEqualIgnoringOrder(["param0-param1", "simple"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["param0-param1", "simple"], _log);
 	}
 	
 	@Test
@@ -98,7 +97,7 @@ class CSignalVoidListenersTest
 		signal.addVoid(onSimple);
 		signal.addVoid(onSimpleWithStar);
 		signal.dispatch("text");
-		ArrayAssert.areEqualIgnoringOrder(["text", "text*", "simple", "simple*"], _log);
+		ArrayAssert.equalToArrayIgnoringOrder(["text", "text*", "simple", "simple*"], _log);
 	}
 	
 	@Test
@@ -110,12 +109,12 @@ class CSignalVoidListenersTest
 		signal.addVoid(onSimpleWithStar);
 		signal.removeVoid(onSimple);
 		signal.dispatch("text");
-		ArrayAssert.areEqual(["simple*"], _log);
+		ArrayAssert.equalToArray(["simple*"], _log);
 		
 		_log = [];
 		signal.removeVoid(onSimpleWithStar);
 		signal.dispatch("text");
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 	}
 	
 	function onOneParam(arg:String)
