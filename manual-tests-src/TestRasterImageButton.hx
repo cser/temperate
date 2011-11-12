@@ -96,8 +96,6 @@ class TestRasterImageButton extends Sprite
 			var button = new MFlatImageButton();
 			button.text = "MFlatImageButton";
 			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0xa0a0a0));
-			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT);
-			button.getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
 			button.textDock = new CRightDock(2, 1);
 			button.setSize(150, 100);
 			line.add(button);
@@ -119,6 +117,10 @@ class TestRasterImageButton extends Sprite
 			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0xa0a0a0));
 			button.selected = true;
 			button.isEnabled = false;
+			line.add(button);
+			
+			var button = new MFlatImageButton();
+			button.text = "MFlatImageButton\n(without image)";
 			line.add(button);
 		}
 	}

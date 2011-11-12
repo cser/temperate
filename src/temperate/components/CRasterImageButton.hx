@@ -126,23 +126,26 @@ class CRasterImageButton extends ACRasterTextButton
 			}
 			var imageOffsetX = 0;
 			var imageOffsetY = 0;
-			var imageParams = _imageParams[_state.index];
-			if (imageParams == null)
+			if (_currentImage != null)
 			{
-				imageParams = _imageParams[CButtonState.UP_SELECTED.index];
-			}
-			if (imageParams != null)
-			{
-				_currentImage.filters = imageParams.filters;
-				_currentImage.alpha = Math.isNaN(imageParams.alpha) ?
-					1 : imageParams.alpha;
-				imageOffsetX = imageParams.offsetX;
-				imageOffsetY = imageParams.offsetY;
-			}
-			else
-			{
-				_currentImage.filters = null;
-				_currentImage.alpha = 1;
+				var imageParams = _imageParams[_state.index];
+				if (imageParams == null)
+				{
+					imageParams = _imageParams[CButtonState.UP_SELECTED.index];
+				}
+				if (imageParams != null)
+				{
+					_currentImage.filters = imageParams.filters;
+					_currentImage.alpha = Math.isNaN(imageParams.alpha) ?
+						1 : imageParams.alpha;
+					imageOffsetX = imageParams.offsetX;
+					imageOffsetY = imageParams.offsetY;
+				}
+				else
+				{
+					_currentImage.filters = null;
+					_currentImage.alpha = 1;
+				}
 			}
 			
 			if (_currentImage != null)
