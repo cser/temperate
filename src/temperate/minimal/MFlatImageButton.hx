@@ -34,5 +34,11 @@ class MFlatImageButton extends CRasterImageButton
 		getState(CButtonState.DISABLED_SELECTED)
 			.setBitmapData(MFlatBdFactory.getBgDisabledSelected())
 			.setFormat(MFormatFactory.FLAT_BUTTON_DISABLED);
+		getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT);
+		getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
+		getImage(CButtonState.DISABLED).setAlpha(.5);
+		getImage(CButtonState.OVER_SELECTED).setFilters(MFilterFactory.LIGHT);
+		getImage(CButtonState.DOWN_SELECTED).setFilters(MFilterFactory.LIGHT);
+		getImage(CButtonState.DISABLED_SELECTED).setAlpha(.5);
 	}	
 }

@@ -51,5 +51,11 @@ class MImageButton extends CRasterImageButton
 			.setAlpha(.5)
 			.setFormat(MFormatFactory.BUTTON_DISABLED)
 			;
+		getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT);
+		getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
+		getImage(CButtonState.DISABLED).setAlpha(.5);
+		getImage(CButtonState.OVER_SELECTED).setFilters(MFilterFactory.LIGHT);
+		getImage(CButtonState.DOWN_SELECTED).setFilters(MFilterFactory.LIGHT);
+		getImage(CButtonState.DISABLED_SELECTED).setAlpha(.5);
 	}	
 }

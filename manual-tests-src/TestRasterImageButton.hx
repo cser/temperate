@@ -66,11 +66,32 @@ class TestRasterImageButton extends Sprite
 			var button = new MImageButton();
 			button.text = "MImageButton";
 			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0xa0a0a0));
-			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT);
-			button.getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
 			button.textDock = new CRightDock(2, 1);
 			button.setSize(150, 100);
 			line.add(button);
+			
+			var button = new MImageButton();
+			button.text = "MImageButton (selected)";
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0xa0a0a0));
+			button.selected = true;
+			line.add(button);
+			
+			var button = new MImageButton();
+			button.text = "MImageButton (disabled)";
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0xa0a0a0));
+			button.isEnabled = false;
+			line.add(button);
+			
+			var button = new MImageButton();
+			button.text = "MImageButton (selected disabled)";
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0xa0a0a0));
+			button.selected = true;
+			button.isEnabled = false;
+			line.add(button);
+		}
+		
+		{
+			var line = new CHBox().addTo(main);
 			
 			var button = new MFlatImageButton();
 			button.text = "MFlatImageButton";
@@ -79,6 +100,25 @@ class TestRasterImageButton extends Sprite
 			button.getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
 			button.textDock = new CRightDock(2, 1);
 			button.setSize(150, 100);
+			line.add(button);
+			
+			var button = new MFlatImageButton();
+			button.text = "MFlatImageButton\n(selected)";
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0xa0a0a0));
+			button.selected = true;
+			line.add(button);
+			
+			var button = new MFlatImageButton();
+			button.text = "MFlatImageButton\n(disabled)";
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0xa0a0a0));
+			button.isEnabled = false;
+			line.add(button);
+			
+			var button = new MFlatImageButton();
+			button.text = "MFlatImageButton\n(selected disabled)";
+			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0xa0a0a0));
+			button.selected = true;
+			button.isEnabled = false;
 			line.add(button);
 		}
 	}

@@ -139,6 +139,11 @@ class CRasterImageButton extends ACRasterTextButton
 				imageOffsetX = imageParams.offsetX;
 				imageOffsetY = imageParams.offsetY;
 			}
+			else
+			{
+				_currentImage.filters = null;
+				_currentImage.alpha = 1;
+			}
 			
 			if (_currentImage != null)
 			{
