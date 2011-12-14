@@ -13,8 +13,8 @@ class MWindowBdFactory
 	public static inline var FRAME_CENTER_TOP = 30;
 	
 	public static var gradientHeight = 24;
-	public static var color:UInt = 0x80ffffff;
-	public static var bgColor:UInt = 0x00ffffff;
+	public static var striaeColor:UInt = 0x80ffffff;
+	public static var striaeBgColor:UInt = 0x00ffffff;
 	public static var headTopColor:UInt = 0xf8407015;
 	public static var headBottomColor:UInt = 0xe080c030;
 	public static var headTopActiveColor:UInt = 0xf8508000;
@@ -133,7 +133,7 @@ class MWindowBdFactory
 	{
 		if (_defaultStriae == null)
 		{
-			_defaultStriae = newStriae(color, bgColor, 4, 1);
+			_defaultStriae = newStriae(striaeColor, striaeBgColor, 4, 1);
 		}
 		return _defaultStriae;
 	}
@@ -188,17 +188,86 @@ class MWindowBdFactory
 	//
 	//----------------------------------------------------------------------------------------------
 	
+	public static var bgColor(get_bgColor, set_bgColor):MFlatBgColor;
+	static var _bgColor:MFlatBgColor;
+	static function get_bgColor()
+	{
+		if (_bgColor == null)
+		{
+			var color = new MFlatBgColor();
+			
+			color.bgRatiosUp = [ 0, 250 ];
+			color.bgRatiosOver = [ 0, 250 ];
+			color.bgRatiosDown = [ 0, 250 ];
+			color.bgRatiosDisabled = [ 0, 250 ];
+
+			color.bgColorsUp = [ 0xffd0f060, 0xff80c020 ];
+			color.bgColorsOver = [ 0xffbfef50, 0xffafcf50 ];
+			color.bgColorsDown = [ 0xff506f00, 0xffc0ff30 ];
+			color.bgColorsDisabled = [ 0xffeeeeee, 0xffcccccc ];
+
+			color.bgBottomRightColor = 0xff105000;
+			color.bgBottomRightDisabledColor = 0xffbabaaa;
+
+			color.bgTopLeftColor = 0xff80a080;
+			color.bgTopLeftDisabledColor = 0xffcccccc;
+
+			color.bgInnerTopLeftColor = 0xa0ffffff;
+			color.bgInnerBottomRightColor = 0xe0ffffff;
+
+			color.bgInnerDownColor = 0x2e000000;
+			
+			_bgColor = color;
+		}
+		return _bgColor;
+	}
+	static function set_bgColor(value:MFlatBgColor)
+	{
+		_bgColor = value;
+		return _bgColor;
+	}
+	
+	public static var bgSelectedColor(get_bgSelectedColor, set_bgSelectedColor):MFlatBgColor;
+	static var _bgSelectedColor:MFlatBgColor;
+	static function get_bgSelectedColor()
+	{
+		if (_bgSelectedColor == null)
+		{
+			var color = new MFlatBgColor();
+			
+			color.bgRatiosUp = [ 0, 250 ];
+			color.bgRatiosOver = [ 0, 250 ];
+			color.bgRatiosDown = [ 0, 250 ];
+			color.bgRatiosDisabled = [ 0, 250 ];
+
+			color.bgColorsUp = [ 0xffe0fe00, 0xffc0a000 ];
+			color.bgColorsOver = [ 0xfffffe00, 0xffcac000 ];
+			color.bgColorsDown = [ 0xffaa8000, 0xfffffe00 ];
+			color.bgColorsDisabled = [ 0xffeeeecc, 0xffcccc82 ];
+
+			color.bgBottomRightColor = 0xff202020;
+
+			color.bgBottomRightDisabledColor = 0xffb5b5b5;
+
+			color.bgTopLeftColor = 0xff8b8b8b;
+			color.bgTopLeftDisabledColor = 0xffcccccc;
+
+			color.bgInnerTopLeftColor = 0xa0ffffff;
+			color.bgInnerBottomRightColor = 0xe0ffffff;
+
+			color.bgInnerDownColor = 0x2e000000;
+			
+			_bgSelectedColor = color;
+		}
+		return _bgSelectedColor;
+	}
+	static function set_bgSelectedColor(value:MFlatBgColor)
+	{
+		_bgSelectedColor = value;
+		return _bgSelectedColor;
+	}
+	
 	public static var size = 22;
-	
-	static function getBgColor():MFlatBgColor
-	{
-		return MBdFlatColors.bgColor;
-	}
-	
-	static function getBgSelectedColor():MFlatBgColor
-	{
-		return MBdFlatColors.bgSelectedColor2;
-	}
 	
 	static function getBg(params:MFlatBgColor, state:CButtonState)
 	{
@@ -212,16 +281,16 @@ class MWindowBdFactory
 		
 		var enabled = state != CButtonState.DISABLED;
 		
-		var color = enabled ? params.bgBottomRightColor : params.bgBottomRightDisabledColor;
+		var color = 0xaaffffff;
 		g.beginFill(color.getColor(), color.getAlpha());
 		g.drawRoundRect(0, 0, size, size, 8);
-		g.drawRoundRect(0, 0, size - 1, size - 1, 8);
+		g.drawRoundRect(1, 1, size - 2, size - 2, 6);
 		g.endFill();
 		
-		var color = enabled ? params.bgTopLeftColor : params.bgTopLeftDisabledColor;
+		var color = 0xff508000;
 		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(0, 0, size, size, 8);
-		g.drawRoundRect(1, 1, size - 1, size - 1, 8);
+		g.drawRoundRect(1, 1, size - 2, size - 2, 6);
+		g.drawRoundRect(2, 2, size - 4, size - 4, 4);
 		g.endFill();
 		
 		{
@@ -251,30 +320,21 @@ class MWindowBdFactory
 			MBdFactoryUtil.getColorsAndAlphas(sourceColors, colors, alphas);
 			
 			g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
-			g.drawRoundRect(1, 1, size - 2, size - 2, 6);
+			g.drawRoundRect(2, 2, size - 4, size - 4, 4);
 			g.endFill();
 		}
+		
+		var color = 0x30000000;
+		g.beginFill(color.getColor(), color.getAlpha());
+		g.drawRoundRect(2, 2, size - 4, size - 4, 4);
+		g.drawRoundRect(2, 2, size - 5, size - 5, 4);
+		g.endFill();
 		
 		var color = params.bgInnerTopLeftColor;
 		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(1, 1, size - 2, size - 2, 6);
-		g.drawRoundRect(2, 2, size - 3, size - 3, 6);
+		g.drawRoundRect(2, 2, size - 4, size - 4, 4);
+		g.drawRoundRect(3, 3, size - 5, size - 5, 4);
 		g.endFill();
-		
-		var color = params.bgInnerBottomRightColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(1, 1, size - 2, size - 2, 6);
-		g.drawRoundRect(1, 1, size - 3, size - 3, 6);
-		g.endFill();
-		
-		if (state == CButtonState.DOWN)
-		{
-			var color = params.bgInnerDownColor;
-			g.beginFill(color.getColor(), color.getAlpha());
-			g.drawRoundRect(2, 2, size - 4, size - 4, 6);
-			g.drawRoundRect(3, 3, size - 6, size - 6, 6);
-			g.endFill();
-		}
 		
 		bd.draw(shape);
 		
@@ -292,7 +352,7 @@ class MWindowBdFactory
 	{
 		if (_bgUp == null)
 		{
-			_bgUp = getBg(getBgColor(), CButtonState.UP);
+			_bgUp = getBg(bgColor, CButtonState.UP);
 		}
 		return _bgUp;
 	}
@@ -303,7 +363,7 @@ class MWindowBdFactory
 	{
 		if (_bgOver == null)
 		{
-			_bgOver = getBg(getBgColor(), CButtonState.OVER);
+			_bgOver = getBg(bgColor, CButtonState.OVER);
 		}
 		return _bgOver;
 	}
@@ -314,7 +374,7 @@ class MWindowBdFactory
 	{
 		if (_bgDown == null)
 		{
-			_bgDown = getBg(getBgColor(), CButtonState.DOWN);
+			_bgDown = getBg(bgColor, CButtonState.DOWN);
 		}
 		return _bgDown;
 	}
@@ -325,7 +385,7 @@ class MWindowBdFactory
 	{
 		if (_bgDisabled == null)
 		{
-			_bgDisabled = getBg(getBgColor(), CButtonState.DISABLED);
+			_bgDisabled = getBg(bgColor, CButtonState.DISABLED);
 		}
 		return _bgDisabled;
 	}
@@ -340,7 +400,7 @@ class MWindowBdFactory
 	{
 		if (_bgUpSelected == null)
 		{
-			_bgUpSelected = getBg(getBgSelectedColor(), CButtonState.UP);
+			_bgUpSelected = getBg(bgSelectedColor, CButtonState.UP);
 		}
 		return _bgUpSelected;
 	}
@@ -351,7 +411,7 @@ class MWindowBdFactory
 	{
 		if (_bgOverSelected == null)
 		{
-			_bgOverSelected = getBg(getBgSelectedColor(), CButtonState.OVER);
+			_bgOverSelected = getBg(bgSelectedColor, CButtonState.OVER);
 		}
 		return _bgOverSelected;
 	}
@@ -362,7 +422,7 @@ class MWindowBdFactory
 	{
 		if (_bgDownSelected == null)
 		{
-			_bgDownSelected = getBg(getBgSelectedColor(), CButtonState.DOWN);
+			_bgDownSelected = getBg(bgSelectedColor, CButtonState.DOWN);
 		}
 		return _bgDownSelected;
 	}
@@ -373,7 +433,7 @@ class MWindowBdFactory
 	{
 		if (_bgDisabledSelected == null)
 		{
-			_bgDisabledSelected = getBg(getBgSelectedColor(), CButtonState.DISABLED);
+			_bgDisabledSelected = getBg(bgSelectedColor, CButtonState.DISABLED);
 		}
 		return _bgDisabledSelected;
 	}

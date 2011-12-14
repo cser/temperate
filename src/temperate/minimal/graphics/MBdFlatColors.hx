@@ -80,44 +80,4 @@ class MBdFlatColors
 		_bgSelectedColor = value;
 		return _bgSelectedColor;
 	}
-	
-	public static var bgSelectedColor2(get_bgSelectedColor2, set_bgSelectedColor2):MFlatBgColor;
-	static var _bgSelectedColor2:MFlatBgColor;
-	static function get_bgSelectedColor2()
-	{
-		if (_bgSelectedColor2 == null)
-		{
-			var color = new MFlatBgColor();
-			
-			color.bgRatiosUp = [ 0, 138, 140, 250 ];
-			color.bgRatiosOver = [ 0, 138, 140, 250 ];
-			color.bgRatiosDown = [ 0, 250 ];
-			color.bgRatiosDisabled = [ 0, 250 ];
-
-			color.bgColorsUp = [ 0xfff08000, 0xffc0a000, 0xff807500, 0xffe0c000 ];
-			color.bgColorsOver = [ 0xffaaaaaa, 0xff909090, 0xff707070, 0xff8f8f8f ];
-			color.bgColorsDown = [ 0xff404040, 0xffa5a5a5 ];
-			color.bgColorsDisabled = [ 0xffcccccc, 0xff828282 ];
-
-			color.bgBottomRightColor = 0xff202020;
-
-			color.bgBottomRightDisabledColor = 0xffb5b5b5;
-
-			color.bgTopLeftColor = 0xff8b8b8b;
-			color.bgTopLeftDisabledColor = 0xffcccccc;
-
-			color.bgInnerTopLeftColor = 0xa0ffffff;
-			color.bgInnerBottomRightColor = 0xe0ffffff;
-
-			color.bgInnerDownColor = 0x2e000000;
-			
-			_bgSelectedColor2 = color;
-		}
-		return _bgSelectedColor2;
-	}
-	static function set_bgSelectedColor2(value:MFlatBgColor)
-	{
-		_bgSelectedColor2 = value;
-		return _bgSelectedColor2;
-	}
 }
