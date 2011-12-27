@@ -12,6 +12,7 @@ import temperate.minimal.MCursorManager;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MSeparator;
+import temperate.minimal.MToolButton;
 import temperate.minimal.MWindow;
 import temperate.minimal.skins.MWindowSkin;
 import temperate.skins.ICWindowSkin;
@@ -54,11 +55,11 @@ class ToolsWindow extends MWindow
 			line.gapX = 0;
 			toolBox.add(line).setPercents(100);
 			
-			var button = new MFlatImageButton();
+			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Arrow());
 			line.add(button).setPercents(100, 100);
 			
-			var button = new MFlatImageButton();
+			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Ellipse());
 			line.add(button).setPercents(100, 100);
 			
@@ -66,11 +67,11 @@ class ToolsWindow extends MWindow
 			line.gapX = 0;
 			toolBox.add(line).setPercents(100);
 			
-			var button = new MFlatImageButton();
+			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Figure());
 			line.add(button).setPercents(100, 100);
 			
-			var button = new MFlatImageButton();
+			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Line());
 			line.add(button).setPercents(100, 100);
 			
@@ -78,11 +79,11 @@ class ToolsWindow extends MWindow
 			line.gapX = 0;
 			toolBox.add(line).setPercents(100);
 			
-			var button = new MFlatImageButton();
+			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Pencil());
 			line.add(button).setPercents(100, 100);
 			
-			var button = new MFlatImageButton();
+			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Rect());
 			line.add(button).setPercents(100, 100);
 		}

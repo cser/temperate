@@ -10,6 +10,7 @@ import temperate.core.CMath;
 import temperate.minimal.graphics.MWindowBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MFormatFactory;
+import temperate.minimal.windows.MCloseButton;
 import temperate.raster.CVScale12GridDrawer;
 import temperate.skins.ACWindowSkin;
 
@@ -126,7 +127,7 @@ class MWindowSkin extends ACWindowSkin
 		{
 			_view_headButtonsValid = true;
 			
-			var x = _width - 2;
+			var x = _width - 6;
 			for (button in _headButtons)
 			{
 				var view = button.view;
@@ -163,14 +164,19 @@ class MWindowSkin extends ACWindowSkin
 	
 	private var _headButtons:Array<ICButton>;
 	
-	public function addHeadButton(button:ICButton)
+	public function addHeadButton(button:ICButton):ICButton
 	{
 		_headButtons.remove(button);
 		_headButtons.unshift(button);
 		addChild(button.view);
-		
 		_view_headButtonsValid = false;
 		postponeView();
+		return button;
+	}
+	
+	public function addCloseButton():ICButton
+	{
+		return addHeadButton(new MCloseButton());
 	}
 	
 	public function removeHeadButton(button:ICButton)

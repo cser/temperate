@@ -77,7 +77,7 @@ class MToolBdFactory
 		return _bgSelectedColor;
 	}
 	
-	public static var size = 30;
+	public static var size = 34;
 	
 	static function getBg(params:MWindowBdColor, state:CButtonState)
 	{

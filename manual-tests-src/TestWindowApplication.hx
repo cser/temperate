@@ -47,3 +47,6 @@ class TestWindowApplication extends Sprite
 			_windowManager.areaWidth, _windowManager.areaHeight);
 	}
 }
+/*
+Починить падение при повторном клике на кнопке закрыть
+*/

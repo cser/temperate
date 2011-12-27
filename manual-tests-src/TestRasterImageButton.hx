@@ -203,6 +203,10 @@ class TestRasterImageButton extends Sprite
 			line.add(button);
 			
 			line.add(new MCloseButton());
+			
+			var button = new MCloseButton();
+			button.isEnabled = false;
+			line.add(button);
 		}
 	}
 	

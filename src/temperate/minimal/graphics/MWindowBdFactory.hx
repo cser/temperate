@@ -1,9 +1,11 @@
 package temperate.minimal.graphics;
 import flash.display.BitmapData;
 import flash.display.GradientType;
+import flash.display.Shape;
 import flash.filters.BevelFilter;
 import flash.filters.BitmapFilterType;
 import flash.filters.GlowFilter;
+import flash.geom.ColorTransform;
 import flash.geom.Matrix;
 import flash.geom.Point;
 import temperate.components.CButtonState;
@@ -196,18 +198,58 @@ class MWindowBdFactory
 	public static var imageHorizontalIndent:Int = 2;
 	public static var imageVerticalIndent:Int = 6;
 	
-	static function newImageBitmapData()
+	public static var imageUpColor:UInt = 0xffffffff;
+	public static var imageOverColor:UInt = 0xffffffff;
+	public static var imageDisabledColor:UInt = 0x80ffffff;
+	public static var imageGlowColor:UInt = 0xff000000;
+	public static var imageOverGlowColor:UInt = 0xff808000;
+	public static var imageDisabledGlowColor:UInt = 0x80000000;
+	
+	static function getImageColor(state:CButtonState):UInt
 	{
-		return new BitmapData(
+		return switch (state)
+		{
+			case CButtonState.OVER, CButtonState.OVER_SELECTED: imageOverColor;
+			case CButtonState.DOWN, CButtonState.DOWN_SELECTED: imageOverColor;
+			case CButtonState.DISABLED, CButtonState.DISABLED_SELECTED: imageDisabledColor;
+			default: imageUpColor;
+		}
+	}
+	
+	static function drawImage(shape:Shape, state:CButtonState):BitmapData
+	{
+		var image = new BitmapData(
 			imageSize + imageHorizontalIndent * 2,
 			imageSize + imageVerticalIndent * 2,
 			true,
 			0x00000000);
-	}
-	
-	static function getImageOffsetMatrix()
-	{
-		return new Matrix(1, 0, 0, 1, imageHorizontalIndent, imageVerticalIndent);
+		MBdFactoryUtil.qualityOn();
+		var matrix = state == CButtonState.DOWN || state == CButtonState.DOWN_SELECTED ?
+			new Matrix(1, 0, 0, 1, imageHorizontalIndent + 1, imageVerticalIndent + 1) :
+			new Matrix(1, 0, 0, 1, imageHorizontalIndent, imageVerticalIndent);
+		image.draw(shape, matrix, new ColorTransform(1, 1, 1, 1, 0, 0, 0, 255));
+		var color;
+		var alpha;
+		if (!state.enabled)
+		{
+			color = imageDisabledGlowColor.getColor();
+			alpha = imageDisabledGlowColor.getAlpha();
+		}
+		else if (state == CButtonState.UP || state == CButtonState.UP_SELECTED)
+		{
+			color = imageGlowColor.getColor();
+			alpha = imageGlowColor.getAlpha();
+		}
+		else
+		{
+			color = imageOverGlowColor.getColor();
+			alpha = imageOverGlowColor.getAlpha();
+		}
+		image.applyFilter(
+			image, image.rect, new Point(), new GlowFilter(color, alpha, 2, 2, 2, 1, false, true));
+		image.draw(shape, matrix);
+		MBdFactoryUtil.qualityOff();
+		return image;
 	}
 	
 	static var _imageClose:Array<BitmapData>;
@@ -220,34 +262,38 @@ class MWindowBdFactory
 		var image = _imageClose[state.index];
 		if (image == null)
 		{
-			image = newImageBitmapData();
-			_imageClose[state.index] = image;
 			var shape = MBdFactoryUtil.getShape();
+			var color = getImageColor(state);
+			var a = imageSize;
+			var a2 = a >> 1;
+			var b = 2;
 			var g = shape.graphics;
 			g.clear();
-			var halfWidth = 2;
-			g.beginFill(0xffffff);
+			g.beginFill(color.getColor(), color.getAlpha());
 			g.moveTo(0, 0);
-			g.lineTo(halfWidth, 0);
-			g.lineTo(imageSize, imageSize - halfWidth);
-			g.lineTo(imageSize, imageSize);
-			g.lineTo(imageSize - halfWidth, imageSize);
-			g.lineTo(0, halfWidth);
+			g.lineTo(b, 0);
+			g.lineTo(a2, a2 - b);
+			g.lineTo(a - b, 0);
+			g.lineTo(a, 0);
+			g.lineTo(a, b);
+			g.lineTo(a2 + b, a2);
+			g.lineTo(a, a - b);
+			g.lineTo(a, a);
+			g.lineTo(a - b, a);
+			g.lineTo(a2, a2 + b);
+			g.lineTo(b, a);
+			g.lineTo(0, a);
+			g.lineTo(0, a - b);
+			g.lineTo(a2 - b, a2);
+			g.lineTo(0, b);
 			g.lineTo(0, 0);
 			g.endFill();
-			g.beginFill(0xffffff);
-			g.moveTo(imageSize, 0);
-			g.lineTo(imageSize, halfWidth);
-			g.lineTo(halfWidth, imageSize);
-			g.lineTo(0, imageSize);
-			g.lineTo(0, imageSize - halfWidth);
-			g.lineTo(imageSize - halfWidth, 0);
-			g.lineTo(imageSize, 0);
-			g.endFill();
-			MBdFactoryUtil.qualityOn();
-			image.draw(shape, getImageOffsetMatrix());
-			image.applyFilter(image, image.rect, new Point(), new GlowFilter(0x000000, 1, 2, 2));
-			MBdFactoryUtil.qualityOff();
+			image = drawImage(shape, state);
+			_imageClose[state.index] = image;
+		}
+		if (image == null)
+		{
+			image = null;
 		}
 		return image;
 	}
@@ -262,18 +308,15 @@ class MWindowBdFactory
 		var image = _imageMinimize[state.index];
 		if (image == null)
 		{
-			image = newImageBitmapData();
-			_imageMinimize[state.index] = image;
 			var shape = MBdFactoryUtil.getShape();
+			var color = getImageColor(state);
 			var g = shape.graphics;
 			g.clear();
-			g.beginFill(0xffffff);
+			g.beginFill(color.getColor(), color.getAlpha());
 			g.drawRect(0, imageSize - 3, imageSize, 3);
 			g.endFill();
-			MBdFactoryUtil.qualityOn();
-			image.draw(shape, getImageOffsetMatrix());
-			image.applyFilter(image, image.rect, new Point(), new GlowFilter(0x000000, 1, 2, 2));
-			MBdFactoryUtil.qualityOff();
+			image = drawImage(shape, state);
+			_imageMinimize[state.index] = image;
 		}
 		return image;
 	}
@@ -288,19 +331,16 @@ class MWindowBdFactory
 		var image = _imageMaximize[state.index];
 		if (image == null)
 		{
-			image = newImageBitmapData();
-			_imageMaximize[state.index] = image;
 			var shape = MBdFactoryUtil.getShape();
+			var color = getImageColor(state);
 			var g = shape.graphics;
 			g.clear();
-			g.beginFill(0xffffff);
+			g.beginFill(color.getColor(), color.getAlpha());
 			g.drawRect(0, 0, imageSize, imageSize);
 			g.drawRect(2, 3, imageSize - 4, imageSize - 5);
 			g.endFill();
-			MBdFactoryUtil.qualityOn();
-			image.draw(shape, getImageOffsetMatrix());
-			image.applyFilter(image, image.rect, new Point(), new GlowFilter(0x000000, 1, 2, 2));
-			MBdFactoryUtil.qualityOff();
+			image = drawImage(shape, state);
+			_imageMaximize[state.index] = image;
 		}
 		return image;
 	}
@@ -315,23 +355,20 @@ class MWindowBdFactory
 		var image = _imageCollapse[state.index];
 		if (image == null)
 		{
-			image = newImageBitmapData();
-			_imageCollapse[state.index] = image;
 			var shape = MBdFactoryUtil.getShape();
+			var color = getImageColor(state);
 			var g = shape.graphics;
 			g.clear();
-			g.beginFill(0xffffff);
+			g.beginFill(color.getColor(), color.getAlpha());
 			g.drawRect(3, 0, imageSize - 3, imageSize - 4);
 			g.drawRect(3, 3, imageSize - 5, imageSize - 7);
 			g.endFill();
-			g.beginFill(0xffffff);
+			g.beginFill(color.getColor(), color.getAlpha());
 			g.drawRect(0, 4, imageSize - 3, imageSize - 4);
 			g.drawRect(2, 7, imageSize - 7, imageSize - 9);
 			g.endFill();
-			MBdFactoryUtil.qualityOn();
-			image.draw(shape, getImageOffsetMatrix());
-			image.applyFilter(image, image.rect, new Point(), new GlowFilter(0x000000, 1, 2, 2));
-			MBdFactoryUtil.qualityOff();
+			image = drawImage(shape, state);
+			_imageCollapse[state.index] = image;
 		}
 		return image;
 	}

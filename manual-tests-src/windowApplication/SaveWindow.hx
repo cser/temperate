@@ -1,20 +1,12 @@
 package windowApplication;
-import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import temperate.containers.CHBox;
-import temperate.containers.CVBox;
-import temperate.minimal.cursors.MHandCursor;
 import temperate.minimal.MButton;
-import temperate.minimal.MCursorManager;
-import temperate.minimal.MFlatButton;
 import temperate.minimal.MInputField;
 import temperate.minimal.MLabel;
 import temperate.minimal.MSeparator;
 import temperate.minimal.MWindow;
-import temperate.minimal.skins.MWindowSkin;
-import temperate.skins.ICWindowSkin;
-import temperate.windows.ACWindow;
 import temperate.windows.CPopUpManager;
 
 class SaveWindow extends MWindow 
@@ -48,9 +40,7 @@ class SaveWindow extends MWindow
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
 		
-		var button = new MFlatButton().setText("X");
-		button.addEventListener(MouseEvent.CLICK, onCancelClick);
-		_skin.addHeadButton(button);
+		_skin.addCloseButton().addEventListener(MouseEvent.CLICK, onCancelClick);
 	}
 	
 	var _title:TextField;
