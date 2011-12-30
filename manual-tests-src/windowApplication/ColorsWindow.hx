@@ -17,14 +17,14 @@ class ColorsWindow extends MWindow
 	
 	function onCloseClick(event:MouseEvent)
 	{
-		manager.remove(this);
+		close();
 	}
 	
 	function onKeyDown(event:KeyboardEvent)
 	{
 		if (event.keyCode == Keyboard.ESCAPE)
 		{
-			manager.remove(this);
+			close();
 		}
 	}
 }

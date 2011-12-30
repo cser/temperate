@@ -60,12 +60,12 @@ class OpenWindow extends MWindow
 	
 	function onOpenClick(event:MouseEvent)
 	{
-		manager.remove(this);
+		close();
 	}
 	
 	function onCancelClick(event:MouseEvent)
 	{
-		manager.remove(this);
+		close();
 	}
 	
 	function onMaximizeChange(event:Event)
@@ -77,7 +77,7 @@ class OpenWindow extends MWindow
 	{
 		if (event.keyCode == Keyboard.ESCAPE)
 		{
-			manager.remove(this);
+			close();
 		}
 	}
 }

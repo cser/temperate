@@ -71,19 +71,19 @@ class TestWindow extends ACWindow
 	
 	function onOKClick(event:MouseEvent)
 	{
-		manager.remove(this);
+		close();
 	}
 	
 	function onCancelClick(event:MouseEvent)
 	{
-		manager.remove(this);
+		close();
 	}
 	
 	function onKeyDown(event:KeyboardEvent)
 	{
 		if (event.keyCode == Keyboard.ESCAPE)
 		{
-			manager.remove(this);
+			close();
 		}
 	}
 }

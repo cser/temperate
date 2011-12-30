@@ -271,4 +271,18 @@ class ACWindow implements ICPopUp
 			_head = _components.head;
 		}
 	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Helped
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	public function close(fast:Bool = false):Void
+	{
+		if (manager != null)
+		{
+			manager.remove(this, fast);
+		}
+	}
 }
