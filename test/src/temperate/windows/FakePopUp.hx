@@ -11,8 +11,10 @@ class FakePopUp implements ICPopUp
 	{
 		view = new Shape();
 		innerDispatcher = new EventDispatcher();
+		isOpened = false;
 	}
 	
+	public var isOpened:Bool;
 	public var view(default, null):DisplayObject;
 	public var innerDispatcher(default, null):IEventDispatcher;
 	public var manager:CPopUpManager;

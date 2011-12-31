@@ -21,10 +21,9 @@ class CChildWrapper
 		_maxHeight = CMath.INT_MAX_VALUE;
 	}
 	
-	private var _child:DisplayObject;
+	var _child:DisplayObject;
 	
 	public var x:Float;
-	
 	public var y:Float;
 	
 	/**
@@ -87,7 +86,6 @@ class CChildWrapper
 	}
 	
 	public var alignX(default, null):Float;
-	
 	public var alignY(default, null):Float;
 	
 	/**
@@ -102,7 +100,6 @@ class CChildWrapper
 	}
 	
 	var _offsetX:Int;
-	
 	var _offsetY:Int;
 	
 	public function setOffsets(offsetX:Int = 0, offsetY:Int = 0):CChildWrapper
@@ -113,7 +110,6 @@ class CChildWrapper
 	}
 	
 	var _childAlignX:Float;
-	
 	var _childAlignY:Float;
 	
 	/**
@@ -127,9 +123,8 @@ class CChildWrapper
 		return this;
 	}
 	
-	private var _fixedWidth:Int;
-	
-	private var _fixedHeight:Int;
+	var _fixedWidth:Int;
+	var _fixedHeight:Int;
 	
 	/**
 	 * [optional] fixedWidth
@@ -142,13 +137,10 @@ class CChildWrapper
 		return this;
 	}
 	
-	private var _minWidth:Int;
-	
-	private var _minHeight:Int;
-	
-	private var _maxWidth:Int;
-	
-	private var _maxHeight:Int;
+	var _minWidth:Int;
+	var _minHeight:Int;
+	var _maxWidth:Int;
+	var _maxHeight:Int;
 	
 	/**
 	 * Works only if persentage scaling on
@@ -165,11 +157,8 @@ class CChildWrapper
 	}
 	
 	var _indentLeft:Int;
-	
 	var _indentRight:Int;
-	
 	var _indentTop:Int;
-	
 	var _indentBottom:Int;
 	
 	public function setIndents(

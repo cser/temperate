@@ -83,7 +83,7 @@ class CRasterScrollTiledSkin implements ICScrollSkin
 		_graphics.endFill();
 	}
 	
-	private var _matrix:Matrix;
+	var _matrix:Matrix;
 	
 	function getMatrix()
 	{

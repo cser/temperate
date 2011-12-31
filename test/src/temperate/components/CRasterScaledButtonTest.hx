@@ -16,11 +16,11 @@ class CRasterScaledButtonTest
 	{
 	}
 	
-	private var _button:CRasterScaledButton;
-	private var _defaultFormat:CTextFormat;
-	private var _customFormat:CTextFormat;
-	private var _defaultTextField:TextField;
-	private var _customTextField:TextField;
+	var _button:CRasterScaledButton;
+	var _defaultFormat:CTextFormat;
+	var _customFormat:CTextFormat;
+	var _defaultTextField:TextField;
+	var _customTextField:TextField;
 	
 	@Before
 	public function setUp()

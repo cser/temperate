@@ -74,6 +74,7 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		updateModal();
 		popUp.manager = this;
 		popUp.animateShow(fast);
+		popUp.isOpened = true;
 	}
 	
 	public function moveToTop(popUp:ICPopUp)
@@ -95,6 +96,7 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 			_isModal.delete(popUp);
 			updateModal();
 			popUp.animateHide(fast, onAnimateCloseComplete);
+			popUp.isOpened = false;
 			popUp.manager = null;
 		}
 	}

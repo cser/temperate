@@ -133,7 +133,7 @@ class CTextFormat extends TextFormat
 		return getHtml(this, text);
 	}
 	
-	private static var _nullFormat:CTextFormat;
+	static var _nullFormat:CTextFormat;
 	
 	public static function setNullFormat(tf:TextField)
 	{

@@ -1,10 +1,12 @@
 package ;
 import flash.display.Sprite;
-import flash.events.Event;
-import temperate.core.ICArea;
+import temperate.debug.FPSMonitor;
 import temperate.minimal.MPopUpManager;
-import temperate.minimal.windows.MLockArea;
-import temperate.windows.CPopUpManager;
+import temperate.windows.docks.CPopUpAbsoluteDock;
+import windowApplication.ColorsWindow;
+import windowApplication.NewWindow;
+import windowApplication.OpenWindow;
+import windowApplication.SaveWindow;
 import windowApplication.ToolsWindow;
 
 class TestWindowApplication extends Sprite
@@ -16,7 +18,58 @@ class TestWindowApplication extends Sprite
 	
 	public function init()
 	{
-		MPopUpManager.add(new ToolsWindow(), false, true);
+		var toolsWindow = new ToolsWindow(this);
+		toolsWindow.dock = new CPopUpAbsoluteDock(10, 50);
+		MPopUpManager.add(toolsWindow, false, true);
+	}
+	
+	var _colorsWindow:ColorsWindow;
+	
+	public function doShowColors()
+	{
+		if (_colorsWindow == null)
+		{
+			_colorsWindow = new ColorsWindow();
+		}
+		if (!_colorsWindow.isOpened)
+		{
+			MPopUpManager.add(_colorsWindow, false);
+		}
+	}
+	
+	public function doNew()
+	{
+		var window = new NewWindow();
+		MPopUpManager.add(window, true);
+	}
+	
+	public function doOpen()
+	{
+		var window = new OpenWindow();
+		window.setSize(200, 150);
+		MPopUpManager.add(window, true);
+	}
+	
+	public function doSave()
+	{
+		var window = new SaveWindow();
+		MPopUpManager.add(window, true);
+	}
+	
+	var _fpsMonitor:FPSMonitor;
+	
+	public function doShowFps()
+	{
+		if (_fpsMonitor == null)
+		{
+			_fpsMonitor = new FPSMonitor();
+			addChild(_fpsMonitor);
+		}
+		else
+		{
+			removeChild(_fpsMonitor);
+			_fpsMonitor = null;
+		}
 	}
 }
 /*

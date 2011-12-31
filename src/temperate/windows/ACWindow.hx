@@ -19,6 +19,7 @@ class ACWindow implements ICPopUp
 {
 	function new() 
 	{
+		isOpened = false;
 		innerDispatcher = new EventDispatcher();
 		dock = new CPopUpAlignedDock();
 		
@@ -38,6 +39,8 @@ class ACWindow implements ICPopUp
 	{
 		return manager;
 	}
+	
+	public var isOpened:Bool;
 	
 	public var manager:CPopUpManager;
 	

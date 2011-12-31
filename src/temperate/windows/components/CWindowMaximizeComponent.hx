@@ -8,15 +8,11 @@ class CWindowMaximizeComponent extends ACWindowComponent
 		super();
 	}
 	
-	private var _x:Int;
-	private var _y:Int;
-	private var _width:Int;
-	private var _height:Int;
+	var _width:Int;
+	var _height:Int;
 	
 	override function doSubscribe():Void
 	{
-		_x = super.getX();
-		_y = super.getY();
 		_width = super.getWidth();
 		_height = super.getHeight();
 		_popUp.innerDispatcher.addEventListener(Event.RESIZE, onResize);

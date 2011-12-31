@@ -1,49 +1,30 @@
 package windowApplication;
-import flash.display.Sprite;
 import flash.events.MouseEvent;
-import flash.text.TextField;
 import temperate.components.CButtonState;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.core.CSprite;
-import temperate.docks.CRightDock;
-import temperate.minimal.cursors.MHandCursor;
-import temperate.minimal.MCursorManager;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MSeparator;
 import temperate.minimal.MToolButton;
 import temperate.minimal.MWindow;
-import temperate.minimal.skins.MWindowSkin;
-import temperate.windows.skins.ICWindowSkin;
-import temperate.windows.ACWindow;
-import temperate.windows.CPopUpManager;
-import temperate.windows.docks.CPopUpAbsoluteDock;
-
-@:bitmap("manual-tests-src/windowApplication/arrow.png")
-class Arrow extends flash.display.BitmapData { public function new() { super(0, 0); }}
-
-@:bitmap("manual-tests-src/windowApplication/ellipse.png")
-class Ellipse extends flash.display.BitmapData { public function new() { super(0, 0); }}
-
-@:bitmap("manual-tests-src/windowApplication/figure.png")
-class Figure extends flash.display.BitmapData { public function new() { super(0, 0); }}
-
-@:bitmap("manual-tests-src/windowApplication/line.png")
-class Line extends flash.display.BitmapData { public function new() { super(0, 0); }}
-
-@:bitmap("manual-tests-src/windowApplication/pencil.png")
-class Pencil extends flash.display.BitmapData { public function new() { super(0, 0); }}
-
-@:bitmap("manual-tests-src/windowApplication/rect.png")
-class Rect extends flash.display.BitmapData { public function new() { super(0, 0); }}
+import windowApplication.assets.Arrow;
+import windowApplication.assets.Ellipse;
+import windowApplication.assets.Figure;
+import windowApplication.assets.Line;
+import windowApplication.assets.Pencil;
+import windowApplication.assets.Rect;
 
 class ToolsWindow extends MWindow
 {
-	public function new() 
+	var _application:TestWindowApplication;
+	
+	public function new(application:TestWindowApplication) 
 	{
 		super();
 		
+		_application = application;
 		_baseSkin.title = "Tools";
 		
 		{
@@ -101,6 +82,7 @@ class ToolsWindow extends MWindow
 		
 		var button = new MFlatButton();
 		button.text = "New";
+		button.addEventListener(MouseEvent.CLICK, onNewClick);
 		_main.add(button).setPercents(100);
 		
 		var button = new MFlatButton();
@@ -113,22 +95,19 @@ class ToolsWindow extends MWindow
 		button.addEventListener(MouseEvent.CLICK, onSaveClick);
 		_main.add(button).setPercents(100);
 		
-		dock = new CPopUpAbsoluteDock(10, 50);
+		var button = new MFlatButton();
+		button.text = "FPS";
+		button.addEventListener(MouseEvent.CLICK, onFPSClick);
+		_main.add(button).setPercents(100);
 		
 		setColor(0x00ff00);
 	}
 	
 	var _colorImage:CSprite;
 	
-	var _colorsWindow:ColorsWindow;
-	
 	function onColorClick(event:MouseEvent)
 	{
-		if (_colorsWindow == null)
-		{
-			_colorsWindow = new ColorsWindow();
-		}
-		manager.add(_colorsWindow, false);
+		_application.doShowColors();
 	}
 	
 	var _color:UInt;
@@ -150,16 +129,23 @@ class ToolsWindow extends MWindow
 		}
 	}
 	
+	function onNewClick(event:MouseEvent)
+	{
+		_application.doNew();
+	}
+	
 	function onOpenClick(event:MouseEvent)
 	{
-		var window = new OpenWindow();
-		window.setSize(200, 150);
-		manager.add(window, true);
+		_application.doOpen();
 	}
 	
 	function onSaveClick(event:MouseEvent)
 	{
-		var window = new SaveWindow();
-		manager.add(window, true);
+		_application.doSave();
+	}
+	
+	function onFPSClick(event:MouseEvent)
+	{
+		_application.doShowFps();
 	}
 }

@@ -1,14 +1,9 @@
 package temperate.minimal.skins;
-import flash.display.Bitmap;
-import flash.display.GradientType;
 import flash.display.Sprite;
-import flash.filters.ColorMatrixFilter;
-import flash.geom.Matrix;
 import flash.text.TextField;
 import temperate.components.ICButton;
 import temperate.core.CMath;
 import temperate.minimal.graphics.MWindowBdFactory;
-import temperate.minimal.MButton;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.windows.MCloseButton;
 import temperate.minimal.windows.MMaximizeButton;
@@ -174,7 +169,7 @@ class MWindowSkin extends ACWindowSkin
 		postponeView();
 	}
 	
-	private var _headButtons:Array<ICButton>;
+	var _headButtons:Array<ICButton>;
 	
 	public function addHeadButton(button:ICButton):ICButton
 	{
@@ -184,6 +179,16 @@ class MWindowSkin extends ACWindowSkin
 		_size_valid = false;
 		postponeSize();
 		return button;
+	}
+	
+	public function removeHeadButton(button:ICButton):Void
+	{
+		if (_headButtons.remove(button))
+		{
+			removeChild(button.view);
+			_size_valid = false;
+			postponeSize();
+		}
 	}
 	
 	public var closeButton(get_closeButton, null):ICButton;
@@ -207,13 +212,5 @@ class MWindowSkin extends ACWindowSkin
 			_maximizeButton.toggle = true;
 		}
 		return _maximizeButton;
-	}
-	
-	public function removeHeadButton(button:ICButton)
-	{
-		if (_headButtons.remove(button))
-		{
-			removeChild(button.view);
-		}
 	}
 }

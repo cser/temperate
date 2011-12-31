@@ -6,7 +6,7 @@ import temperate.core.CMath;
 
 class CVScale12GridDrawer 
 {
-	private static inline var DEFAULT_PADDING = 8;
+	static inline var DEFAULT_PADDING = 8;
 	
 	public function new() 
 	{

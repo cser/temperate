@@ -335,7 +335,7 @@ class MScrollBarBdFactory
 	// Background
 	//----------------------------------------------------------------------------------------------
 	
-	private static var _hBgUp:BitmapData;
+	static var _hBgUp:BitmapData;
 	
 	public static function getHBgUp()
 	{
@@ -346,7 +346,7 @@ class MScrollBarBdFactory
 		return _hBgUp;
 	}
 	
-	private static var _hBgDown:BitmapData;
+	static var _hBgDown:BitmapData;
 
 	public static function getHBgDown()
 	{
@@ -357,7 +357,7 @@ class MScrollBarBdFactory
 		return _hBgDown;
 	}
 	
-	private static var _vBgUp:BitmapData;
+	static var _vBgUp:BitmapData;
 	
 	public static function getVBgUp()
 	{
@@ -368,7 +368,7 @@ class MScrollBarBdFactory
 		return _vBgUp;
 	}
 	
-	private static var _vBgDown:BitmapData;
+	static var _vBgDown:BitmapData;
 
 	public static function getVBgDown()
 	{
