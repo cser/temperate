@@ -157,4 +157,20 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 					event.keyLocation, event.ctrlKey, event.altKey, event.shiftKey));
 		}
 	}
+	
+	public function getPopUpAt(index:Int):ICPopUp
+	{
+		return _popUps[index];
+	}
+	
+	public var numPopUps(get_numPopUps, null):Int;
+	function get_numPopUps()
+	{
+		return _popUps.length;
+	}
+	
+	inline public function iterator():Iterator<ICPopUp>
+	{
+		return _popUps.iterator();
+	}
 }

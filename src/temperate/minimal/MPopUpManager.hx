@@ -6,54 +6,59 @@ import temperate.minimal.windows.MLockArea;
 import temperate.windows.CPopUpManager;
 import temperate.windows.ICPopUp;
 
-class MPopUpManager extends CPopUpManager
+class MPopUpManager
 {
-	public static var instance(get_instance, null):MPopUpManager;
-	static var _instance:MPopUpManager;
-	static function get_instance():MPopUpManager
+	static var _instance:CPopUpManager;
+	
+	static function getInstance():CPopUpManager
 	{
 		if (_instance == null)
 		{
-			_instance = new MPopUpManager(Lib.current.stage);
+			_stage = Lib.current.stage;
+			_instance = new CPopUpManager(_stage);
+			_lockArea = new MLockArea().setManager(_instance);
+			_stage.addEventListener(Event.RESIZE, onStageResize);
+			onStageResize();
 		}
 		return _instance;
 	}
 	
-	var _stage:Stage;
-	var _lockArea:MLockArea;
-	
-	function new(stage:Stage)
+	public static function add(popUp:ICPopUp, modal:Bool, fast:Bool = false):Void
 	{
-		super(stage);
-		
-		_stage = stage;
-		_lockArea = new MLockArea().setManager(this);
-		_stage.addEventListener(Event.RESIZE, onStageResize);
-		onStageResize();
-	}
-	
-	function onStageResize(event:Event = null)
-	{
-		setArea(0, 0, Std.int(_stage.stageWidth), Std.int(_stage.stageHeight));
-		_lockArea.setArea(areaX, areaY, areaWidth, areaHeight);
-	}
-	
-	override public function add(popUp:ICPopUp, modal:Bool, fast:Bool = false)
-	{
-		super.add(popUp, modal, fast);
-		var index = container.getChildIndex(_popUps[0].view);
+		getInstance().add(popUp, modal, fast);
+		var index = _stage.getChildIndex(_instance.getPopUpAt(0).view);
 		var lockView = _lockArea.container;
-		if (lockView.parent != container)
+		if (lockView.parent != _stage)
 		{
-			container.addChildAt(_lockArea, index);
+			_stage.addChildAt(_lockArea, index);
 		}
 		else
 		{
-			var lockIndex = container.getChildIndex(lockView);
+			var lockIndex = _stage.getChildIndex(lockView);
 			if (lockIndex > index)
 			{
-				container.setChildIndex(_lockArea, index);
+				_stage.setChildIndex(_lockArea, index);
 			}
 		}
+	}
+	
+	public static function moveToTop(popUp:ICPopUp):Void
+	{
+		getInstance().moveToTop(popUp);
+	}
+	
+	public static function remove(popUp:ICPopUp, fast:Bool = false):Void
+	{
+		getInstance().remove(popUp, fast);
+	}
+	
+	static var _stage:Stage;
+	static var _lockArea:MLockArea;
+	
+	static function onStageResize(event:Event = null)
+	{
+		_instance.setArea(0, 0, Std.int(_stage.stageWidth), Std.int(_stage.stageHeight));
+		_lockArea.setArea(
+			_instance.areaX, _instance.areaY, _instance.areaWidth, _instance.areaHeight);
 	}
 }

@@ -4,6 +4,7 @@ import flash.display.Sprite;
 import flash.errors.ArgumentError;
 import flash.events.Event;
 import flash.utils.RegExp;
+import haxe.PosInfos;
 import massive.munit.Assert;
 using massive.munit.Assert;
 using ArrayAssert;
@@ -296,5 +297,38 @@ class CPopUpManagerTest
 		popUp0.isActive.isFalse();
 		popUp2.isActive.isFalse();
 		popUp1.isActive.isTrue();
+	}
+	
+	@Test
+	public function popUpsIteration()
+	{
+		var popUp0 = new FakePopUp();
+		var popUp1 = new FakePopUp();
+		var popUp2 = new FakePopUp();
+		
+		0.areEqual(_manager.numPopUps);
+		assertPopUpIteration([]);
+		
+		_manager.add(popUp0, true);
+		1.areEqual(_manager.numPopUps);
+		popUp0.areEqual(_manager.getPopUpAt(0));
+		assertPopUpIteration([popUp0]);
+		
+		_manager.add(popUp1, true);
+		_manager.add(popUp2, true);
+		3.areEqual(_manager.numPopUps);
+		popUp1.areEqual(_manager.getPopUpAt(1));
+		popUp2.areEqual(_manager.getPopUpAt(2));
+		assertPopUpIteration([popUp0, popUp1, popUp2]);
+	}
+	
+	function assertPopUpIteration(expected:Array<Dynamic>, ?info:PosInfos)
+	{
+		var array = [];
+		for (popUp in _manager)
+		{
+			array.push(popUp);
+		}
+		expected.equalToArray(array);
 	}
 }

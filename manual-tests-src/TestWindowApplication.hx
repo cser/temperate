@@ -16,7 +16,7 @@ class TestWindowApplication extends Sprite
 	
 	public function init()
 	{
-		MPopUpManager.instance.add(new ToolsWindow(), false, true);
+		MPopUpManager.add(new ToolsWindow(), false, true);
 	}
 }
 /*
