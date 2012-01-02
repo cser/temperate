@@ -6,11 +6,14 @@ import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import temperate.collections.CPriorityList;
+import temperate.collections.ICValueSwitcher;
+import temperate.core.CGeomUtil;
 import temperate.windows.components.ACWindowComponent;
 import temperate.windows.components.CWindowBaseComponent;
 import temperate.windows.components.CWindowConstraintsComponent;
 import temperate.windows.components.CWindowMaximizeComponent;
 import temperate.windows.components.CWindowMoveComponent;
+import temperate.windows.components.CWindowResizeComponent;
 import temperate.windows.docks.CPopUpAlignedDock;
 import temperate.windows.docks.ICPopUpDock;
 import temperate.windows.skins.ICWindowSkin;
@@ -244,6 +247,54 @@ class ACWindow implements ICPopUp
 	function newMaximizeComponent():ACWindowComponent
 	{
 		return new CWindowMaximizeComponent();
+	}
+	
+	var _resizeComponent:ACWindowComponent;
+	
+	public var resizable(get_resizable, set_resizable):Bool;
+	var _resizable:Bool;
+	function get_resizable()
+	{
+		return _resizable;
+	}
+	function set_resizable(value)
+	{
+		if (_resizable != value)
+		{
+			_resizable = value;
+			if (_resizable)
+			{
+				if (_resizeComponent == null)
+				{
+					_resizeComponent = newResizeComponent();
+					_resizeComponent.priority = CWindowComponentPriority.RESIZE;
+				}
+				addComponent(_resizeComponent);
+			}
+		}
+		else
+		{
+			removeComponent(_resizeComponent);
+		}
+		return _resizable;
+	}
+	
+	function newResizeComponent():ACWindowComponent
+	{
+		return new CWindowResizeComponent(isInMarker, newResizeCursor());
+	}
+	
+	function isInMarker():Bool
+	{
+		var w = view.width;
+		var h = view.height;
+		var d = 20;
+		return CGeomUtil.isInTriangle(w, h, w - d, h, w, h - d, view.mouseX, view.mouseY);
+	}
+	
+	function newResizeCursor():ICValueSwitcher<Dynamic>
+	{
+		return null;
 	}
 	
 	//----------------------------------------------------------------------------------------------

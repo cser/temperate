@@ -15,6 +15,7 @@ import temperate.cursors.CCursor;
 import temperate.cursors.ICCursor;
 import temperate.minimal.cursors.MForbiddenCursor;
 import temperate.minimal.cursors.MHandCursor;
+import temperate.minimal.cursors.MResizeCursor;
 import temperate.minimal.cursors.MWaitCursor;
 import temperate.minimal.graphics.MCursorBdFactory;
 import temperate.minimal.MButton;
@@ -127,9 +128,13 @@ class TestMCursorManager extends Sprite
 			var box = new CVBox().addTo(line);
 			
 			box.add(new Bitmap(MCursorBdFactory.getForbidden()));
+			box.add(new Bitmap(MCursorBdFactory.getResize()));
 			
 			var button = new MButton().setText("Forbidden cursor").addTo(box);
 			MCursorManager.newHover().setTarget(button).setValue(new MForbiddenCursor(true));
+			
+			var button = new MButton().setText("Resize cursor").addTo(box);
+			MCursorManager.newHover().setTarget(button).setValue(new MResizeCursor(true));
 			
 			box.add(new Bitmap(MCursorBdFactory.getWait()));
 			

@@ -14,6 +14,7 @@ class ImageWindow extends MWindow
 		_skin.addHeadButton(_skin.maximizeButton).addEventListener(Event.CHANGE, onMaximizeChange);
 		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
 		moveToTopOnMouseDown = false;
+		resizable = true;
 	}
 	
 	function onMaximizeChange(event:Event)

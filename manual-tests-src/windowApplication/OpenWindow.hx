@@ -52,6 +52,8 @@ class OpenWindow extends MWindow
 		_skin.addHeadButton(_skin.maximizeButton).addEventListener(Event.CHANGE, onMaximizeChange);
 		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCancelClick);
 		innerDispatcher.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		
+		resizable = true;
 	}
 	
 	var _buttonBox:CHBox;

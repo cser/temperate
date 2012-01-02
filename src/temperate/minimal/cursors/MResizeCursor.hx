@@ -3,18 +3,17 @@ import flash.display.Bitmap;
 import temperate.cursors.CCursor;
 import temperate.minimal.graphics.MCursorBdFactory;
 
-class MWaitCursor extends CCursor
+class MResizeCursor extends CCursor
 {
-	public function new(
-		updateOnMove:Bool = false, hideSystem:Bool = false, system:String = null) 
+	public function new(updateOnMove:Bool = false, hideSystem:Bool = true, system:String = null) 
 	{
 		super();
 		
 		setView(
-			new Bitmap(MCursorBdFactory.getWait()),
+			new Bitmap(MCursorBdFactory.getResize()),
 			updateOnMove,
-			hideSystem ? 0 : 14,
-			hideSystem ? 0 : 16
+			hideSystem ? -8 : 12,
+			hideSystem ? -8 : 10
 		);
 		
 		setHideSystem(hideSystem);

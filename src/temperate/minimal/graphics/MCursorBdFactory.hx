@@ -39,6 +39,17 @@ class MCursorBdFactory
 		return _forbidden;
 	}
 	
+	static var _resize:BitmapData;
+	
+	public static function getResize()
+	{
+		if (_resize == null)
+		{
+			_resize = newResize();
+		}
+		return _resize;
+	}
+	
 	static var _wait:BitmapData;
 	
 	public static function getWait()
@@ -111,6 +122,38 @@ class MCursorBdFactory
 		g.lineTo(x0 - sin * r, y0 - cos * r);
 		
 		var bitmapData = new BitmapData(x0 * 2 + 4, y0 * 2 + 4, true, 0x00000000);
+		bitmapData.draw(shape);
+		bitmapData.applyFilter(
+			bitmapData, bitmapData.rect, new Point(),
+			new DropShadowFilter(2, 45, 0x000000, .5, 2, 2)
+		);
+		
+		MBdFactoryUtil.qualityOff();
+		return bitmapData;
+	}
+	
+	static function newResize()
+	{
+		MBdFactoryUtil.qualityOn();
+		var shape = MBdFactoryUtil.getShape();
+		var g = shape.graphics;
+		g.clear();
+		
+		g.lineStyle(0, 0x000000, 1, true);
+		g.beginFill(0x808080);
+		g.moveTo(0, 0);
+		g.lineTo(6, 0);
+		g.lineTo(3, 2);
+		g.lineTo(16 - 2, 16 - 3);
+		g.lineTo(16, 16 - 6);
+		g.lineTo(16, 16);
+		g.lineTo(16 - 6, 16);
+		g.lineTo(16 - 3, 16 - 2);
+		g.lineTo(2, 3);
+		g.lineTo(0, 6);
+		g.lineTo(0, 0);
+		
+		var bitmapData = new BitmapData(20, 20, true, 0x00000000);
 		bitmapData.draw(shape);
 		bitmapData.applyFilter(
 			bitmapData, bitmapData.rect, new Point(),

@@ -37,8 +37,8 @@ class NewWindow extends MWindow
 		
 		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
 		
-		_widthNs.setValues(1, 1000, 800);
-		_heightNs.setValues(1, 1000, 600);
+		_widthNs.setValues(1, 1000, 600);
+		_heightNs.setValues(1, 1000, 400);
 		
 		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
 		

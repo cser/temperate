@@ -1,6 +1,5 @@
 package temperate.core;
 
-import haxe.PosInfos;
 import massive.munit.Assert;
 
 class CMathTest

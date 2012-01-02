@@ -1,6 +1,9 @@
 package temperate.minimal;
 import flash.display.Sprite;
+import temperate.collections.ICValueSwitcher;
 import temperate.containers.CVBox;
+import temperate.minimal.cursors.MResizeCursor;
+import temperate.minimal.cursors.MWaitCursor;
 import temperate.minimal.skins.MWindowSkin;
 import temperate.minimal.windows.MWindowScaleAnimator;
 import temperate.windows.ACWindow;
@@ -28,5 +31,10 @@ class MWindow extends ACWindow
 	{
 		_main = new CVBox();
 		return _main;
+	}
+	
+	override function newResizeCursor():ICValueSwitcher<Dynamic>
+	{
+		return MCursorManager.newSwitcher().setValue(new MResizeCursor());
 	}
 }
