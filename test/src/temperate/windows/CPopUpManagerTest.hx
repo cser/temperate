@@ -348,12 +348,7 @@ class CPopUpManagerTest
 	
 	function assertPopUpIteration(expected:Array<Dynamic>, ?info:PosInfos)
 	{
-		var array = [];
-		for (popUp in _manager)
-		{
-			array.push(popUp);
-		}
-		expected.equalToArray(array);
+		expected.equalToArray(getPopUps());
 	}
 	
 	function getPopUps()
@@ -364,5 +359,35 @@ class CPopUpManagerTest
 			array.push(popUp);
 		}
 		return array;
+	}
+	
+	@Test
+	public function topPopUpChange()
+	{
+		var popUp0 = new FakePopUp();
+		var popUp1 = new FakePopUp();
+		_manager.addEventListener(Event.SELECT, onManagerSelect);
+		
+		Assert.areEqual(null, _manager.topPopUp);
+		
+		_log = [];
+		_manager.add(popUp0, false);
+		Assert.areEqual(popUp0, _manager.topPopUp);
+		ArrayAssert.equalToArray([Event.SELECT], _log);
+		
+		_log = [];
+		_manager.remove(popUp0);
+		Assert.areEqual(null, _manager.topPopUp);
+		ArrayAssert.equalToArray([Event.SELECT], _log);
+		
+		_log = [];
+		_manager.add(popUp0, false);
+		_manager.add(popUp1, false);
+		Assert.areEqual(popUp1, _manager.topPopUp);
+	}
+	
+	function onManagerSelect(event:Event)
+	{
+		_log.push(event.type);
 	}
 }

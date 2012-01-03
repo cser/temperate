@@ -9,6 +9,12 @@ import flash.utils.TypedDictionary;
 import temperate.core.ICArea;
 using temperate.core.ArrayUtil;
 
+/**
+ * Events:
+ * Event.CHANGE
+ * Event.RESIZE
+ * Event.SELECT
+ */
 class CPopUpManager extends EventDispatcher, implements ICArea
 {	
 	public function new(container:DisplayObjectContainer) 
@@ -71,10 +77,10 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 		_popUps.remove(popUp);
 		_popUps.push(popUp);
 		_isModal.set(popUp, modal);
-		updateModal();
 		popUp.manager = this;
-		popUp.animateShow(fast);
 		popUp.isOpened = true;
+		updateModal();
+		popUp.animateShow(fast);
 	}
 	
 	public function moveToTop(popUp:ICPopUp)
@@ -135,6 +141,12 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 			modal = newModal;
 			dispatchEvent(new Event(Event.CHANGE));
 		}
+		var newTopPopUp = _popUps[length - 1];
+		if (topPopUp != newTopPopUp)
+		{
+			topPopUp = newTopPopUp;
+			dispatchEvent(new Event(Event.SELECT));
+		}
 	}
 	
 	public var modal(default, null):Bool;
@@ -171,6 +183,8 @@ class CPopUpManager extends EventDispatcher, implements ICArea
 					event.keyLocation, event.ctrlKey, event.altKey, event.shiftKey));
 		}
 	}
+	
+	public var topPopUp(default, null):ICPopUp;
 	
 	public function getPopUpAt(index:Int):ICPopUp
 	{

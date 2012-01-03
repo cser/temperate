@@ -29,6 +29,11 @@ class ImageWindow extends MWindow
 	public function setImageSize(width:Int, height:Int)
 	{
 		_image.setSize(width, height);
+		var g = _image.graphics;
+		g.clear();
+		g.beginFill(0xffffff);
+		g.drawRect(0, 0, width, height);
+		g.endFill();
 		_pane.invalidate();
 	}
 	
