@@ -1,5 +1,7 @@
 package windowApplication;
+import flash.events.Event;
 import flash.events.MouseEvent;
+import temperate.components.CButtonSelector;
 import temperate.components.CButtonState;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
@@ -9,16 +11,24 @@ import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MSeparator;
 import temperate.minimal.MToolButton;
 import temperate.minimal.MWindow;
-import windowApplication.assets.Arrow;
 import windowApplication.assets.Ellipse;
 import windowApplication.assets.Figure;
 import windowApplication.assets.Line;
 import windowApplication.assets.Pencil;
 import windowApplication.assets.Rect;
+import windowApplication.assets.Text;
+import windowApplication.states.ADrawState;
+import windowApplication.states.EllipseDrawState;
+import windowApplication.states.FigureDrawState;
+import windowApplication.states.LineDrawState;
+import windowApplication.states.PencilDrawState;
+import windowApplication.states.RectDrawState;
+import windowApplication.states.TextDrawState;
 
 class ToolsWindow extends MWindow
 {
 	var _application:TestWindowApplication;
+	var _states:CButtonSelector<ADrawState>;
 	
 	public function new(application:TestWindowApplication) 
 	{
@@ -26,6 +36,9 @@ class ToolsWindow extends MWindow
 		
 		_application = application;
 		_baseSkin.title = "Tools";
+		_states = new CButtonSelector(null);
+		_states.addEventListener(Event.CHANGE, onStatesChange);
+		var pencilState = new PencilDrawState();
 		
 		{
 			var toolBox = new CVBox();
@@ -37,12 +50,14 @@ class ToolsWindow extends MWindow
 			toolBox.add(line).setPercents(100);
 			
 			var button = new MToolButton();
-			button.getImage(CButtonState.UP).setBitmapData(new Arrow());
+			button.getImage(CButtonState.UP).setBitmapData(new Text());
 			line.add(button).setPercents(100, 100);
+			_states.add(button, new TextDrawState());
 			
 			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Ellipse());
 			line.add(button).setPercents(100, 100);
+			_states.add(button, new EllipseDrawState());
 			
 			var line = new CHBox();
 			line.gapX = 0;
@@ -51,10 +66,12 @@ class ToolsWindow extends MWindow
 			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Figure());
 			line.add(button).setPercents(100, 100);
+			_states.add(button, new FigureDrawState());
 			
 			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Line());
 			line.add(button).setPercents(100, 100);
+			_states.add(button, new LineDrawState());
 			
 			var line = new CHBox();
 			line.gapX = 0;
@@ -63,11 +80,15 @@ class ToolsWindow extends MWindow
 			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Pencil());
 			line.add(button).setPercents(100, 100);
+			_states.add(button, pencilState);
 			
 			var button = new MToolButton();
 			button.getImage(CButtonState.UP).setBitmapData(new Rect());
 			line.add(button).setPercents(100, 100);
+			_states.add(button, new RectDrawState());
 		}
+		
+		_states.value = pencilState;
 		
 		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
 		
@@ -101,6 +122,11 @@ class ToolsWindow extends MWindow
 		_main.add(button).setPercents(100);
 		
 		setColor(0x00ff00);
+	}
+	
+	function onStatesChange(event:Event)
+	{
+		_application.setState(_states.value);
 	}
 	
 	var _colorImage:CSprite;
