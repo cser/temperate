@@ -1,3 +1,4 @@
+v.0.-?
 v.0.7
 - CSignal moved to temperate.extra
 - CKey added for downed key checking (is not using in temperate)
@@ -5,3 +6,5 @@ v.0.7
 - Renaming CMath methods colorPart, alphaPart and fullColor to getColor, getAlpha and applyAlpha
 - Renaming LinkedStack to ValueStack
 - Window system added
+v.0.5
+- First version
