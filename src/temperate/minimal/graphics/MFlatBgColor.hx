@@ -1,6 +1,6 @@
 package temperate.minimal.graphics;
 
-class MFlatBgColor 
+class MFlatBgColor
 {
 	public function new()
 	{

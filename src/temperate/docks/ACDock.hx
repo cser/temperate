@@ -2,7 +2,7 @@ package temperate.docks;
 
 class ACDock implements ICDock
 {
-	public function new() 
+	function new() 
 	{
 		noTargetMode = false;
 	}

@@ -3,7 +3,7 @@ package temperate.minimal.graphics;
 import flash.display.BitmapData;
 import flash.display.GradientType;
 import flash.geom.Matrix;
-import temperate.core.CMath;
+using temperate.core.CMath;
 
 /**
  * There is only one reson to draw skin's BitmapData's by code for default skin:
@@ -13,34 +13,7 @@ import temperate.core.CMath;
  * (In this case just incluse swf with you BitmapData's and customize components by they)
  */
 class MCommonBdFactory 
-{	
-	/*
-	static function newStriae(color:UInt, backgroundColor:UInt, space:Int, size:Int)
-	{
-		var g = shape.graphics;
-		g.clear();
-		
-		g.lineStyle(size, color);
-		var x = -DEFAULT_STRIAE_SIZE;
-		while (x < DEFAULT_STRIAE_SIZE)
-		{
-			g.moveTo(x + DEFAULT_STRIAE_SIZE, 0);
-			g.lineTo(x, DEFAULT_STRIAE_SIZE);
-			x += space + size;
-		}
-		
-		var bitmapData = new BitmapData(
-			DEFAULT_STRIAE_SIZE, DEFAULT_STRIAE_SIZE, false, backgroundColor);
-		bitmapData.draw(shape);
-		return bitmapData;
-	}
-	
-	public static function getPanelStriae()
-	{
-		return newStriae(0xc0c0c0, 0xd0d0d0, 3, 1);
-	}
-	*/
-	
+{
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Customizing
@@ -357,11 +330,11 @@ class MCommonBdFactory
 		var g = shape.graphics;
 		g.clear();
 
-		g.beginFill(CMath.colorPart(borderColor), CMath.alphaPart(borderColor));
+		g.beginFill(borderColor.getColor(), borderColor.getAlpha());
 		g.drawRoundRect(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 6);
 		g.drawRoundRect(1, 1, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 4);
 		g.endFill();
-		g.beginFill(CMath.colorPart(fillColor), CMath.alphaPart(fillColor));
+		g.beginFill(fillColor.getColor(), fillColor.getAlpha());
 		g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 4);
 		g.endFill();
 
@@ -387,13 +360,13 @@ class MCommonBdFactory
 		
 		if (shadow)
 		{
-			g.beginFill(CMath.colorPart(buttonShadowColor), CMath.alphaPart(buttonShadowColor));
+			g.beginFill(buttonShadowColor.getColor(), buttonShadowColor.getAlpha());
 			g.drawRoundRect(2, 2, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 8);
 			g.drawRoundRect(1, 1, DEFAULT_WIDTH - 3, DEFAULT_HEIGHT - 3, 8);
 			g.endFill();
 		}
 		
-		g.beginFill(CMath.colorPart(buttonBorderColor), CMath.alphaPart(buttonInnerBorderColor));
+		g.beginFill(buttonBorderColor.getColor(), buttonInnerBorderColor.getAlpha());
 		g.drawRoundRect(1, 1, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 8);
 		g.drawRoundRect(3, 3, DEFAULT_WIDTH - 6, DEFAULT_HEIGHT - 6, 4);
 		g.endFill();
@@ -406,8 +379,7 @@ class MCommonBdFactory
 		g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 8);
 		g.endFill();
 		
-		g.beginFill(
-			CMath.colorPart(buttonInnerBorderColor), CMath.alphaPart(buttonInnerBorderColor));
+		g.beginFill(buttonInnerBorderColor.getColor(), buttonInnerBorderColor.getAlpha());
 		g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 4);
 		g.drawRoundRect(3, 3, DEFAULT_WIDTH - 6, DEFAULT_HEIGHT - 6, 6);
 		g.endFill();
@@ -443,7 +415,7 @@ class MCommonBdFactory
 			g.drawRoundRect(2, 2, width - 4, height - 4, (width - 4) >> 1);
 			g.endFill();
 			
-			g.beginFill(CMath.colorPart(roundBgColor), CMath.alphaPart(roundBgColor));
+			g.beginFill(roundBgColor.getColor(), roundBgColor.getAlpha());
 			g.drawRoundRect(2, 2, width - 4, height - 4, (width - 4) >> 1);
 			g.endFill();
 		}
@@ -479,7 +451,7 @@ class MCommonBdFactory
 		}
 		
 		var offsetX = selected ? BOX_WIDTH - BOX_HEIGHT : 0;
-		g.beginFill(CMath.colorPart(roundInnerLineColor), CMath.alphaPart(roundInnerLineColor));
+		g.beginFill(roundInnerLineColor.getColor(), roundInnerLineColor.getAlpha());
 		g.drawEllipse(2 + offsetX, 2, BOX_HEIGHT - 4, BOX_HEIGHT - 4);
 		g.drawEllipse(3 + offsetX, 3, BOX_HEIGHT - 6, BOX_HEIGHT - 6);
 		g.endFill();
@@ -517,7 +489,7 @@ class MCommonBdFactory
 			g.drawEllipse(2, 2, width - 4, height - 4);
 			g.endFill();
 			
-			g.beginFill(CMath.colorPart(roundBgColor), CMath.alphaPart(roundBgColor));
+			g.beginFill(roundBgColor.getColor(), roundBgColor.getAlpha());
 			g.drawEllipse(2, 2, width - 4, height - 4);
 			g.endFill();
 			
@@ -543,7 +515,7 @@ class MCommonBdFactory
 			g.drawEllipse(indent, indent, BOX_HEIGHT - indent * 2, BOX_HEIGHT - indent * 2);
 			g.endFill();
 			
-			g.beginFill(CMath.colorPart(roundInnerLineColor), CMath.alphaPart(roundInnerLineColor));
+			g.beginFill(roundInnerLineColor.getColor(), roundInnerLineColor.getAlpha());
 			g.drawEllipse(indent, indent, BOX_HEIGHT - indent * 2, BOX_HEIGHT - indent * 2);
 			g.drawEllipse(
 			indent + 1, indent + 1, BOX_HEIGHT - indent * 2 - 2, BOX_HEIGHT - indent * 2 - 2);

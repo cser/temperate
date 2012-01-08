@@ -383,35 +383,35 @@ class CTextArea extends ACScrollPane
 	}
 	
 	public var text(get_text, set_text):String;
-	var _text:String;
 	function get_text()
 	{
-		return _text;
+		return _tf.text;
 	}
 	function set_text(value)
 	{
-		if (_text != value)
+		if (_html)
 		{
-			_text = value;
-			updateTfByText();
-			
-			_size_valid = false;
-			postponeSize();
-			dispatchEvent(new Event(Event.CHANGE));
+			_tf.htmlText = value != null ? value : "";
 		}
-		return _text;
+		else
+		{
+			_tf.text = value != null ? value : "";
+		}
+		_size_valid = false;
+		postponeSize();
+		dispatchEvent(new Event(Event.CHANGE));
+		return value;
 	}
 	
 	public function appendText(text:String)
 	{
-		_text = _text != null ? _text + text : text;
-		if (_html)
+		if (text != null)
 		{
-			_tf.htmlText = _text != null ? _text : "";
-		}
-		else
-		{
-			if (text != null)
+			if (_html)
+			{
+				_tf.htmlText += text;
+			}
+			else
 			{
 				_tf.appendText(text);
 			}
@@ -432,25 +432,18 @@ class CTextArea extends ACScrollPane
 		if (_html != value)
 		{
 			_html = value;
-			updateTfByText();
-			
+			if (_html)
+			{
+				_tf.htmlText = _tf.text;
+			}
+			else
+			{
+				_tf.text = _tf.htmlText;
+			}
 			_size_valid = false;
 			postponeSize();
 		}
 		return _html;
-	}
-	
-	function updateTfByText()
-	{
-		var settedText = _text != null ? _text : "";
-		if (_html)
-		{
-			_tf.htmlText = settedText;
-		}
-		else
-		{
-			_tf.text = settedText;
-		}
 	}
 	
 	public var restrict(get_restrict, set_restrict):String;

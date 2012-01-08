@@ -54,8 +54,7 @@ class MTooltipFactory
 	
 	static function onStageResize(event:Event = null)
 	{
-		_owner.right = _stage.stageWidth;
-		_owner.bottom = _stage.stageHeight;
+		_owner.setArea(0, 0, _stage.stageWidth, _stage.stageHeight);
 	}
 	
 	static function newDefaultAnimator<T>()

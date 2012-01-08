@@ -32,19 +32,19 @@ class CTooltipManagerTest
 		
 		var tooltiper = new FakeTooltiper();
 		manager.show(tooltiper);
-		ArrayAssert.areEqual(["show"], tooltiper.log);
+		ArrayAssert.equalToArray(["show"], tooltiper.log);
 		manager.hide(tooltiper);
-		ArrayAssert.areEqual(["show", "hide"], tooltiper.log);
+		ArrayAssert.equalToArray(["show", "hide"], tooltiper.log);
 		
 		tooltiper.log = [];
 		
 		var tooltiper2 = new FakeTooltiper();
 		manager.show(tooltiper2);
-		ArrayAssert.areEqual(["show"], tooltiper2.log);
+		ArrayAssert.equalToArray(["show"], tooltiper2.log);
 		
 		manager.show(tooltiper);
-		ArrayAssert.areEqual(["show", "hide"], tooltiper2.log);
-		ArrayAssert.areEqual(["show"], tooltiper.log);
+		ArrayAssert.equalToArray(["show", "hide"], tooltiper2.log);
+		ArrayAssert.equalToArray(["show"], tooltiper.log);
 	}
 	
 	@Test
@@ -58,13 +58,13 @@ class CTooltipManagerTest
 		
 		var tooltiper = new FakeTooltiper();
 		manager.show(tooltiper);
-		ArrayAssert.areEqual([], tooltiper.log);
+		ArrayAssert.equalToArray([], tooltiper.log);
 		manager.factory.currentTime += 7;
-		ArrayAssert.areEqual([], tooltiper.log);
+		ArrayAssert.equalToArray([], tooltiper.log);
 		manager.factory.currentTime += 1;
-		ArrayAssert.areEqual(["show"], tooltiper.log);
+		ArrayAssert.equalToArray(["show"], tooltiper.log);
 		manager.factory.currentTime += 1;
-		ArrayAssert.areEqual(["show"], tooltiper.log);
+		ArrayAssert.equalToArray(["show"], tooltiper.log);
 	}
 	
 	@Test
@@ -78,15 +78,15 @@ class CTooltipManagerTest
 		
 		var tooltiper = new FakeTooltiper();
 		manager.show(tooltiper);
-		ArrayAssert.areEqual(["show"], tooltiper.log);
+		ArrayAssert.equalToArray(["show"], tooltiper.log);
 		manager.hide(tooltiper);
-		ArrayAssert.areEqual(["show"], tooltiper.log);
+		ArrayAssert.equalToArray(["show"], tooltiper.log);
 		manager.factory.currentTime += 7;
-		ArrayAssert.areEqual(["show"], tooltiper.log);
+		ArrayAssert.equalToArray(["show"], tooltiper.log);
 		manager.factory.currentTime += 1;
-		ArrayAssert.areEqual(["show", "hide"], tooltiper.log);
+		ArrayAssert.equalToArray(["show", "hide"], tooltiper.log);
 		manager.factory.currentTime += 20;
-		ArrayAssert.areEqual(["show", "hide"], tooltiper.log);
+		ArrayAssert.equalToArray(["show", "hide"], tooltiper.log);
 	}
 	
 	
@@ -103,26 +103,26 @@ class CTooltipManagerTest
 		
 		manager.show(tooltiper);
 		manager.factory.currentTime += 7;
-		ArrayAssert.areEqual([], tooltiper.log);
+		ArrayAssert.equalToArray([], tooltiper.log);
 		manager.factory.currentTime += 1;
-		ArrayAssert.areEqual(["show"], tooltiper.log);
+		ArrayAssert.equalToArray(["show"], tooltiper.log);
 		
 		var tooltiper2 = new FakeTooltiper();
 		
 		manager.hide(tooltiper);
 		manager.show(tooltiper2);
 		manager.factory.currentTime += 1;
-		ArrayAssert.areEqual([], tooltiper2.log);
-		ArrayAssert.areEqual(["show"], tooltiper.log);
+		ArrayAssert.equalToArray([], tooltiper2.log);
+		ArrayAssert.equalToArray(["show"], tooltiper.log);
 		manager.factory.currentTime += 1;
-		ArrayAssert.areEqual([], tooltiper2.log);
-		ArrayAssert.areEqual(["show", "hide"], tooltiper.log);
+		ArrayAssert.equalToArray([], tooltiper2.log);
+		ArrayAssert.equalToArray(["show", "hide"], tooltiper.log);
 		manager.factory.currentTime += 2;
-		ArrayAssert.areEqual([], tooltiper2.log);
-		ArrayAssert.areEqual(["show", "hide"], tooltiper.log);
+		ArrayAssert.equalToArray([], tooltiper2.log);
+		ArrayAssert.equalToArray(["show", "hide"], tooltiper.log);
 		manager.factory.currentTime += 1;
-		ArrayAssert.areEqual(["show"], tooltiper2.log);
-		ArrayAssert.areEqual(["show", "hide"], tooltiper.log);
+		ArrayAssert.equalToArray(["show"], tooltiper2.log);
+		ArrayAssert.equalToArray(["show", "hide"], tooltiper.log);
 	}
 }
 

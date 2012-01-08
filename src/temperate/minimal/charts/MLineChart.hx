@@ -1,6 +1,6 @@
 package temperate.minimal.charts;
-import temperate.core.CMath;
 import temperate.text.CTextFormat;
+using temperate.core.CMath;
 
 class MLineChart extends AMBoundableChart
 {	
@@ -42,7 +42,7 @@ class MLineChart extends AMBoundableChart
 		var min:Float = get_minValue();
 		var scale:Float = chartHeight / (max - min);
 		
-		g.lineStyle(_lineWidth, CMath.colorPart(_lineColor), CMath.alphaPart(_lineColor));
+		g.lineStyle(_lineWidth, _lineColor.getColor(), _lineColor.getAlpha());
 		
 		for(i in 0 ... _values.length)
 		{
@@ -73,7 +73,7 @@ class MLineChart extends AMBoundableChart
 		
 		if (min < 0)
 		{
-			g.lineStyle(0, CMath.colorPart(_borderColor), CMath.alphaPart(_borderColor));
+			g.lineStyle(0, _borderColor.getColor(), _borderColor.getAlpha());
 			g.moveTo(0, min * scale);
 			g.lineTo(chartWidth, min * scale);
 			g.lineStyle();

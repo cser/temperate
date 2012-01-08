@@ -29,7 +29,7 @@ class CCursor implements ICCursor
 	//----------------------------------------------------------------------------------------------
 	
 	/**
-	 * For once call only. It's just for minimize parameters in constructor
+	 * For once call only. It's just for minimize params in constructor
 	 * @param	view
 	 * @param	viewUpdateOnMove - is event.updateAfterEvent() calling on moving needed
 	 */

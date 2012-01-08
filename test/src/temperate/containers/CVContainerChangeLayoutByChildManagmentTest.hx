@@ -39,7 +39,7 @@ class CVContainerChangeLayoutByChildManagmentTest
 		_container = null;
 	}
 	
-	private function checkSize(width:Int, height:Int, ?info:PosInfos)
+	function checkSize(width:Int, height:Int, ?info:PosInfos)
 	{
 		Assert.areEqual(width, _container.width, info);
 		Assert.areEqual(height, _container.height, info);

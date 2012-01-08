@@ -2,7 +2,7 @@ package temperate.components;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Shape;
-import temperate.components.parametrization.CRasterParameters;
+import temperate.components.parametrization.CRasterParams;
 import temperate.core.CMath;
 import temperate.raster.CScale3GridDrawer;
 
@@ -24,7 +24,7 @@ class CRasterThumb extends ACButton
 	
 	override function init()
 	{
-		_parameters = [];
+		_params = [];
 		minSize = 10;
 		minSizeWithIcon = 20;
 		
@@ -40,15 +40,15 @@ class CRasterThumb extends ACButton
 		_drawer = new CScale3GridDrawer(_horizontal, _bg.graphics);
 	}
 	
-	var _parameters:Array<CRasterParameters>;
+	var _params:Array<CRasterParams>;
 		
-	public function getState(state:CButtonState):CRasterParameters
+	public function getState(state:CButtonState):CRasterParams
 	{
-		var parameters = _parameters[state.index];
-		if (parameters == null)
+		var params = _params[state.index];
+		if (params == null)
 		{
-			parameters = new CRasterParameters();
-			_parameters[state.index] = parameters;
+			params = new CRasterParams();
+			_params[state.index] = params;
 		}
 		if (state == CButtonState.UP)
 		{
@@ -61,7 +61,7 @@ class CRasterThumb extends ACButton
 			_view_valid = false;
 			postponeView();
 		}
-		return parameters;
+		return params;
 	}
 	
 	override function doUpdateState()
@@ -76,7 +76,7 @@ class CRasterThumb extends ACButton
 		{
 			_size_upValid = true;
 			
-			var upParameter = _parameters[CButtonState.UP.index];
+			var upParameter = _params[CButtonState.UP.index];
 			var upBd = upParameter.bitmapData;
 			if (upBd != null)
 			{
@@ -119,25 +119,25 @@ class CRasterThumb extends ACButton
 		{
 			_view_valid = true;
 			
-			var upParameters = _parameters[CButtonState.UP.index];
-			var parameters = _parameters[_state.index];
-			if (parameters == null)
+			var upParams = _params[CButtonState.UP.index];
+			var params = _params[_state.index];
+			if (params == null)
 			{
-				parameters = upParameters;
+				params = upParams;
 			}
 			
-			if (parameters != null)
+			if (params != null)
 			{
 				_drawer.setBounds(
-					parameters.bgOffsetLeft,
-					parameters.bgOffsetTop,
-					Std.int(_width) - parameters.bgOffsetLeft + parameters.bgOffsetRight,
-					Std.int(_height) - parameters.bgOffsetTop + parameters.bgOffsetBottom
+					params.bgOffsetLeft,
+					params.bgOffsetTop,
+					Std.int(_width) - params.bgOffsetLeft + params.bgOffsetRight,
+					Std.int(_height) - params.bgOffsetTop + params.bgOffsetBottom
 				)
-					.setBitmapData(parameters.bitmapData)
+					.setBitmapData(params.bitmapData)
 					.redraw();
-				_bg.filters = parameters.filters;
-				_bg.alpha = Math.isNaN(parameters.alpha) ? 1 : parameters.alpha;
+				_bg.filters = params.filters;
+				_bg.alpha = Math.isNaN(params.alpha) ? 1 : params.alpha;
 			}
 			else
 			{

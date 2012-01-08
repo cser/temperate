@@ -51,7 +51,7 @@ class CScrollBarTest
 	}
 	
 	@Test
-	public function thumbSizeChaningOnParametersChangeCases()
+	public function thumbSizeChaningOnParamsChangeCases()
 	{
 		var owner = new ScrollBarOwner(true);
 		var scrollBar = owner.scrollBar;
@@ -74,7 +74,7 @@ class CScrollBarTest
 	}
 	
 	@Test
-	public function thumbPositionChaningOnParametersChangeCases()
+	public function thumbPositionChaningOnParamsChangeCases()
 	{
 		var owner = new ScrollBarOwner(true);
 		var scrollBar = owner.scrollBar;

@@ -1,5 +1,5 @@
 package oldStyleCalculator;
-import temperate.signals.CSignal;
+import temperate.extra.CSignal;
 
 class Controller 
 {

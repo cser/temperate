@@ -2,6 +2,7 @@ package temperate.minimal.charts;
 import flash.text.TextField;
 import temperate.core.CMath;
 import temperate.text.CTextFormat;
+using temperate.core.CMath;
 
 class MPieChart extends AMChart
 {
@@ -46,9 +47,9 @@ class MPieChart extends AMChart
 		_chartOwner.x = indentLeft + .5 * chartWidth;
 		_chartOwner.y = indentTop + .5 * chartHeight;
 		
-		if (CMath.alphaPart(_lineColor) != 0)
+		if (_lineColor.getAlpha() != 0)
 		{
-			g.lineStyle(_lineWidth, CMath.colorPart(_lineColor), CMath.alphaPart(_lineColor));
+			g.lineStyle(_lineWidth, _lineColor.getColor(), _lineColor.getAlpha());
 		}
 		else
 		{
@@ -98,7 +99,7 @@ class MPieChart extends AMChart
 	function drawArc(begin:Float, end:Float, radius:Float, color:UInt)
 	{
 		var g = _chartOwner.graphics;
-		g.beginFill(CMath.colorPart(color), CMath.alphaPart(color));
+		g.beginFill(color.getColor(), color.getAlpha());
 		g.moveTo(0, 0);
 		
 		var numSegments = Math.ceil((end - begin) * 4 / Math.PI);
@@ -153,8 +154,8 @@ class MPieChart extends AMChart
 		g = CMath.max(0, CMath.min(1, g + (index % 3 == 1 ? -.1 : .5)));
 		b = CMath.max(0, CMath.min(1, b + (index % 3 == 2 ? -.1 : .5)));
 		
-		return CMath.fullColor(
-			(Std.int(r * 0xff) << 16) | (Std.int(g * 0xff) << 8) | Std.int(b * 0xff), 1);
+		return ((Std.int(r * 0xff) << 16) | (Std.int(g * 0xff) << 8) | Std.int(b * 0xff))
+			.applyAlpha(1);
 	}
 	
 	//----------------------------------------------------------------------------------------------

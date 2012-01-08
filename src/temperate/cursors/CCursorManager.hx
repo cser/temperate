@@ -5,7 +5,7 @@ import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import flash.ui.Mouse;
 import flash.ui.MouseCursorData;
-import temperate.collections.CLinkedStack;
+import temperate.collections.CValueStack;
 import temperate.collections.ICValueSwitcher;
 import temperate.core.CMath;
 
@@ -16,14 +16,14 @@ class CCursorManager
 		_owner = owner;
 		_mouseEventSource = mouseEventSource;
 		
-		_stack = new CLinkedStack(onCursorChange);
+		_stack = new CValueStack(onCursorChange);
 		_defaultSwitcher = _stack.newSwitcher(CMath.INT_MIN_VALUE);
 		_defaultSwitcher.on();
 	}
 	
 	var _owner:DisplayObjectContainer;
 	var _mouseEventSource:IEventDispatcher;
-	var _stack:CLinkedStack<ICCursor>;
+	var _stack:CValueStack<ICCursor>;
 	
 	function onCursorChange()
 	{

@@ -1,7 +1,7 @@
 package temperate.tooltips.managers;
 import flash.utils.Timer;
 import flash.utils.TypedDictionary;
-import temperate.collections.CLinkedStack;
+import temperate.collections.CValueStack;
 import temperate.collections.ICValueSwitcher;
 import temperate.tooltips.managers.helpers.TooltiperProcessExecutor;
 import temperate.tooltips.tooltipers.ICTooltiper;
@@ -9,12 +9,12 @@ import temperate.tooltips.tooltipers.ICTooltiper;
 class CTooltipManager implements ICTooltipManager
 {
 	var _executor:TooltiperProcessExecutor;
-	var _stack:CLinkedStack<ICTooltiper>;
+	var _stack:CValueStack<ICTooltiper>;
 	var _switcherByTooltiper:TypedDictionary<ICTooltiper, ICValueSwitcher<ICTooltiper>>;
 	
 	public function new() 
 	{
-		_stack = new CLinkedStack(onStackChange);
+		_stack = new CValueStack(onStackChange);
 		_switcherByTooltiper = new TypedDictionary();
 		_executor = new TooltiperProcessExecutor(newTimer);
 	}

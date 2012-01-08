@@ -20,7 +20,7 @@ class MChartTest
 		Assert.areEqual(4, chart.indentBottom);
 		
 		chart.setValues([1., 2, 3]);
-		ArrayAssert.areEqual([1, 2, 3], chart.values);
+		ArrayAssert.equalToArray([1, 2, 3], chart.values);
 		
 		chart.autoScale = true;
 		Assert.areEqual(true, chart.autoScale);
@@ -38,13 +38,13 @@ class MChartTest
 		ExtendedAssert.areUIntEqual(0x80a0a0a0, chart.borderColor);
 		
 		chart.colors = [0xff000000, 0xffeeeeee];
-		ArrayAssert.areEqual([0xff000000, 0xffeeeeee], chart.colors);
+		ArrayAssert.equalToArray([0xff000000, 0xffeeeeee], chart.colors);
 		
 		chart.labelPrecision = 2;
 		Assert.areEqual(2, chart.labelPrecision);
 		
 		chart.labels = ["one", "two"];
-		ArrayAssert.areEqual(["one", "two"], chart.labels);
+		ArrayAssert.equalToArray(["one", "two"], chart.labels);
 		
 		chart.maxValue = 1111;
 		Assert.areEqual(1111, chart.maxValue);
@@ -95,7 +95,7 @@ class MChartTest
 		ExtendedAssert.areUIntEqual(0x80abcdef, chart.lineColor);
 		
 		chart.colors = [0xff000000, 0xffeeeeee];
-		ArrayAssert.areEqual([0xff000000, 0xffeeeeee], chart.colors);
+		ArrayAssert.equalToArray([0xff000000, 0xffeeeeee], chart.colors);
 	}
 	
 	@Test
