@@ -2,6 +2,7 @@ package temperate.windows.skins;
 import flash.display.DisplayObject;
 import flash.display.InteractiveObject;
 import flash.display.Sprite;
+import temperate.layouts.parametrization.CChildWrapper;
 
 interface ICWindowSkin 
 {
@@ -11,7 +12,7 @@ interface ICWindowSkin
 	
 	var headHeight(get_headHeight, null):Float;
 	
-	function link(container:Sprite):Void;
+	function link(container:Sprite, wrapper:CChildWrapper):Void;
 	
 	function setMouseEnabled(value:Bool):Void;
 	

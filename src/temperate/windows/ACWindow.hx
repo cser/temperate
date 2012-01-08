@@ -9,6 +9,7 @@ import temperate.collections.CPriorityList;
 import temperate.collections.ICValueSwitcher;
 import temperate.core.CGeomUtil;
 import temperate.core.CTypedDispatcher;
+import temperate.layouts.parametrization.CChildWrapper;
 import temperate.windows.components.ACWindowComponent;
 import temperate.windows.components.CWindowBaseComponent;
 import temperate.windows.components.CWindowConstraintsComponent;
@@ -33,8 +34,10 @@ class ACWindow< TData > extends CTypedDispatcher<CWindowEvent<TData>>, implement
 		innerDispatcher.addEventListener(Event.RESIZE, onManagerResize);
 		
 		_baseContainer = newContainer();
+		containerWrapper = new CChildWrapper(_baseContainer);
+		containerWrapper.setPercents(100, 100);
 		_baseSkin = newSkin();
-		_baseSkin.link(_baseContainer);
+		_baseSkin.link(_baseContainer, containerWrapper);
 		view = _baseSkin.view;
 		
 		initComponents();
@@ -361,11 +364,7 @@ class ACWindow< TData > extends CTypedDispatcher<CWindowEvent<TData>>, implement
 		}
 	}
 	
-	//----------------------------------------------------------------------------------------------
-	//
-	//  Helped
-	//
-	//----------------------------------------------------------------------------------------------
+	public var containerWrapper(default, null):CChildWrapper;
 	
 	public function close(data:TData, fast:Bool = false):Void
 	{

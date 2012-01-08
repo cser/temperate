@@ -3,6 +3,7 @@ import flash.display.Sprite;
 import flash.text.TextField;
 import temperate.components.ICButton;
 import temperate.core.CMath;
+import temperate.layouts.parametrization.CChildWrapper;
 import temperate.minimal.graphics.MWindowBdFactory;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.windows.MCloseButton;
@@ -44,9 +45,9 @@ class MWindowSkin extends ACWindowSkin
 	var _drawer:CVScale12GridDrawer;
 	var _head:Sprite;
 	
-	override public function link(container:Sprite):Void 
+	override public function link(container:Sprite, wrapper:CChildWrapper):Void 
 	{
-		super.link(container);
+		super.link(container, wrapper);
 		_titleTF = MFormatFactory.WINDOW_TITLE.newAutoSized();
 		_titleTF.mouseEnabled = false;
 		addChild(_titleTF);
@@ -80,12 +81,19 @@ class MWindowSkin extends ACWindowSkin
 			var left = INDENT;
 			var right = INDENT;
 			var neededWidth = CMath.intMax(getNeededWidth(), minWidth);
-			_container.width = CMath.intMax(0, neededWidth - left - right);
-			_container.height = CMath.intMax(0, getNeededHeight() - top - bottom);
-			_width = CMath.intMax(Std.int(_container.width) + left + right, minWidth);
-			_height = CMath.intMax(Std.int(_container.height) + top + bottom, minHeight);
-			_container.x = left;
-			_container.y = top;
+			_wrapper.x = 0;
+			_wrapper.y = 0;
+			if (!Math.isNaN(_wrapper.widthPortion))
+			{
+				_wrapper.setWidth(CMath.intMax(0, neededWidth - left - right));
+			}
+			if (!Math.isNaN(_wrapper.heightPortion))
+			{
+				_wrapper.setHeight(CMath.intMax(0, getNeededHeight() - top - bottom));
+			}
+			_width = CMath.intMax(Std.int(_wrapper.getWidth()) + left + right, minWidth);
+			_height = CMath.intMax(Std.int(_wrapper.getHeight()) + top + bottom, minHeight);
+			_wrapper.updatePosition(left, top);
 			_lineTop = top - LINE_BOTTOM_INDENT;
 			
 			_view_valid = false;

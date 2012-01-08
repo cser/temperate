@@ -3,6 +3,7 @@ import flash.display.DisplayObject;
 import flash.display.InteractiveObject;
 import flash.display.Sprite;
 import temperate.core.CSprite;
+import temperate.layouts.parametrization.CChildWrapper;
 
 class ACWindowSkin extends CSprite, implements ICWindowSkin
 {
@@ -25,11 +26,14 @@ class ACWindowSkin extends CSprite, implements ICWindowSkin
 	}
 	
 	var _container:Sprite;
+	var _wrapper:CChildWrapper;
 	
-	public function link(container:Sprite):Void
+	public function link(container:Sprite, wrapper:CChildWrapper):Void
 	{
 		_container = container;
 		addChild(_container);
+		
+		_wrapper = wrapper;
 		
 		_size_valid = false;
 		postponeSize();

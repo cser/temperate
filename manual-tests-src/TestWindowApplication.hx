@@ -296,18 +296,24 @@ class TestWindowApplication extends Sprite
 	
 	function onToolFPSClick()
 	{
+		var first = false;
 		if (_fpsMonitor == null)
 		{
+			first = true;
 			_fpsMonitor = new MWindowedContainer(new FPSMonitor());
-			_fpsMonitor.setSize(150, 100);
+			_fpsMonitor.containerWrapper.setPercents( -1, -1);
 		}
 		if (_fpsMonitor.isOpened)
 		{
-			_fpsMonitor.close(null);
+			_fpsMonitor.close(null, true);
 		}
 		else
 		{
-			MWindowManager.add(_fpsMonitor, false);
+			MWindowManager.add(_fpsMonitor, false, true);
+			if (first)
+			{
+				_fpsMonitor.move(0, 0);
+			}
 		}
 	}
 }
