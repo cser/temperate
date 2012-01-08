@@ -18,29 +18,46 @@ class ImageWindow extends AMWindow<Dynamic>
 	{
 		super();
 		
-		title = name;
+		image = new CSprite();
+		primitives = new Primitives();
+		primitives.changed.add(updateTitle);
+		this.name = name;
+		
+		isImageOpened = false;
+		_savedPrimitivesLength = 0;
 		_editorState = editorState;
 		
 		_skin.addHeadButton(_skin.maximizeButton).addEventListener(Event.CHANGE, onMaximizeChange);
 		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
 		resizable = true;
 		
-		image = new CSprite();
-		primitives = [];
 		_pane = new MScrollPane();
 		_pane.set(image);
 		_main.add(_pane).setPercents(100, 100);
 		
-		_toolCursor = MCursorManager.newHover(-1).setTarget(image);
+		_toolCursor = MCursorManager.newHover( -1).setTarget(image);
+	}
+	
+	function updateTitle()
+	{
+		title = name + (isChanged ? "*" : "");
 	}
 	
 	var _editorState:EditorState;
 	var _pane:MScrollPane;
 	var _toolCursor:CHoverSwitcher<ICCursor>;
 	
+	public var name(default, set_name):String;
+	function set_name(value)
+	{
+		name = value;
+		updateTitle();
+		return name;
+	}
+	
 	public var image(default, null):CSprite;
 	
-	public var primitives(default, null):Array<Primitive>;
+	public var primitives(default, null):Primitives;
 	
 	public function setImageSize(width:Int, height:Int)
 	{
@@ -48,9 +65,30 @@ class ImageWindow extends AMWindow<Dynamic>
 		redrawBg();
 	}
 	
-	public function drawPrimitives(primitives:Array<Primitive>)
+	public var isImageOpened(default, null):Bool;
+	
+	public var isChanged(get_changed, null):Bool;
+	function get_changed()
 	{
+		return primitives.length > _savedPrimitivesLength;
+	}
+	
+	var _savedPrimitivesLength:Int;
+	
+	public function markAsSaved()
+	{
+		_savedPrimitivesLength = primitives.length;
+	}
+	
+	public function drawPrimitives(primitives:Primitives)
+	{
+		if (this.primitives != null)
+		{
+			this.primitives.changed.remove(updateTitle);
+		}
 		this.primitives = primitives;
+		primitives.changed.add(updateTitle);
+		isImageOpened = true;
 		redrawBg();
 		var g = image.graphics;
 		g.lineStyle(0, 0x000000);
@@ -79,6 +117,8 @@ class ImageWindow extends AMWindow<Dynamic>
 					image.addChild(tf);
 			}
 		}
+		markAsSaved();
+		updateTitle();
 	}
 	
 	function redrawBg()

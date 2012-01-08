@@ -76,7 +76,7 @@ List.as					-
 ListItem.as				-
 
 Panel.as				-
-Window.as				-
+Window.as				MWindowManager && MWindow
 Accordion.as			-
 
 Calendar.as				-

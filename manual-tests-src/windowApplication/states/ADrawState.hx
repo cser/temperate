@@ -6,6 +6,7 @@ import flash.events.MouseEvent;
 import temperate.core.CSprite;
 import windowApplication.EditorState;
 import windowApplication.Primitive;
+import windowApplication.Primitives;
 
 class ADrawState 
 {
@@ -28,9 +29,9 @@ class ADrawState
 	var _graphics:Graphics;
 	var _topSprite:Sprite;
 	var _topGraphics:Graphics;
-	var _primitives:Array<Primitive>;
+	var _primitives:Primitives;
 	
-	public function setImage(image:CSprite, primitives:Array<Primitive>)
+	public function setImage(image:CSprite, primitives:Primitives)
 	{
 		if (_image != image)
 		{

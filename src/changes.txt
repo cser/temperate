@@ -4,3 +4,4 @@ v.0.7
 - CRasterImageButton added (scaled button with some DisplayObject inside)
 - Renaming CMath methods colorPart, alphaPart and fullColor to getColor, getAlpha and applyAlpha
 - Renaming LinkedStack to ValueStack
+- Window system added

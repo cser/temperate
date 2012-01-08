@@ -7,6 +7,7 @@ import temperate.components.ICButton;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
 import temperate.core.CSprite;
+import temperate.extra.CSignal;
 import temperate.minimal.MFlatButton;
 import temperate.minimal.MFlatImageButton;
 import temperate.minimal.MSeparator;
@@ -16,17 +17,26 @@ import windowApplication.states.ADrawState;
 
 class ToolsWindow extends AMWindow<Dynamic>
 {
-	var _application:TestWindowApplication;
+	public var signalColorClick(default, null):CSignal < Void->Void > ;
+	public var signalNewClick(default, null):CSignal < Void->Void > ;
+	public var signalOpenClick(default, null):CSignal < Void->Void > ;
+	public var signaleSaveClick(default, null):CSignal < Void->Void > ;
+	public var signalFPSClick(default, null):CSignal < Void->Void > ;
+	
 	var _tools:CButtonSelector<ADrawState>;
 	var _editorState:EditorState;
 	
 	public function new(
-		application:TestWindowApplication, states:Array<ADrawState>, selectedState:ADrawState,
-		editorState:EditorState)
+		states:Array<ADrawState>, selectedState:ADrawState, editorState:EditorState)
 	{
 		super();
 		
-		_application = application;
+		signalColorClick = new CSignal();
+		signalNewClick = new CSignal();
+		signalOpenClick = new CSignal();
+		signaleSaveClick = new CSignal();
+		signalFPSClick = new CSignal();
+		
 		_editorState = editorState;
 		_baseSkin.title = "Tools";
 		_tools = new CButtonSelector(null);
@@ -69,30 +79,30 @@ class ToolsWindow extends AMWindow<Dynamic>
 		_colorImage.setSize(40, 20);
 		var button = new MFlatImageButton();
 		button.getImage(CButtonState.UP).setImage(_colorImage);
-		button.addEventListener(MouseEvent.CLICK, onColorClick);
+		button.addEventListener(MouseEvent.CLICK, newListener(signalColorClick));
 		_main.add(button).setPercents(100);
 		
 		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
 		
 		var button = new MFlatButton();
 		button.text = "New";
-		button.addEventListener(MouseEvent.CLICK, onNewClick);
+		button.addEventListener(MouseEvent.CLICK, newListener(signalNewClick));
 		_main.add(button).setPercents(100);
 		
 		var button = new MFlatButton();
 		button.text = "Open";
-		button.addEventListener(MouseEvent.CLICK, onOpenClick);
+		button.addEventListener(MouseEvent.CLICK, newListener(signalOpenClick));
 		_main.add(button).setPercents(100);
 		
 		var button = new MFlatButton();
 		button.text = "Save";
-		button.addEventListener(MouseEvent.CLICK, onSaveClick);
+		button.addEventListener(MouseEvent.CLICK, newListener(signaleSaveClick));
 		_main.add(button).setPercents(100);
 		saveButton = button;
 		
 		var button = new MFlatButton();
 		button.text = "FPS";
-		button.addEventListener(MouseEvent.CLICK, onFPSClick);
+		button.addEventListener(MouseEvent.CLICK, newListener(signalFPSClick));
 		_main.add(button).setPercents(100);
 		
 		_editorState.colorChanged.add(onColorChange);
@@ -108,11 +118,6 @@ class ToolsWindow extends AMWindow<Dynamic>
 	
 	var _colorImage:CSprite;
 	
-	function onColorClick(event:MouseEvent)
-	{
-		_application.doShowColors();
-	}
-	
 	function onColorChange()
 	{
 		var w = _colorImage.width;
@@ -127,23 +132,11 @@ class ToolsWindow extends AMWindow<Dynamic>
 		g.endFill();
 	}
 	
-	function onNewClick(event:MouseEvent)
+	function newListener(signal:CSignal < Void->Void > )
 	{
-		_application.doNew();
-	}
-	
-	function onOpenClick(event:MouseEvent)
-	{
-		_application.doOpen();
-	}
-	
-	function onSaveClick(event:MouseEvent)
-	{
-		_application.doSave();
-	}
-	
-	function onFPSClick(event:MouseEvent)
-	{
-		_application.doShowFps();
+		return function (event:Event)
+		{
+			signal.dispatch();
+		}
 	}
 }

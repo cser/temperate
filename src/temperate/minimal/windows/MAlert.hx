@@ -6,6 +6,7 @@ import flash.utils.TypedDictionary;
 import temperate.containers.CHBox;
 import temperate.minimal.MButton;
 import temperate.minimal.MFormatFactory;
+import temperate.minimal.MSeparator;
 
 class MAlert< TData > extends AMWindow<TData>
 {
@@ -53,6 +54,8 @@ class MAlert< TData > extends AMWindow<TData>
 		}
 		line.add(_tf);
 		
+		_main.add(new MSeparator(true)).setIndents( -2, -2).setPercents(100);
+		
 		var line = new CHBox();
 		_main.add(line).setAlign(.5);
 		
@@ -63,6 +66,10 @@ class MAlert< TData > extends AMWindow<TData>
 			button.width = 50;
 			button.text = info.name;
 			button.addEventListener(MouseEvent.CLICK, onButtonClick);
+			if (info.selected)
+			{
+				button.selected = true;
+			}
 			line.add(button);
 			_dataByButton.set(button, info.data);
 		}

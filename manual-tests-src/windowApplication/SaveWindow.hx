@@ -35,6 +35,7 @@ class SaveWindow extends AMWindow<String>
 		var button = new MButton();
 		button.text = "Save";
 		button.addEventListener(MouseEvent.CLICK, onSaveClick);
+		button.selected = true;
 		buttonBox.add(button);
 		
 		var button = new MButton();

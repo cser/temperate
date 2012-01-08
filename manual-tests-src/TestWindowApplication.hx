@@ -3,15 +3,19 @@ import flash.display.Sprite;
 import flash.geom.Point;
 import temperate.debug.FPSMonitor;
 import temperate.minimal.windows.MAlert;
+import temperate.minimal.windows.MButtonInfo;
 import temperate.minimal.windows.MWindowedContainer;
 import temperate.minimal.windows.MWindowManager;
+import temperate.windows.ACWindow;
 import temperate.windows.events.CWindowEvent;
 import windowApplication.CImageManager;
 import windowApplication.ColorsWindow;
 import windowApplication.EditorState;
+import windowApplication.ImageWindow;
 import windowApplication.NewWindow;
 import windowApplication.OpenWindow;
 import windowApplication.OpenWindowData;
+import windowApplication.Primitives;
 import windowApplication.SaveWindow;
 import windowApplication.states.ADrawState;
 import windowApplication.states.EllipseDrawState;
@@ -53,7 +57,12 @@ class TestWindowApplication extends Sprite
 		{
 			state.init(_editorState);
 		}
-		_toolsWindow = new ToolsWindow(this, states, pencilState, _editorState);
+		_toolsWindow = new ToolsWindow(states, pencilState, _editorState);
+		_toolsWindow.signalColorClick.add(onToolColorClick);
+		_toolsWindow.signaleSaveClick.add(onToolSaveClick);
+		_toolsWindow.signalFPSClick.add(onToolFPSClick);
+		_toolsWindow.signalNewClick.add(onToolNewClick);
+		_toolsWindow.signalOpenClick.add(onToolOpenClick);
 		MWindowManager.add(_toolsWindow, false, true);
 		_toolsWindow.move(Std.int(stage.stageWidth) - _toolsWindow.width - 10, 50);
 		updateSaveEnabled();
@@ -98,7 +107,7 @@ class TestWindowApplication extends Sprite
 	
 	var _colorsWindow:ColorsWindow;
 	
-	public function doShowColors()
+	function onToolColorClick()
 	{
 		if (_colorsWindow == null)
 		{
@@ -118,7 +127,7 @@ class TestWindowApplication extends Sprite
 		}
 	}
 	
-	public function doNew()
+	function onToolNewClick()
 	{
 		var window = new NewWindow();
 		window.addTypedListener(CWindowEvent.CLOSE, onNewWindowClose);
@@ -149,7 +158,7 @@ class TestWindowApplication extends Sprite
 		return name;
 	}
 	
-	public function doOpen()
+	function onToolOpenClick()
 	{
 		var window = new OpenWindow(_storage.names);
 		window.addTypedListener(CWindowEvent.CLOSE, onOpenClose);
@@ -157,9 +166,9 @@ class TestWindowApplication extends Sprite
 		MWindowManager.add(window, true);
 	}
 	
-	public function doSave()
+	function onToolSaveClick()
 	{
-		var name = _imageManager.current.title;
+		var name = _imageManager.current.name;
 		var window = new SaveWindow(name);
 		window.addTypedListener(CWindowEvent.CLOSE, onSaveClose);
 		MWindowManager.add(window, true);
@@ -171,20 +180,43 @@ class TestWindowApplication extends Sprite
 		if (name != null)
 		{
 			var window = _imageManager.current;
-			if (_storage.exists(name))
+			if (_storage.exists(name) && (name != window.name || !window.isImageOpened))
 			{
 				event.preventDefault();
-				MAlert.show(true, "File with name \"" + name + "\" already exists");
+				MAlert.show(
+					true, "File with name \"" + name + "\" already exists.\nRewrite it?",
+					"Question",
+					[new MButtonInfo(
+						{window:window, name:name, parentWindow:event.window}, "Yes", true),
+					new MButtonInfo(null, "No")])
+					.addTypedListener(CWindowEvent.CLOSE, onRewriteYesNoClose);
 				return;
 			}
-			var imageData = {
-				width: Std.int(window.image.width),
-				height: Std.int(window.image.height),
-				primitives: window.primitives
-			}
-			_storage.save(name, imageData);
-			window.title = name;
+			save(window, name);
 		}
+	}
+	
+	function onRewriteYesNoClose(
+		event:CWindowEvent<{window:ImageWindow, name:String, parentWindow:ACWindow<Dynamic>}>)
+	{
+		var data = event.data;
+		if (data != null)
+		{
+			save(data.window, data.name);
+			data.parentWindow.close(null);
+		}
+	}
+	
+	function save(window:ImageWindow, name:String)
+	{
+		var imageData = {
+			width: Std.int(window.image.width),
+			height: Std.int(window.image.height),
+			primitives: window.primitives.toArray()
+		}
+		_storage.save(name, imageData);
+		window.name = name;
+		window.markAsSaved();
 	}
 	
 	function onOpenClose(event:CWindowEvent<OpenWindowData>)
@@ -199,7 +231,7 @@ class TestWindowApplication extends Sprite
 					{
 						var imageData = _storage.getImageData(name);
 						window = _imageManager.addNew(imageData.width, imageData.height, name);
-						window.drawPrimitives(imageData.primitives);
+						window.drawPrimitives(Primitives.fromArray(imageData.primitives));
 						var tool = _editorState.tool;
 						_editorState.tool = null;
 						_editorState.tool = tool;
@@ -216,7 +248,7 @@ class TestWindowApplication extends Sprite
 	
 	var _fpsMonitor:MWindowedContainer<Dynamic>;
 	
-	public function doShowFps()
+	function onToolFPSClick()
 	{
 		if (_fpsMonitor == null)
 		{

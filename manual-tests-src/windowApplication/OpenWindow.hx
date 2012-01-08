@@ -50,6 +50,7 @@ class OpenWindow extends AMWindow<OpenWindowData>
 		var button = new MButton();
 		button.text = "Open";
 		button.addEventListener(MouseEvent.CLICK, onOpenClick);
+		button.selected = true;
 		buttonBox.add(button);
 		_openButton = button;
 		

@@ -11,7 +11,6 @@ class ACWindowSkin extends CSprite, implements ICWindowSkin
 		super();
 		view = this;
 		
-		_isLocked = false;
 		_isActive = false;
 	}
 	
@@ -35,7 +34,7 @@ class ACWindowSkin extends CSprite, implements ICWindowSkin
 		_size_valid = false;
 		postponeSize();
 		
-		updateIsLocked();
+		updateIsEnabled();
 		updateIsActive();
 	}
 	
@@ -47,31 +46,25 @@ class ACWindowSkin extends CSprite, implements ICWindowSkin
 		updateMouseEnabled();
 	}
 	
-	public var isLocked(get_isLocked, set_isLocked):Bool;
-	var _isLocked:Bool;
-	function get_isLocked()
+	override function set_isEnabled(value)
 	{
-		return _isLocked;
-	}
-	function set_isLocked(value)
-	{
-		if (_isLocked != value)
+		if (_isEnabled != value)
 		{
-			_isLocked = value;
-			updateIsLocked();
+			_isEnabled = value;
+			updateIsEnabled();
 		}
-		return _isLocked;
+		return _isEnabled;
 	}
 	
-	function updateIsLocked()
+	function updateIsEnabled()
 	{
 		updateMouseEnabled();
 	}
 	
 	function updateMouseEnabled()
 	{
-		mouseEnabled = !_isLocked && _mouseEnabled;
-		mouseChildren = !_isLocked && _mouseEnabled;
+		mouseEnabled = _isEnabled && _mouseEnabled;
+		mouseChildren = _isEnabled && _mouseEnabled;
 	}
 	
 	public var isActive(get_isActive, set_isActive):Bool;

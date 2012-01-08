@@ -100,22 +100,21 @@ class MWindowSkin extends ACWindowSkin
 		{
 			_view_valid = true;
 			
-			var format = _isLocked ?
-				MFormatFactory.WINDOW_TITLE_DISABLED : MFormatFactory.WINDOW_TITLE;
+			var format = _isEnabled ?
+				MFormatFactory.WINDOW_TITLE : MFormatFactory.WINDOW_TITLE_DISABLED;
 			format.applyTo(_titleTF);
 			
 			var g = graphics;
 			g.clear();
 			
 			g.lineStyle();
-			var bd;
-			if (_isLocked)
+			var bd = if (_isEnabled)
 			{
-				bd = MWindowBdFactory.getLockedTop();
+				_isActive ? MWindowBdFactory.getActiveTop() : MWindowBdFactory.getDefaultTop();
 			}
 			else
 			{
-				bd = _isActive ? MWindowBdFactory.getActiveTop() : MWindowBdFactory.getDefaultTop();
+				MWindowBdFactory.getLockedTop();
 			}
 			g.beginBitmapFill(bd);
 			g.drawRoundRectComplex(1, 1, width - 2, _lineTop - 1, 5, 5, 0, 0);
@@ -156,9 +155,9 @@ class MWindowSkin extends ACWindowSkin
 		return _title;
 	}
 	
-	override function updateIsLocked()
+	override function updateIsEnabled()
 	{
-		super.updateIsLocked();
+		super.updateIsEnabled();
 		_view_valid = false;
 		postponeView();
 	}
