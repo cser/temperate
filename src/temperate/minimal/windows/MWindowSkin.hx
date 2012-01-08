@@ -41,6 +41,7 @@ class MWindowSkin extends ACWindowSkin
 	}
 	
 	var _view_headButtonsValid:Bool;
+	var _measuredTF:TextField;
 	var _titleTF:TextField;
 	var _drawer:CVScale12GridDrawer;
 	var _head:Sprite;
@@ -48,8 +49,13 @@ class MWindowSkin extends ACWindowSkin
 	override public function link(container:Sprite, wrapper:CChildWrapper):Void 
 	{
 		super.link(container, wrapper);
-		_titleTF = MFormatFactory.WINDOW_TITLE.newAutoSized();
+		var format = MFormatFactory.WINDOW_TITLE;
+		_measuredTF = format.newAutoSized();
+		_measuredTF.text = " ";
+		_titleTF = format.newFixed();
 		_titleTF.mouseEnabled = false;
+		_titleTF.x = INDENT;
+		_titleTF.y = INDENT;
 		addChild(_titleTF);
 	}
 	
@@ -61,10 +67,10 @@ class MWindowSkin extends ACWindowSkin
 		{
 			_size_valid = true;
 			
-			var titleWidth = Std.int(_titleTF.width);
-			var titleHeight = Std.int(_titleTF.height);
-			_titleTF.x = INDENT;
-			_titleTF.y = INDENT;
+			var titleWidth = Std.int(_measuredTF.width);
+			var titleHeight = Std.int(_measuredTF.height);
+			_titleTF.width = titleWidth;
+			_titleTF.height = titleHeight;
 			
 			var buttonsWidth = 0;
 			for (button in _headButtons)
@@ -157,7 +163,9 @@ class MWindowSkin extends ACWindowSkin
 	override function set_title(value:String) 
 	{
 		_title = value;
-		_titleTF.text = _title;
+		var corrected = _title != null && _title != "" ? _title : " ";
+		_measuredTF.text = corrected;
+		_titleTF.text = corrected;
 		_size_valid = false;
 		postponeSize();
 		return _title;
