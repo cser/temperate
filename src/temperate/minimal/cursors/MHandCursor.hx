@@ -12,8 +12,8 @@ class MHandCursor extends CRasterPressCursor
 		
 		setView(
 			MCursorBdFactory.getHandUp(), MCursorBdFactory.getHandDown(), updateOnMove,
-			hideSystem ? 0 : 14,
-			hideSystem ? 0 : 16
+			hideSystem ? -5 : 14,
+			hideSystem ? -5 : 16
 		);
 		
 		setHideSystem(hideSystem);

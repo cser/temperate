@@ -60,17 +60,17 @@ class CMath
 		return x > 0 ? x : -x;
 	}
 	
-	inline public static function alphaPart(color:UInt):Float
+	inline public static function getAlpha(color:UInt):Float
 	{
 		return (color >>> 24) / 0xff;
 	}
 	
-	inline public static function colorPart(color:UInt):UInt
+	inline public static function getColor(color:UInt):UInt
 	{
 		return color & 0x00ffffff;
 	}
 	
-	inline public static function fullColor(colorPart:UInt, alphaPart:Float):UInt
+	inline public static function applyAlpha(colorPart:UInt, alphaPart:Float):UInt
 	{
 		return (Std.int(0xff * alphaPart) << 24) | (0x00ffffff & colorPart);
 	}

@@ -1,7 +1,7 @@
 package temperate.minimal;
 import temperate.components.CButtonState;
 import temperate.components.CNumericStepper;
-import temperate.components.CRasterFixedButton;
+import temperate.components.CRasterToolButton;
 import temperate.core.CMath;
 import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.skins.MFieldRectSkin;
@@ -10,7 +10,7 @@ class MNumericStepper extends CNumericStepper
 {	
 	public function new() 
 	{
-		var up = new CRasterFixedButton();
+		var up = new CRasterToolButton();
 		up.getState(CButtonState.UP).setBitmapData(MCommonBdFactory.getUpArrowUp());
 		up.getState(CButtonState.OVER).setBitmapData(MCommonBdFactory.getUpArrowOver());
 		up.getState(CButtonState.DOWN).setBitmapData(MCommonBdFactory.getUpArrowOver())
@@ -18,7 +18,7 @@ class MNumericStepper extends CNumericStepper
 		up.getState(CButtonState.DISABLED).setBitmapData(MCommonBdFactory.getUpArrowUp())
 			.setAlpha(.4);
 		
-		var down = new CRasterFixedButton();
+		var down = new CRasterToolButton();
 		down.getState(CButtonState.UP).setBitmapData(MCommonBdFactory.getDownArrowUp());
 		down.getState(CButtonState.OVER).setBitmapData(MCommonBdFactory.getDownArrowOver());
 		down.getState(CButtonState.DOWN).setBitmapData(MCommonBdFactory.getDownArrowOver())

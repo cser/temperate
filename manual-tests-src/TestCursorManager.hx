@@ -82,9 +82,4 @@ class TestCursorManager extends Sprite
 	{
 		_manager.defaultCursor = cursor;
 	}
-	
-	/*
-	Переводит курсор в состояние "нажато", если нажата кнопка мыши, возвращает при отпускании
-	Курсор, цепляющийся к цели
-	*/
 }

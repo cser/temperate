@@ -38,10 +38,5 @@ class CNullTooltipAnimator< T > implements ICTooltipAnimator<T>
 		}
 	}
 	
-	public function updatePosition()
-	{
-		
-	}
-	
 	public var onHideComplete:Void->Void;
 }

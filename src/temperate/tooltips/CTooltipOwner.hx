@@ -1,26 +1,38 @@
 package temperate.tooltips;
 import flash.display.DisplayObjectContainer;
 import flash.geom.Rectangle;
+import temperate.core.ICArea;
 import temperate.tooltips.docks.ICTooltipDock;
 
-class CTooltipOwner 
+class CTooltipOwner implements ICArea
 {
 	public function new(container:DisplayObjectContainer)
 	{
 		this.container = container;
 		
-		left = 0;
-		top = 0;
-		right = 100;
-		bottom = 100;
+		areaX = 0;
+		areaY = 0;
+		areaWidth = 100;
+		areaHeight = 100;
 	}
 	
 	public var container(default, null):DisplayObjectContainer;
 	
-	public var left:Int;
-	public var top:Int;
-	public var right:Int;
-	public var bottom:Int;
+	public var areaX(default, null):Int;
+	
+	public var areaY(default, null):Int;
+	
+	public var areaWidth(default, null):Int;
+	
+	public var areaHeight(default, null):Int;
+	
+	public function setArea(x:Int, y:Int, width:Int, height:Int):Void
+	{
+		areaX = x;
+		areaY = y;
+		areaWidth = width;
+		areaHeight = height;
+	}
 	
 	static var _rectangle:Rectangle;
 	
@@ -31,13 +43,13 @@ class CTooltipOwner
 		{
 			_rectangle = new Rectangle();
 		}
-		_rectangle.x = target.x - left;
-		_rectangle.y = target.y - top;
+		_rectangle.x = target.x - areaX;
+		_rectangle.y = target.y - areaY;
 		_rectangle.width = target.width;
 		_rectangle.height = target.height;
-		dock.arrange(_rectangle, right - left, bottom - top, rendererWidth, rendererHeight);
-		rendererX = dock.rendererX + left;
-		rendererY = dock.rendererY + top;
+		dock.arrange(_rectangle, areaWidth, areaHeight, rendererWidth, rendererHeight);
+		rendererX = dock.rendererX + areaX;
+		rendererY = dock.rendererY + areaY;
 	}
 	
 	public var rendererX(default, null):Int;

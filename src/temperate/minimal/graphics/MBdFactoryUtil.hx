@@ -2,7 +2,7 @@ package temperate.minimal.graphics;
 import flash.display.Shape;
 import flash.display.StageQuality;
 import flash.Lib;
-import temperate.core.CMath;
+using temperate.core.CMath;
 
 class MBdFactoryUtil 
 {
@@ -44,8 +44,8 @@ class MBdFactoryUtil
 		for (i in 0 ... source.length)
 		{
 			var color = source[i];
-			outColors[i] = CMath.colorPart(color);
-			outAlphas[i] = CMath.alphaPart(color);
+			outColors[i] = color.getColor();
+			outAlphas[i] = color.getAlpha();
 		}
 	}
 }

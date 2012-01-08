@@ -251,10 +251,7 @@ class TestTooltips extends Sprite
 	
 	function onStageResize(event:Event = null)
 	{
-		_owner.left = 10;
-		_owner.top = 20;
-		_owner.right = stage.stageWidth - 10;
-		_owner.bottom = stage.stageHeight - 20;
+		_owner.setArea(10, 20, stage.stageWidth - 20, stage.stageHeight - 40);
 	}
 	
 	function newCustomTooltip()

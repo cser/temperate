@@ -7,6 +7,7 @@ import temperate.core.CMath;
 import temperate.core.CSprite;
 import temperate.text.CDefaultFormatFactory;
 import temperate.text.CTextFormat;
+using temperate.core.CMath;
 	
 class AMChart extends CSprite
 {
@@ -149,8 +150,8 @@ class AMChart extends CSprite
 	{
 		var g = _bg.graphics;
 		g.clear();
-		g.lineStyle(0, CMath.colorPart(_borderColor), CMath.alphaPart(_borderColor));
-		g.beginFill(CMath.colorPart(_bgColor), CMath.alphaPart(_bgColor));
+		g.lineStyle(0, borderColor.getColor(), _borderColor.getAlpha());
+		g.beginFill(_bgColor.getColor(), _bgColor.getAlpha());
 		g.drawRect(0, 0, _width, _height);
 		g.endFill();
 	}
@@ -186,7 +187,7 @@ class AMChart extends CSprite
 		}
 		if (result == null)
 		{
-			result = CMath.toLimitDigits(_values[index], _labelPrecision);
+			result = _values[index].toLimitDigits(_labelPrecision);
 		}
 		return result;
 	}

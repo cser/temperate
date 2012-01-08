@@ -1,7 +1,6 @@
 package temperate.minimal.graphics;
 import flash.display.BitmapData;
-import flash.geom.Rectangle;
-import temperate.core.CMath;
+using temperate.core.CMath;
 
 class MLineBdFactory 
 {
@@ -55,14 +54,14 @@ class MLineBdFactory
 		var g = shape.graphics;
 		g.clear();
 
-		g.beginFill(CMath.colorPart(fillColor), CMath.alphaPart(fillColor));
+		g.beginFill(fillColor.getColor(), fillColor.getAlpha());
 		g.drawRoundRect(0, 0, width, height, 4);
 		g.endFill();
-		g.beginFill(CMath.colorPart(borderLightColor), CMath.alphaPart(borderLightColor));
+		g.beginFill(borderLightColor.getColor(), borderLightColor.getAlpha());
 		g.drawRoundRect(0, 0, width, height, 4);
 		g.drawRoundRect(0, 0, width - 1, height - 1, 4);
 		g.endFill();
-		g.beginFill(CMath.colorPart(borderColor), CMath.alphaPart(borderColor));
+		g.beginFill(borderColor.getColor(), borderColor.getAlpha());
 		g.drawRoundRect(0, 0, width, height, 4);
 		g.drawRoundRect(1, 1, width - 1, height - 1, 4);
 		g.endFill();

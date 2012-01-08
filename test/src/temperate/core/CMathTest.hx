@@ -1,6 +1,5 @@
 package temperate.core;
 
-import haxe.PosInfos;
 import massive.munit.Assert;
 
 class CMathTest
@@ -12,42 +11,42 @@ class CMathTest
 	@Test
 	public function colorConvertions()
 	{
-		Assert.areEqual(1, CMath.alphaPart(0xff000000));
-		Assert.areEqual(1, CMath.alphaPart(0xffe0e0e0));
-		Assert.areEqual(1, CMath.alphaPart(0xffffffff));
+		Assert.areEqual(1, CMath.getAlpha(0xff000000));
+		Assert.areEqual(1, CMath.getAlpha(0xffe0e0e0));
+		Assert.areEqual(1, CMath.getAlpha(0xffffffff));
 		
-		Assert.areEqual(0, CMath.alphaPart(0x00000000));
-		Assert.areEqual(0, CMath.alphaPart(0x00e0e0e0));
-		Assert.areEqual(0, CMath.alphaPart(0x00ffffff));
+		Assert.areEqual(0, CMath.getAlpha(0x00000000));
+		Assert.areEqual(0, CMath.getAlpha(0x00e0e0e0));
+		Assert.areEqual(0, CMath.getAlpha(0x00ffffff));
 		
-		Assert.areEqual(.5, Math.round(CMath.alphaPart(0x80000000) * 10) / 10);
-		Assert.areEqual(.5, Math.round(CMath.alphaPart(0x80e0e0e0) * 10) / 10);
-		Assert.areEqual(.5, Math.round(CMath.alphaPart(0x80ffffff) * 10) / 10);
+		Assert.areEqual(.5, Math.round(CMath.getAlpha(0x80000000) * 10) / 10);
+		Assert.areEqual(.5, Math.round(CMath.getAlpha(0x80e0e0e0) * 10) / 10);
+		Assert.areEqual(.5, Math.round(CMath.getAlpha(0x80ffffff) * 10) / 10);
 		
-		Assert.areEqual(0x000000, CMath.colorPart(0xff000000));
-		Assert.areEqual(0x000000, CMath.colorPart(0x00000000));
-		Assert.areEqual(0x000000, CMath.colorPart(0x80000000));
+		Assert.areEqual(0x000000, CMath.getColor(0xff000000));
+		Assert.areEqual(0x000000, CMath.getColor(0x00000000));
+		Assert.areEqual(0x000000, CMath.getColor(0x80000000));
 		
-		Assert.areEqual(0xffffff, CMath.colorPart(0xffffffff));
-		Assert.areEqual(0xffffff, CMath.colorPart(0x00ffffff));
-		Assert.areEqual(0xffffff, CMath.colorPart(0x80ffffff));
+		Assert.areEqual(0xffffff, CMath.getColor(0xffffffff));
+		Assert.areEqual(0xffffff, CMath.getColor(0x00ffffff));
+		Assert.areEqual(0xffffff, CMath.getColor(0x80ffffff));
 		
-		Assert.areEqual(0x808080, CMath.colorPart(0xff808080));
-		Assert.areEqual(0x808080, CMath.colorPart(0x00808080));
-		Assert.areEqual(0x808080, CMath.colorPart(0x80808080));
+		Assert.areEqual(0x808080, CMath.getColor(0xff808080));
+		Assert.areEqual(0x808080, CMath.getColor(0x00808080));
+		Assert.areEqual(0x808080, CMath.getColor(0x80808080));
 	}
 	
 	@Test
 	public function fullColor()
 	{
-		ExtendedAssert.areUIntEqual(0xff808080, CMath.fullColor(0x808080, 1));
-		ExtendedAssert.areUIntEqual(0xff000000, CMath.fullColor(0x000000, 1));
-		ExtendedAssert.areUIntEqual(0xffffffff, CMath.fullColor(0xffffff, 1));
+		ExtendedAssert.areUIntEqual(0xff808080, CMath.applyAlpha(0x808080, 1));
+		ExtendedAssert.areUIntEqual(0xff000000, CMath.applyAlpha(0x000000, 1));
+		ExtendedAssert.areUIntEqual(0xffffffff, CMath.applyAlpha(0xffffff, 1));
 		
-		ExtendedAssert.areUIntEqual(0x7f808080, CMath.fullColor(0x80808080, .5));
-		ExtendedAssert.areUIntEqual(0x7fffffff, CMath.fullColor(0x80ffffff, .5));
-		ExtendedAssert.areUIntEqual(0x00808080, CMath.fullColor(0xff808080, 0));
-		ExtendedAssert.areUIntEqual(0x00ffffff, CMath.fullColor(0xffffffff, 0));
+		ExtendedAssert.areUIntEqual(0x7f808080, CMath.applyAlpha(0x80808080, .5));
+		ExtendedAssert.areUIntEqual(0x7fffffff, CMath.applyAlpha(0x80ffffff, .5));
+		ExtendedAssert.areUIntEqual(0x00808080, CMath.applyAlpha(0xff808080, 0));
+		ExtendedAssert.areUIntEqual(0x00ffffff, CMath.applyAlpha(0xffffffff, 0));
 	}
 	
 	@Test

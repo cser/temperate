@@ -3,7 +3,7 @@ import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import temperate.components.ACButton;
 import temperate.components.CButtonState;
-import temperate.components.parametrization.CRasterParameters;
+import temperate.components.parametrization.CRasterParams;
 import temperate.text.CDefaultFormatFactory;
 
 class ACRasterTextButton extends ACButton
@@ -19,7 +19,7 @@ class ACRasterTextButton extends ACButton
 	
 	override function init()
 	{
-		_parameters = [];
+		_params = [];
 		_measuringTf = new TextField();
 		_measuringTf.autoSize = TextFieldAutoSize.LEFT;
 		_tf = new TextField();
@@ -43,15 +43,15 @@ class ACRasterTextButton extends ACButton
 		postponeSize();
 	}
 	
-	var _parameters:Array<CRasterParameters>;
+	var _params:Array<CRasterParams>;
 		
-	public function getState(state:CButtonState):CRasterParameters
+	public function getState(state:CButtonState):CRasterParams
 	{
-		var parameters = _parameters[state.index];
-		if (parameters == null)
+		var params = _params[state.index];
+		if (params == null)
 		{
-			parameters = new CRasterParameters();
-			_parameters[state.index] = parameters;
+			params = new CRasterParams();
+			_params[state.index] = params;
 		}
 		if (state == CButtonState.UP)
 		{
@@ -65,7 +65,7 @@ class ACRasterTextButton extends ACButton
 			_view_valid = false;
 			postponeView();
 		}
-		return parameters;
+		return params;
 	}
 	
 	var _measuringTf:TextField;
@@ -84,11 +84,11 @@ class ACRasterTextButton extends ACButton
 			
 			_measuringTf.text = getCorrectLabel(_text);
 			
-			var upParameters = _parameters[CButtonState.UP.index];
+			var upParams = _params[CButtonState.UP.index];
 			var format = null;
-			if (upParameters != null)
+			if (upParams != null)
 			{
-				format = upParameters.format;
+				format = upParams.format;
 			}
 			if (format == null)
 			{
@@ -102,16 +102,16 @@ class ACRasterTextButton extends ACButton
 	}
 	
 	inline function getCurrentFormat(
-		parameters:CRasterParameters, upParameters:CRasterParameters)
+		params:CRasterParams, upParams:CRasterParams)
 	{
 		var format = null;
-		if (parameters != null)
+		if (params != null)
 		{
-			format = parameters.format;
+			format = params.format;
 		}
-		if (format == null && upParameters != null)
+		if (format == null && upParams != null)
 		{
-			format = upParameters.format;
+			format = upParams.format;
 		}
 		if (format == null)
 		{

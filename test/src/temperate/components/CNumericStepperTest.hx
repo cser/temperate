@@ -24,10 +24,10 @@ class CNumericStepperTest
 	public function dontDispatchChangeDuringInstantination()
 	{
 		var stepper = new ExtendedTestNumericStepper();
-		ArrayAssert.areEqual([], stepper.eventLog);
+		ArrayAssert.equalToArray([], stepper.eventLog);
 		
 		stepper.validate();
-		ArrayAssert.areEqual([], stepper.eventLog);
+		ArrayAssert.equalToArray([], stepper.eventLog);
 	}
 	
 	@Test
@@ -36,12 +36,12 @@ class CNumericStepperTest
 		var stepper = new ExtendedTestNumericStepper();
 		Assert.areEqual(0, stepper.value);
 		stepper.value = 0;
-		ArrayAssert.areEqual([], stepper.eventLog);
+		ArrayAssert.equalToArray([], stepper.eventLog);
 		
 		stepper.value = 1;
 		stepper.eventLog = [];
 		stepper.value = 1;
-		ArrayAssert.areEqual([], stepper.eventLog);
+		ArrayAssert.equalToArray([], stepper.eventLog);
 	}
 	
 	@Test
@@ -50,11 +50,11 @@ class CNumericStepperTest
 		var stepper = new ExtendedTestNumericStepper();
 		Assert.areEqual(0, stepper.value);
 		stepper.value = 1;
-		ArrayAssert.areEqual([ Event.CHANGE ], stepper.eventLog);
+		ArrayAssert.equalToArray([ Event.CHANGE ], stepper.eventLog);
 		
 		stepper.eventLog = [];
 		stepper.value = 0;
-		ArrayAssert.areEqual([ Event.CHANGE ], stepper.eventLog);
+		ArrayAssert.equalToArray([ Event.CHANGE ], stepper.eventLog);
 	}
 	
 	@Test
@@ -68,22 +68,22 @@ class CNumericStepperTest
 		stepper.eventLog = [];
 		stepper.value = 11;
 		Assert.areEqual(10, stepper.value);
-		ArrayAssert.areEqual([ Event.CHANGE ], stepper.eventLog);
+		ArrayAssert.equalToArray([ Event.CHANGE ], stepper.eventLog);
 		
 		stepper.eventLog = [];
 		stepper.value = 12;
 		Assert.areEqual(10, stepper.value);
-		ArrayAssert.areEqual([], stepper.eventLog);
+		ArrayAssert.equalToArray([], stepper.eventLog);
 		
 		stepper.eventLog = [];
 		stepper.value = -21;
 		Assert.areEqual( -20, stepper.value);
-		ArrayAssert.areEqual([ Event.CHANGE ], stepper.eventLog);
+		ArrayAssert.equalToArray([ Event.CHANGE ], stepper.eventLog);
 		
 		stepper.eventLog = [];
 		stepper.value = -22;
 		Assert.areEqual( -20, stepper.value);
-		ArrayAssert.areEqual([], stepper.eventLog);
+		ArrayAssert.equalToArray([], stepper.eventLog);
 	}
 	
 	@Test
@@ -97,13 +97,13 @@ class CNumericStepperTest
 		stepper.eventLog = [];
 		stepper.minValue = 1;
 		Assert.areEqual(1, stepper.value);
-		ArrayAssert.areEqual([ Event.CHANGE ], stepper.eventLog);
+		ArrayAssert.equalToArray([ Event.CHANGE ], stepper.eventLog);
 		
 		stepper.value = 50;
 		stepper.eventLog = [];
 		stepper.maxValue = 49;
 		Assert.areEqual(49, stepper.value);
-		ArrayAssert.areEqual([ Event.CHANGE ], stepper.eventLog);
+		ArrayAssert.equalToArray([ Event.CHANGE ], stepper.eventLog);
 	}
 	
 	@Test

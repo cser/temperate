@@ -188,7 +188,7 @@ class CVContainerTest
 		Assert.areEqual(200, _container.height);
 	}
 	
-	private function newSprite(width:Float, height:Float):DisplayObject
+	function newSprite(width:Float, height:Float):DisplayObject
 	{
 		var sprite = new CSprite();
 		sprite.width = width;

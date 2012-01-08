@@ -114,8 +114,7 @@ class TestTooltipsOld extends Sprite
 			_forcedTargetTooltiper = new CForcedTargetTooltiper(_owner, _manager);
 		}
 		
-		_owner.right = stage.stageWidth;
-		_owner.bottom = stage.stageHeight;
+		_owner.setArea(0, 0, stage.stageWidth, stage.stageHeight);
 		addChild(_owner.container);
 		
 		drawMTooltipRenderers();

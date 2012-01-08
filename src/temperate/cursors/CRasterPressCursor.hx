@@ -31,7 +31,7 @@ class CRasterPressCursor implements ICCursor
 	//----------------------------------------------------------------------------------------------
 	
 	/**
-	 * For once call only. It's just for minimize parameters in constructor
+	 * For once call only. It's just for minimize params in constructor
 	 * @param	viewUpdateOnMove - is event.updateAfterEvent() calling on moving needed
 	 */
 	public function setView(
