@@ -11,6 +11,7 @@ import temperate.windows.events.CWindowEvent;
 import windowApplication.CImageManager;
 import windowApplication.ColorsWindow;
 import windowApplication.EditorState;
+import windowApplication.events.ImageWindowEvent;
 import windowApplication.ImageWindow;
 import windowApplication.NewWindow;
 import windowApplication.OpenWindow;
@@ -71,6 +72,8 @@ class TestWindowApplication extends Sprite
 		onToolChanged();
 		
 		_storage = new Storage();
+		
+		stage.addEventListener(ImageWindowEvent.CLOSE, onImageWindowClose);
 	}
 	
 	var _toolsWindow:ToolsWindow;
@@ -168,6 +171,11 @@ class TestWindowApplication extends Sprite
 	
 	function onToolSaveClick()
 	{
+		openSaveWindow();
+	}
+	
+	function openSaveWindow()
+	{
 		var name = _imageManager.current.name;
 		var window = new SaveWindow(name);
 		window.addTypedListener(CWindowEvent.CLOSE, onSaveClose);
@@ -183,12 +191,11 @@ class TestWindowApplication extends Sprite
 			if (_storage.exists(name) && (name != window.name || !window.isImageOpened))
 			{
 				event.preventDefault();
+				var yesData = { window:window, name:name, parentWindow:event.window };
 				MAlert.show(
 					true, "File with name \"" + name + "\" already exists.\nRewrite it?",
 					"Question",
-					[new MButtonInfo(
-						{window:window, name:name, parentWindow:event.window}, "Yes", true),
-					new MButtonInfo(null, "No")])
+					[new MButtonInfo(yesData, "Yes", true), new MButtonInfo(null, "No")])
 					.addTypedListener(CWindowEvent.CLOSE, onRewriteYesNoClose);
 				return;
 			}
@@ -242,6 +249,45 @@ class TestWindowApplication extends Sprite
 					}
 				case OpenWindowData.REMOVE(name):
 					_storage.remove(name);
+			}
+		}
+	}
+	
+	function onImageWindowClose(event:ImageWindowEvent)
+	{
+		var window = event.window;
+		if (window.isChanged)
+		{
+			event.preventDefault();
+			var yesInfo = new MButtonInfo(
+				{ window:window, name:name, yes:true, continuePrevented:event.continuePrevented },
+				"Yes", true);
+			var noInfo = new MButtonInfo(
+				{ window:window, name:name, yes:false, continuePrevented:event.continuePrevented },
+				"No");
+			var cancelInfo = new MButtonInfo(null, "Cancel");
+			MAlert.show(
+				true, "File has unsaved changes.\nSave changes?", "Question",
+				[yesInfo, noInfo, cancelInfo])
+				.addTypedListener(CWindowEvent.CLOSE, onImageCloseYesNoCancel);
+		}
+	}
+	
+	function onImageCloseYesNoCancel(
+		event:CWindowEvent < {
+			window:ImageWindow, name:String, yes:Bool, continuePrevented:Void->Void } > )
+	{
+		var data = event.data;
+		if (data != null)
+		{
+			var window = data.window;
+			if (!data.yes)
+			{
+				data.continuePrevented();
+			}
+			else
+			{
+				openSaveWindow();
 			}
 		}
 	}

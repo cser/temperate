@@ -44,6 +44,7 @@ class NewWindow extends AMWindow<Point>
 		var button = new MButton();
 		button.text = "OK";
 		button.addEventListener(MouseEvent.CLICK, onOkClick);
+		button.selected = true;
 		buttonBox.add(button);
 		
 		var button = new MButton();

@@ -371,10 +371,19 @@ class ACWindow< TData > extends CTypedDispatcher<CWindowEvent<TData>>, implement
 	{
 		if (manager != null)
 		{
-			if (dispatchTyped(new CWindowEvent(CWindowEvent.CLOSE, this, data)))
+			if (dispatchTyped(
+				new CWindowEvent(CWindowEvent.CLOSE, this, data, fast, onPreventedCloseContinue)))
 			{
 				manager.remove(this, fast);
 			}
+		}
+	}
+	
+	function onPreventedCloseContinue(event:CWindowEvent<TData>)
+	{
+		if (manager != null)
+		{
+			manager.remove(this, event.fast);
 		}
 	}
 }

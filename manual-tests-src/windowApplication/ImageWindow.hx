@@ -10,6 +10,8 @@ import temperate.minimal.MCursorManager;
 import temperate.minimal.MFormatFactory;
 import temperate.minimal.MScrollPane;
 import temperate.minimal.windows.AMWindow;
+import temperate.windows.events.CWindowEvent;
+import windowApplication.events.ImageWindowEvent;
 import windowApplication.states.PencilDrawState;
 
 class ImageWindow extends AMWindow<Dynamic>
@@ -36,6 +38,8 @@ class ImageWindow extends AMWindow<Dynamic>
 		_main.add(_pane).setPercents(100, 100);
 		
 		_toolCursor = MCursorManager.newHover( -1).setTarget(image);
+		
+		addTypedListener(CWindowEvent.CLOSE, onClose);
 	}
 	
 	function updateTitle()
@@ -77,7 +81,9 @@ class ImageWindow extends AMWindow<Dynamic>
 	
 	public function markAsSaved()
 	{
+		isImageOpened = true;
 		_savedPrimitivesLength = primitives.length;
+		updateTitle();
 	}
 	
 	public function drawPrimitives(primitives:Primitives)
@@ -88,7 +94,6 @@ class ImageWindow extends AMWindow<Dynamic>
 		}
 		this.primitives = primitives;
 		primitives.changed.add(updateTitle);
-		isImageOpened = true;
 		redrawBg();
 		var g = image.graphics;
 		g.lineStyle(0, 0x000000);
@@ -173,6 +178,15 @@ class ImageWindow extends AMWindow<Dynamic>
 		else
 		{
 			_toolCursor.value = null;
+		}
+	}
+	
+	function onClose(event:CWindowEvent<Dynamic>)
+	{
+		if (!_skin.view.dispatchEvent(
+			new ImageWindowEvent(ImageWindowEvent.CLOSE, this, event.continuePrevented)))
+		{
+			event.preventDefault();
 		}
 	}
 }
