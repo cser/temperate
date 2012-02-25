@@ -15,12 +15,12 @@ class MButton extends CRasterScaledButton
 			;
 		getState(CButtonState.OVER)
 			.setBitmapData(MCommonBdFactory.getButtonBgUp())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			;
 		getState(CButtonState.DOWN)
 			.setBitmapData(MCommonBdFactory.getButtonBgDown())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setTextOffset(1, 1)
 			.setBgOffset(1, 1, 1, 1)
@@ -35,12 +35,12 @@ class MButton extends CRasterScaledButton
 			;
 		getState(CButtonState.OVER_SELECTED)
 			.setBitmapData(MCommonBdFactory.getButtonBgUpSelected())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			;
 		getState(CButtonState.DOWN_SELECTED)
 			.setBitmapData(MCommonBdFactory.getButtonBgDownSelected())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setTextOffset(1, 1)
 			.setBgOffset(1, 1, 1, 1)

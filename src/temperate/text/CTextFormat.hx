@@ -1,4 +1,5 @@
 package temperate.text;
+import flash.geom.ColorTransform;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
@@ -9,7 +10,7 @@ class CTextFormat extends TextFormat
 {
 	public function new(
 		?font:String, ?size:Float, ?color:UInt, ?bold:Bool, ?italic:Bool, ?underline:Bool,
-		?url:String, ?target:String, ?align:TextFormatAlign, ?leftMargin:Float, ?rightMargin:Float,
+		?url:String, ?target:String, ?align:CTextFormatAlign, ?leftMargin:Float, ?rightMargin:Float,
 		?indent:Float, ?leading:Float
 	)
 	{
@@ -74,6 +75,14 @@ class CTextFormat extends TextFormat
 		return this;
 	}
 	
+	public var colorTransform:ColorTransform;
+	
+	public function setColorTransform(colorTransform:ColorTransform)
+	{
+		this.colorTransform = colorTransform;
+		return this;
+	}
+	
 	public function clone()
 	{
 		var format = new CTextFormat(
@@ -90,6 +99,7 @@ class CTextFormat extends TextFormat
 		format.embedFonts = embedFonts;
 		format.filters = filters;
 		format.alpha = alpha;
+		format.colorTransform = colorTransform;
 		
 		return format;
 	}
@@ -100,7 +110,18 @@ class CTextFormat extends TextFormat
 		textField.defaultTextFormat = this;
 		textField.embedFonts = embedFonts;
 		textField.filters = filters;
-		textField.alpha = Math.isNaN(alpha) ? 1 : alpha;
+		if (colorTransform != null)
+		{
+			textField.transform.colorTransform = colorTransform;
+			if (!Math.isNaN(alpha))
+			{
+				textField.alpha = alpha;
+			}
+		}
+		else
+		{
+			textField.alpha = Math.isNaN(alpha) ? 1 : alpha;
+		}
 	}
 	
 	public function newFixed(selectable:Bool = false, text:String = null)
@@ -159,6 +180,7 @@ class CTextFormat extends TextFormat
 			_nullFormat.target = "";
 			_nullFormat.underline = false;
 			_nullFormat.url = "";
+			_nullFormat.colorTransform = new ColorTransform();
 		}
 		_nullFormat.applyTo(tf);
 	}

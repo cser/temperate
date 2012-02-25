@@ -1,5 +1,6 @@
 package temperate.components;
 import flash.display.Shape;
+import temperate.components.parametrization.CRasterParams;
 import temperate.core.CMath;
 import temperate.raster.CScale9GridDrawer;
 
@@ -83,14 +84,12 @@ class CRasterScaledButton extends ACRasterTextButton
 				)
 					.setBitmapData(params.bitmapData)
 					.redraw();
-				_bg.filters = params.filters;
-				_bg.alpha = Math.isNaN(params.alpha) ? 1 : params.alpha;
+				params.applyTransforms(_bg);
 			}
 			else
 			{
 				_bg.graphics.clear();
-				_bg.filters = null;
-				_bg.alpha = 1;
+				CRasterParams.clearTransforms(_bg);
 			}
 			
 			_tf.x = Std.int(

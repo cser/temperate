@@ -15,12 +15,12 @@ class MImageButton extends CRasterImageButton
 			;
 		getState(CButtonState.OVER)
 			.setBitmapData(MCommonBdFactory.getButtonBgUp())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			;
 		getState(CButtonState.DOWN)
 			.setBitmapData(MCommonBdFactory.getButtonBgDown())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setTextOffset(1, 1)
 			.setBgOffset(1, 1, 1, 1)
@@ -35,12 +35,12 @@ class MImageButton extends CRasterImageButton
 			;
 		getState(CButtonState.OVER_SELECTED)
 			.setBitmapData(MCommonBdFactory.getButtonBgUpSelected())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			;
 		getState(CButtonState.DOWN_SELECTED)
 			.setBitmapData(MCommonBdFactory.getButtonBgDownSelected())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setTextOffset(1, 1)
 			.setBgOffset(1, 1, 1, 1)
@@ -51,11 +51,11 @@ class MImageButton extends CRasterImageButton
 			.setAlpha(.5)
 			.setFormat(MFormatFactory.BUTTON_DISABLED)
 			;
-		getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT);
-		getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
+		getImage(CButtonState.OVER).setColorTransform(MFilterFactory.LIGHT);
+		getImage(CButtonState.DOWN).setColorTransform(MFilterFactory.LIGHT);
 		getImage(CButtonState.DISABLED).setAlpha(.5);
-		getImage(CButtonState.OVER_SELECTED).setFilters(MFilterFactory.LIGHT);
-		getImage(CButtonState.DOWN_SELECTED).setFilters(MFilterFactory.LIGHT);
+		getImage(CButtonState.OVER_SELECTED).setColorTransform(MFilterFactory.LIGHT);
+		getImage(CButtonState.DOWN_SELECTED).setColorTransform(MFilterFactory.LIGHT);
 		getImage(CButtonState.DISABLED_SELECTED).setAlpha(.5);
 	}	
 }

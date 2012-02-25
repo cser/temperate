@@ -18,13 +18,14 @@ class MToolButton extends CRasterToolButton
 		getState(CButtonState.DOWN_SELECTED).setBitmapData(MToolBdFactory.getBgDownSelected());
 		getState(CButtonState.DISABLED_SELECTED)
 			.setBitmapData(MToolBdFactory.getBgDisabledSelected());
-		getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT);
-		getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT).setOffset(0, 1);
+		getImage(CButtonState.OVER).setColorTransform(MFilterFactory.LIGHT);
+		getImage(CButtonState.DOWN).setColorTransform(MFilterFactory.LIGHT).setOffset(0, 1);
 		getImage(CButtonState.DISABLED).setAlpha(.5);
-		getImage(CButtonState.UP_SELECTED).setFilters(MFilterFactory.LIGHT).setOffset(0, 1);
+		getImage(CButtonState.UP_SELECTED).setColorTransform(MFilterFactory.LIGHT).setOffset(0, 1);
 		getImage(CButtonState.OVER_SELECTED)
-			.setFilters(MFilterFactory.LIGHT_AMPLIFIED).setOffset(0, 1);
-		getImage(CButtonState.DOWN_SELECTED).setFilters(MFilterFactory.LIGHT).setOffset(0, 1);
+			.setColorTransform(MFilterFactory.LIGHT_AMPLIFIED).setOffset(0, 1);
+		getImage(CButtonState.DOWN_SELECTED)
+			.setColorTransform(MFilterFactory.LIGHT).setOffset(0, 1);
 		getImage(CButtonState.DISABLED_SELECTED).setAlpha(.5).setOffset(0, 1);
 		setImageIndents(4, 5, 4, 5);
 	}	

@@ -2,6 +2,7 @@ package ;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.filters.GlowFilter;
+import flash.geom.ColorTransform;
 import temperate.containers.ACLineBox;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
@@ -33,6 +34,32 @@ class TestText extends Sprite
 				.newAutoSized();
 			tf.text = "TextField with CTextFormat";
 			_main.addChild(tf);
+		}
+		
+		{
+			var tf = new CTextFormat("Tahoma", 12, 0xff0080, true)
+				.setAlpha(.5)
+				.newAutoSized();
+			tf.text = "TextField with CTextFormat alpha = .5";
+			tf.x = 200;
+			addChild(tf);
+			
+			var tf = new CTextFormat("Tahoma", 12, 0xff0080, true)
+				.setColorTransform(new ColorTransform(0, 0, 2, .4, 0, 0, 0, 0))
+				.newAutoSized();
+			tf.text = "TextField with CTextFormat no alpha, colorTransform with alpha = .4";
+			tf.x = 200;
+			tf.y = 20;
+			addChild(tf);
+			
+			var tf = new CTextFormat("Tahoma", 12, 0xff0080, true)
+				.setAlpha(.5)
+				.setColorTransform(new ColorTransform(0, 0, 2, .4, 0, 0, 0, 0))
+				.newAutoSized();
+			tf.text = "TextField with CTextFormat alpha = .5, colorTransform with alpha = .4";
+			tf.x = 200;
+			tf.y = 40;
+			addChild(tf);
 		}
 		
 		{
