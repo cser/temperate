@@ -1,8 +1,6 @@
 package temperate.minimal;
-import flash.display.Shape;
 import temperate.components.CSeparator;
-import temperate.core.CMath;
-import temperate.core.CSprite;
+using temperate.core.CMath;
 
 class MSeparator extends CSeparator
 {
@@ -26,7 +24,7 @@ class MSeparator extends CSeparator
 	{
 		var g = graphics;
 		g.clear();
-		g.beginFill(CMath.colorPart(shadowColor), CMath.alphaPart(shadowColor));
+		g.beginFill(shadowColor.getColor(), shadowColor.getAlpha());
 		if (_horizontal)
 		{
 			g.drawRect(0, 0, _width, 1);
@@ -36,7 +34,7 @@ class MSeparator extends CSeparator
 			g.drawRect(0, 0, 1, _height);
 		}
 		g.endFill();
-		g.beginFill(CMath.colorPart(lightColor), CMath.alphaPart(lightColor));
+		g.beginFill(lightColor.getColor(), lightColor.getAlpha());
 		if (_horizontal)
 		{
 			g.drawRect(1, 1, _width, 1);

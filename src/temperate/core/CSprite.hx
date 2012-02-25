@@ -30,7 +30,7 @@ class CSprite extends Sprite
 	@:getter(width)
 	function get_width():Float
 	{
-		validateSize();
+		__validateSize();
 		return _width;
 	}
 	
@@ -49,7 +49,7 @@ class CSprite extends Sprite
 	@:getter(height)
 	function get_height():Float
 	{
-		validateSize();
+		__validateSize();
 		return _height;
 	}
 	
@@ -68,34 +68,40 @@ class CSprite extends Sprite
 	var _size_valid:Bool;
 	var _view_valid:Bool;
 	
-	inline function postponeSize()
+	inline function postponeSize():Void
 	{
-		_validator.postponeSize(validateSize);
+		_validator.postponeSize(this);
 	}
 	
-	inline function postponeView()
+	inline function postponeView():Void
 	{
-		_validator.postponeView(validateView);
+		_validator.postponeView(this);
 	}
 	
-	function validateSize()
+	public function __validateSize():Void
 	{
-		_validator.removeSize(validateSize);
+		_validator.removeSize(this);
 		doValidateSize();
 	}
 	
-	function validateView()
+	public function __validateView():Void
 	{
-		_validator.removeSize(validateView);
-		validateSize();
+		_validator.removeSize(this);
+		doValidateSize();
+		_validator.removeView(this);
 		doValidateView();
 	}
+	
+	public var __sp:CSprite;
+	public var __sn:CSprite;
+	public var __vp:CSprite;
+	public var __vn:CSprite;
 	
 	/**
 	 * There validates all that accessible from properties
 	 * It's meen, that all properties always accessed as valid
 	 */
-	function doValidateSize()
+	function doValidateSize():Void
 	{
 		_size_valid = true;
 	}
@@ -104,7 +110,7 @@ class CSprite extends Sprite
 	 * There validates all that can't be accessible from prperties
 	 * (it user see on screen only)
 	 */
-	function doValidateView()
+	function doValidateView():Void
 	{
 		_view_valid = true;
 	}
@@ -113,9 +119,9 @@ class CSprite extends Sprite
 	 * Call if need validate view in this moment (For draw component on BitmapData for example)
 	 * Also it mast be called if components size invalidated in view validation stack
 	 */
-	public function validate()
+	public function validate():Void
 	{
-		validateView();
+		__validateView();
 	}
 	
 	public var isCompactWidth(get_isCompactWidth, null):Bool;
@@ -152,20 +158,30 @@ class CSprite extends Sprite
 		return _isEnabled;
 	}
 	
+	inline function getNeededWidth():Int
+	{
+		return _isCompactWidth ? 0 : Std.int(_settedWidth);
+	}
+	
+	inline function getNeededHeight():Int
+	{
+		return _isCompactHeight ? 0 : Std.int(_settedHeight);
+	}
+	
 	//----------------------------------------------------------------------------------------------
 	//
 	//  Helped
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	public function move(x:Float, y:Float)
+	public function move(x:Float, y:Float):CSprite
 	{
 		this.x = x;
 		this.y = y;
 		return this;
 	}
 	
-	public function setSize(width:Float, height:Float)
+	public function setSize(width:Float, height:Float):CSprite
 	{
 		this.width = width;
 		this.height = height;

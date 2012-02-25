@@ -76,7 +76,7 @@ List.as					-
 ListItem.as				-
 
 Panel.as				-
-Window.as				-
+Window.as				MWindowManager && MWindow
 Accordion.as			-
 
 Calendar.as				-
@@ -96,7 +96,7 @@ MinimalConfigurator.as	-
 -                       CSignal
 
 ----------------------------------------------------------------------------------------------------
-About signals (temperate.signals.Signal<TListener>)
+About signals (temperate.extra.Signal<TListener>)
 ----------------------------------------------------------------------------------------------------	
 	This classes will be not used in temperate lib
 (May be your are not want to use signals, or want use another signal lib).
@@ -118,7 +118,7 @@ It was made simple becouse:
 - other haxe libs do it (hsl-1, hsl-pico-1)
 
 Examples of using see at
-https://github.com/cser/temperate/tree/develop/test/src/temperate/signals
+https://github.com/cser/temperate/tree/develop/test/src/temperate/extra
 
 Practical exapmples of signals using can be find at
 https://github.com/cser/temperate/tree/develop/examples

@@ -1,7 +1,7 @@
 package temperate.minimal.charts;
 import flash.text.TextField;
-import temperate.core.CMath;
 import temperate.text.CTextFormat;
+using temperate.core.CMath;
 
 class AMBoundableChart extends AMChart
 {
@@ -22,7 +22,7 @@ class AMBoundableChart extends AMChart
 		
 		if (_maxLabel != null)
 		{
-			_maxLabel.text = CMath.toLimitDigits(maxValue, _labelPrecision);
+			_maxLabel.text = maxValue.toLimitDigits(_labelPrecision);
 			var x = indentLeft - _maxLabel.width;
 			if (x < 0)
 			{
@@ -39,7 +39,7 @@ class AMBoundableChart extends AMChart
 		
 		if (_minLabel != null)
 		{
-			_minLabel.text = CMath.toLimitDigits(minValue, _labelPrecision);
+			_minLabel.text = minValue.toLimitDigits(_labelPrecision);
 			var x = indentLeft - _minLabel.width;
 			if (x < 0)
 			{
@@ -65,7 +65,7 @@ class AMBoundableChart extends AMChart
 			var chartHeight = getChartHeight();
 			
 			var g = _bg.graphics;
-			g.lineStyle(0, CMath.colorPart(_borderColor), CMath.alphaPart(_borderColor));
+			g.lineStyle(0, _borderColor.getColor(), _borderColor.getAlpha());
 			g.drawRect(indentLeft, indentTop, chartWidth, chartHeight);
 		}
 	}

@@ -10,7 +10,7 @@ class AssetsGenerator
 {
 	static function main() 
 	{
-		var parameters = {
+		var params = {
 			inputPath: "assets",
 			outputPath: "generated",
 			packageName: "assets",
@@ -20,14 +20,14 @@ class AssetsGenerator
 			assetsPath: "assets"
 		};
 		{
-			// Parameters reading
+			// Params reading
 			
 			var args = Sys.args();
-			var isParametersCorrect = true;
+			var isParamsCorrect = true;
 			if (args.length % 2 == 1)
 			{
 				Lib.println("Error: expected format: -parameter value");
-				isParametersCorrect = false;
+				isParamsCorrect = false;
 			}
 			for (i in 0 ... (args.length >> 1))
 			{
@@ -36,33 +36,33 @@ class AssetsGenerator
 				if (!~/^\-/.match(name))
 				{
 					Lib.println("Error: incorrect parameter: " + name);
-					isParametersCorrect = false;
+					isParamsCorrect = false;
 				}
-				else if (Reflect.field(parameters, normalizeParameter(name)) == null)
+				else if (Reflect.field(params, normalizeParameter(name)) == null)
 				{
 					Lib.println("Error: unexpected parameter: " + name);
-					isParametersCorrect = false;
+					isParamsCorrect = false;
 				}
 			}
-			if (!isParametersCorrect)
+			if (!isParamsCorrect)
 			{
-				Lib.println("Default parameters:");
-				printParameters(parameters);
+				Lib.println("Default params:");
+				printParams(params);
 				return;
 			}
 			for (i in 0 ... (args.length >> 1))
 			{
 				var name = normalizeParameter(args[i << 1]);
 				var value = args[(i << 1) + 1];
-				Reflect.setField(parameters, name, value);
+				Reflect.setField(params, name, value);
 			}
-			Lib.println("Parameters:");
-			printParameters(parameters);
+			Lib.println("Params:");
+			printParams(params);
 		}
 		{
 			// Clear output
 			
-			clearDir(parameters.outputPath);
+			clearDir(params.outputPath);
 		}
 		
 		{
@@ -85,10 +85,10 @@ class AssetsGenerator
 			xmlText = ~/\r\n/g.replace(xmlText, "\n");
 			xmlText = ~/\n\t\t\t\t/g.replace(xmlText, "\n");
 			
-			var lines = generateForDir(parameters.inputPath, parameters.packageName, parameters.outputPath, parameters.assetsPath);
+			var lines = generateForDir(params.inputPath, params.packageName, params.outputPath, params.assetsPath);
 			xmlText = ~/#lines/g.replace(xmlText, lines.join("\n"));
 			
-			var file = File.write(parameters.swfmillXmlPath, false);
+			var file = File.write(params.swfmillXmlPath, false);
 			file.writeString(xmlText);
 			file.close();
 		}
@@ -96,17 +96,17 @@ class AssetsGenerator
 			// Run swfmill
 			
 			Sys.command(
-				"\"" + parameters.sfwmillPath + "\" " +
-				"simple " + ~/\//g.replace(parameters.swfmillXmlPath, "\\") + " " + parameters.outputSwfPath
+				"\"" + params.sfwmillPath + "\" " +
+				"simple " + ~/\//g.replace(params.swfmillXmlPath, "\\") + " " + params.outputSwfPath
 			);
 		}
 	}
 	
-	static function printParameters(parameters)
+	static function printParams(params)
 	{
-		for (name in Reflect.fields(parameters))
+		for (name in Reflect.fields(params))
 		{
-			Lib.println("-" + name + " \"" + Reflect.field(parameters, name) + "\"");
+			Lib.println("-" + name + " \"" + Reflect.field(params, name) + "\"");
 		}
 	}
 	

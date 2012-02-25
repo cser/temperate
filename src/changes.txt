@@ -1,0 +1,11 @@
+v.0.-?
+- Show text for custom plots of DebugMonitor
+v.0.7
+- CSignal moved to temperate.extra
+- CKey added for downed key checking (is not using in temperate)
+- CRasterImageButton added (scaled button with some DisplayObject inside)
+- Renaming CMath methods colorPart, alphaPart and fullColor to getColor, getAlpha and applyAlpha
+- Renaming LinkedStack to ValueStack
+- Window system added
+v.0.5
+- First version

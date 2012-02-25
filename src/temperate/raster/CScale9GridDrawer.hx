@@ -5,7 +5,7 @@ import flash.geom.Matrix;
 
 class CScale9GridDrawer implements ICDrawer
 {
-	private static inline var DEFAULT_PADDING = 8;
+	static inline var DEFAULT_PADDING = 8;
 	
 	public function new(graphics:Graphics = null) 
 	{

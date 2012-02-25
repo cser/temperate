@@ -21,7 +21,7 @@ class MTween< T >
 	
 	static var _tweenSet:TypedDictionary<Dynamic, MTween<Dynamic>>;
 	
-	static function register(target:Dynamic, tween:MTween<Dynamic>)
+	static function register(target:Dynamic, tween:MTween<Dynamic>):Void
 	{
 		if (_tweenSet == null)
 		{
@@ -35,7 +35,7 @@ class MTween< T >
 		_tweenSet.set(target, tween);
 	}
 	
-	static function unregister(target:Dynamic, tween:MTween<Dynamic>)
+	static function unregister(target:Dynamic, tween:MTween<Dynamic>):Void
 	{
 		if (_tweenSet != null)
 		{
@@ -53,7 +53,7 @@ class MTween< T >
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	public static function killTargetTween(target:Dynamic)
+	public static function killTargetTween(target:Dynamic):Void
 	{
 		if (_tweenSet != null)
 		{
@@ -73,12 +73,12 @@ class MTween< T >
 	 * @return	tween object (for additional parametrization or stop,
 	 * parametrization is _not_ damage tween if it in this frame)
 	 */
-	public static function to<T>(target:T, duration:Int, vars:Dynamic)
+	public static function to< T >(target:T, duration:Int, vars:Dynamic):MTween<T>
 	{
 		return new MTween(target, duration, vars);
 	}
 	
-	public static function apply<T>(target:T, vars:Dynamic)
+	public static function apply< T >(target:T, vars:Dynamic):Void
 	{
 		killTargetTween(target);
 		for (field in Reflect.fields(vars))
@@ -134,7 +134,7 @@ class MTween< T >
 	 * 
 	 * @return this
 	 */
-	public function setEase(ease:MEaseMethod)
+	public function setEase(ease:MEaseMethod):MTween<T>
 	{
 		_ease = ease;
 		return this;
@@ -142,7 +142,7 @@ class MTween< T >
 	
 	var _onComplete:MTween<T>->Void;
 	
-	public function setOnComplete(onComplete:MTween<T>->Void)
+	public function setOnComplete(onComplete:MTween<T>->Void):MTween<T>
 	{
 		_onComplete = onComplete;
 		return this;
@@ -150,7 +150,7 @@ class MTween< T >
 	
 	var _voidOnComplete:Void->Void;
 	
-	public function setVoidOnComplete(voidOnComplete:Void->Void)
+	public function setVoidOnComplete(voidOnComplete:Void->Void):MTween<T>
 	{
 		_voidOnComplete = voidOnComplete;
 		return this;
@@ -158,7 +158,7 @@ class MTween< T >
 	
 	var _onUpdate:MTween<T>->Void;
 	
-	public function setOnUpdate(onUpdate:MTween<T>->Void)
+	public function setOnUpdate(onUpdate:MTween<T>->Void):MTween<T>
 	{
 		_onUpdate = onUpdate;
 		return this;
@@ -166,7 +166,7 @@ class MTween< T >
 	
 	var _voidOnUpdate:Void->Void;
 	
-	public function setVoidOnUpdate(voidOnUpdate:Void->Void)
+	public function setVoidOnUpdate(voidOnUpdate:Void->Void):MTween<T>
 	{
 		_voidOnUpdate = voidOnUpdate;
 		return this;
@@ -174,7 +174,7 @@ class MTween< T >
 	
 	var _elapsedTime:Int;
 	
-	function onEnterFrame(event:Event)
+	function onEnterFrame(event:Event):Void
 	{
 		_elapsedTime = Lib.getTimer() - _startTime;
 		if (_elapsedTime >= _duration)
@@ -210,7 +210,7 @@ class MTween< T >
 		}
 	}
 	
-	public function kill(callComplete:Bool = false)
+	public function kill(callComplete:Bool = false):Void
 	{
 		if (_enterFrameDispatcher != null)
 		{
@@ -230,7 +230,7 @@ class MTween< T >
 		}
 	}
 	
-	public function getValue(startValue:Float, endValue:Float)
+	public function getValue(startValue:Float, endValue:Float):Float
 	{
 		if (_elapsedTime >= _duration)
 		{
@@ -239,7 +239,7 @@ class MTween< T >
 		return _ease(_elapsedTime, startValue, endValue - startValue, _duration);
 	}
 	
-	public function setVars(vars:Dynamic)
+	public function setVars(vars:Dynamic):Void
 	{
 		_vars = vars;
 	}

@@ -20,9 +20,9 @@ class CRasterScaledButton extends ACRasterTextButton
 		
 		super.init();
 		
-		_textAlignX = .5;
-		_textAlignY = .5;
 		_drawer = new CScale9GridDrawer(_bg.graphics);
+		textAlignX = .5;
+		textAlignY = .5;
 		textIndentLeft = 5;
 		textIndentRight = 5;
 		textIndentTop = 3;
@@ -63,28 +63,28 @@ class CRasterScaledButton extends ACRasterTextButton
 		{
 			_view_valid = true;
 			
-			var upParameters = _parameters[CButtonState.UP.index];
-			var parameters = _parameters[_state.index];
-			if (parameters == null)
+			var upParams = _params[CButtonState.UP.index];
+			var params = _params[_state.index];
+			if (params == null)
 			{
-				parameters = upParameters;
+				params = upParams;
 			}
 			
-			var format = getCurrentFormat(parameters, upParameters);
+			var format = getCurrentFormat(params, upParams);
 			format.applyTo(_tf);
 			
-			if (parameters != null)
+			if (params != null)
 			{
 				_drawer.setBounds(
-					parameters.bgOffsetLeft,
-					parameters.bgOffsetTop,
-					Std.int(_width) - parameters.bgOffsetLeft + parameters.bgOffsetRight,
-					Std.int(_height) - parameters.bgOffsetTop + parameters.bgOffsetBottom
+					params.bgOffsetLeft,
+					params.bgOffsetTop,
+					Std.int(_width) - params.bgOffsetLeft + params.bgOffsetRight,
+					Std.int(_height) - params.bgOffsetTop + params.bgOffsetBottom
 				)
-					.setBitmapData(parameters.bitmapData)
+					.setBitmapData(params.bitmapData)
 					.redraw();
-				_bg.filters = parameters.filters;
-				_bg.alpha = Math.isNaN(parameters.alpha) ? 1 : parameters.alpha;
+				_bg.filters = params.filters;
+				_bg.alpha = Math.isNaN(params.alpha) ? 1 : params.alpha;
 			}
 			else
 			{
@@ -94,15 +94,15 @@ class CRasterScaledButton extends ACRasterTextButton
 			}
 			
 			_tf.x = Std.int(
-				_textAlignX * 
+				textAlignX * 
 				(_width - _measuringTf.width - textIndentLeft - textIndentRight) +
 				textIndentLeft
-			) + (parameters != null ? parameters.textOffsetX : 0);
+			) + (params != null ? params.textOffsetX : 0);
 			_tf.y = Std.int(
-				_textAlignY * 
+				textAlignY * 
 				(_height - _measuringTf.height - textIndentTop - textIndentBottom) +
 				textIndentTop
-			) + (parameters != null ? parameters.textOffsetY : 0);
+			) + (params != null ? params.textOffsetY : 0);
 		}
 	}
 	
@@ -131,24 +131,14 @@ class CRasterScaledButton extends ACRasterTextButton
 		postponeSize();
 	}
 	
-	public var textAlignX(get_textAlignX, null):Float;
-	var _textAlignX:Float;
-	function get_textAlignX()
-	{
-		return _textAlignX;
-	}
+	public var textAlignX(default, null):Float;
 	
-	public var textAlignY(get_textAlignY, null):Float;
-	var _textAlignY:Float;
-	function get_textAlignY()
-	{
-		return _textAlignY;
-	}
+	public var textAlignY(default, null):Float;
 	
 	public function setTextAlign(alignX:Float, alignY:Float)
 	{
-		_textAlignX = alignX;
-		_textAlignY = alignY;
+		textAlignX = alignX;
+		textAlignY = alignY;
 		_view_valid = false;
 		postponeView();
 	}

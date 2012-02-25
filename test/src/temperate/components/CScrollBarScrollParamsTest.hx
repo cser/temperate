@@ -39,7 +39,7 @@ class CScrollBarScrollParamsTest
 	}
 	
 	@Test
-	public function defaultScrollParameters()
+	public function defaultScrollParams()
 	{
 		for (sb in [newScrollBar(true), newScrollBar(false)])
 		{
@@ -218,16 +218,16 @@ class CScrollBarScrollParamsTest
 			
 			sb.value = 20;
 			Assert.areEqual(20, sb.value);
-			ArrayAssert.areEqual([], _log);
+			ArrayAssert.equalToArray([], _log);
 			
 			sb.minValue = 21;
 			Assert.areEqual(21, sb.value);
-			ArrayAssert.areEqual([], _log);
+			ArrayAssert.equalToArray([], _log);
 			
 			sb.value = 100;
 			sb.maxValue = 80;
 			Assert.areEqual(80, sb.value);
-			ArrayAssert.areEqual([], _log);
+			ArrayAssert.equalToArray([], _log);
 		}
 	}
 	
@@ -284,14 +284,14 @@ class CScrollBarScrollParamsTest
 						3
 					)
 				);
-				ArrayAssert.areEqual(["scroll"], _log);
+				ArrayAssert.equalToArray(["scroll"], _log);
 			}
 			{
 				// Left button point
 				var object = getTopObject(5, 5);
 				object.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true));
 				object.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP, true));
-				ArrayAssert.areEqual(["scroll", "scroll"], _log);
+				ArrayAssert.equalToArray(["scroll", "scroll"], _log);
 			}
 			{
 				// Right button point
@@ -300,7 +300,7 @@ class CScrollBarScrollParamsTest
 					getTopObject(5, sb.height - 5);
 				object.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true));
 				object.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP, true));
-				ArrayAssert.areEqual(["scroll", "scroll", "scroll"], _log);
+				ArrayAssert.equalToArray(["scroll", "scroll", "scroll"], _log);
 			}
 			
 			Lib.current.removeChild(sb);

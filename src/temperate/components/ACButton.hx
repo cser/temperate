@@ -31,9 +31,8 @@ class ACButton extends CSprite, implements ICButton
 	
 	public var view(default, null):DisplayObject;
 	
-	private var _isDown:Bool;
-	
-	private var _isOver:Bool;
+	var _isDown:Bool;
+	var _isOver:Bool;
 	
 	function init():Void
 	{

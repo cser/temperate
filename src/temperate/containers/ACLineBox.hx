@@ -35,7 +35,7 @@ class ACLineBox extends CSprite, implements ICInvalidateClient
 		return wrapper;
 	}
 	
-	override public function addChild(child:DisplayObject)
+	override public function addChild(child:DisplayObject):DisplayObject
 	{
 		super.addChild(child);
 		var wrapper = new CChildWrapper(child);
@@ -46,7 +46,7 @@ class ACLineBox extends CSprite, implements ICInvalidateClient
 		return child;
 	}
 	
-	override public function addChildAt(child:DisplayObject, index:Int)
+	override public function addChildAt(child:DisplayObject, index:Int):DisplayObject
 	{
 		super.addChildAt(child, index);
 		var wrapper = new CChildWrapper(child);
@@ -57,7 +57,7 @@ class ACLineBox extends CSprite, implements ICInvalidateClient
 		return child;
 	}
 	
-	override public function removeChild(child:DisplayObject)
+	override public function removeChild(child:DisplayObject):DisplayObject
 	{
 		super.removeChild(child);
 		var wrapper = _wrapperByChild.get(child);
@@ -68,7 +68,7 @@ class ACLineBox extends CSprite, implements ICInvalidateClient
 		return child;
 	}
 	
-	override public function removeChildAt(index:Int)
+	override public function removeChildAt(index:Int):DisplayObject
 	{
 		var child = getChildAt(index);
 		super.removeChildAt(index);
@@ -141,7 +141,7 @@ class ACLineBox extends CSprite, implements ICInvalidateClient
 		return _indentBottom;
 	}
 	
-	public function setIndents(left:Int, right:Int, top:Int, bottom:Int)
+	public function setIndents(left:Int, right:Int, top:Int, bottom:Int):Void
 	{
 		_indentLeft = left;
 		_indentRight = right;
@@ -181,7 +181,7 @@ class ACLineBox extends CSprite, implements ICInvalidateClient
 	/**
 	 * Call it directly if child sizes changed and need update layout
 	 */
-	public function invalidate()
+	public function invalidate():Void
 	{
 		_size_valid = false;
 		postponeSize();
@@ -193,7 +193,7 @@ class ACLineBox extends CSprite, implements ICInvalidateClient
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	public function addTo(parent:DisplayObjectContainer, x:Float = 0, y:Float = 0)
+	public function addTo(parent:DisplayObjectContainer, x:Float = 0, y:Float = 0):ACLineBox
 	{
 		this.x = x;
 		this.y = y;

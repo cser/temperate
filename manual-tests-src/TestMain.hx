@@ -28,7 +28,7 @@ class TestMain
 		var test = new TestMButton();
 		var test = new TestFrameEvent();
 		var test = new TestContainer();
-		var test = new TestContainerSpace();		
+		var test = new TestContainerSpace();
 		var test = new TestRecursiveContainer();
 		var test = new TestMCheckBox();
 		var test = new TestTooltipsOld();
@@ -45,8 +45,12 @@ class TestMain
 		var test = new TestSlider();
 		var test = new TestSimpleButtonWrapper();
 		var test = new TestSignalPerformance();
-		
 		var test = new TestScrollPane();
+		var test = new TestKey();
+		var test = new TestRasterImageButton();
+		
+		var test = new TestWindows();
+		var test = new TestWindowApplication();
 		Lib.current.addChild(test);
 		test.init();
 	}

@@ -45,7 +45,7 @@ class CButtonSelectorTest
 		Assert.areEqual(2, _switcher.value);
 		Assert.areEqual(false, _button1.selected);
 		Assert.areEqual(true, _button2.selected);
-		ArrayAssert.areEqual([ "change" ], _log);
+		ArrayAssert.equalToArray([ "change" ], _log);
 	}
 	
 	function test1_onSwitcherChange(event:Event)
@@ -70,11 +70,11 @@ class CButtonSelectorTest
 		
 		_button2.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 		Assert.areEqual(0, _switcher.value);
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		
 		_button2.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN));
 		Assert.areEqual(2, _switcher.value);
-		ArrayAssert.areEqual(["change"], _log);
+		ArrayAssert.equalToArray(["change"], _log);
 		
 		_log = [];
 		_switcher = new CButtonSelector(0);
@@ -88,11 +88,11 @@ class CButtonSelectorTest
 		
 		_button2.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN));
 		Assert.areEqual(0, _switcher.value);
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		
 		_button2.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 		Assert.areEqual(2, _switcher.value);
-		ArrayAssert.areEqual(["change"], _log);
+		ArrayAssert.equalToArray(["change"], _log);
 	}
 	
 	function default_onSwitchChange(event:Event)
@@ -170,11 +170,11 @@ class CButtonSelectorTest
 		switcher.add(button2, 2);
 		Assert.areEqual(false, button1.selected);
 		Assert.areEqual(false, button2.selected);
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 		
 		switcher.value = 1;
 		
-		ArrayAssert.areEqual(["change"], _log);
+		ArrayAssert.equalToArray(["change"], _log);
 		Assert.areEqual(true, button1.selected);
 		Assert.areEqual(false, button2.selected);
 		
@@ -182,7 +182,7 @@ class CButtonSelectorTest
 		
 		switcher.value = 2;
 		
-		ArrayAssert.areEqual(["change"], _log);
+		ArrayAssert.equalToArray(["change"], _log);
 		Assert.areEqual(false, button1.selected);
 		Assert.areEqual(true, button2.selected);
 	}
@@ -234,7 +234,7 @@ class CButtonSelectorTest
 		switcher.remove(button1);
 		
 		button1.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 	}
 	
 	@Test
@@ -276,7 +276,7 @@ class CButtonSelectorTest
 		
 		switcher.value = 10;
 		
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 	}
 	
 	@Test
@@ -290,7 +290,7 @@ class CButtonSelectorTest
 		
 		button.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 		
-		ArrayAssert.areEqual([], _log);
+		ArrayAssert.equalToArray([], _log);
 	}
 	
 	@Test

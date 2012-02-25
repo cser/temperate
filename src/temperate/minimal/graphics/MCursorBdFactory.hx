@@ -6,175 +6,179 @@ import flash.geom.Point;
 
 class MCursorBdFactory 
 {
-	static var _handUp:BitmapData;
-	
 	public static function getHandUp()
 	{
-		if (_handUp == null)
+		if (!_generated)
 		{
-			_handUp = newHand(false);
+			generate();
 		}
 		return _handUp;
 	}
 	
-	static var _handDown:BitmapData;
-	
 	public static function getHandDown()
 	{
-		if (_handDown == null)
+		if (!_generated)
 		{
-			_handDown = newHand(true);
+			generate();
 		}
 		return _handDown;
 	}
 	
-	static var _forbidden:BitmapData;
-	
 	public static function getForbidden()
 	{
-		if (_forbidden == null)
+		if (!_generated)
 		{
-			_forbidden = newForbidden();
+			generate();
 		}
 		return _forbidden;
 	}
 	
-	static var _wait:BitmapData;
+	public static function getResize()
+	{
+		if (!_generated)
+		{
+			generate();
+		}
+		return _resize;
+	}
 	
 	public static function getWait()
 	{
-		if (_wait == null)
+		if (!_generated)
 		{
-			_wait = newWait();
+			generate();
 		}
 		return _wait;
 	}
 	
-	//----------------------------------------------------------------------------------------------
-	//
-	//  Generators
-	//
-	//----------------------------------------------------------------------------------------------
+	static var _generated = false;
+	static var _handUp:BitmapData;
+	static var _handDown:BitmapData;
+	static var _forbidden:BitmapData;
+	static var _resize:BitmapData;
+	static var _wait:BitmapData;
 	
-	static function newHand(down:Bool)
+	static function generate()
 	{
+		_generated = true;
+		
 		MBdFactoryUtil.qualityOn();
 		var shape = MBdFactoryUtil.getShape();
-		
 		var g = shape.graphics;
-		g.clear();
-		if (down)
-		{
-			drawHandDown(g, true);
-			drawHandDown(g, false);
-		}
-		else
-		{
+		var shadowFilter = new DropShadowFilter(2, 45, 0x000000, .5, 2, 2);
+		var zero = new Point();
+		_handUp = {
+			g.clear();
 			drawHandUp(g, true);
 			drawHandUp(g, false);
+			var bd = new BitmapData(20, 24, true, 0x00000000);
+			bd.draw(shape);
+			bd;
 		}
-		
-		var bitmapData = new BitmapData(20, 24, true, 0x00000000);
-		bitmapData.draw(shape);
-		
+		_handDown = {
+			g.clear();
+			drawHandDown(g, true);
+			drawHandDown(g, false);
+			var bd = new BitmapData(20, 24, true, 0x00000000);
+			bd.draw(shape);
+			bd;
+		}
+		_forbidden = {
+			var borderColor = 0x000000;
+			var fillColor = 0x808080;
+			var r = 8;
+			var x0 = r + 2;
+			var y0 = r + 2;
+			g.clear();
+			
+			g.lineStyle(4, borderColor);
+			g.drawCircle(x0, y0, r);
+			
+			var sin = Math.sin(Math.PI * .25);
+			var cos = Math.cos(Math.PI * .25);
+			
+			g.moveTo(x0 + sin * r, y0 + cos * r);
+			g.lineTo(x0 - sin * r, y0 - cos * r);
+			
+			g.lineStyle(2, fillColor);
+			g.drawCircle(x0, y0, r);
+			
+			g.moveTo(x0 + sin * r, y0 + cos * r);
+			g.lineTo(x0 - sin * r, y0 - cos * r);
+			
+			var bd = new BitmapData(x0 * 2 + 4, y0 * 2 + 4, true, 0x00000000);
+			bd.draw(shape);
+			bd.applyFilter(bd, bd.rect, zero, shadowFilter);
+			bd;
+		}
+		_resize = {
+			g.clear();
+			
+			g.lineStyle(0, 0x000000, 1, true);
+			g.beginFill(0x808080);
+			g.moveTo(0, 0);
+			g.lineTo(6, 0);
+			g.lineTo(3, 2);
+			g.lineTo(14, 13);
+			g.lineTo(16, 10);
+			g.lineTo(16, 16);
+			g.lineTo(10, 16);
+			g.lineTo(13, 14);
+			g.lineTo(2, 3);
+			g.lineTo(0, 6);
+			g.lineTo(0, 0);
+			
+			var bd = new BitmapData(20, 20, true, 0x00000000);
+			bd.draw(shape);
+			bd.applyFilter(bd, bd.rect, zero, shadowFilter);
+			bd;
+		}
+		_wait = {
+			var borderColor = 0x000000;
+			var fillColor = 0x808080;
+			var color = 0xffffff;
+			var r = 10;
+			var x0 = r + 2;
+			var y0 = r + 2;
+			
+			g.clear();
+			
+			g.beginFill(color);
+			g.drawCircle(x0, y0, r);
+			g.endFill();
+			
+			g.beginFill(fillColor);
+			g.drawCircle(x0, y0, r + 1);
+			g.drawCircle(x0, y0, r);
+			g.endFill();
+			
+			g.beginFill(borderColor);
+			g.drawCircle(x0, y0, r - 1);
+			g.drawCircle(x0, y0, r - 3);
+			g.endFill();
+			
+			g.lineStyle(1, borderColor);
+			
+			g.moveTo(x0 - r + 1, y0);
+			g.lineTo(x0 - r + 5, y0);
+			g.moveTo(x0 + r - 1, y0);
+			g.lineTo(x0 + r - 5, y0);
+			g.moveTo(x0, y0 + r - 1);
+			g.lineTo(x0, y0 + r - 5);
+			g.moveTo(x0, y0 - r + 1);
+			g.lineTo(x0, y0 - r + 5);
+			
+			g.moveTo(x0, y0);
+			g.lineTo(x0 + 3, y0 - 5);
+			g.moveTo(x0, y0);
+			g.lineTo(x0 + 4, y0 + 3);
+			
+			var bd = new BitmapData(x0 * 2 + 4, y0 * 2 + 4, true, 0x00000000);
+			bd.draw(shape);
+			bd.applyFilter(bd, bd.rect, zero, shadowFilter);
+			bd;
+		}
 		MBdFactoryUtil.qualityOff();
-		return bitmapData;
-	}
-	
-	static function newForbidden()
-	{
-		MBdFactoryUtil.qualityOn();
-		var shape = MBdFactoryUtil.getShape();
-		
-		var borderColor = 0x000000;
-		var fillColor = 0x808080;
-		var r = 8;
-		var x0 = r + 2;
-		var y0 = r + 2;
-		
-		var g = shape.graphics;
-		g.clear();
-		
-		g.lineStyle(4, borderColor);
-		g.drawCircle(x0, y0, r);
-		
-		var sin = Math.sin(Math.PI * .25);
-		var cos = Math.cos(Math.PI * .25);
-		
-		g.moveTo(x0 + sin * r, y0 + cos * r);
-		g.lineTo(x0 - sin * r, y0 - cos * r);
-		
-		g.lineStyle(2, fillColor);
-		g.drawCircle(x0, y0, r);
-		
-		g.moveTo(x0 + sin * r, y0 + cos * r);
-		g.lineTo(x0 - sin * r, y0 - cos * r);
-		
-		var bitmapData = new BitmapData(x0 * 2 + 4, y0 * 2 + 4, true, 0x00000000);
-		bitmapData.draw(shape);
-		bitmapData.applyFilter(
-			bitmapData, bitmapData.rect, new Point(),
-			new DropShadowFilter(2, 45, 0x000000, .5, 2, 2)
-		);
-		
-		MBdFactoryUtil.qualityOff();
-		return bitmapData;
-	}
-	
-	static function newWait()
-	{
-		MBdFactoryUtil.qualityOn();
-		var shape = MBdFactoryUtil.getShape();
-		
-		var borderColor = 0x000000;
-		var fillColor = 0x808080;
-		var color = 0xffffff;
-		var r = 10;
-		var x0 = r + 2;
-		var y0 = r + 2;
-		
-		var g = shape.graphics;
-		g.clear();
-		
-		g.beginFill(color);
-		g.drawCircle(x0, y0, r);
-		g.endFill();
-		
-		g.beginFill(fillColor);
-		g.drawCircle(x0, y0, r + 1);
-		g.drawCircle(x0, y0, r);
-		g.endFill();
-		
-		g.beginFill(borderColor);
-		g.drawCircle(x0, y0, r - 1);
-		g.drawCircle(x0, y0, r - 3);
-		g.endFill();
-		
-		g.lineStyle(1, borderColor);
-		
-		g.moveTo(x0 - r + 1, y0);
-		g.lineTo(x0 - r + 5, y0);
-		g.moveTo(x0 + r - 1, y0);
-		g.lineTo(x0 + r - 5, y0);
-		g.moveTo(x0, y0 + r - 1);
-		g.lineTo(x0, y0 + r - 5);
-		g.moveTo(x0, y0 - r + 1);
-		g.lineTo(x0, y0 - r + 5);
-		
-		g.moveTo(x0, y0);
-		g.lineTo(x0 + 3, y0 - 5);
-		g.moveTo(x0, y0);
-		g.lineTo(x0 + 4, y0 + 3);
-		
-		var bitmapData = new BitmapData(x0 * 2 + 4, y0 * 2 + 4, true, 0x00000000);
-		bitmapData.draw(shape);
-		bitmapData.applyFilter(
-			bitmapData, bitmapData.rect, new Point(),
-			new DropShadowFilter(2, 45, 0x000000, .5, 2, 2)
-		);
-		
-		MBdFactoryUtil.qualityOff();
-		return bitmapData;
 	}
 	
 	static function drawHandBegin(g:Graphics, drawBorder:Bool)

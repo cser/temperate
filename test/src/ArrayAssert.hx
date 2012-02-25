@@ -5,7 +5,8 @@ import massive.munit.Assert;
 
 class ArrayAssert 
 {
-	public static function areEqual(expected:Array<Dynamic>, actual:Array<Dynamic>, ?info:PosInfos)
+	public static function equalToArray(
+		expected:Array<Dynamic>, actual:Array<Dynamic>, ?info:PosInfos)
 	{
 		Assert.assertionCount++;
 		if (expected == actual || expected == null && actual == null)
@@ -25,7 +26,7 @@ class ArrayAssert
 		}		
 	}
 	
-	public static function areEqualIgnoringOrder(
+	public static function equalToArrayIgnoringOrder(
 		expected:Array<Dynamic>, actual:Array<Dynamic>, ?info:PosInfos)
 	{
 		Assert.assertionCount++;

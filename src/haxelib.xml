@@ -3,5 +3,5 @@
 	<tag v="flash"/>
 	<tag v="gui"/>
 	<description>Simple customizable GUI for flashplayer9+. Includes cursors and tooltips separated systems</description>
-	<version name="0.5">Initial release, 50% implemented, everything is working</version>
+	<version name="0.7">Window system added</version>
 </project>

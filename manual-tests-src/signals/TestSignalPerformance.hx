@@ -6,7 +6,7 @@ import flash.Lib;
 import temperate.containers.CVBox;
 import temperate.minimal.charts.MBarChart;
 import temperate.minimal.MLabel;
-import temperate.signals.CSignal;
+import temperate.extra.CSignal;
 
 class TestSignalPerformance extends Sprite
 {

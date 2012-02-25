@@ -8,6 +8,7 @@ import flash.events.MouseEvent;
 import flash.filters.DropShadowFilter;
 import flash.Lib;
 import flash.text.TextFormatAlign;
+import haxe.Timer;
 import temperate.components.ACButton;
 import temperate.components.CSpacer;
 import temperate.containers.CHBox;
@@ -21,6 +22,14 @@ import temperate.text.CTextFormat;
 
 class OldStyleCalculator extends Sprite
 {
+	static var DEFAULT_FORMAT = {
+		var format = new CTextFormat("Verdana", 20, 0x505050, true, true);
+		format.align = TextFormatAlign.RIGHT;
+		format;
+	};
+	
+	static var HIDE_FORMAT = DEFAULT_FORMAT.clone().setAlpha(.1);
+	
 	static function main() 
 	{
 		var sprite = new OldStyleCalculator();
@@ -47,12 +56,9 @@ class OldStyleCalculator extends Sprite
 		addChild(_mainContainer);
 		
 		{
-			var format = new CTextFormat("Verdana", 20, 0x505050, true, true);
-			format.align = TextFormatAlign.RIGHT;
-			
 			_screen = new MInputField();
 			_screen.editable = false;
-			_screen.format = format;
+			_screen.format = DEFAULT_FORMAT;
 			_mainContainer.add(_screen).setPercents(100);
 		}
 		
@@ -153,7 +159,7 @@ class OldStyleCalculator extends Sprite
 	{
 		var button = new MFlatButton();
 		button.text = symbol;
-		button.addEventListener(MouseEvent.CLICK, callback(onSymbolClick, symbol));
+		button.addEventListener(MouseEvent.MOUSE_DOWN, callback(onSymbolMouseDown, symbol));
 		return button;
 	}
 	
@@ -162,7 +168,7 @@ class OldStyleCalculator extends Sprite
 		var button = new MFlatButton();
 		button.text = operation.sign;
 		button.selected = true;
-		button.addEventListener(MouseEvent.CLICK, callback(onOperationClick, operation));
+		button.addEventListener(MouseEvent.MOUSE_DOWN, callback(onOperationMouseDown, operation));
 		return button;
 	}
 	
@@ -171,19 +177,21 @@ class OldStyleCalculator extends Sprite
 		_screen.text = _controller.screen;
 	}
 	
-	function onSymbolClick(symbol:String, event:Event)
+	function onSymbolMouseDown(symbol:String, event:Event)
 	{
 		_controller.addSymbol(symbol);
 	}
 	
-	function onOperationClick(operation:Operation, event:Event)
+	function onOperationMouseDown(operation:Operation, event:Event)
 	{
 		_controller.addOperation(operation);
+		blinkScreenOnce();
 	}
 	
 	function onCalculateClick(event:Event)
 	{
 		_controller.calculate();
+		blinkScreenOnce();
 	}
 	
 	function onBackspaceClick(event:Event)
@@ -194,10 +202,24 @@ class OldStyleCalculator extends Sprite
 	function onCEClick(event:Event)
 	{
 		_controller.clearCurrent();
+		blinkScreenOnce();
 	}
 	
 	function onCClick(event:Event)
 	{
 		_controller.resetAll();
+		blinkScreenOnce();
+	}
+	
+	function blinkScreenOnce()
+	{
+		_screen.format = HIDE_FORMAT;
+		Timer.delay(showScreen, 50);
+	}
+	
+	function showScreen()
+	{
+		_screen.format = DEFAULT_FORMAT;
+		_screen.visible = true;
 	}
 }

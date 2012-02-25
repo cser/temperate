@@ -2,6 +2,7 @@ package temperate.minimal;
 import temperate.components.CButtonState;
 import temperate.components.CRasterFixedButton;
 import temperate.components.CRasterThumb;
+import temperate.components.CRasterToolButton;
 import temperate.components.CScrollBar;
 import temperate.minimal.graphics.MScrollBarBdFactory;
 import temperate.skins.CRasterScrollTiledSkin;
@@ -10,7 +11,7 @@ class MScrollBar extends CScrollBar
 {
 	public function new(horizontal:Bool) 
 	{
-		var leftArrow = new CRasterFixedButton();
+		var leftArrow = new CRasterToolButton();
 		leftArrow.getState(CButtonState.UP).setBitmapData(
 			horizontal ? MScrollBarBdFactory.getLeftUp() : MScrollBarBdFactory.getTopUp());
 		leftArrow.getState(CButtonState.OVER).setBitmapData(
@@ -21,7 +22,7 @@ class MScrollBar extends CScrollBar
 			horizontal ?
 				MScrollBarBdFactory.getLeftDisabled() :
 				MScrollBarBdFactory.getTopDisabled());
-		var rightArrow = new CRasterFixedButton();
+		var rightArrow = new CRasterToolButton();
 		rightArrow.getState(CButtonState.UP).setBitmapData(
 			horizontal ? MScrollBarBdFactory.getRightUp() : MScrollBarBdFactory.getBottomUp());
 		rightArrow.getState(CButtonState.OVER).setBitmapData(
