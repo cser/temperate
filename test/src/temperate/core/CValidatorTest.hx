@@ -34,12 +34,25 @@ class CValidatorTest
 	}
 	
 	@Test
-	public function bugWithFailure():Void
+	public function bugWithFailureOnSizeValidation():Void
 	{
 		var parent = new FakeBox("parent", _validator);
 		var child = new FakeBox("child", _validator);
 		parent.add(child);
 		child.invalidate();
+		_validator.forseValidate();
+		Assert.isTrue(true);// Not failed
+	}
+	
+	@Test
+	public function bugWithFailureOnViewValidation():Void
+	{
+		var parent = new FakeViewChildValidateble("parent", _validator);
+		var child = new FakeViewChildValidateble("child", _validator);
+		var subchild = new FakeViewChildValidateble("subchild", _validator);
+		parent.add(child);
+		child.add(subchild);
+		subchild.invalidate();
 		_validator.forseValidate();
 		Assert.isTrue(true);// Not failed
 	}

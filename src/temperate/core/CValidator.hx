@@ -131,7 +131,7 @@ class CValidator
 		);
 		while (true)
 		{
-			var sprite:ACValidatable = _sizeHead.__sn;
+			var sprite = _sizeHead.__sn;
 			if (sprite == _sizeTail)
 			{
 				break;
@@ -143,18 +143,15 @@ class CValidator
 			sprite.__validateSize();
 		}
 		
-		var sprite;
-		var vn = _viewHead.__vn;
 		while (true)
 		{
-			sprite = vn;
+			var sprite = _viewHead.__vn;
 			if (sprite == _viewTail)
 			{
 				break;
 			}
-			vn = sprite.__vn;
-			sprite.__vp.__vn = vn;
-			vn.__vp = sprite.__vp;
+			sprite.__vp.__vn = sprite.__vn;
+			sprite.__vn.__vp = sprite.__vp;
 			sprite.__vn = null;
 			sprite.__vp = null;
 			sprite.__validateView();
