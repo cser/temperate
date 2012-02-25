@@ -11,15 +11,7 @@ class CValidator
 		if (_instance == null)
 		{
 			_instance = new CValidator();
-			_instance._sizeHead = new CSprite();
-			_instance._sizeTail = new CSprite();
-			_instance._viewHead = new CSprite();
-			_instance._viewTail = new CSprite();
-			_instance._sizeTail.__sp = _instance._sizeHead;
-			_instance._sizeHead.__sn = _instance._sizeTail;
-			_instance._viewTail.__vp = _instance._viewHead;
-			_instance._viewHead.__vn = _instance._viewTail;
-			_instance._dispatcher = _instance._sizeHead;
+			_instance.init(new CSprite(), new CSprite(), new CSprite(), new CSprite());
 		}
 		return _instance;
 	}
@@ -27,6 +19,19 @@ class CValidator
 	function new()
 	{
 		_hasExitFrame = false;
+	}
+	
+	function init(sizeHead:CSprite, sizeTail:CSprite, viewHead:CSprite, viewTail:CSprite):Void
+	{
+		_sizeHead = sizeHead;
+		_sizeTail = sizeTail;
+		_viewHead = viewHead;
+		_viewTail = viewTail;
+		_sizeTail.__sp = _sizeHead;
+		_sizeHead.__sn = _sizeTail;
+		_viewTail.__vp = _viewHead;
+		_viewHead.__vn = _viewTail;
+		_dispatcher = _sizeHead;
 	}
 	
 	var _sizeHead:CSprite;
@@ -104,7 +109,7 @@ class CValidator
 			,
 			onExitFrame
 		);
-		var sprite;
+		var sprite:CSprite = null;
 		var sn = _sizeHead.__sn;
 		while (true)
 		{
