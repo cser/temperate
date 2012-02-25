@@ -1,2 +1,2 @@
-bin/*.swf
-test/bin/*.swf
+bin/*
+test/bin/*
