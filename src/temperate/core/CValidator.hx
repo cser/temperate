@@ -11,15 +11,10 @@ class CValidator
 		if (_instance == null)
 		{
 			_instance = new CValidator();
-			_instance._sizeHead = new CSprite();
-			_instance._sizeTail = new CSprite();
-			_instance._viewHead = new CSprite();
-			_instance._viewTail = new CSprite();
-			_instance._sizeTail.__sp = _instance._sizeHead;
-			_instance._sizeHead.__sn = _instance._sizeTail;
-			_instance._viewTail.__vp = _instance._viewHead;
-			_instance._viewHead.__vn = _instance._viewTail;
-			_instance._dispatcher = _instance._sizeHead;
+			_instance.init(
+				new ACValidatable(null), new ACValidatable(null),
+				new ACValidatable(null), new ACValidatable(null)
+			);
 		}
 		return _instance;
 	}
@@ -29,16 +24,46 @@ class CValidator
 		_hasExitFrame = false;
 	}
 	
-	var _sizeHead:CSprite;
-	var _sizeTail:CSprite;
-	var _viewHead:CSprite;
-	var _viewTail:CSprite;
+	function init(
+		sizeHead:ACValidatable, sizeTail:ACValidatable,
+		viewHead:ACValidatable, viewTail:ACValidatable):Void
+	{
+		_sizeHead = sizeHead;
+		_sizeTail = sizeTail;
+		_viewHead = viewHead;
+		_viewTail = viewTail;
+		_sizeTail.__sp = _sizeHead;
+		_sizeHead.__sn = _sizeTail;
+		_viewTail.__vp = _viewHead;
+		_viewHead.__vn = _viewTail;
+		_dispatcher = _sizeHead;
+		_testHash = new flash.utils.TypedDictionary();
+		_testIndex = 0;
+	}
+	
+	var _sizeHead:ACValidatable;
+	var _sizeTail:ACValidatable;
+	var _viewHead:ACValidatable;
+	var _viewTail:ACValidatable;
 	
 	var _dispatcher:IEventDispatcher;
 	
 	var _hasExitFrame:Bool;
 	
-	inline public function postponeSize(sprite:CSprite)
+	var _testIndex:Int;
+	var _testHash:flash.utils.TypedDictionary<ACValidatable, String>;
+	
+	private function getTestName(sprite:ACValidatable):String
+	{
+		if (_testHash.get(sprite) == null)
+		{
+			_testHash.set(sprite, "sprite[" + _testIndex + "]" + "/*" + sprite + "*/");
+			_testIndex++;
+		}
+		return _testHash.get(sprite);
+	}
+	
+	inline public function postponeSize(sprite:ACValidatable)
 	{
 		if (sprite.__sp == null)
 		{
@@ -50,7 +75,7 @@ class CValidator
 		wait();
 	}
 	
-	inline public function postponeView(sprite:CSprite)
+	inline public function postponeView(sprite:ACValidatable)
 	{
 		if (sprite.__vp == null)
 		{
@@ -62,7 +87,7 @@ class CValidator
 		wait();
 	}
 	
-	inline public function removeSize(sprite:CSprite)
+	inline public function removeSize(sprite:ACValidatable)
 	{
 		if (sprite.__sp != null)
 		{
@@ -73,7 +98,7 @@ class CValidator
 		}
 	}
 	
-	inline public function removeView(sprite:CSprite)
+	inline public function removeView(sprite:ACValidatable)
 	{
 		if (sprite.__vp != null)
 		{
@@ -104,35 +129,29 @@ class CValidator
 			,
 			onExitFrame
 		);
-		var sprite;
-		var sn = _sizeHead.__sn;
 		while (true)
 		{
-			sprite = sn;
+			var sprite = _sizeHead.__sn;
 			if (sprite == _sizeTail)
 			{
 				break;
 			}
-			sn = sprite.__sn;
-			sprite.__sp.__sn = sn;
-			sn.__sp = sprite.__sp;
+			sprite.__sp.__sn = sprite.__sn;
+			sprite.__sn.__sp = sprite.__sp;
 			sprite.__sn = null;
 			sprite.__sp = null;
 			sprite.__validateSize();
 		}
 		
-		var sprite;
-		var vn = _viewHead.__vn;
 		while (true)
 		{
-			sprite = vn;
+			var sprite = _viewHead.__vn;
 			if (sprite == _viewTail)
 			{
 				break;
 			}
-			vn = sprite.__vn;
-			sprite.__vp.__vn = vn;
-			vn.__vp = sprite.__vp;
+			sprite.__vp.__vn = sprite.__vn;
+			sprite.__vn.__vp = sprite.__vp;
 			sprite.__vn = null;
 			sprite.__vp = null;
 			sprite.__validateView();

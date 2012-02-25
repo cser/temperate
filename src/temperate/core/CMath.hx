@@ -75,14 +75,38 @@ class CMath
 		return (Std.int(0xff * alphaPart) << 24) | (0x00ffffff & colorPart);
 	}
 	
-	inline public static function toPrecision(x:Float, precision:Int):String
-	{
-		return untyped x.toPrecision(precision);
-	}
-	
 	inline public static function toFixed(x:Float, fractionDigits:UInt):String
 	{
+		#if flash9
 		return untyped x.toFixed(fractionDigits);
+		#else
+		for (i in 0 ... fractionDigits)
+		{
+			x *= 10;
+		}
+		var text = Std.string(Math.round(x));
+		if (fractionDigits <= 0)
+		{
+			return text == "0" ? "0." : text;
+		}
+		else
+		{
+			var index = text.length - fractionDigits;
+			if (index >= 0)
+			{
+				var left = text.substr(0, index);
+				return (left != "" ? left : "0") + "." + text.substr(index);
+			}
+			else
+			{
+				for (i in 0 ... -index)
+				{
+					text = "0" + text;
+				}
+				return "0." + text;
+			}
+		}
+		#end
 	}
 	
 	inline public static function toLimitDigits(x:Float, maxDigits:UInt):String
@@ -93,6 +117,10 @@ class CMath
 	
 	inline public static function toString(x:Float, radix:Int = 10):String
 	{
+		#if flash9
 		return untyped x.toString(radix);
+		#else
+		return Std.string(x);
+		#end
 	}
 }

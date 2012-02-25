@@ -55,11 +55,13 @@ class CMathTest
 		Assert.areEqual("1.00", CMath.toFixed(1, 2));
 		Assert.areEqual("1.50", CMath.toFixed(1.501, 2));
 		Assert.areEqual("2", CMath.toFixed(1.501, 0));
-		
-		Assert.areEqual("2", CMath.toPrecision(1.501, 1));
-		Assert.areEqual("1.50", CMath.toPrecision(1.501, 3));
-		Assert.areEqual("1.501", CMath.toPrecision(1.501, 4));
-		Assert.areEqual("1.000", CMath.toPrecision(1, 4));
+		Assert.areEqual("0.", CMath.toFixed(0.499, 0));
+		Assert.areEqual("0.02", CMath.toFixed(0.019, 2));
+		Assert.areEqual("0.11", CMath.toFixed(0.11, 2));
+		Assert.areEqual("0.1", CMath.toFixed(0.11, 1));
+		Assert.areEqual("0.0", CMath.toFixed(.0, 1));
+		Assert.areEqual("0.00", CMath.toFixed(.0, 2));
+		Assert.areEqual("135.11", CMath.toFixed(135.111111, 2));
 		
 		Assert.areEqual("1", CMath.toLimitDigits(1, 2));
 		Assert.areEqual("2", CMath.toLimitDigits(1.501, 0));
