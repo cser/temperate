@@ -26,4 +26,9 @@ class TestValidator extends CValidator
 	{
 		_dispatcher.dispatchEvent(new Event(Event.EXIT_FRAME));
 	}
+	
+	public function forseValidate():Void
+	{
+		onExitFrame(new Event(Event.EXIT_FRAME));
+	}
 }

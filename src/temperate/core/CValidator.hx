@@ -37,6 +37,8 @@ class CValidator
 		_viewTail.__vp = _viewHead;
 		_viewHead.__vn = _viewTail;
 		_dispatcher = _sizeHead;
+		_testHash = new flash.utils.TypedDictionary();
+		_testIndex = 0;
 	}
 	
 	var _sizeHead:ACValidatable;
@@ -47,6 +49,19 @@ class CValidator
 	var _dispatcher:IEventDispatcher;
 	
 	var _hasExitFrame:Bool;
+	
+	var _testIndex:Int;
+	var _testHash:flash.utils.TypedDictionary<ACValidatable, String>;
+	
+	private function getTestName(sprite:ACValidatable):String
+	{
+		if (_testHash.get(sprite) == null)
+		{
+			_testHash.set(sprite, "sprite[" + _testIndex + "]" + "/*" + sprite + "*/");
+			_testIndex++;
+		}
+		return _testHash.get(sprite);
+	}
 	
 	inline public function postponeSize(sprite:ACValidatable)
 	{
@@ -114,18 +129,15 @@ class CValidator
 			,
 			onExitFrame
 		);
-		var sprite:ACValidatable = null;
-		var sn = _sizeHead.__sn;
 		while (true)
 		{
-			sprite = sn;
+			var sprite:ACValidatable = _sizeHead.__sn;
 			if (sprite == _sizeTail)
 			{
 				break;
 			}
-			sn = sprite.__sn;
-			sprite.__sp.__sn = sn;
-			sn.__sp = sprite.__sp;
+			sprite.__sp.__sn = sprite.__sn;
+			sprite.__sn.__sp = sprite.__sp;
 			sprite.__sn = null;
 			sprite.__sp = null;
 			sprite.__validateSize();
