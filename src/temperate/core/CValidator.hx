@@ -11,7 +11,10 @@ class CValidator
 		if (_instance == null)
 		{
 			_instance = new CValidator();
-			_instance.init(new CSprite(), new CSprite(), new CSprite(), new CSprite());
+			_instance.init(
+				new ACValidatable(null), new ACValidatable(null),
+				new ACValidatable(null), new ACValidatable(null)
+			);
 		}
 		return _instance;
 	}
@@ -21,7 +24,9 @@ class CValidator
 		_hasExitFrame = false;
 	}
 	
-	function init(sizeHead:CSprite, sizeTail:CSprite, viewHead:CSprite, viewTail:CSprite):Void
+	function init(
+		sizeHead:ACValidatable, sizeTail:ACValidatable,
+		viewHead:ACValidatable, viewTail:ACValidatable):Void
 	{
 		_sizeHead = sizeHead;
 		_sizeTail = sizeTail;
@@ -34,16 +39,16 @@ class CValidator
 		_dispatcher = _sizeHead;
 	}
 	
-	var _sizeHead:CSprite;
-	var _sizeTail:CSprite;
-	var _viewHead:CSprite;
-	var _viewTail:CSprite;
+	var _sizeHead:ACValidatable;
+	var _sizeTail:ACValidatable;
+	var _viewHead:ACValidatable;
+	var _viewTail:ACValidatable;
 	
 	var _dispatcher:IEventDispatcher;
 	
 	var _hasExitFrame:Bool;
 	
-	inline public function postponeSize(sprite:CSprite)
+	inline public function postponeSize(sprite:ACValidatable)
 	{
 		if (sprite.__sp == null)
 		{
@@ -55,7 +60,7 @@ class CValidator
 		wait();
 	}
 	
-	inline public function postponeView(sprite:CSprite)
+	inline public function postponeView(sprite:ACValidatable)
 	{
 		if (sprite.__vp == null)
 		{
@@ -67,7 +72,7 @@ class CValidator
 		wait();
 	}
 	
-	inline public function removeSize(sprite:CSprite)
+	inline public function removeSize(sprite:ACValidatable)
 	{
 		if (sprite.__sp != null)
 		{
@@ -78,7 +83,7 @@ class CValidator
 		}
 	}
 	
-	inline public function removeView(sprite:CSprite)
+	inline public function removeView(sprite:ACValidatable)
 	{
 		if (sprite.__vp != null)
 		{
@@ -109,7 +114,7 @@ class CValidator
 			,
 			onExitFrame
 		);
-		var sprite:CSprite = null;
+		var sprite:ACValidatable = null;
 		var sn = _sizeHead.__sn;
 		while (true)
 		{

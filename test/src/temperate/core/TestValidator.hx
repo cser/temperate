@@ -9,17 +9,18 @@ class TestValidator extends CValidator
 	public function new() 
 	{
 		super();
-		sizeHead = new CSprite();
-		sizeTail = new CSprite();
-		viewHead = new CSprite();
-		viewTail = new CSprite();
+		sizeHead = new ACValidatable(null);
+		sizeTail = new ACValidatable(null);
+		viewHead = new ACValidatable(null);
+		viewTail = new ACValidatable(null);
 		_dispatcher = new EventDispatcher();
+		init(sizeHead, sizeTail, viewHead, viewTail);
 	}
 	
-	public var sizeHead(default, null):CSprite;
-	public var sizeTail(default, null):CSprite;
-	public var viewHead(default, null):CSprite;
-	public var viewTail(default, null):CSprite;
+	public var sizeHead(default, null):ACValidatable;
+	public var sizeTail(default, null):ACValidatable;
+	public var viewHead(default, null):ACValidatable;
+	public var viewTail(default, null):ACValidatable;
 	
 	public function dispatchExitFrame():Void
 	{

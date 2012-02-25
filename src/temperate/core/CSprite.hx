@@ -2,20 +2,17 @@ package temperate.core;
 import flash.display.Sprite;
 import flash.events.Event;
 
-class CSprite extends Sprite
+class CSprite extends ACValidatable
 {
 	public function new() 
 	{
-		super();
-		_validator = CValidator.getInstance();
+		super(CValidator.getInstance());
 		_isEnabled = true;
 		_width = 0;
 		_height = 0;
 		_settedWidth = 0;
 		_settedHeight = 0;
 	}
-	
-	var _validator:CValidator;
 	
 	var _width:Float;
 	var _height:Float;
@@ -65,9 +62,6 @@ class CSprite extends Sprite
 		}
 	}
 	
-	var _size_valid:Bool;
-	var _view_valid:Bool;
-	
 	inline function postponeSize():Void
 	{
 		_validator.postponeSize(this);
@@ -76,43 +70,6 @@ class CSprite extends Sprite
 	inline function postponeView():Void
 	{
 		_validator.postponeView(this);
-	}
-	
-	public function __validateSize():Void
-	{
-		_validator.removeSize(this);
-		doValidateSize();
-	}
-	
-	public function __validateView():Void
-	{
-		_validator.removeSize(this);
-		doValidateSize();
-		_validator.removeView(this);
-		doValidateView();
-	}
-	
-	public var __sp:CSprite;
-	public var __sn:CSprite;
-	public var __vp:CSprite;
-	public var __vn:CSprite;
-	
-	/**
-	 * There validates all that accessible from properties
-	 * It's meen, that all properties always accessed as valid
-	 */
-	function doValidateSize():Void
-	{
-		_size_valid = true;
-	}
-	
-	/**
-	 * There validates all that can't be accessible from prperties
-	 * (it user see on screen only)
-	 */
-	function doValidateView():Void
-	{
-		_view_valid = true;
 	}
 	
 	/**
