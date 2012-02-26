@@ -3,6 +3,7 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.Lib;
 import minimal.TestMButton;
+import minimal.TestMCheckBox;
 
 class CppTestMainNmml
 {
@@ -19,15 +20,14 @@ class CppTestMainNmml
 		var test = new NmeTestText();
 		var test = new NmeTestCurrent();
 		
-		var test = new TestMButton();
 		var test = new TestDebugMonitor();
-		/*var test = new TestMButton();
+		var test = new TestMButton();
 		var test = new TestFrameEvent();
 		var test = new TestContainer();
 		var test = new TestContainerSpace();
 		var test = new TestRecursiveContainer();
 		var test = new TestMCheckBox();
-		var test = new TestTooltipsOld();
+		/*var test = new TestTooltipsOld();
 		var test = new TestMTooltips();
 		var test = new TestNumericStepper();
 		var test = new TestCursorManager();
