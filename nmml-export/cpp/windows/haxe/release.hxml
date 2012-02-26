@@ -1,0 +1,10 @@
+-main ApplicationMain 
+-D nme_install_tool
+-cp src
+-cp manual-tests-src-cpp
+-lib nme
+-D desktop
+-cp nmml-export/cpp/windows/haxe
+-cp nmml-export/cpp/haxe
+-cpp nmml-export/cpp/windows/obj
+--remap flash:nme

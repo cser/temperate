@@ -8,7 +8,6 @@ class CppTestMain
 {
 	public static function main()
 	{
-		trace("klsdjflksdjflssdfsdf");
 		CppTestRunner.run();
 		
 		var tf = new CTextFormat(

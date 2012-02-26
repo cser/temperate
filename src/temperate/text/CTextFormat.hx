@@ -18,6 +18,7 @@ class CTextFormat extends TextFormat
 			font, size, color, bold, italic, underline, url, target, align, leftMargin,
 			rightMargin, indent, leading
 		);
+		alpha = Math.NaN;
 	}
 	
 	public var embedFonts:Bool;
