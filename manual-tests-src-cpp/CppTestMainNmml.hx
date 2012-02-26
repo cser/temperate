@@ -16,6 +16,8 @@ class CppTestMainNmml
 		But at least _all_ tests compilationable checked on any test run
 		*/
 		var test = new NmeTestText();
+		var test = new NmeTestCurrent();
+		//var text = new TestMButton();
 		Lib.current.addChild(test);
 		test.init();
 	}

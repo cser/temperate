@@ -17,6 +17,7 @@ class CImageParams
 	
 	public function new() 
 	{
+		alpha = Math.NaN;
 	}
 	
 	public var image:DisplayObject;

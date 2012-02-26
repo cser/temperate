@@ -1,5 +1,4 @@
 package ;
-import flash.utils.Dictionary;
 import haxe.PosInfos;
 import massive.munit.Assert;
 
@@ -47,7 +46,7 @@ class ArrayAssert
 		{
 			return "[" + actual + "] getted, but expected [" + expected + "]";
 		}
-		var countByValue = new flash.utils.TypedDictionary<Dynamic, Int>();
+		var countByValue = new ClumsyDictionary<Dynamic, Int>();
 		for (value in actual)
 		{
 			var count:Int = countByValue.get(value);

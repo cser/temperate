@@ -18,6 +18,7 @@
     <class path="src" />
     <class path="manual-tests-src-cpp" />
     <class path="test\src" />
+    <class path="manual-tests-src" />
   </classpaths>
   <!-- Build options -->
   <build>

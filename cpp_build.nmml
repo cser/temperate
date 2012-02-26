@@ -9,6 +9,7 @@
 	<set name="BUILD_DIR" value="nmml-export" />
  
 	<classpath name="src" />
+	<classpath name="manual-tests-src" />
 	<classpath name="manual-tests-src-cpp" />
 	<haxelib name="nme" />
  

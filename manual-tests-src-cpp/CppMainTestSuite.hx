@@ -7,5 +7,6 @@ class CppMainTestSuite extends TestSuite
 	{
 		super();
 		add(temperate.core.CMathTest);
+		add(temperate.collections.CObjectHashTest);
 	}
 }

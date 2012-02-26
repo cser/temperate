@@ -16,6 +16,7 @@ class CRasterParams
 	
 	public function new() 
 	{
+		alpha = Math.NaN;
 	}
 	
 	public var bitmapData:BitmapData;

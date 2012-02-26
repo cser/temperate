@@ -24,6 +24,44 @@ class CSprite extends ACValidatable
 	var _settedWidth:Float;
 	var _settedHeight:Float;
 	
+	#if nme
+	
+	override function nmeGetWidth():Float
+	{
+		__validateSize();
+		return _width;
+	}
+	override function nmeSetWidth(value:Float):Float
+	{	
+		if (_settedWidth != value)
+		{
+			_settedWidth = value;
+			_width = value;
+			_size_valid = false;
+			postponeSize();
+		}
+		return value;
+	}
+	
+	override function nmeGetHeight():Float
+	{
+		__validateSize();
+		return _height;
+	}
+	override function nmeSetHeight(value:Float):Float
+	{
+		if (_settedHeight != value)
+		{
+			_settedHeight = value;
+			_height = value;
+			_size_valid = false;
+			postponeSize();
+		}
+		return value;
+	}
+	
+	#else
+	
 	@:getter(width)
 	function get_width():Float
 	{
@@ -61,6 +99,8 @@ class CSprite extends ACValidatable
 			postponeSize();
 		}
 	}
+	
+	#end
 	
 	inline function postponeSize():Void
 	{
