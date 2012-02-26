@@ -1,6 +1,7 @@
 package temperate.tooltips.tooltipers;
 import flash.display.DisplayObject;
 import flash.geom.Rectangle;
+import temperate.core.CDisplayObjectUtil;
 import temperate.tooltips.CTooltipOwner;
 import temperate.tooltips.managers.ICTooltipManager;
 import temperate.tooltips.renderers.ICTooltip;
@@ -14,7 +15,7 @@ class CForcedTargetTooltiper extends ACForcedTooltiper<CForcedTargetTooltiper>
 	
 	function getTargetRect(target:DisplayObject)
 	{
-		return target.getRect(_owner.container);
+		return CDisplayObjectUtil.getRect(target, _owner.container);
 	}
 	
 	var _target:DisplayObject;

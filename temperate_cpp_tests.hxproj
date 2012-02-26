@@ -2,7 +2,7 @@
 <project version="2">
   <!-- Output SWF options -->
   <output>
-    <movie outputType="Application" />
+    <movie outputType="CustomBuild" />
     <movie input="" />
     <movie path="bin" />
     <movie fps="0" />
@@ -23,7 +23,7 @@
   <build>
     <option directives="" />
     <option flashStrict="False" />
-    <option mainClass="CppTestMain" />
+    <option mainClass="CppTestRunner" />
     <option enabledebug="False" />
     <option additional="--remap flash:nme" />
   </build>
@@ -45,9 +45,9 @@
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
   <options>
-    <option showHiddenPaths="False" />
+    <option showHiddenPaths="True" />
     <option testMovie="Custom" />
-    <option testMovieCommand="run-cpp.bat" />
+    <option testMovieCommand="cpp_build_tests_nmml.bat" />
   </options>
   <!-- Plugin storage -->
   <storage />

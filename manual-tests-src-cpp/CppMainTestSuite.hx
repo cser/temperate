@@ -8,5 +8,8 @@ class CppMainTestSuite extends TestSuite
 		super();
 		add(temperate.core.CMathTest);
 		add(temperate.collections.CObjectHashTest);
+		add(temperate.containers.CVContainerTest);
+		//add(temperate.containers.CVContainerChangeLayoutByChildManagmentTest);// has failures
+		//add(temperate.containers.CHContainerChildManagmentTest);// has failures
 	}
 }
