@@ -51,7 +51,7 @@ class TestMain
 		
 		var test = new TestWindows();
 		var test = new TestValidationBug();
-		var test = new TestWindowApplication();
+		var test = new TestWindowApplication();var test = new TestTooltipsOld();
 		Lib.current.addChild(test);
 		test.init();
 	}

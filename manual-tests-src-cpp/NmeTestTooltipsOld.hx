@@ -1,4 +1,6 @@
 package ;
+import flash.display.Graphics;
+import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -9,7 +11,7 @@ import flash.Lib;
 import flash.utils.Timer;
 import temperate.components.ACButton;
 import temperate.containers.CHBox;
-import temperate.core.CGeomUtil;
+import temperate.core.CMath;
 import temperate.minimal.MButton;
 import temperate.minimal.renderers.MTextTooltip;
 import temperate.tooltips.CTooltipOwner;
@@ -22,7 +24,7 @@ import temperate.tooltips.tooltipers.CTargetMouseTooltiper;
 import temperate.tooltips.tooltipers.CTargetTooltiper;
 import temperate.tooltips.tooltipers.ICTooltiper;
 
-class TestTooltipsOld extends Sprite
+class NmeTestTooltipsOld extends Sprite
 {
 	public function new() 
 	{
@@ -119,29 +121,6 @@ class TestTooltipsOld extends Sprite
 		addChild(_owner.container);
 		
 		drawMTooltipRenderers();
-		
-		{
-			var xys0 = [100., 100, 200, 200, 100, 200];
-			var xys1 = [120., 120, 220, 220, 120, 220];
-			var xys = CGeomUtil.getUnionPoligon(xys0, xys1);
-			var g = graphics;
-			g.lineStyle(2, 0xff0000);
-			var length = xys.length;
-			var i = length - 2;
-			var x0 = xys0[i];
-			var y0 = xys0[i + 1];
-			g.moveTo(x0, y0);
-			i = 0;
-			while (i < length)
-			{
-				var x1 = xys0[i];
-				var y1 = xys0[i + 1];
-				g.lineTo(x1, y1);
-				x0 = x1;
-				y0 = y1;
-				i += 2;
-			}
-		}
 	}
 	
 	var _forsedTargetTooltipButton:ACButton;
