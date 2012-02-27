@@ -46,42 +46,51 @@ class CGeomUtil
 	{
 		var result = [];
 		
-		var lengthI = xys0.length;
-		var i = lengthI - 2;
-		var x0 = xys0[i];
-		var y0 = xys0[i + 1];
-		i = 0;
-		while (i < lengthI)
+		var length0 = xys0.length;
+		var length1 = xys1.length;
+		
+		var xys = xys0;
+		var xys_ = xys1;
+		var length = length0;
+		var length_ = length1;
+		var i = 0;
+		var x0 = xys[i];
+		var y0 = xys[i + 1];
+		for (k in 0 ... 100)
 		{
-			var x1 = xys0[i];
-			var y1 = xys0[i + 1];
-			
-			
-			var lengthJ = xys1.length;
-			var j = lengthJ - 2;
-			var xj0 = xys1[j];
-			var yj0 = xys1[j + 1];
-			j = 0;
-			while (j < lengthJ)
+			i += 2;
+			if (i >= length)
 			{
-				var xj1 = xys0[j];
-				var yj1 = xys0[j + 1];
+				i = 0;
+			}
+			var x1 = xys[i];
+			var y1 = xys[i + 1];
+			
+			var j = length_ - 2;
+			var x0_ = xys_[j];
+			var y0_ = xys_[j + 1];
+			j = 0;
+			while (j < length_)
+			{
+				var x1_ = xys_[j];
+				var y1_ = xys_[j + 1];
 				
-				var intersection = {
-					var v1 = (xj1 - xj0) * (y0 - yj0) - (yj1 - yj0) * (x0 - xj0);
-					var v2 = (xj1 - xj0) * (y1 - yj0) - (yj1 - yj0) * (x1 - xj0);
-					var v3 = (x1 - x0) * (yj0 - y0) - (y1 - y0) * (xj0 - x0);
-					var v4 = (x1 - x0) * (yj1 - y0) - (y1 - y0) * (xj1 - x0);
-					(v1 * v2 < 0) && (v3 * v4 < 0);
-				}
-				if (intersection)
+				if (isSegmentsCross(x0, y0, x1, y1, x0_, y0_, x1_, y1_))
 				{
-					
+					getLineIntersect(x0, y0, x1, y1, x0_, y0_, x1_, y1_);
+					result.push(lineIntersectX);
+					result.push(lineIntersectY);
 				}
 				
-				xj0 = xj1;
-				yj0 = yj1;
+				x0_ = x1_;
+				y0_ = y1_;
 				j += 2;
+			}
+			
+			if (!isInConvexPoligon(xys1, x0, y0))
+			{
+				result.push(x0);
+				result.push(y0);
 			}
 			
 			x0 = x1;
@@ -89,7 +98,33 @@ class CGeomUtil
 			i += 2;
 		}
 		
-		result = xys0;
 		return result;
 	}
+	
+	public static inline function isSegmentsCross(
+		x1:Float, y1:Float, x2:Float, y2:Float, x1_:Float, y1_:Float, x2_:Float, y2_:Float):Bool
+	{
+		var v1 = (x2_ - x1_) * (y1 - y1_) - (y2_ - y1_) * (x1 - x1_);
+		var v2 = (x2_ - x1_) * (y2 - y1_) - (y2_ - y1_) * (x2 - x1_);
+		var v3 = (x2 - x1) * (y1_ - y1) - (y2 - y1) * (x1_ - x1);
+		var v4 = (x2 - x1) * (y2_ - y1) - (y2 - y1) * (x2_ - x1);
+		return (v1 * v2 < 0) && (v3 * v4 < 0);
+	}
+	
+	public static inline function getLineIntersect(
+		x1:Float, y1:Float, x2:Float, y2:Float, x1_:Float, y1_:Float, x2_:Float, y2_:Float):Void
+	{
+		var a = y1 - y2;
+		var b = x2 - x1;
+		var c = x1 * y2 - x2 * y1;
+		var a_ = y1_ - y2_;
+		var b_ = x2_ - x1_;
+		var c_ = x1_ * y2_ - x2_ * y1_;
+		var k = (a * b_ - a_ * b);
+		lineIntersectX = (b * c_ - b_ * c) / k;
+		lineIntersectY = (c * a_ - c_ * a) / k;
+	}
+	
+	public static var lineIntersectX(default, null):Float;
+	public static var lineIntersectY(default, null):Float;
 }

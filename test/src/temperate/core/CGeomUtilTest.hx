@@ -80,4 +80,20 @@ class CGeomUtilTest
 			CGeomUtil.isInConvexPoligon(xys, 4, 2).isFalse();
 		}
 	}
+	
+	@Test
+	public function getLineIntersect():Void
+	{
+		CGeomUtil.getLineIntersect(0, -1, 3, 2, 0, 3, 3, 0);
+		Assert.areEqual(2, CGeomUtil.lineIntersectX);
+		Assert.areEqual(1, CGeomUtil.lineIntersectY);
+		
+		CGeomUtil.getLineIntersect(0, -1, 0, 1, -1, 0, 1, 0);
+		Assert.areEqual(0, CGeomUtil.lineIntersectX);
+		Assert.areEqual(0, CGeomUtil.lineIntersectY);
+		
+		CGeomUtil.getLineIntersect(-1, 0, 1, 0, 0, -1, 0, 1);
+		Assert.areEqual(0, CGeomUtil.lineIntersectX);
+		Assert.areEqual(0, CGeomUtil.lineIntersectY);
+	}
 }

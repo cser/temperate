@@ -1,4 +1,5 @@
 package ;
+import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -121,22 +122,29 @@ class TestTooltipsOld extends Sprite
 		drawMTooltipRenderers();
 		
 		{
-			var xys0 = [100., 100, 200, 200, 100, 200];
-			var xys1 = [120., 120, 220, 220, 120, 220];
-			var xys = CGeomUtil.getUnionPoligon(xys0, xys1);
-			var g = graphics;
+			var xys = {
+				var xys0 = [0., 0, 100, 0, 100, 100, 0, 100];
+				var xys1 = [50., 50, 150, 50, 150, 150, 50, 150];
+				CGeomUtil.getUnionPoligon(xys0, xys1);
+			}
+			var shape = new Shape();
+			shape.x = 400;
+			shape.y = 150;
+			addChild(shape);
+			var g = shape.graphics;
 			g.lineStyle(2, 0xff0000);
 			var length = xys.length;
 			var i = length - 2;
-			var x0 = xys0[i];
-			var y0 = xys0[i + 1];
-			g.moveTo(x0, y0);
+			var x0 = xys[i];
+			var y0 = xys[i + 1];
 			i = 0;
 			while (i < length)
 			{
-				var x1 = xys0[i];
-				var y1 = xys0[i + 1];
+				var x1 = xys[i];
+				var y1 = xys[i + 1];
+				g.moveTo(x0, y0);
 				g.lineTo(x1, y1);
+				g.drawCircle(x1, y1, 2);
 				x0 = x1;
 				y0 = y1;
 				i += 2;
