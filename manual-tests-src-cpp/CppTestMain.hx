@@ -7,7 +7,7 @@ import minimal.TestMCharts;
 import minimal.TestMCheckBox;
 import minimal.TestMTween;
 
-class CppTestMainNmml
+class CppTestMain
 {
 	public static function main()
 	{
@@ -29,7 +29,6 @@ class CppTestMainNmml
 		var test = new TestContainerSpace();
 		var test = new TestRecursiveContainer();
 		var test = new TestMCheckBox();
-		//var test = new TestTooltipsOld();
 		//var test = new TestMTooltips();
 		//var test = new TestNumericStepper();
 		//var test = new TestCursorManager();
@@ -37,6 +36,7 @@ class CppTestMainNmml
 		var test = new TestMCharts();
 		//var test = new TestText();
 		var test = new TestMTween();
+		var test = new TestTooltipsOld();
 		/*var test = new TestTooltips();
 		var test = new TestScrollBar();
 		var test = new TestTextArea();
