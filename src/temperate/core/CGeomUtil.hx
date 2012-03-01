@@ -39,23 +39,22 @@ class CGeomUtil
 		return true;
 	}
 	
-	/**
-	 * Mast be convex both
-	 */
-	public static function getUnionPoligon(
-		xys0:Array<Float>, xys1:Array<Float>, safetyCounter:Int = 1000
+	public static function getUnionOfConvexPoligons(
+		xys0:Array<Float>, xys1:Array<Float>, maxIterations:Int = 1000
 	):Array<Float>
 	{
 		xys0 = getClockwized(xys0);
 		xys1 = getClockwized(xys1);
 		
 		var result = [];
+		var resultIndex = 0;
 		
 		var xys = xys0;
 		var xys_ = xys1;
+		var length = xys.length;
+		var length_ = xys_.length;
 		
-		
-		var j = xys.length;
+		var j = length;
 		var i = 0;
 		while (true)
 		{
@@ -77,13 +76,13 @@ class CGeomUtil
 		var startXys = xys;
 		while (true)
 		{
-			safetyCounter--;
-			if (safetyCounter < 0)
+			maxIterations--;
+			if (maxIterations < 0)
 			{
 				break;
 			}
 			i += 2;
-			if (i >= xys.length)
+			if (i >= length)
 			{
 				i = 0;
 			}
@@ -95,11 +94,11 @@ class CGeomUtil
 			var intersectY = 0.;
 			var intersectJ = 0;
 			{
-				var j = xys_.length - 2;
+				var j = length_ - 2;
 				var x0_ = xys_[j];
 				var y0_ = xys_[j + 1];
 				j = 0;
-				while (j < xys_.length)
+				while (j < length_)
 				{
 					var x1_ = xys_[j];
 					var y1_ = xys_[j + 1];
@@ -127,18 +126,21 @@ class CGeomUtil
 			
 			if (minDistance < 0)
 			{
-				result.push(x1);
-				result.push(y1);
+				result[resultIndex++] = x1;
+				result[resultIndex++] = y1;
 				x0 = x1;
 				y0 = y1;
 			}
 			else
 			{
-				result.push(intersectX);
-				result.push(intersectY);
+				result[resultIndex++] = intersectX;
+				result[resultIndex++] = intersectY;
 				var c = xys;
 				xys = xys_;
 				xys_ = c;
+				var c = length;
+				length = length_;
+				length_ = c;
 				i = intersectJ - 2;
 				x0 = intersectX;
 				y0 = intersectY;

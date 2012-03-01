@@ -12,7 +12,7 @@ class MTooltipBg extends Sprite
 	{
 		super();
 		
-		borderRadius = 8;
+		borderRadius = 4;
 		borderThickness = 1;
 		tailIndent = -4;
 		tailHalfWidth = 6;
@@ -87,20 +87,60 @@ class MTooltipBg extends Sprite
 				_tailEndX, _tailEndY,
 				_tailBeginX + tailHalfWidth * sin, _tailBeginY - tailHalfWidth * cos];
 		}
+		
 		var x0 = borderThickness;
 		var y0 = borderThickness;
 		var x1 = _width - borderThickness * 2;
 		var y1 = _height - borderThickness * 2;
-		var rect = [
-			x0, y0,
-			x1, y0,
-			x1, y1,
-			x0, y1];
-		var poligon = tail != null ? CGeomUtil.getUnionPoligon(rect, tail, 20) : rect;
+		var rect:Array<Float>;
+		if (borderRadius > 0)
+		{
+			rect = [];
+			var i = 0;
+			
+			rect[i++] = x0 + borderRadius;
+			rect[i++] = y0;
+			rect[i++] = x1 - borderRadius;
+			rect[i++] = y0;
+			
+			i = addArcPoints(
+				rect, i, x1 - borderRadius, y0 + borderRadius, -Math.PI * .5, 0);
+			
+			rect[i++] = x1;
+			rect[i++] = y0 + borderRadius;
+			rect[i++] = x1;
+			rect[i++] = y1 - borderRadius;
+			
+			i = addArcPoints(
+				rect, i, x1 - borderRadius, y1 - borderRadius, 0, Math.PI * .5);
+			
+			rect[i++] = x1 - borderRadius;
+			rect[i++] = y1;
+			rect[i++] = x0 + borderRadius;
+			rect[i++] = y1;
+			
+			i = addArcPoints(
+				rect, i, x0 + borderRadius, y1 - borderRadius, Math.PI * .5, Math.PI);
+			
+			rect[i++] = x0;
+			rect[i++] = y1 - borderRadius;
+			rect[i++] = x0;
+			rect[i++] = y0 + borderRadius;
+			
+			i = addArcPoints(
+				rect, i, x0 + borderRadius, y0 + borderRadius, -Math.PI, -Math.PI * .5);
+		}
+		else
+		{
+			rect = [x0, y0, x1, y0, x1, y1, x0, y1];
+		}
+		var poligon = tail != null ? CGeomUtil.getUnionOfConvexPoligons(rect, tail, 100) : rect;
+		
 		
 		var g = graphics;
 		g.clear();
-		g.lineStyle(borderThickness, CMath.getColor(borderColor), CMath.getAlpha(borderColor));
+		g.lineStyle(
+			borderThickness, CMath.getColor(borderColor), CMath.getAlpha(borderColor), true);
 		g.beginFill(CMath.getColor(fillColor), CMath.getAlpha(fillColor));
 		
 		var i = 0;
@@ -118,6 +158,25 @@ class MTooltipBg extends Sprite
 		g.lineTo(x0, y0);
 		
 		g.endFill();
+	}
+	
+	function addArcPoints(
+		coords:Array<Float>, startIndex:Int, x0:Float, y0:Float, begin:Float, end:Float):Int
+	{
+		var count:Int = Std.int(borderRadius * .3);
+		if (count < 1)
+		{
+			count = 1;
+		}
+		var step = (end - begin) / (count + 1);
+		var angle = begin + step;
+		while (angle < end - .00001)
+		{
+			coords[startIndex++] = x0 + Math.cos(angle) * borderRadius;
+			coords[startIndex++] = y0 + Math.sin(angle) * borderRadius;
+			angle += step;
+		}
+		return startIndex;
 	}
 	
 	function getMinPositive(k0:Float, k1:Float, k2:Float, k3:Float)

@@ -39,7 +39,7 @@ class TestGeomUtil extends Sprite
 		shape.y = offsetY;
 		addChild(shape);
 		
-		var result = CGeomUtil.getUnionPoligon(cast coords0, cast coords1);
+		var result = CGeomUtil.getUnionOfConvexPoligons(cast coords0, cast coords1);
 		
 		var g = shape.graphics;
 		g.lineStyle(1, 0xff0000);

@@ -125,7 +125,7 @@ class TestTooltipsOld extends Sprite
 			var xys = {
 				var xys0 = [0., 0, 100, 0, 100, 100, 0, 100];
 				var xys1 = [50., 50, 150, 50, 150, 150, 50, 150];
-				CGeomUtil.getUnionPoligon(xys0, xys1);
+				CGeomUtil.getUnionOfConvexPoligons(xys0, xys1);
 			}
 			var shape = new Shape();
 			shape.x = 400;
