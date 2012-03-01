@@ -29,7 +29,6 @@ class CppTestMain
 		var test = new TestContainerSpace();
 		var test = new TestRecursiveContainer();
 		var test = new TestMCheckBox();
-		//var test = new TestTooltipsOld();
 		//var test = new TestMTooltips();
 		//var test = new TestNumericStepper();
 		//var test = new TestCursorManager();
@@ -37,7 +36,7 @@ class CppTestMain
 		var test = new TestMCharts();
 		//var test = new TestText();
 		var test = new TestMTween();
-		var test = new NmeTestTooltipsOld();
+		var test = new TestTooltipsOld();
 		/*var test = new TestTooltips();
 		var test = new TestScrollBar();
 		var test = new TestTextArea();

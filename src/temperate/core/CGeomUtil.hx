@@ -72,7 +72,7 @@ class CGeomUtil
 		}
 		
 		var x0 = xys[i];
-		var y0 = xys[i];
+		var y0 = xys[i + 1];
 		var startI = i;
 		var startXys = xys;
 		while (true)
@@ -189,7 +189,7 @@ class CGeomUtil
 		var v2 = (x2_ - x1_) * (y2 - y1_) - (y2_ - y1_) * (x2 - x1_);
 		var v3 = (x2 - x1) * (y1_ - y1) - (y2 - y1) * (x1_ - x1);
 		var v4 = (x2 - x1) * (y2_ - y1) - (y2 - y1) * (x2_ - x1);
-		return (v1 * v2 < 0) && (v3 * v4 < 0);
+		return (v1 * v2 < -.001) && (v3 * v4 < -.001);
 	}
 	
 	public static inline function getLineIntersect(

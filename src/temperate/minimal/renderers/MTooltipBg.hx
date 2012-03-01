@@ -96,8 +96,7 @@ class MTooltipBg extends Sprite
 			x1, y0,
 			x1, y1,
 			x0, y1];
-		
-		var poligon = tail != null ? CGeomUtil.getUnionPoligon(rect, tail) : rect;
+		var poligon = tail != null ? CGeomUtil.getUnionPoligon(rect, tail, 20) : rect;
 		
 		var g = graphics;
 		g.clear();
