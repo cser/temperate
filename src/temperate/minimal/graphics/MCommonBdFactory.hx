@@ -398,19 +398,16 @@ class MCommonBdFactory
 		var g = shape.graphics;
 		g.clear();
 		
+		var width = BOX_WIDTH;
+		var height = BOX_HEIGHT;
 		var colors = [];
 		var alphas = [];
 		MBdFactoryUtil.getColorsAndAlphas(roundBorderColors, colors, alphas);
 		
 		{
-			var width = BOX_WIDTH;
-			var height = BOX_HEIGHT;
-			
-			g.beginGradientFill(GradientType.LINEAR, colors, alphas, roundBorderRatios, matrix);
-			g.drawRoundRect(1, 1, width - 2, height - 2, (width - 0) >> 1);
-			g.drawRoundRect(2, 2, width - 4, height - 4, (width - 4) >> 1);
-			g.endFill();
-			
+			g.drawCircleRectBorder(
+				1, 1, width - 2, height - 2,
+				colors, alphas, roundBorderRatios, matrix, 1);
 			g.beginFill(roundBgColor.getColor(), roundBgColor.getAlpha());
 			g.drawRoundRect(2, 2, width - 4, height - 4, (width - 4) >> 1);
 			g.endFill();
@@ -425,34 +422,30 @@ class MCommonBdFactory
 		if (selected)
 		{
 			g.beginGradientFill(GradientType.LINEAR, finalColors, alphas, ratios, matrix);
+			g.drawRoundRect(2, 2, width - 4, height - 4, (height - 2) >> 1);
 			g.drawRoundRect(
-				2, 2, BOX_WIDTH - 4, BOX_HEIGHT - 4,
-				(BOX_HEIGHT - 2) >> 1);
-			g.drawRoundRect(
-				2 + BOX_WIDTH - BOX_HEIGHT - 1, 2, BOX_HEIGHT - 4 + 1, BOX_HEIGHT - 4,
-				(BOX_HEIGHT - 4) >> 1);
+				2 + width - height - 1, 2, height - 4 + 1, height - 4, (height - 4) >> 1);
 			g.endFill();
 			
 			g.beginGradientFill(GradientType.LINEAR, finalColors, alphas, ratios, matrix);
 			g.drawRoundRect(
-				2 + BOX_WIDTH - BOX_HEIGHT, 2, BOX_HEIGHT - 4, BOX_HEIGHT - 4,
-				(BOX_WIDTH - 4) * .5);
+				2 + width - height, 2, height - 4, height - 4,
+				(width - 4) * .5);
 			g.endFill();
 		}
 		else
 		{
 			g.beginGradientFill(GradientType.LINEAR, finalColors, alphas, ratios, matrix);
-			g.drawEllipse(2, 2, BOX_HEIGHT - 4, BOX_HEIGHT - 4);
+			g.drawEllipse(2, 2, height - 4, height - 4);
 			g.endFill();
 		}
 		
-		var offsetX = selected ? BOX_WIDTH - BOX_HEIGHT : 0;
-		g.beginFill(roundInnerLineColor.getColor(), roundInnerLineColor.getAlpha());
-		g.drawEllipse(2 + offsetX, 2, BOX_HEIGHT - 4, BOX_HEIGHT - 4);
-		g.drawEllipse(3 + offsetX, 3, BOX_HEIGHT - 6, BOX_HEIGHT - 6);
-		g.endFill();
+		var offsetX = selected ? width - height : 0;
+		g.drawCircleBorder(
+			offsetX + (height >> 1), height >> 1, (height >> 1) - 2, 1,
+			roundInnerLineColor.getColor(), roundInnerLineColor.getAlpha());
 		
-		var bitmapData = new BitmapData(BOX_WIDTH, BOX_HEIGHT, true, 0x00000000);
+		var bitmapData = new BitmapData(width, height, true, 0x00000000);
 		bitmapData.draw(shape);
 		
 		MBdFactoryUtil.qualityOff();
@@ -470,32 +463,21 @@ class MCommonBdFactory
 		var g = shape.graphics;
 		g.clear();
 		
+		var r = BOX_HEIGHT >> 1;
 		var indent = down ? 3 : 4;
 		
 		{
-			var width = BOX_HEIGHT;
-			var height = BOX_HEIGHT;
-			
 			var colors = [];
 			var alphas = [];
 			MBdFactoryUtil.getColorsAndAlphas(roundBorderColors, colors, alphas);
-			
-			g.beginGradientFill(GradientType.LINEAR, colors, alphas, roundBorderRatios, matrix);
-			g.drawEllipse(1, 1, width - 2, height - 2);
-			g.drawEllipse(2, 2, width - 4, height - 4);
-			g.endFill();
-			
+			g.drawCircleGradientBorder(r, r, r - 1, 1, colors, alphas, roundBorderRatios, matrix);
 			g.beginFill(roundBgColor.getColor(), roundBgColor.getAlpha());
-			g.drawEllipse(2, 2, width - 4, height - 4);
+			g.drawEllipse(2, 2, BOX_HEIGHT - 4, BOX_HEIGHT - 4);
 			g.endFill();
-			
 			if (selected)
 			{
-				g.beginGradientFill(GradientType.LINEAR, colors, alphas, roundBorderRatios, matrix);
-				g.drawEllipse(
-					indent - 1, indent - 1, width - indent * 2 + 2, height - indent * 2 + 2);
-				g.drawEllipse(2, 2, width - 4, height - 4);
-				g.endFill();
+				g.drawCircleGradientBorder(
+					r, r, r - 2, indent - 1, colors, alphas, roundBorderRatios, matrix);
 			}
 		}
 		
@@ -506,16 +488,13 @@ class MCommonBdFactory
 			MBdFactoryUtil.getColorsAndAlphas(
 				down ? roundColorsDown : roundColorsUp, colors, alphas);
 			var ratios = down ? roundRatiosDown : roundRatiosUp;
-		
 			g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
 			g.drawEllipse(indent, indent, BOX_HEIGHT - indent * 2, BOX_HEIGHT - indent * 2);
 			g.endFill();
 			
-			g.beginFill(roundInnerLineColor.getColor(), roundInnerLineColor.getAlpha());
-			g.drawEllipse(indent, indent, BOX_HEIGHT - indent * 2, BOX_HEIGHT - indent * 2);
-			g.drawEllipse(
-			indent + 1, indent + 1, BOX_HEIGHT - indent * 2 - 2, BOX_HEIGHT - indent * 2 - 2);
-			g.endFill();
+			g.drawCircleBorder(
+				r, r, r - indent, 1,
+				roundInnerLineColor.getColor(), roundInnerLineColor.getAlpha());
 		}
 		
 		var bitmapData = new BitmapData(BOX_HEIGHT, BOX_HEIGHT, true, 0x00000000);
