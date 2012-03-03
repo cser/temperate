@@ -1,6 +1,5 @@
 package temperate.containers;
 import flash.display.DisplayObject;
-import flash.Lib;
 
 class LayoutUtil 
 {
@@ -15,10 +14,9 @@ class LayoutUtil
 				break;
 			}
 			
-			var invalidateClient = Lib.as(current, ICInvalidateClient);
-			if (invalidateClient != null)
+			if (Std.is(current, ICInvalidateClient))
 			{
-				invalidateClient.invalidate();
+				cast(current, ICInvalidateClient).invalidate();
 			}
 		}
 	}

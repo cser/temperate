@@ -37,8 +37,8 @@ class CppTestMain
 		var test = new TestTooltipsOld();
 		var test = new TestMTooltips();
 		var test = new TestTooltips();// TODO Убрать баг с зависанием
-		var test = new TestCursorManager();// TODO Убрать баг с закрыванием окна на загрузке
 		var test = new TestValidationBug();
+		var test = new TestCursorManager();// TODO Убрать баг с неправильным изменением курсора
 		//var test = new TestMCursorManager();
 		//var test = new TestRasterImageButton();
 		//var test = new TestScrollBar();
