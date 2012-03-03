@@ -36,7 +36,7 @@ class MCommonBdFactory
 	public static var buttonBgSelectedRatios:Array<Int> = [ 0, 50, 51, 255 ];
 	public static var buttonShadowColor:UInt = 0x45000000;
 	public static var buttonInnerBorderColor:UInt = 0x80ffffff;
-	public static var buttonBorderColor:UInt = 0xff105000;
+	public static var buttonBorderColor:UInt = 0xaa105000;
 	
 	public static var roundBorderColors:Array<UInt> = [ 0xff000000, 0xff808080 ];
 	public static var roundBorderRatios:Array<UInt> = [ 0, 255 ];
@@ -330,7 +330,7 @@ class MCommonBdFactory
 		
 		var g = shape.graphics;
 		g.clear();
-		g.fillRoundRect(
+		g.drawRoundRectBorder(
 			0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 6,
 			borderColor.getColor(), borderColor.getAlpha(), 1);
 		g.beginFill(fillColor.getColor(), fillColor.getAlpha());
@@ -359,31 +359,30 @@ class MCommonBdFactory
 		
 		if (shadow)
 		{
-			g.beginFill(buttonShadowColor.getColor(), buttonShadowColor.getAlpha());
-			g.drawRoundRect(2, 2, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 8);
-			g.drawRoundRect(1, 1, DEFAULT_WIDTH - 3, DEFAULT_HEIGHT - 3, 8);
-			g.endFill();
+			g.drawRightBottomBorder(
+				2, 2, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 4,
+				buttonShadowColor.getColor(), buttonShadowColor.getAlpha(), 1, false);
 		}
 		
-		g.fillRoundRect(
+		g.drawRoundRectBorder(
 			1, 1, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 4,
-			buttonBorderColor.getColor(), buttonInnerBorderColor.getAlpha(), 2);
+			buttonBorderColor.getColor(), buttonBorderColor.getAlpha(), 1);
 		
 		var alphas = [];
 		var finalColors = [];
 		MBdFactoryUtil.getColorsAndAlphas(colors, finalColors, alphas);
 		
 		g.beginGradientFill(GradientType.LINEAR, finalColors, alphas, ratios, matrix);
-		g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 8);
+		g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 6);
 		g.endFill();
 		
-		g.fillRoundRect(
+		g.drawRoundRectBorder(
 			2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 4,
 			buttonInnerBorderColor.getColor(), buttonInnerBorderColor.getAlpha(), 1);
-
+		
 		var bitmapData = new BitmapData(DEFAULT_WIDTH, DEFAULT_HEIGHT, true, 0x00000000);
 		bitmapData.draw(shape);
-			
+		
 		MBdFactoryUtil.qualityOff();
 		return bitmapData;
 	}
