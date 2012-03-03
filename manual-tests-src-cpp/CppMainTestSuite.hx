@@ -7,6 +7,7 @@ class CppMainTestSuite extends TestSuite
 	{
 		super();
 		add(temperate.core.CMathTest);
+		add(temperate.core.ArrayUtilTest);
 		add(temperate.collections.CObjectHashTest);
 		add(temperate.containers.CVContainerTest);
 		//add(temperate.containers.CVContainerChangeLayoutByChildManagmentTest);// has failures
