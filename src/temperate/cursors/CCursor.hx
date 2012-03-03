@@ -44,7 +44,7 @@ class CCursor implements ICCursor
 		{
 			cast(view, InteractiveObject).mouseEnabled = false;
 		}
-		if (Std.is(view, DisplayObjectContainer) != null)
+		if (Std.is(view, DisplayObjectContainer))
 		{
 			cast(view, DisplayObjectContainer).mouseChildren = false;
 		}

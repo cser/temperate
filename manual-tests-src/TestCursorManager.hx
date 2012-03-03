@@ -58,7 +58,7 @@ class TestCursorManager extends Sprite
 			var cursor = new CCursor();
 			
 			#if !nme
-			cursor.setSystem(MouseCursor.ARROW)
+			cursor.setSystem(MouseCursor.ARROW);
 			#end
 			
 			_manager.newHover().setTarget(button).setValue(cursor);
