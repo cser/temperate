@@ -4,10 +4,13 @@ import flash.events.Event;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import flash.ui.Mouse;
-import flash.ui.MouseCursorData;
 import temperate.collections.CValueStack;
 import temperate.collections.ICValueSwitcher;
 import temperate.core.CMath;
+
+#if !nme
+import flash.ui.MouseCursorData;
+#end
 
 class CCursorManager 
 {	

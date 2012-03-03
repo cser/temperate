@@ -5,8 +5,11 @@ import flash.display.InteractiveObject;
 import flash.events.IEventDispatcher;
 import flash.Lib;
 import flash.ui.Mouse;
+
+#if !nme
 import flash.ui.MouseCursor;
 import flash.ui.MouseCursorData;
+#end
 
 class CCursor implements ICCursor
 {
@@ -37,15 +40,13 @@ class CCursor implements ICCursor
 		view:DisplayObject, updateOnMove:Bool = false, viewOffsetX:Int = 0, viewOffsetY:Int = 0)
 	{
 		this.view = view;
-		var interactiveObject = Lib.as(view, InteractiveObject);
-		if (interactiveObject != null)
+		if (Std.is(view, InteractiveObject))
 		{
-			interactiveObject.mouseEnabled = false;
+			cast(view, InteractiveObject).mouseEnabled = false;
 		}
-		var container = Lib.as(view, DisplayObjectContainer);
-		if (container != null)
+		if (Std.is(view, DisplayObjectContainer) != null)
 		{
-			container.mouseChildren = false;
+			cast(view, DisplayObjectContainer).mouseChildren = false;
 		}
 		this.updateOnMove = updateOnMove;
 		this.viewOffsetX = viewOffsetX;

@@ -4,7 +4,6 @@ import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.geom.Point;
 import flash.Lib;
-import flash.ui.MouseCursor;
 import flash.Vector;
 import temperate.containers.CVBox;
 import temperate.cursors.CCursor;
@@ -12,6 +11,10 @@ import temperate.cursors.CCursorManager;
 import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.graphics.MCursorBdFactory;
 import temperate.minimal.MButton;
+
+#if !nme
+import flash.ui.MouseCursor;
+#end
 
 class TestCursorManager extends Sprite
 {
@@ -31,7 +34,10 @@ class TestCursorManager extends Sprite
 		box.add(new MButton().setText("Set null cursor")
 			.addClickHandler(callback(onChangeCursorClick, null)));
 		
-		var cursor = new CCursor().setSystem(MouseCursor.IBEAM);
+		var cursor = new CCursor();
+		#if !nme
+		cursor.setSystem(MouseCursor.IBEAM);
+		#end
 		box.add(new MButton().setText("Set IBEAM cursor")
 			.addClickHandler(callback(onChangeCursorClick, cursor)));
 		
@@ -49,15 +55,25 @@ class TestCursorManager extends Sprite
 			button.setSize(100, 100);
 			button.text = "ARROW";
 			button.setTextAlign(1, .5);
-			_manager.newHover().setTarget(button)
-				.setValue(new CCursor().setSystem(MouseCursor.ARROW));
+			var cursor = new CCursor();
+			
+			#if !nme
+			cursor.setSystem(MouseCursor.ARROW)
+			#end
+			
+			_manager.newHover().setTarget(button).setValue(cursor);
 			
 			var button = new MButton();
 			button.addTo(this, 150, 100);
 			button.setSize(100, 100);
 			button.text = "IBEAM";
-			_manager.newHover().setTarget(button)
-				.setValue(new CCursor().setSystem(MouseCursor.IBEAM));
+			var cursor = new CCursor();
+			
+			#if !nme
+			cursor.setSystem(MouseCursor.IBEAM);
+			#end
+			
+			_manager.newHover().setTarget(button).setValue(cursor);
 		}
 		
 		{

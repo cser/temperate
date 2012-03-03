@@ -2,7 +2,6 @@ package temperate.minimal.graphics;
 import flash.display.BitmapData;
 import flash.display.GradientType;
 import flash.display.Shape;
-import flash.filters.BevelFilter;
 import flash.filters.BitmapFilterType;
 import flash.filters.GlowFilter;
 import flash.geom.ColorTransform;
