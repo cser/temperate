@@ -4,6 +4,7 @@ import flash.display.BitmapData;
 import flash.display.GradientType;
 import flash.geom.Matrix;
 using temperate.core.CMath;
+using temperate.core.CGraphicsUtil;
 
 /**
  * There is only one reson to draw skin's BitmapData's by code for default skin:
@@ -329,11 +330,9 @@ class MCommonBdFactory
 		
 		var g = shape.graphics;
 		g.clear();
-
-		g.beginFill(borderColor.getColor(), borderColor.getAlpha());
-		g.drawRoundRect(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 6);
-		g.drawRoundRect(1, 1, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 4);
-		g.endFill();
+		g.fillRoundRect(
+			0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 6,
+			borderColor.getColor(), borderColor.getAlpha(), 1);
 		g.beginFill(fillColor.getColor(), fillColor.getAlpha());
 		g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 4);
 		g.endFill();
@@ -366,10 +365,9 @@ class MCommonBdFactory
 			g.endFill();
 		}
 		
-		g.beginFill(buttonBorderColor.getColor(), buttonInnerBorderColor.getAlpha());
-		g.drawRoundRect(1, 1, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 8);
-		g.drawRoundRect(3, 3, DEFAULT_WIDTH - 6, DEFAULT_HEIGHT - 6, 4);
-		g.endFill();
+		g.fillRoundRect(
+			1, 1, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 4,
+			buttonBorderColor.getColor(), buttonInnerBorderColor.getAlpha(), 2);
 		
 		var alphas = [];
 		var finalColors = [];
@@ -379,10 +377,9 @@ class MCommonBdFactory
 		g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 8);
 		g.endFill();
 		
-		g.beginFill(buttonInnerBorderColor.getColor(), buttonInnerBorderColor.getAlpha());
-		g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 4);
-		g.drawRoundRect(3, 3, DEFAULT_WIDTH - 6, DEFAULT_HEIGHT - 6, 6);
-		g.endFill();
+		g.fillRoundRect(
+			2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 4,
+			buttonInnerBorderColor.getColor(), buttonInnerBorderColor.getAlpha(), 1);
 
 		var bitmapData = new BitmapData(DEFAULT_WIDTH, DEFAULT_HEIGHT, true, 0x00000000);
 		bitmapData.draw(shape);

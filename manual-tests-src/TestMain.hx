@@ -4,6 +4,7 @@ import flash.display.StageScaleMode;
 import flash.Lib;
 import haxe.Log;
 import haxe.PosInfos;
+import minimal.TestMBdFactory;
 import minimal.TestMButton;
 import minimal.TestMCharts;
 import minimal.TestMCheckBox;
@@ -53,6 +54,7 @@ class TestMain
 		var test = new TestValidationBug();
 		var test = new TestWindowApplication();
 		var test = new TestGeomUtil();
+		var test = new TestMBdFactory();
 		Lib.current.addChild(test);
 		test.init();
 	}
