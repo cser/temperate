@@ -1,0 +1,13 @@
+Bugs of nme cpp for windows:
+- exe failing on using blend mode for figures with border, on masks too
+- not dispatched Event.ENTER_FRAME event for childs that not added to stage (may be future?)
+- not throws flash.errors.ArgumentError on removing missing child from Sprite
+- incorrect shapes drawing -don't cut intersections (may be don't metter):
+	var g = shape.graphics;
+	g.beginFill(0xff0000);
+	g.drawRoundRect(0, 0, 100, 100, 10);
+	g.drawRoundRect(10, 10, 80, 80, 10);
+	g.endFill();// No hole in rect, on flash it exists
+
+Bugs of cpp:
+- Float is init by 0 insteard of Math.NaN

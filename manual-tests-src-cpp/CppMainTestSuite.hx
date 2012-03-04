@@ -11,7 +11,7 @@ class CppMainTestSuite extends TestSuite
 		add(temperate.collections.CObjectHashTest);
 		add(temperate.containers.CVContainerTest);
 		//add(temperate.containers.CVContainerChangeLayoutByChildManagmentTest);// has failures
-		//add(temperate.containers.CHContainerChildManagmentTest);// has failures
+		add(temperate.containers.CHContainerChildManagmentTest);
 		add(temperate.collections.CObjectSetTest);
 		add(temperate.extra.CSignalTest);
 	}

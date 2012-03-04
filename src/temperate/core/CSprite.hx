@@ -1,5 +1,7 @@
 package temperate.core;
+import flash.display.DisplayObject;
 import flash.display.Sprite;
+import flash.errors.ArgumentError;
 import flash.events.Event;
 
 class CSprite extends ACValidatable
@@ -58,6 +60,17 @@ class CSprite extends ACValidatable
 			postponeSize();
 		}
 		return value;
+	}
+	
+	override public function removeChild(child:DisplayObject):DisplayObject
+	{
+		// flash do it, then nme mast to
+		if (child.parent != this)
+		{
+			throw new ArgumentError("Child mast exists in container");
+		}
+		super.removeChild(child);
+		return child;
 	}
 	
 	#else
