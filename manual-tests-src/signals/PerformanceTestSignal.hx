@@ -7,7 +7,7 @@ class PerformanceTestSignal< TListener >
 	public function new() 
 	{
 		_listeners = [];
-		dispatch = cast privateDispatch;
+		dispatch = Reflect.makeVarArgs(privateDispatch);
 	}
 	
 	public function add(listener:TListener):Void
@@ -29,12 +29,12 @@ class PerformanceTestSignal< TListener >
 	
 	public var dispatch(default, null):TListener;
 	
-	function privateDispatch(__arguments__):Void
+	function privateDispatch(args:Array<Dynamic>):Void
 	{
 		var listeners = _listeners.copy();		
 		for (listener in _listeners)
 		{
-			Reflect.callMethod(null, listener, __arguments__);
+			Reflect.callMethod(null, listener, args);
 		}
 	}
 }
