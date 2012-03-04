@@ -5,6 +5,8 @@ import flash.display.Sprite;
 import temperate.containers.CHBox;
 import temperate.core.CGraphicsUtil;
 import temperate.minimal.graphics.MCommonBdFactory;
+import temperate.minimal.graphics.MFlatBdFactory;
+import temperate.minimal.graphics.MScrollBarBdFactory;
 
 class TestMBdFactory extends Sprite
 {
@@ -28,10 +30,29 @@ class TestMBdFactory extends Sprite
 		line.add(new Bitmap(MCommonBdFactory.getRadioButtonBgDown()));
 		line.add(new Bitmap(MCommonBdFactory.getRadioButtonBgUpSelected()));
 		line.add(new Bitmap(MCommonBdFactory.getRadioButtonBgDownSelected()));
+		line.add(new Bitmap(MScrollBarBdFactory.getTopUp()));
+		line.add(new Bitmap(MScrollBarBdFactory.getTopOver()));
+		line.add(new Bitmap(MScrollBarBdFactory.getTopDown()));
+		line.add(new Bitmap(MScrollBarBdFactory.getTopDisabled()));
+		line.add(new Bitmap(MScrollBarBdFactory.getHThumbUp()));
+		line.add(new Bitmap(MScrollBarBdFactory.getHThumbOver()));
+		line.add(new Bitmap(MScrollBarBdFactory.getHThumbDown()));
+		line.add(new Bitmap(MScrollBarBdFactory.getSliderHThumbUp()));
+		line.add(new Bitmap(MScrollBarBdFactory.getSliderHThumbOver()));
+		line.add(new Bitmap(MScrollBarBdFactory.getSliderHThumbDown()));
+		line.add(new Bitmap(MScrollBarBdFactory.getSliderHThumbDisabled()));
+		line.add(new Bitmap(MFlatBdFactory.getBgUp()));
+		line.add(new Bitmap(MFlatBdFactory.getBgOver()));
+		line.add(new Bitmap(MFlatBdFactory.getBgDown()));
+		line.add(new Bitmap(MFlatBdFactory.getBgDisabled()));
 		
 		var shape = new Shape();
 		addChild(shape);
 		CGraphicsUtil.drawCircleBorder(shape.graphics, 100, 300, 50, 10, 0x808080, 1);
+		CGraphicsUtil.drawTopLeftBorder(
+			shape.graphics, 300, 300, 100, 100, 20, 0x808080, 1, 10, true);
+		CGraphicsUtil.drawTopLeftBorder(
+			shape.graphics, 500, 300, 100, 100, 20, 0x808080, 1, 10, false);
 		
 		var shape = new Shape();
 		shape.y = 400;

@@ -360,7 +360,7 @@ class MCommonBdFactory
 		
 		if (shadow)
 		{
-			g.drawRightBottomBorder(
+			g.drawBottomRightBorder(
 				2, 2, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2, 4,
 				buttonShadowColor.getColor(), buttonShadowColor.getAlpha(), 1, false);
 		}
