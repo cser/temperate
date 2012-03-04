@@ -215,4 +215,63 @@ class CGraphicsUtil
 			g.curveTo(x1, y1, x2, y2);
 		}
 	}
+	
+	public static function drawRoundRectComplexStepByStep(
+		g:Graphics,
+		x:Float, y:Float, width:Float, height:Float,
+		topLeftRadius:Float, topRightRadius:Float,
+		bottomLeftRadius:Float, bottomRightRadius:Float):Void
+	{
+		var x1 = x + width;
+		var y1 = y + height;
+		var r = topLeftRadius;
+		if (r > 0)
+		{
+			g.moveTo(x + r, y);
+		}
+		else
+		{
+			g.moveTo(x, y);
+		}
+		var r = topRightRadius;
+		if (r > 0)
+		{
+			g.lineTo(x1 - r, y);
+			g.curveTo(x1, y, x1, y + r);
+		}
+		else
+		{
+			g.lineTo(x1, y);
+		}
+		var r = bottomRightRadius;
+		if (r > 0)
+		{
+			g.lineTo(x1, y1 - r);
+			g.curveTo(x1, y1, x1 - r, y1);
+		}
+		else
+		{
+			g.lineTo(x1, y1);
+		}
+		var r = bottomLeftRadius;
+		if (r > 0)
+		{
+			g.lineTo(x + r, y1);
+			g.curveTo(x, y1, x, y1 - r);
+		}
+		else
+		{
+			g.lineTo(x, y1);
+		}
+		var r = topLeftRadius;
+		if (r > 0)
+		{
+			g.lineTo(x, y + r);
+			g.curveTo(x, y, x + r, y);
+		}
+		else
+		{
+			g.lineTo(x, y);
+		}
+	}
 }

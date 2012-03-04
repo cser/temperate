@@ -11,6 +11,7 @@ import temperate.minimal.windows.MMaximizeButton;
 import temperate.raster.CVScale12GridDrawer;
 import temperate.windows.skins.ACWindowSkin;
 using temperate.core.ArrayUtil;
+using temperate.core.CGraphicsUtil;
 
 class MWindowSkin extends ACWindowSkin
 {
@@ -131,7 +132,7 @@ class MWindowSkin extends ACWindowSkin
 				MWindowBdFactory.getLockedTop();
 			}
 			g.beginBitmapFill(bd);
-			g.drawRoundRectComplex(1, 1, width - 2, _lineTop - 1, 5, 5, 0, 0);
+			g.drawRoundRectComplexStepByStep(1, 1, width - 2, _lineTop - 1, 5, 5, 0, 0);
 			g.endFill();
 			
 			_drawer.setBounds(

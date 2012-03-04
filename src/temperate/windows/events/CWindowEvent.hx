@@ -1,8 +1,9 @@
 package temperate.windows.events;
 import flash.events.Event;
+import temperate.events.CEvent;
 import temperate.windows.ACWindow;
 
-class CWindowEvent< T > extends Event
+class CWindowEvent< T > extends CEvent
 {
 	public static var CLOSE = "window.close";
 	

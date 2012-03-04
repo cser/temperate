@@ -64,5 +64,13 @@ class TestMBdFactory extends Sprite
 		g.lineTo(100, 0);
 		CGraphicsUtil.drawArc(g, 100, 50, 50, 1.5 * Math.PI, .5 * Math.PI);
 		g.lineTo(50, 100);
+		
+		var shape = new Shape();
+		shape.x = 300;
+		shape.y = 400;
+		addChild(shape);
+		var g = shape.graphics;
+		g.lineStyle(0, 0xff0000);
+		CGraphicsUtil.drawRoundRectComplexStepByStep(g, 10, 20, 100, 50, 10, 20, 5, 2);
 	}
 }

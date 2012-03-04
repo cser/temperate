@@ -9,6 +9,7 @@ import flash.geom.Matrix;
 import flash.geom.Point;
 import temperate.components.CButtonState;
 using temperate.core.CMath;
+using temperate.core.CGraphicsUtil;
 
 class MWindowBdFactory 
 {
@@ -72,12 +73,12 @@ class MWindowBdFactory
 		g.lineStyle();
 		
 		g.beginFill(0xeeeeee);
-		g.drawRoundRectComplex(1, lineTop, width - 2, height - lineTop - 1, 0, 0, 5, 5);
+		g.drawRoundRectComplexStepByStep(1, lineTop, width - 2, height - lineTop - 1, 0, 0, 5, 5);
 		g.endFill();
 		
 		g.beginFill(0xffffff);
-		g.drawRoundRectComplex(1, lineTop, width - 2, height - lineTop - 1, 0, 0, 5, 5);
-		g.drawRoundRectComplex(1, lineTop, width - 3, height - lineTop - 2, 0, 0, 5, 5);
+		g.drawRoundRectComplexStepByStep(1, lineTop, width - 2, height - lineTop - 1, 0, 0, 5, 5);
+		g.drawRoundRectComplexStepByStep(1, lineTop, width - 3, height - lineTop - 2, 0, 0, 5, 5);
 		g.endFill();
 		
 		var matrix = new Matrix();
@@ -85,8 +86,8 @@ class MWindowBdFactory
 		
 		g.beginGradientFill(
 			GradientType.LINEAR, [0xffffff, 0xffffff], [.5, 1], [0, 255], matrix);
-		g.drawRoundRectComplex(1, 1, width - 2, lineTop - 1, 5, 5, 0, 0);
-		g.drawRoundRectComplex(2, 2, width - 4, lineTop - 2, 5, 5, 0, 0);
+		g.drawRoundRectComplexStepByStep(1, 1, width - 2, lineTop - 1, 5, 5, 0, 0);
+		g.drawRoundRectComplexStepByStep(2, 2, width - 4, lineTop - 2, 5, 5, 0, 0);
 		g.endFill();
 		
 		g.beginFill(0xffffff, .6);

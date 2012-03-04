@@ -11,6 +11,7 @@ class MainTestSuite extends TestSuite
 		add(FakeTimerFactoryTest);
 		add(temperate.collections.CDoubleDictionaryTest);
 		add(temperate.collections.CObjectHashTest);
+		add(temperate.collections.CObjectSetTest);
 		add(temperate.collections.CPriorityListTest);
 		add(temperate.collections.CValueStackTest);
 		add(temperate.components.CButtonSelectorTest);

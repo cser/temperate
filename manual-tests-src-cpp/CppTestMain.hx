@@ -38,7 +38,6 @@ class CppTestMain
 		var test = new TestValidationBug();
 		var test = new TestCursorManager();// TODO Убрать баг с неправильным изменением курсора
 		/*
-		var test = new TestRasterImageButton();
 		var test = new TestSignalPerformance();
 		var test = new TestWindows();
 		var test = new TestWindowApplication();
@@ -53,6 +52,7 @@ class CppTestMain
 		//var test = new TestMCursorManager();// Падает
 		//var test = new TestTextArea();// Падает
 		//var test = new TestKey();// Закрывается
+		//var test = new TestRasterImageButton();// Падает
 		
 		//var test = new NmeTestCurrent();
 		Lib.current.addChild(test);
