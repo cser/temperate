@@ -30,29 +30,29 @@ class CppTestMain
 		var test = new TestContainerSpace();
 		var test = new TestRecursiveContainer();
 		var test = new TestMCheckBox();
-		//var test = new TestNumericStepper();
-		//var test = new TestSlider();
 		var test = new TestMCharts();
-		//var test = new TestText();
 		var test = new TestMTween();
 		var test = new TestTooltipsOld();
 		var test = new TestMTooltips();
 		var test = new TestTooltips();// TODO Убрать баг с зависанием
 		var test = new TestValidationBug();
 		var test = new TestCursorManager();// TODO Убрать баг с неправильным изменением курсора
-		//var test = new TestMCursorManager();
-		//var test = new TestRasterImageButton();
-		//var test = new TestScrollBar();
-		/*var test = new TestTextArea();
-		var test = new TestSimpleButtonWrapper();
+		/*
+		var test = new TestRasterImageButton();
 		var test = new TestSignalPerformance();
-		var test = new TestScrollPane();
-		var test = new TestKey();
-		
 		var test = new TestWindows();
 		var test = new TestWindowApplication();
 		*/
 		var test = new TestMBdFactory();
+		var test = new TestText();
+		var test = new TestNumericStepper();// TODO исправить медленное изменение при зажатии
+		var test = new TestSimpleButtonWrapper();// TODO исправить медленное изменение при зажатии, rollOut не отлипает
+		//var test = new TestSlider();// Падает
+		//var test = new TestScrollBar();// Закрывается
+		//var test = new TestScrollPane();// Падает
+		//var test = new TestMCursorManager();// Падает
+		//var test = new TestTextArea();// Падает
+		//var test = new TestKey();// Закрывается
 		
 		//var test = new NmeTestCurrent();
 		Lib.current.addChild(test);

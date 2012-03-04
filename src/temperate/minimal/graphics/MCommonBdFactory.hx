@@ -332,7 +332,7 @@ class MCommonBdFactory
 		var g = shape.graphics;
 		g.clear();
 		g.drawRoundRectBorder(
-			0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 6,
+			0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 3,
 			borderColor.getColor(), borderColor.getAlpha(), 1);
 		g.beginFill(fillColor.getColor(), fillColor.getAlpha());
 		g.drawRoundRect(2, 2, DEFAULT_WIDTH - 4, DEFAULT_HEIGHT - 4, 4);

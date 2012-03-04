@@ -170,7 +170,6 @@ class TestText extends Sprite
 				column.add(new CLabel().setText("MInputText with restrict 0123456789."));
 				
 				var field = new MInputField().setText("123").addTo(column);
-				field.restrict = "0123456789.";
 			}
 			
 			line.add(new MSeparator(false)).setPercents( -1, 100);

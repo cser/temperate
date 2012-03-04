@@ -1,12 +1,12 @@
 package temperate.minimal.cursors;
-import flash.ui.MouseCursor;
+import temperate.cursors.CMouseCursor;
 import temperate.cursors.CRasterPressCursor;
 import temperate.minimal.graphics.MCursorBdFactory;
 
 class MHandCursor extends CRasterPressCursor
 {
 	public function new(
-		updateOnMove:Bool = false, hideSystem:Bool = true, mouseCursor:MouseCursor = null) 
+		updateOnMove:Bool = false, hideSystem:Bool = true, mouseCursor:CMouseCursor = null) 
 	{
 		super();
 		

@@ -33,7 +33,6 @@ class CNumericStepper extends CSprite
 		_value = 0;
 		_mouseWheelDimRatio = 1;
 		
-		valueRestrict = "\\-0-9";
 		valueTranslator = Std.string;
 		valueParser = Std.parseInt;
 		valueIsCorrect = isCorrectInt;
@@ -54,7 +53,6 @@ class CNumericStepper extends CSprite
 		addChild(_down.view);
 		
 		_tf = new TextField();
-		_tf.restrict = valueRestrict;
 		_tf.text = valueTranslator(_value);
 		_tf.addEventListener(Event.CHANGE, onTfChange, false, CMath.INT_MAX_VALUE);
 		addChild(_tf);
@@ -134,21 +132,18 @@ class CNumericStepper extends CSprite
 		return _timerChanger;
 	}
 	
-	public var valueRestrict(default, null):String;
 	public var valueTranslator(default, null):Int->String;
 	public var valueParser(default, null):String->Int;
 	public var valueIsCorrect(default, null):String->Bool;
 	
 	public function setValueTranslators(
-		restrict:String, translator:Int->String, parser:String->Int, isCorrect:String->Bool
+		translator:Int->String, parser:String->Int, isCorrect:String->Bool
 	)
 	{
-		valueRestrict = restrict;
 		valueTranslator = translator;
 		valueParser = parser;
 		valueIsCorrect = isCorrect;
 		
-		_tf.restrict = valueRestrict;
 		_tf.text = valueTranslator(_value);
 		
 		_size_tfMinSizeValid = false;
