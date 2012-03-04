@@ -2,6 +2,7 @@ package ;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.Lib;
+import minimal.TestMBdFactory;
 import minimal.TestMButton;
 import minimal.TestMCharts;
 import minimal.TestMCheckBox;
@@ -51,8 +52,9 @@ class CppTestMain
 		var test = new TestWindows();
 		var test = new TestWindowApplication();
 		*/
+		var test = new TestMBdFactory();
 		
-		var test = new NmeTestCurrent();
+		//var test = new NmeTestCurrent();
 		Lib.current.addChild(test);
 		test.init();
 	}

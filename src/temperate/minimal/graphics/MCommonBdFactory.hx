@@ -2,6 +2,7 @@ package temperate.minimal.graphics;
 
 import flash.display.BitmapData;
 import flash.display.GradientType;
+import flash.display.Graphics;
 import flash.geom.Matrix;
 using temperate.core.CMath;
 using temperate.core.CGraphicsUtil;
@@ -405,7 +406,8 @@ class MCommonBdFactory
 		MBdFactoryUtil.getColorsAndAlphas(roundBorderColors, colors, alphas);
 		
 		{
-			g.drawCircleRectBorder(
+			drawCircleRectBorder(
+				g,
 				1, 1, width - 2, height - 2,
 				colors, alphas, roundBorderRatios, matrix, 1);
 			g.beginFill(roundBgColor.getColor(), roundBgColor.getAlpha());
@@ -422,10 +424,13 @@ class MCommonBdFactory
 		if (selected)
 		{
 			g.beginGradientFill(GradientType.LINEAR, finalColors, alphas, ratios, matrix);
-			g.drawRoundRect(2, 2, width - 4, height - 4, (height - 2) >> 1);
-			g.drawRoundRect(
-				2 + width - height - 1, 2, height - 4 + 1, height - 4, (height - 4) >> 1);
-			g.endFill();
+			
+			var r = (height >> 1) - 2;
+			g.moveTo(2 + r, 2);
+			g.lineTo(width - 2 - r - 1.5, 2);
+			g.drawArc(width - 2 - r - 1.5, 2 + r, r, 1.5 * Math.PI, .5 * Math.PI);
+			g.lineTo(2 + r, height - 2);
+			g.drawArc(2 + r, 2 + r, r, .5 * Math.PI, 1.5 * Math.PI);
 			
 			g.beginGradientFill(GradientType.LINEAR, finalColors, alphas, ratios, matrix);
 			g.drawRoundRect(
@@ -436,7 +441,7 @@ class MCommonBdFactory
 		else
 		{
 			g.beginGradientFill(GradientType.LINEAR, finalColors, alphas, ratios, matrix);
-			g.drawEllipse(2, 2, height - 4, height - 4);
+			g.drawCircle(height >> 1, height >> 1, (height >> 1) - 2);
 			g.endFill();
 		}
 		
@@ -450,6 +455,27 @@ class MCommonBdFactory
 		
 		MBdFactoryUtil.qualityOff();
 		return bitmapData;
+	}
+	
+	static function drawCircleRectBorder(
+		g:Graphics,
+		x:Float, y:Float, width:Float, height:Float,
+		colors:Array<UInt>, alphas:Array<Float>, ratios:Array<UInt>, matrix:Matrix,
+		thickness:Int):Void
+	{
+		var r = height * .5;
+		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
+		g.draw1per8SegmentBorder(2, 6, x + r, y + r, r, thickness);
+		g.endFill();
+		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
+		g.draw1per8SegmentBorder(-2, 2, x + width - r, y + r, r, thickness);
+		g.endFill();
+		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
+		g.drawRect(x + r, y, width - r * 2, thickness);
+		g.endFill();
+		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
+		g.drawRect(x + r, y + height - thickness, width - r * 2, thickness);
+		g.endFill();
 	}
 	
 	static function newRoundBg(selected:Bool, down:Bool)
@@ -472,7 +498,7 @@ class MCommonBdFactory
 			MBdFactoryUtil.getColorsAndAlphas(roundBorderColors, colors, alphas);
 			g.drawCircleGradientBorder(r, r, r - 1, 1, colors, alphas, roundBorderRatios, matrix);
 			g.beginFill(roundBgColor.getColor(), roundBgColor.getAlpha());
-			g.drawEllipse(2, 2, BOX_HEIGHT - 4, BOX_HEIGHT - 4);
+			g.drawCircle(r, r, r - 2);
 			g.endFill();
 			if (selected)
 			{
@@ -489,7 +515,7 @@ class MCommonBdFactory
 				down ? roundColorsDown : roundColorsUp, colors, alphas);
 			var ratios = down ? roundRatiosDown : roundRatiosUp;
 			g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
-			g.drawEllipse(indent, indent, BOX_HEIGHT - indent * 2, BOX_HEIGHT - indent * 2);
+			g.drawCircle(r, r, r - indent);
 			g.endFill();
 			
 			g.drawCircleBorder(

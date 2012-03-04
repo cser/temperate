@@ -96,10 +96,10 @@ class CGraphicsUtil
 		color:UInt, alpha:Float):Void
 	{
 		g.beginFill(color, alpha);
-		drawSegmentBorder(g, 0, 4, x, y, radius, thickness);
+		draw1per8SegmentBorder(g, 0, 4, x, y, radius, thickness);
 		g.endFill();
 		g.beginFill(color, alpha);
-		drawSegmentBorder(g, 4, 8, x, y, radius, thickness);
+		draw1per8SegmentBorder(g, 4, 8, x, y, radius, thickness);
 		g.endFill();
 	}
 	
@@ -109,35 +109,14 @@ class CGraphicsUtil
 		colors:Array<UInt>, alphas:Array<Float>, ratios:Array<UInt>, matrix:Matrix):Void
 	{
 		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
-		drawSegmentBorder(g, 0, 4, x, y, radius, thickness);
+		draw1per8SegmentBorder(g, 0, 4, x, y, radius, thickness);
 		g.endFill();
 		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
-		drawSegmentBorder(g, 4, 8, x, y, radius, thickness);
+		draw1per8SegmentBorder(g, 4, 8, x, y, radius, thickness);
 		g.endFill();
 	}
 	
-	public static function drawCircleRectBorder(
-		g:Graphics,
-		x:Float, y:Float, width:Float, height:Float,
-		colors:Array<UInt>, alphas:Array<Float>, ratios:Array<UInt>, matrix:Matrix,
-		thickness:Int):Void
-	{
-		var r = height * .5;
-		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
-		drawSegmentBorder(g, 2, 6, x + r, y + r, r, thickness);
-		g.endFill();
-		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
-		drawSegmentBorder(g, -2, 2, x + width - r, y + r, r, thickness);
-		g.endFill();
-		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
-		g.drawRect(x + r, y, width - r * 2, thickness);
-		g.endFill();
-		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
-		g.drawRect(x + r, y + height - thickness, width - r * 2, thickness);
-		g.endFill();
-	}
-	
-	static function drawSegmentBorder(
+	public static function draw1per8SegmentBorder(
 		g:Graphics,
 		i0:Int, i1:Int, x:Float, y:Float, radius:Float, thickness:Int):Void
 	{
@@ -173,5 +152,28 @@ class CGraphicsUtil
 		}
 		var angle = 2 * i * step;
 		g.lineTo(x + r1 * Math.cos(angle), y + r1 * Math.sin(angle));
+	}
+	
+	public static function drawArc(
+		g:Graphics,
+		x:Float, y:Float, radius:Float, angle0:Float, angle1:Float):Void
+	{
+		var numSegments = Math.ceil((angle1 - angle0) * 4 / Math.PI);
+		if (numSegments < 0)
+		{
+			numSegments = -numSegments;
+		}
+		var deltaAngle = (angle1 - angle0) / numSegments;
+		var externalRadius = radius / Math.cos(deltaAngle * .5);
+		for (i in 0 ... numSegments)
+		{
+			var angle = angle0 + (i + 1) * deltaAngle;
+			var halfAngle = angle0 + (i + .5) * deltaAngle;
+			var x1 = x + Math.cos(halfAngle) * externalRadius;
+			var y1 = y + Math.sin(halfAngle) * externalRadius;
+			var x2 = x + Math.cos(angle) * radius;
+			var y2 = y + Math.sin(angle) * radius;
+			g.curveTo(x1, y1, x2, y2);
+		}
 	}
 }
