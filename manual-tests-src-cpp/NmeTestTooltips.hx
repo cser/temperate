@@ -5,6 +5,7 @@ import flash.events.MouseEvent;
 import temperate.components.ACButton;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
+import temperate.core.CSprite;
 import temperate.minimal.animators.MAlphaAnimator;
 import temperate.minimal.animators.MScaleAnimator;
 import temperate.minimal.MButton;
@@ -78,17 +79,17 @@ class NmeTestTooltips extends Sprite
 				.setTarget(button);
 		}
 		
-		/*var button = newScaleAnimatorButton(TestTooltip);
+		var button = newScaleAnimatorButton(TestTooltip);
 		line.add(button);
 		
 		var button = newScaleAnimatorButton(TestTooltip);
 		button.addTo(this, 150, 0);
 		
 		var button = newScaleAnimatorButton(MTextTooltip);
-		button.addTo(this, 350, 0);*/
+		button.addTo(this, 350, 0);
 		
 		{
-			/*var outer = newBlock(500, 0, 100, 100);
+			var outer = newBlock(500, 0, 100, 100);
 			addChild(outer);
 			
 			var inner = newBlock(20, 15, 50, 20);
@@ -106,16 +107,16 @@ class NmeTestTooltips extends Sprite
 				.setTooltipClass(MTextTooltip)
 				.setAnimator(new MScaleAnimator())
 				.setData("Inner tooltip")
-				.setTarget(inner);*/
+				.setTarget(inner);
 		}
 		
 		var column = new CVBox().addTo(line);
 		column.add(new MLabel().setText("secondShowDelay = 0"));
-		/*column.add(newDelayedBlock(0, false));
+		column.add(newDelayedBlock(0, false));
 		column.add(new MLabel().setText("secondShowDelay = 50"));
 		column.add(newDelayedBlock(50, false));
 		column.add(new MLabel().setText("Custom delays"));
-		column.add(newDelayedBlock(0, true));*/
+		column.add(newDelayedBlock(0, true));
 		
 		var line = new CHBox().addTo(main);
 		
@@ -125,11 +126,11 @@ class NmeTestTooltips extends Sprite
 			button.setSize(100, 100);
 			line.add(button);
 			
-			/*new CTargetMouseTooltiper(_owner, manager)
+			new CTargetMouseTooltiper(_owner, manager)
 				.setTooltipMethod(newCustomTooltip)
 				.setAnimator(new MScaleAnimator())
 				.setData("Tooltip text")
-				.setTarget(button);*/
+				.setTarget(button);
 		}
 		
 		{
@@ -138,16 +139,16 @@ class NmeTestTooltips extends Sprite
 			button.setSize(100, 100);
 			line.add(button);
 			
-			/*new CTargetMouseTooltiper(_owner, manager)
+			new CTargetMouseTooltiper(_owner, manager)
 				.setTooltipMethod(newCustomTooltip)
 				.setAnimator(new MAlphaAnimator())
 				.setData("Tooltip text")
-				.setTarget(button);*/
+				.setTarget(button);
 		}
 		
 		var manager = new CTooltipManager();
 		
-		/*{
+		{
 			_forsedTargetTooltipButton = new MButton()
 				.setText("Forsed target\ntooltip button")
 				.addTo(line);
@@ -158,16 +159,16 @@ class NmeTestTooltips extends Sprite
 				MouseEvent.MOUSE_OUT, manualTarget_onMouseOut
 			);
 			_forcedTargetTooltiper = new CForcedTargetTooltiper(_owner, manager);
-		}*/
+		}
 		
-		/*{
+		{
 			var button = new MButton().setText("Mouse\ntooltip button").addTo(line);
 			button.setSize(100, 100);
 			button.addEventListener(MouseEvent.ROLL_OVER, mouseTooltipButton_onRollOver);
 			button.addEventListener(MouseEvent.ROLL_OUT, mouseTooltipButton_onRollOut);
 			
 			_mouseTooltiper = new CMouseTooltiper(_owner, manager);
-		}*/
+		}
 	}
 	
 	function onStageResize(event:Event = null)
@@ -183,7 +184,6 @@ class NmeTestTooltips extends Sprite
 		return tooltip;
 	}
 	
-	/*
 	function newDelayedBlock(secondShowDelay:Int, useCustomDelays:Bool)
 	{
 		var block = new CHBox();
@@ -233,8 +233,11 @@ class NmeTestTooltips extends Sprite
 		return block;
 	}
 	
-	function newBlock(x:Int, y:Int, width:Int, height:Int)
+	function newBlock(x:Int, y:Int, width:Int, height:Int):Sprite
 	{
+		//var block = new CSprite();
+		//block.setSize(width, height);
+		
 		var block = new Sprite();
 		block.x = x;
 		block.y = y;
@@ -286,5 +289,5 @@ class NmeTestTooltips extends Sprite
 	function mouseTooltipButton_onRollOut(event:Event)
 	{
 		_mouseTooltiper.hide();
-	}*/
+	}
 }

@@ -59,11 +59,12 @@ class MScaleAnimator< T > implements ICTooltipAnimator<T>
 			target.x, target.y, target.width, target.height, 0
 		);
 		
+		var minScale = .1;// if set to 0 - failing on nme
 		_hideVars.alpha = 0;
-		_hideVars.scaleX = 0;
-		_hideVars.scaleY = 0;
-		_hideVars.x = _x + CGeomUtil.crossX;
-		_hideVars.y = _y + CGeomUtil.crossY;
+		_hideVars.scaleX = minScale;
+		_hideVars.scaleY = minScale;
+		_hideVars.x = _x + CGeomUtil.crossX - .5 * _width * minScale;
+		_hideVars.y = _y + CGeomUtil.crossY - .5 * _height * minScale;
 		
 		_showVars.alpha = 1;
 		_showVars.scaleX = 1;

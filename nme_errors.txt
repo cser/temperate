@@ -35,7 +35,16 @@ Bugs of nme cpp for windows:
 	
 	_layout.add(child); called 2 times on addChildAt !
 - Bitmap is not transparent for mouse
+- Filing on getting size of DisplayObject with drawing
+	var shape = new Shape();
+	var g = shape.graphics;
+	g.lineStyle(0, 0x000000);// important
+	g.beginFill(0x0000ff);
+	g.drawRect(0, 0, 100, 100);
+	g.endFill();
+	var x = shape.width;//<-- failing if it line exists
 
 Bugs of cpp:
 - Float is init by 0 insteard of Math.NaN
 - Don't work equal operator for 2 elements from different typed arrays
+- Hangs on scaleX = scaleY = 0 in specific cases
