@@ -33,7 +33,8 @@ Bugs of nme cpp for windows:
 		_layout.add(child);
 	}
 	
-	_layout.add(child); called 2 times on addChildAt !
+	_layout.add(child); called 2 times on addChildAt !	
+- Bitmap is not transparent for mouse
 
 Bugs of cpp:
 - Float is init by 0 insteard of Math.NaN

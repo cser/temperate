@@ -1,10 +1,13 @@
 package temperate.cursors;
+import flash.display.Bitmap;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.InteractiveObject;
+import flash.display.Sprite;
 import flash.events.IEventDispatcher;
 import flash.Lib;
 import flash.ui.Mouse;
+import nme.display.Shape;
 
 #if !nme
 import flash.ui.MouseCursor;
@@ -39,6 +42,14 @@ class CCursor implements ICCursor
 	public function setView(
 		view:DisplayObject, updateOnMove:Bool = false, viewOffsetX:Int = 0, viewOffsetY:Int = 0)
 	{
+		if (Std.is(view, Bitmap) || Std.is(view, Shape))
+		{
+			// For nme
+			var sprite = new Sprite();
+			sprite.addChild(view);
+			view = sprite;
+		}
+		
 		this.view = view;
 		if (Std.is(view, InteractiveObject))
 		{
