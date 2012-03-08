@@ -53,6 +53,7 @@ class CppTestMain
 		var test = new TestWindowApplication();// Закрывается
 		//var test = new TestKey();// Закрывается даже если не вызван init()
 		
+		var test = new NmeTestTooltips();// Виснет
 		var test = new NmeTestCurrent();
 		Lib.current.addChild(test);
 		test.init();

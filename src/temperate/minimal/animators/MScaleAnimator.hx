@@ -23,6 +23,10 @@ class MScaleAnimator< T > implements ICTooltipAnimator<T>
 		_state = CAnimatorState.HIDED;
 		_hideVars = { };
 		_showVars = { };
+		_x = 0;
+		_y = 0;
+		_width = 0;
+		_height = 0;
 	}
 	
 	public function setTooltip(tooltip:ICTooltip<T>)

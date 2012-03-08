@@ -7,7 +7,7 @@ import flash.display.Sprite;
 import flash.events.IEventDispatcher;
 import flash.Lib;
 import flash.ui.Mouse;
-import nme.display.Shape;
+import flash.display.Shape;
 
 #if !nme
 import flash.ui.MouseCursor;
