@@ -39,6 +39,7 @@ class CppTestMain
 		var test = new TestText();
 		var test = new TestValidationBug();
 		var test = new TestCursorManager();
+		var test = new TestSignalPerformance();
 		var test = new TestNumericStepper();// TODO исправить медленное изменение при зажатии
 		var test = new TestSimpleButtonWrapper();// TODO исправить медленное изменение при зажатии, rollOut не отлипает
 		var test = new TestTooltips();// TODO Убрать баг с зависанием
@@ -48,7 +49,6 @@ class CppTestMain
 		var test = new TestMCursorManager();// Падает
 		var test = new TestTextArea();// Падает
 		var test = new TestRasterImageButton();// Падает
-		var test = new TestSignalPerformance();
 		var test = new TestWindows();// Виснет
 		var test = new TestWindowApplication();// Закрывается
 		//var test = new TestKey();// Закрывается даже если не вызван init()

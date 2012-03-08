@@ -29,7 +29,7 @@ class CValidatorTest
 		var sprite0 = newSprite("0");
 		_validator.postponeSize(sprite0);
 		ArrayAssert.equalToArray([], sprite0.log);
-		_validator.dispatchExitFrame();
+		_validator.forseValidate();
 		ArrayAssert.equalToArray(["doValidateSize"], sprite0.log);
 	}
 	

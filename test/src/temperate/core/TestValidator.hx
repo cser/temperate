@@ -22,13 +22,8 @@ class TestValidator extends CValidator
 	public var viewHead(default, null):ACValidatable;
 	public var viewTail(default, null):ACValidatable;
 	
-	public function dispatchExitFrame():Void
-	{
-		_dispatcher.dispatchEvent(new Event(Event.EXIT_FRAME));
-	}
-	
 	public function forseValidate():Void
 	{
-		onExitFrame(new Event(Event.EXIT_FRAME));
+		onExitFrame(null);
 	}
 }

@@ -197,7 +197,7 @@ class CTextFormat extends TextFormat
 		if (format.color != null)
 		{
 			fontTagText = addToRight(
-				fontTagText, " color=\"#" + CMath.toString(format.color, 16) + "\"");
+				fontTagText, " color=\"#" + CMath.toHex(format.color) + "\"");
 		}
 		if (format.size != null)
 		{
