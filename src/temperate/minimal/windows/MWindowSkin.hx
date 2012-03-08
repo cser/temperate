@@ -213,9 +213,9 @@ class MWindowSkin extends ACWindowSkin
 		return _headButtons.exists(button);
 	}
 	
-	public var closeButton(get_closeButton, null):ICButton;
 	var _closeButton:ICButton;
-	function get_closeButton()
+	
+	public function getCloseButton():ICButton
 	{
 		if (_closeButton == null)
 		{
@@ -224,9 +224,9 @@ class MWindowSkin extends ACWindowSkin
 		return _closeButton;
 	}
 	
-	public var maximizeButton(get_maximizeButton, null):ICButton;
 	var _maximizeButton:MMaximizeButton;
-	function get_maximizeButton()
+	
+	public function getMaximizeButton():ICButton
 	{
 		if (_maximizeButton == null)
 		{

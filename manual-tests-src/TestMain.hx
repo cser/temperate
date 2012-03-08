@@ -56,7 +56,7 @@ class TestMain
 		var test = new TestWindowApplication();
 		var test = new TestGeomUtil();
 		var test = new BitmapDataInlineSuite();
-		var test = new TestMBdFactory();var test = new TestWindowApplication();
+		var test = new TestMBdFactory();
 		Lib.current.addChild(test);
 		test.init();
 	}

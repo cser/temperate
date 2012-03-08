@@ -7,9 +7,12 @@ import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.graphics.MWindowBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MFlatButton;
+import temperate.minimal.windows.MMaximizeButton;
+import temperate.minimal.windows.MWindowManager;
 import temperate.minimal.windows.MWindowSkin;
 import temperate.raster.CScale9GridDrawer;
 import temperate.raster.CVScale12GridDrawer;
+import windows.MMaximizedWindow;
 
 class NmeTestCurrent extends Sprite
 {
@@ -55,5 +58,12 @@ class NmeTestCurrent extends Sprite
 			10, 12, 10, 12, MWindowBdFactory.FRAME_CENTER_TOP -2, 2);
 		drawer.setBounds(0, 0, 100, 100, 20);
 		drawer.draw(shape.graphics);
+		
+		var line = new CHBox().addTo(this, 10, 200);
+		var button = new MMaximizeButton();
+		line.add(button);
+		
+		var button = new MWindowSkin().getMaximizeButton();
+		line.add(button.view);
 	}
 }

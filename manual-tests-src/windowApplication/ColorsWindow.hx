@@ -66,7 +66,7 @@ class ColorsWindow extends AMWindow<Dynamic>
 		
 		_editorState = editorState;
 		
-		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
+		_skin.addHeadButton(_skin.getCloseButton()).addEventListener(MouseEvent.CLICK, onCloseClick);
 		innerDispatcher.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 	}
 	

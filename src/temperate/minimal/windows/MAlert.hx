@@ -75,7 +75,7 @@ class MAlert< TData > extends AMWindow<TData>
 		}
 		if (crossShow)
 		{
-			var button = _skin.closeButton;
+			var button = _skin.getCloseButton();
 			_skin.addHeadButton(button);
 			_dataByButton.set(button, crossData);
 			button.addEventListener(MouseEvent.CLICK, onButtonClick);

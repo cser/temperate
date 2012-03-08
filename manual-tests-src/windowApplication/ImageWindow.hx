@@ -29,8 +29,10 @@ class ImageWindow extends AMWindow<Dynamic>
 		_savedPrimitivesLength = 0;
 		_editorState = editorState;
 		
-		_skin.addHeadButton(_skin.maximizeButton).addEventListener(Event.CHANGE, onMaximizeChange);
-		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
+		_skin.addHeadButton(_skin.getMaximizeButton())
+			.addEventListener(Event.CHANGE, onMaximizeChange);
+		_skin.addHeadButton(_skin.getCloseButton())
+			.addEventListener(MouseEvent.CLICK, onCloseClick);
 		resizable = true;
 		
 		_pane = new MScrollPane();
@@ -138,7 +140,7 @@ class ImageWindow extends AMWindow<Dynamic>
 	
 	function onMaximizeChange(event:Event)
 	{
-		maximized = _skin.maximizeButton.selected;
+		maximized = _skin.getMaximizeButton().selected;
 	}
 	
 	function onCloseClick(event:MouseEvent)

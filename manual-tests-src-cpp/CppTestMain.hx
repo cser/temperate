@@ -35,23 +35,23 @@ class CppTestMain
 		var test = new TestMTween();
 		var test = new TestTooltipsOld();
 		var test = new TestMTooltips();
-		var test = new TestTooltips();// TODO Убрать баг с зависанием
-		var test = new TestValidationBug();
-		var test = new TestCursorManager();// TODO Убрать баг с неправильным изменением курсора
 		var test = new TestMBdFactory();
 		var test = new TestText();
+		var test = new TestValidationBug();
+		var test = new TestTooltips();// TODO Убрать баг с зависанием
+		var test = new TestCursorManager();// TODO Убрать баг с неправильным изменением курсора
 		var test = new TestNumericStepper();// TODO исправить медленное изменение при зажатии
 		var test = new TestSimpleButtonWrapper();// TODO исправить медленное изменение при зажатии, rollOut не отлипает
 		var test = new TestSlider();// Падает
-		//var test = new TestScrollBar();// Закрывается
+		var test = new TestScrollBar();// Закрывается
 		var test = new TestScrollPane();// Падает
 		var test = new TestMCursorManager();// Падает
 		var test = new TestTextArea();// Падает
-		//var test = new TestKey();// Закрывается
 		var test = new TestRasterImageButton();// Падает
 		var test = new TestSignalPerformance();
-		//var test = new TestWindows();
-		//var test = new TestWindowApplication();
+		var test = new TestWindows();// Виснет
+		var test = new TestWindowApplication();// Закрывается
+		//var test = new TestKey();// Закрывается даже если не вызван init()
 		
 		var test = new NmeTestCurrent();
 		Lib.current.addChild(test);
