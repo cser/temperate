@@ -88,10 +88,10 @@ class TestTooltips extends Sprite
 		button.addTo(this, 350, 0);
 		
 		{
-			var outer = newBlock(500, 0, 100, 100);
+			var outer = newBlock(500, 0, 100, 100, 0x0000ff);
 			addChild(outer);
 			
-			var inner = newBlock(20, 15, 50, 20);
+			var inner = newBlock(20, 15, 50, 20, 0x0080ff);
 			outer.addChild(inner);
 			
 			var manager = new CTooltipManager();
@@ -170,6 +170,19 @@ class TestTooltips extends Sprite
 		}
 	}
 	
+	function onStageResize(event:Event = null)
+	{
+		_owner.setArea(10, 20, stage.stageWidth - 20, stage.stageHeight - 40);
+	}
+	
+	function newCustomTooltip()
+	{
+		var tooltip = new MTextTooltip();
+		tooltip.borderColor = 0xff0000ff;
+		tooltip.fillColor = 0x80eeeeff;
+		return tooltip;
+	}
+	
 	function newDelayedBlock(secondShowDelay:Int, useCustomDelays:Bool)
 	{
 		var block = new CHBox();
@@ -219,15 +232,14 @@ class TestTooltips extends Sprite
 		return block;
 	}
 	
-	function newBlock(x:Int, y:Int, width:Int, height:Int)
+	function newBlock(x:Int, y:Int, width:Int, height:Int, color:UInt):Sprite
 	{
 		var block = new Sprite();
 		block.x = x;
 		block.y = y;
 		
 		var g = block.graphics;
-		g.lineStyle(0, 0x000000);
-		g.beginFill(0x0000ff);
+		g.beginFill(color);
 		g.drawRect(0, 0, width, height);
 		g.endFill();
 		
@@ -247,19 +259,6 @@ class TestTooltips extends Sprite
 			.setTarget(button);
 		
 		return button;
-	}
-	
-	function onStageResize(event:Event = null)
-	{
-		_owner.setArea(10, 20, stage.stageWidth - 20, stage.stageHeight - 40);
-	}
-	
-	function newCustomTooltip()
-	{
-		var tooltip = new MTextTooltip();
-		tooltip.borderColor = 0xff0000ff;
-		tooltip.fillColor = 0x80eeeeff;
-		return tooltip;
 	}
 	
 	var _forsedTargetTooltipButton:ACButton;
