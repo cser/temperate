@@ -47,9 +47,9 @@ class CppTestMain
 		var test = new TestTextArea();
 		var test = new TestRasterImageButton();
 		var test = new TestMCursorManager();
+		var test = new TestKey();
 		var test = new TestNumericStepper();// TODO исправить медленное изменение при зажатии
 		var test = new TestSimpleButtonWrapper();// TODO исправить медленное изменение при зажатии, rollOut не отлипает
-		//var test = new TestKey();// Закрывается даже если не вызван init()
 		
 		var test = new NmeTestCurrent();
 		var test = new TestWindows();// Окно не двигается и не закрывается
