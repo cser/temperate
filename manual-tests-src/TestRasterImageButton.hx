@@ -10,6 +10,7 @@ import temperate.components.CRasterToolButton;
 import temperate.components.CSpacer;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
+import temperate.core.CGraphicsUtil;
 import temperate.core.CSprite;
 import temperate.docks.CRightDock;
 import temperate.minimal.graphics.MCommonBdFactory;
@@ -258,10 +259,15 @@ class TestRasterImageButton extends Sprite
 	{
 		var image = new Shape();
 		var g = image.graphics;
-		g.lineStyle(0, 0x000000);
-		g.beginFill(color);
-		g.drawRect(0, 0, width, height);
+		
+		g.beginFill(0x000000);
+		CGraphicsUtil.drawRectBorder(g, 0, 0, width, height, 1);
 		g.endFill();
+		
+		g.beginFill(color);
+		g.drawRect(1, 1, width - 2, height - 2);
+		g.endFill();
+		
 		return image;
 	}
 	

@@ -5,6 +5,25 @@ import flash.geom.Matrix;
 
 class CGraphicsUtil 
 {
+	public static function drawRectBorder(
+		g:Graphics,
+		x:Float, y:Float, width:Float, height:Float, thickness:Int):Void
+	{
+		var x1 = x + width;
+		var y1 = y + height;
+		g.moveTo(x, y);
+		g.lineTo(x1, y);
+		g.lineTo(x1, y1);
+		g.lineTo(x, y1);
+		g.lineTo(x, y + thickness);
+		g.lineTo(x + thickness, y + thickness);
+		g.lineTo(x + thickness, y1 - thickness);
+		g.lineTo(x1 - thickness, y1 - thickness);
+		g.lineTo(x1 - thickness, y + thickness);
+		g.lineTo(x, y + thickness);
+		g.lineTo(x, y);
+	}
+	
 	public static function drawRoundRectBorder(
 		g:Graphics,
 		x:Float, y:Float, width:Float, height:Float, radius:Float, color:UInt, alpha:Float,

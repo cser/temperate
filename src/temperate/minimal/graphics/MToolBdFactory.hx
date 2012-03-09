@@ -4,6 +4,7 @@ import flash.display.GradientType;
 import flash.geom.Matrix;
 import temperate.components.CButtonState;
 using temperate.core.CMath;
+using temperate.core.CGraphicsUtil;
 
 class MToolBdFactory 
 {
@@ -90,16 +91,10 @@ class MToolBdFactory
 		g.clear();
 		
 		var color = state.enabled ? params.outerBorderColor : params.outerBorderDisabledColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(0, 0, size, size, 8);
-		g.drawRoundRect(1, 1, size - 2, size - 2, 6);
-		g.endFill();
+		g.drawRoundRectBorder(0, 0, size, size, 4, color.getColor(), color.getAlpha(), 1);
 		
 		var color = state.enabled ? params.innerBorderColor : params.innerBorderDisabledColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(1, 1, size - 2, size - 2, 6);
-		g.drawRoundRect(2, 2, size - 4, size - 4, 4);
-		g.endFill();
+		g.drawRoundRectBorder(1, 1, size - 2, size - 2, 3, color.getColor(), color.getAlpha(), 1);
 		
 		{
 			var boxHeight = size - 2;
@@ -133,16 +128,12 @@ class MToolBdFactory
 		}
 		
 		var color = params.bgInnerBottomRightColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(2, 2, size - 4, size - 4, 4);
-		g.drawRoundRect(2, 2, size - 5, size - 5, 4);
-		g.endFill();
+		g.drawBottomRightBorder(
+			2, 2, size - 4, size - 4, 2, color.getColor(), color.getAlpha(), 1, true);
 		
 		var color = params.bgInnerTopLeftColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(2, 2, size - 4, size - 4, 4);
-		g.drawRoundRect(3, 3, size - 5, size - 5, 4);
-		g.endFill();
+		g.drawTopLeftBorder(
+			2, 2, size - 4, size - 4, 2, color.getColor(), color.getAlpha(), 1, true);
 		
 		bd.draw(shape);
 		
