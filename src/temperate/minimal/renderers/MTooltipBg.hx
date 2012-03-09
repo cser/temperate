@@ -139,8 +139,11 @@ class MTooltipBg extends Sprite
 		
 		var g = graphics;
 		g.clear();
-		g.lineStyle(
-			borderThickness, CMath.getColor(borderColor), CMath.getAlpha(borderColor), true);
+		if (CMath.getAlpha(borderColor) != 0)
+		{
+			g.lineStyle(
+				borderThickness, CMath.getColor(borderColor), CMath.getAlpha(borderColor), true);
+		}
 		g.beginFill(CMath.getColor(fillColor), CMath.getAlpha(fillColor));
 		
 		var i = 0;

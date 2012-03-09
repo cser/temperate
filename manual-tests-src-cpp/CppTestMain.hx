@@ -41,10 +41,10 @@ class CppTestMain
 		var test = new TestCursorManager();
 		var test = new TestSignalPerformance();
 		var test = new TestTooltips();
+		var test = new TestScrollBar();
 		var test = new TestNumericStepper();// TODO исправить медленное изменение при зажатии
 		var test = new TestSimpleButtonWrapper();// TODO исправить медленное изменение при зажатии, rollOut не отлипает
 		var test = new TestSlider();// Падает
-		var test = new TestScrollBar();// Закрывается
 		var test = new TestScrollPane();// Падает
 		var test = new TestMCursorManager();// Падает
 		var test = new TestTextArea();// Падает
