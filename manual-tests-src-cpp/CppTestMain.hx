@@ -49,11 +49,11 @@ class CppTestMain
 		var test = new TestMCursorManager();// Падает
 		var test = new TestTextArea();// Падает
 		var test = new TestRasterImageButton();// Падает
-		var test = new TestWindows();// Виснет
 		var test = new TestWindowApplication();// Закрывается
 		//var test = new TestKey();// Закрывается даже если не вызван init()
 		
 		var test = new NmeTestCurrent();
+		var test = new TestWindows();// Окно не двигается и не закрывается
 		Lib.current.addChild(test);
 		test.init();
 	}

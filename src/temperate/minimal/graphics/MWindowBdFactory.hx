@@ -31,13 +31,15 @@ class MWindowBdFactory
 		
 		var g = shape.graphics;
 		g.clear();
-		
-		g.lineStyle(size, color.getColor(), color.getAlpha());
+		g.beginFill(color.getColor(), color.getAlpha());
 		var x = -DEFAULT_STRIAE_SIZE;
 		while (x < DEFAULT_STRIAE_SIZE)
 		{
 			g.moveTo(x + DEFAULT_STRIAE_SIZE, 0);
 			g.lineTo(x, DEFAULT_STRIAE_SIZE);
+			g.lineTo(x + size, DEFAULT_STRIAE_SIZE);
+			g.lineTo(x + DEFAULT_STRIAE_SIZE + size, 0);
+			g.lineTo(x + DEFAULT_STRIAE_SIZE, 0);
 			x += space + size;
 		}
 		
@@ -139,7 +141,7 @@ class MWindowBdFactory
 	
 	static var _defaultStriae:BitmapData;
 	
-	static function getDefaultStriae():BitmapData
+	public static function getDefaultStriae():BitmapData
 	{
 		if (_defaultStriae == null)
 		{

@@ -4,10 +4,13 @@ import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 import temperate.containers.CHBox;
+import temperate.core.CSprite;
+import temperate.layouts.parametrization.CChildWrapper;
 import temperate.minimal.graphics.MCommonBdFactory;
 import temperate.minimal.graphics.MWindowBdFactory;
 import temperate.minimal.MButton;
 import temperate.minimal.MFlatButton;
+import temperate.minimal.windows.MAlert;
 import temperate.minimal.windows.MMaximizeButton;
 import temperate.minimal.windows.MWindowManager;
 import temperate.minimal.windows.MWindowSkin;
@@ -66,5 +69,15 @@ class NmeTestCurrent extends Sprite
 		
 		var button = new MWindowSkin().getMaximizeButton();
 		line.add(button.view);
+		
+		{
+			var skin = new MWindowSkin();
+			var container = new CSprite();
+			container.setSize(100, 100);
+			var wrapper = new CChildWrapper(container);
+			skin.link(container, wrapper);
+			addChild(skin.view);
+			MAlert.show(false, "Alert!");
+		}
 	}
 }

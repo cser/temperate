@@ -43,6 +43,7 @@ Bugs of nme cpp for windows:
 	g.drawRect(0, 0, 100, 100);
 	g.endFill();
 	var x = shape.width;//<-- failing if it line exists
+- Failing BitmapData::draw on shape with lines
 
 Bugs of cpp:
 - Float is init by 0 insteard of Math.NaN

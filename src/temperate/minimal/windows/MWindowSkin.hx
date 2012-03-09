@@ -123,13 +123,14 @@ class MWindowSkin extends ACWindowSkin
 			g.clear();
 			
 			g.lineStyle();
-			var bd = if (_isEnabled)
+			var bd;
+			if (_isEnabled)
 			{
-				_isActive ? MWindowBdFactory.getActiveTop() : MWindowBdFactory.getDefaultTop();
+				bd = _isActive ? MWindowBdFactory.getActiveTop() : MWindowBdFactory.getDefaultTop();
 			}
 			else
 			{
-				MWindowBdFactory.getLockedTop();
+				bd = MWindowBdFactory.getLockedTop();
 			}
 			g.beginBitmapFill(bd);
 			g.drawRoundRectComplexStepByStep(1, 1, width - 2, _lineTop - 1, 5, 5, 0, 0);
