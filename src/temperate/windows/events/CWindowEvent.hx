@@ -1,23 +1,21 @@
 package temperate.windows.events;
 import flash.events.Event;
-import temperate.events.ACEvent;
-import temperate.events.CEventContext;
 import temperate.windows.ACWindow;
 
-class CWindowEvent< T > extends ACEvent
+class CWindowEvent< T > extends ACWindowEvent
 {
 	public static var CLOSE = "window.close";
 	
 	public function new(
-		type:String, window:ACWindow<T>, data:T, fast:Bool, continuePrevented:CWindowEvent<T>->Void,
-		context:CEventContext = null
+		type:String, window:ACWindow<T>, data:T, fast:Bool,
+		continueWindowPrevented:CWindowEvent<T>->Void, context:CWindowEventContext = null
 	)
 	{
 		super(type, false, true, context);
 		this.window = window;
 		this.data = data;
 		this.fast = fast;
-		_continuePrevented = continuePrevented;
+		_continueWindowPrevented = continueWindowPrevented;
 	}
 	
 	public var window(default, null):ACWindow<T>;
@@ -26,18 +24,18 @@ class CWindowEvent< T > extends ACEvent
 	
 	public var fast(default, null):Bool;
 	
-	var _continuePrevented:CWindowEvent<T>->Void;
+	var _continueWindowPrevented:CWindowEvent<T>->Void;
 	
-	public function continuePrevented():Void
+	public function continueWindowPrevented():Void
 	{
-		if (isDefaultPrevented())
+		if (isWindowPrevented())
 		{
-			_continuePrevented(this);
+			_continueWindowPrevented(this);
 		}
 	}
 	
 	override public function clone():Event
 	{
-		return new CWindowEvent(type, window, data, fast, _continuePrevented, _context);
+		return new CWindowEvent(type, window, data, fast, _continueWindowPrevented, _context);
 	}
 }

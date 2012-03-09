@@ -2,16 +2,20 @@ package windowApplication;
 import flash.display.DisplayObjectContainer;
 import flash.errors.Error;
 import flash.events.Event;
+import flash.events.EventDispatcher;
 import temperate.cursors.CHoverSwitcher;
 import temperate.cursors.ICCursor;
 import temperate.minimal.MCursorManager;
 import temperate.windows.CWindowManager;
 import temperate.windows.docks.CWindowAbsoluteDock;
+import temperate.windows.events.CWindowEvent;
+import windowApplication.events.ImageWindowEvent;
 
-class CImageManager
+class CImageManager extends EventDispatcher
 {
 	public function new(container:DisplayObjectContainer, editorState:EditorState) 
 	{
+		super();
 		_container = container;
 		_editorState = editorState;
 		_manager = new CWindowManager(container);
@@ -37,9 +41,9 @@ class CImageManager
 	}
 	
 	public var current(get_current, null):ImageWindow;
-	function get_current()
+	function get_current():ImageWindow
 	{
-		return cast(_manager.topWindow, ImageWindow);
+		return cast _manager.topWindow;
 	}
 	
 	public function getByName(name:String)
@@ -65,6 +69,7 @@ class CImageManager
 		window.setSize(640, 480);
 		window.setImageSize(width, height);
 		window.dock = new CWindowAbsoluteDock(10, 10);
+		window.addTypedListener(CWindowEvent.CLOSE, onImageWindowClose);
 		var top = _manager.topWindow;
 		_manager.add(window, false);
 		if (top != null)
@@ -77,5 +82,16 @@ class CImageManager
 	public function moveToTop(window:ImageWindow)
 	{
 		_manager.moveToTop(window);
+	}
+	
+	function onImageWindowClose(event:CWindowEvent<Dynamic>):Void
+	{
+		var dispatchedEvent = new ImageWindowEvent(
+			ImageWindowEvent.CLOSE, cast event.window, event.continueWindowPrevented);
+		dispatchEvent(dispatchedEvent);
+		if (dispatchedEvent.isWindowPrevented())
+		{
+			event.windowPrevent();
+		}
 	}
 }

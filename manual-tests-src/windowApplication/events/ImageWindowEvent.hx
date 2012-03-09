@@ -1,15 +1,16 @@
 package windowApplication.events;
 import flash.events.Event;
-import temperate.events.ACEvent;
-import temperate.events.CEventContext;
+import temperate.windows.events.ACWindowEvent;
+import temperate.windows.events.CWindowEventContext;
 import windowApplication.ImageWindow;
 
-class ImageWindowEvent extends ACEvent
+class ImageWindowEvent extends ACWindowEvent
 {
 	public static var CLOSE:String = "imageWindow.close";
 	
 	public function new(
-		type:String, window:ImageWindow, continuePrevented:Void->Void, context:CEventContext = null)
+		type:String, window:ImageWindow, continuePrevented:Void->Void,
+		context:CWindowEventContext = null)
 	{
 		super(type, true, true, context);
 		this.window = window;

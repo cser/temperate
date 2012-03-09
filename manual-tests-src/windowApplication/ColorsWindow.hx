@@ -7,11 +7,9 @@ import flash.ui.Keyboard;
 import temperate.components.CButtonSelector;
 import temperate.components.CButtonState;
 import temperate.components.CRasterImageButton;
-import temperate.components.CRasterToolButton;
 import temperate.containers.CHBox;
+import temperate.core.CGraphicsUtil;
 import temperate.core.CSprite;
-import temperate.minimal.MImageButton;
-import temperate.minimal.MToolButton;
 import temperate.minimal.windows.AMWindow;
 
 class ColorsWindow extends AMWindow<Dynamic>
@@ -48,9 +46,11 @@ class ColorsWindow extends AMWindow<Dynamic>
 			image.width = 20;
 			image.height = 20;
 			var g = image.graphics;
-			g.lineStyle(0, 0x000000);
+			g.beginFill(0x000000);
+			CGraphicsUtil.drawRectBorder(g, 0, 0, image.width, image.height, 1);
+			g.endFill();
 			g.beginFill(color);
-			g.drawRect(0, 0, image.width, image.height);
+			g.drawRect(1, 1, image.width - 2, image.height - 2);
 			g.endFill();
 			var button = new CRasterImageButton();
 			button.setTextIndents(0, 0, 0, 0);

@@ -45,6 +45,7 @@ class TestWindowApplication extends Sprite
 		
 		_imageManager = new CImageManager(this, _editorState);
 		_imageManager.onImageSelect = onImageSelect;
+		_imageManager.addEventListener(ImageWindowEvent.CLOSE, onImageWindowClose);
 		
 		var pencilState = new PencilDrawState();
 		var states:Array<ADrawState> = [];
@@ -72,8 +73,6 @@ class TestWindowApplication extends Sprite
 		onToolChanged();
 		
 		_storage = new Storage();
-		
-		stage.addEventListener(ImageWindowEvent.CLOSE, onImageWindowClose);
 	}
 	
 	var _toolsWindow:ToolsWindow;
@@ -190,7 +189,7 @@ class TestWindowApplication extends Sprite
 			var window = _imageManager.current;
 			if (_storage.exists(name) && (name != window.name || !window.isImageOpened))
 			{
-				event.preventDefault();
+				event.windowPrevent();
 				var yesData = { window:window, name:name, parentWindow:event.window };
 				MAlert.show(
 					true, "File with name \"" + name + "\" already exists.\nRewrite it?",
@@ -256,9 +255,10 @@ class TestWindowApplication extends Sprite
 	function onImageWindowClose(event:ImageWindowEvent)
 	{
 		var window = event.window;
+		trace("window.isChanged = " + window.isChanged);
 		if (window.isChanged)
 		{
-			event.preventDefault();
+			event.windowPrevent();
 			var yesInfo = new MButtonInfo(
 				{ window:window, name:name, yes:true, continuePrevented:event.continuePrevented },
 				"Yes", true);

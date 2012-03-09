@@ -40,8 +40,6 @@ class ImageWindow extends AMWindow<Dynamic>
 		_main.add(_pane).setPercents(100, 100);
 		
 		_toolCursor = MCursorManager.newHover( -1).setTarget(image);
-		
-		addTypedListener(CWindowEvent.CLOSE, onClose);
 	}
 	
 	function updateTitle()
@@ -180,15 +178,6 @@ class ImageWindow extends AMWindow<Dynamic>
 		else
 		{
 			_toolCursor.value = null;
-		}
-	}
-	
-	function onClose(event:CWindowEvent<Dynamic>)
-	{
-		if (!_skin.view.dispatchEvent(
-			new ImageWindowEvent(ImageWindowEvent.CLOSE, this, event.continuePrevented)))
-		{
-			event.preventDefault();
 		}
 	}
 }
