@@ -109,6 +109,27 @@ class Scaler extends Sprite
 		}
 	}
 	
+	#if nme
+	override function nmeGetWidth():Float
+	{
+		return _target.width;
+	}
+	override function nmeSetWidth(value:Float):Float
+	{	
+		_target.width = value;
+		return value;
+	}
+	
+	override function nmeGetHeight():Float
+	{
+		return _target.height;
+	}
+	override function nmeSetHeight(value:Float):Float
+	{	
+		_target.height = value;
+		return value;
+	}
+	#else
 	@:getter(width)
 	function get_width():Float
 	{
@@ -132,4 +153,5 @@ class Scaler extends Sprite
 	{
 		_target.height = value;
 	}
+	#end
 }
