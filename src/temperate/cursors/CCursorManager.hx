@@ -8,7 +8,7 @@ import temperate.collections.CValueStack;
 import temperate.collections.ICValueSwitcher;
 import temperate.core.CMath;
 
-#if !nme
+#if flash10_2
 import flash.ui.MouseCursorData;
 #end
 

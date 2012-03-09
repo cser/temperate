@@ -11,6 +11,8 @@ import flash.display.Shape;
 
 #if !nme
 import flash.ui.MouseCursor;
+#end
+#if flash10_2
 import flash.ui.MouseCursorData;
 #end
 
@@ -27,6 +29,8 @@ class CCursor implements ICCursor
 	
 	private var _hideSystem:Bool;
 	private var _system:String;
+	private var _container:Sprite;
+	private var _containerView:DisplayObject;
 	
 	//----------------------------------------------------------------------------------------------
 	//
@@ -42,12 +46,20 @@ class CCursor implements ICCursor
 	public function setView(
 		view:DisplayObject, updateOnMove:Bool = false, viewOffsetX:Int = 0, viewOffsetY:Int = 0)
 	{
+		// For nme
 		if (Std.is(view, Bitmap) || Std.is(view, Shape))
 		{
-			// For nme
-			var sprite = new Sprite();
-			sprite.addChild(view);
-			view = sprite;
+			view.x = 0;
+			view.y = 0;
+			_containerView = view;
+			_container = new Sprite();
+			_container.addChild(_containerView);
+			view = _container;
+		}
+		else
+		{
+			_container = null;
+			_containerView = null;
 		}
 		
 		this.view = view;
@@ -102,6 +114,11 @@ class CCursor implements ICCursor
 		if (_hideSystem)
 		{
 			Mouse.hide();
+		}
+		if (_container != null && _containerView != null && _containerView.parent != _container)
+		{
+			// For allow equals cursor views on nme
+			_container.addChild(_containerView);
 		}
 		#if flash10
 		if (_system != null)

@@ -7,6 +7,9 @@ import flash.events.MouseEvent;
 import flash.ui.Mouse;
 import temperate.cursors.ICCursor;
 import temperate.minimal.graphics.MCommonBdFactory;
+#if flash10
+import flash.ui.MouseCursor;
+#end
 
 class CRasterPressCursor implements ICCursor
 {
@@ -89,7 +92,7 @@ class CRasterPressCursor implements ICCursor
 		{
 			Mouse.hide();
 		}
-		#if flash_10
+		#if flash10
 		if (_system != null)
 		{
 			Mouse.cursor = _system;
@@ -106,7 +109,7 @@ class CRasterPressCursor implements ICCursor
 		{
 			Mouse.show();
 		}
-		#if flash_10
+		#if flash10
 		if (_system != null)
 		{
 			Mouse.cursor = MouseCursor.AUTO;

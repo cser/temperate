@@ -13,7 +13,9 @@ import temperate.minimal.graphics.MCursorBdFactory;
 import temperate.minimal.MButton;
 
 #if !nme
+#if flash10
 import flash.ui.MouseCursor;
+#end
 #end
 
 class TestCursorManager extends Sprite
@@ -36,7 +38,9 @@ class TestCursorManager extends Sprite
 		
 		var cursor = new CCursor();
 		#if !nme
+		#if flash10
 		cursor.setSystem(MouseCursor.IBEAM);
+		#end
 		#end
 		box.add(new MButton().setText("Set IBEAM cursor")
 			.addClickHandler(callback(onChangeCursorClick, cursor)));
@@ -58,7 +62,9 @@ class TestCursorManager extends Sprite
 			var cursor = new CCursor();
 			
 			#if !nme
+			#if flash10
 			cursor.setSystem(MouseCursor.ARROW);
+			#end
 			#end
 			
 			_manager.newHover().setTarget(button).setValue(cursor);
@@ -70,7 +76,9 @@ class TestCursorManager extends Sprite
 			var cursor = new CCursor();
 			
 			#if !nme
+			#if flash10
 			cursor.setSystem(MouseCursor.IBEAM);
+			#end
 			#end
 			
 			_manager.newHover().setTarget(button).setValue(cursor);
