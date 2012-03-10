@@ -1,5 +1,6 @@
 package temperate.minimal.windows;
 import flash.display.Sprite;
+import flash.geom.Matrix;
 import flash.text.TextField;
 import temperate.components.ICButton;
 import temperate.core.CMath;
@@ -119,10 +120,8 @@ class MWindowSkin extends ACWindowSkin
 				MFormatFactory.WINDOW_TITLE : MFormatFactory.WINDOW_TITLE_DISABLED;
 			format.applyTo(_titleTF);
 			
-			var g = graphics;
+			var g = _head.graphics;
 			g.clear();
-			
-			g.lineStyle();
 			var bd;
 			if (_isEnabled)
 			{
@@ -132,19 +131,38 @@ class MWindowSkin extends ACWindowSkin
 			{
 				bd = MWindowBdFactory.getLockedTop();
 			}
-			g.beginBitmapFill(bd);
-			g.drawRoundRectComplexStepByStep(1, 1, width - 2, _lineTop - 1, 5, 5, 0, 0);
-			g.endFill();
+			{
+				var w = bd.width;
+				var w2 = bd.width >> 1;
+				g.beginBitmapFill(bd);
+				g.drawRoundRectComplexStepByStep(2, 2, w - 2, _lineTop - 4, 5, 0, 0, 0);
+				g.endFill();
+				var x0 = w;
+				var x1 = _width - w2;
+				var lastI = Std.int((x1 - x0) / w);
+				var i = lastI;
+				if (x1 - x0 - i * w > 0)
+				{
+					g.beginBitmapFill(bd, new Matrix(1, 0, 0, 1, x0 + i * w), false);
+					g.drawRect(x0 + i * w, 2, x1 - x0 - i * w, _lineTop - 4);
+					g.endFill();
+				}
+				while (i-- > 0)
+				{
+					g.beginBitmapFill(bd, new Matrix(1, 0, 0, 1, x0 + i * w), false);
+					g.drawRect(x0 + i * w, 2, w, _lineTop - 4);
+					g.endFill();
+				}
+				var offset = Std.int((_width - w2 - x0 - lastI * w) / w2) * w2;
+				g.beginBitmapFill(bd, new Matrix(1, 0, 0, 1, x0 + lastI * w + offset), false);
+				g.drawRoundRectComplexStepByStep(_width - w2, 2, w2 - 2, _lineTop - 4, 0, 5, 0, 0);
+				g.endFill();
+			}
 			
+			graphics.clear();
 			_drawer.setBounds(
 				0, 0, Std.int(_width + 2), Std.int(_height + 2), _lineTop + CENTER_TOP_OFFSET);
-			_drawer.draw(g);
-			
-			var g = _head.graphics;
-			g.clear();
-			g.beginFill(0xffffff, 0);
-			g.drawRect(0, 0, width, _lineTop);
-			g.endFill();
+			_drawer.draw(graphics);
 		}
 		if (!_view_headButtonsValid)
 		{
