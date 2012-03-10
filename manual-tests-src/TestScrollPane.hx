@@ -182,14 +182,27 @@ class TestScrollPane extends Sprite
 	{
 		var shape = new Shape();
 		var g = shape.graphics;
-		g.lineStyle(2, 0xff0000);
+		
 		g.beginFill(0x0000ff, .5);
 		g.drawRect(0, 0, width, height);
 		g.endFill();
+		
+		g.beginFill(0x000000);
 		g.moveTo(0, 0);
+		g.lineTo(2, 0);
 		g.lineTo(width, height);
-		g.moveTo(0, height);
+		g.lineTo(width - 2, height);
+		g.lineTo(0, 0);
+		g.endFill();
+		
+		g.beginFill(0x000000);
+		g.moveTo(2, height);
+		g.lineTo(0, height);
+		g.lineTo(width - 2, 0);
 		g.lineTo(width, 0);
+		g.lineTo(2, height);
+		g.endFill();
+		
 		return shape;
 	}
 	

@@ -1,11 +1,22 @@
 package temperate.components.parametrization;
 import flash.display.BitmapData;
+import flash.display.DisplayObject;
+import flash.geom.ColorTransform;
 import temperate.text.CTextFormat;
 
 class CRasterParams 
 {
+	private static var _nullColorTransform:ColorTransform = new ColorTransform();
+	
+	public static function clearTransforms(object:DisplayObject):Void
+	{
+		object.filters = null;
+		object.transform.colorTransform = _nullColorTransform;
+	}
+	
 	public function new() 
 	{
+		alpha = Math.NaN;
 	}
 	
 	public var bitmapData:BitmapData;
@@ -30,6 +41,31 @@ class CRasterParams
 	{
 		this.filters = filters;
 		return this;
+	}
+	
+	public var colorTransform:ColorTransform;
+	
+	public function setColorTransform(colorTransform:ColorTransform):CRasterParams
+	{
+		this.colorTransform = colorTransform;
+		return this;
+	}
+	
+	public function applyTransforms(object:DisplayObject):Void
+	{
+		object.filters = filters;
+		if (colorTransform != null)
+		{
+			object.transform.colorTransform = colorTransform;
+		}
+		else
+		{
+			object.transform.colorTransform = _nullColorTransform;
+		}
+		if (!Math.isNaN(alpha))
+		{
+			object.alpha = alpha;
+		}
 	}
 	
 	public var bgOffsetLeft:Int;

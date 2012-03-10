@@ -15,11 +15,11 @@ class MCheckBox extends CRasterFixedButton
 			;
 		getState(CButtonState.OVER)
 			.setBitmapData(MCommonBdFactory.getCheckBoxBgUp())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DOWN)
 			.setBitmapData(MCommonBdFactory.getCheckBoxBgDown())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DISABLED)
 			.setBitmapData(MCommonBdFactory.getCheckBoxBgUp())
@@ -31,11 +31,11 @@ class MCheckBox extends CRasterFixedButton
 			;
 		getState(CButtonState.OVER_SELECTED)
 			.setBitmapData(MCommonBdFactory.getCheckBoxBgUpSelected())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DOWN_SELECTED)
 			.setBitmapData(MCommonBdFactory.getCheckBoxBgDownSelected())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DISABLED_SELECTED)
 			.setBitmapData(MCommonBdFactory.getCheckBoxBgUpSelected())

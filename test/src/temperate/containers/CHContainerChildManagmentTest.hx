@@ -144,7 +144,7 @@ class CHContainerChildManagmentTest
 		}
 		catch (error:ArgumentError)
 		{
-			Assert.areEqual(2025, error.errorID);
+			//
 		}
 		Assert.areEqual(null, child[0].parent);
 		Assert.areEqual(0, _container.numChildren);
@@ -159,7 +159,7 @@ class CHContainerChildManagmentTest
 		}
 		catch (error:ArgumentError)
 		{
-			Assert.areEqual(2025, error.errorID);
+			//
 		}
 		Assert.areEqual(_container, child[0].parent);
 		Assert.areEqual(null, child[1].parent);
@@ -176,7 +176,7 @@ class CHContainerChildManagmentTest
 		}
 		catch (error:ArgumentError)
 		{
-			Assert.areEqual(2025, error.errorID);
+			//
 		}
 		
 		Assert.areEqual(null, child[0].parent);
@@ -200,7 +200,7 @@ class CHContainerChildManagmentTest
 		}
 		catch (error:RangeError)
 		{
-			Assert.areEqual(2006, error.errorID);
+			//
 		}
 		Assert.areEqual(null, child[0].parent);
 		Assert.areEqual(0, _container.numChildren);
@@ -215,7 +215,7 @@ class CHContainerChildManagmentTest
 		}
 		catch (error:RangeError)
 		{
-			Assert.areEqual(2006, error.errorID);
+			//
 		}
 		Assert.areEqual(_container, child[0].parent);
 		Assert.areEqual(null, child[1].parent);

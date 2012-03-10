@@ -1,21 +1,20 @@
 package temperate.core;
+import flash.display.DisplayObject;
 import flash.display.Sprite;
+import flash.errors.ArgumentError;
 import flash.events.Event;
 
-class CSprite extends Sprite
+class CSprite extends ACValidatable
 {
 	public function new() 
 	{
-		super();
-		_validator = CValidator.getInstance();
+		super(CValidator.getInstance());
 		_isEnabled = true;
 		_width = 0;
 		_height = 0;
 		_settedWidth = 0;
 		_settedHeight = 0;
 	}
-	
-	var _validator:CValidator;
 	
 	var _width:Float;
 	var _height:Float;
@@ -27,10 +26,59 @@ class CSprite extends Sprite
 	var _settedWidth:Float;
 	var _settedHeight:Float;
 	
+	#if nme
+	
+	override function nmeGetWidth():Float
+	{
+		__validateSize();
+		return _width;
+	}
+	override function nmeSetWidth(value:Float):Float
+	{	
+		if (_settedWidth != value)
+		{
+			_settedWidth = value;
+			_width = value;
+			_size_valid = false;
+			postponeSize();
+		}
+		return value;
+	}
+	
+	override function nmeGetHeight():Float
+	{
+		__validateSize();
+		return _height;
+	}
+	override function nmeSetHeight(value:Float):Float
+	{
+		if (_settedHeight != value)
+		{
+			_settedHeight = value;
+			_height = value;
+			_size_valid = false;
+			postponeSize();
+		}
+		return value;
+	}
+	
+	override public function removeChild(child:DisplayObject):DisplayObject
+	{
+		// flash do it, then nme mast to
+		if (child.parent != this)
+		{
+			throw new ArgumentError("Child mast exists in container");
+		}
+		super.removeChild(child);
+		return child;
+	}
+	
+	#else
+	
 	@:getter(width)
 	function get_width():Float
 	{
-		validateSize();
+		__validateSize();
 		return _width;
 	}
 	
@@ -49,7 +97,7 @@ class CSprite extends Sprite
 	@:getter(height)
 	function get_height():Float
 	{
-		validateSize();
+		__validateSize();
 		return _height;
 	}
 	
@@ -65,48 +113,16 @@ class CSprite extends Sprite
 		}
 	}
 	
-	var _size_valid:Bool;
-	var _view_valid:Bool;
+	#end
 	
 	inline function postponeSize():Void
 	{
-		_validator.postponeSize(validateSize);
+		_validator.postponeSize(this);
 	}
 	
 	inline function postponeView():Void
 	{
-		_validator.postponeView(validateView);
-	}
-	
-	function validateSize():Void
-	{
-		_validator.removeSize(validateSize);
-		doValidateSize();
-	}
-	
-	function validateView():Void
-	{
-		_validator.removeSize(validateView);
-		validateSize();
-		doValidateView();
-	}
-	
-	/**
-	 * There validates all that accessible from properties
-	 * It's meen, that all properties always accessed as valid
-	 */
-	function doValidateSize():Void
-	{
-		_size_valid = true;
-	}
-	
-	/**
-	 * There validates all that can't be accessible from prperties
-	 * (it user see on screen only)
-	 */
-	function doValidateView():Void
-	{
-		_view_valid = true;
+		_validator.postponeView(this);
 	}
 	
 	/**
@@ -115,7 +131,7 @@ class CSprite extends Sprite
 	 */
 	public function validate():Void
 	{
-		validateView();
+		__validateView();
 	}
 	
 	public var isCompactWidth(get_isCompactWidth, null):Bool;

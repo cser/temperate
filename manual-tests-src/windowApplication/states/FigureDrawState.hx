@@ -1,7 +1,7 @@
 package windowApplication.states;
 import flash.events.MouseEvent;
 import temperate.core.CMath;
-import windowApplication.assets.Figure;
+import windowApplication.BdFactory;
 import windowApplication.Primitive;
 
 class FigureDrawState extends ADrawState
@@ -10,7 +10,7 @@ class FigureDrawState extends ADrawState
 	{
 		super();
 		
-		icon = Figure;
+		icon = BdFactory.getFigure();
 	}
 	
 	override function subscribe()

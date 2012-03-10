@@ -446,17 +446,6 @@ class CTextArea extends ACScrollPane
 		return _html;
 	}
 	
-	public var restrict(get_restrict, set_restrict):String;
-	function get_restrict()
-	{
-		return _tf.restrict;
-	}
-	function set_restrict(value)
-	{
-		_tf.restrict = value;
-		return value;
-	}
-	
 	public var selectable(get_selectable, set_selectable):Bool;
 	function get_selectable()
 	{

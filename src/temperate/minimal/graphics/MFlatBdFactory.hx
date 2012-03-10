@@ -4,6 +4,7 @@ import flash.display.GradientType;
 import flash.geom.Matrix;
 import temperate.components.CButtonState;
 using temperate.core.CMath;
+using temperate.core.CGraphicsUtil;
 
 class MFlatBdFactory 
 {
@@ -30,16 +31,10 @@ class MFlatBdFactory
 		g.clear();
 		
 		var color = state.enabled ? params.bgBottomRightColor : params.bgBottomRightDisabledColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(0, 0, size, size, 6);
-		g.drawRoundRect(0, 0, size - 1, size - 1, 6);
-		g.endFill();
+		g.drawBottomRightBorder(0, 0, size, size, 3, color.getColor(), color.getAlpha(), 1, true);
 		
 		var color = state.enabled ? params.bgTopLeftColor : params.bgTopLeftDisabledColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(0, 0, size, size, 6);
-		g.drawRoundRect(1, 1, size - 1, size - 1, 6);
-		g.endFill();
+		g.drawTopLeftBorder(0, 0, size, size, 3, color.getColor(), color.getAlpha(), 1, true);
 		
 		{
 			var boxHeight = 20;
@@ -73,24 +68,18 @@ class MFlatBdFactory
 		}
 		
 		var color = params.bgInnerTopLeftColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(1, 1, size - 2, size - 2, 4);
-		g.drawRoundRect(2, 2, size - 3, size - 3, 4);
-		g.endFill();
+		g.drawTopLeftBorder(
+			1, 1, size - 2, size - 2, 2, color.getColor(), color.getAlpha(), 1, true);
 		
 		var color = params.bgInnerBottomRightColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(1, 1, size - 2, size - 2, 4);
-		g.drawRoundRect(1, 1, size - 3, size - 3, 4);
-		g.endFill();
+		g.drawBottomRightBorder(
+			1, 1, size - 2, size - 2, 2, color.getColor(), color.getAlpha(), 1, true);
 		
 		if (state == CButtonState.DOWN)
 		{
 			var color = params.bgInnerDownColor;
-			g.beginFill(color.getColor(), color.getAlpha());
-			g.drawRoundRect(2, 2, size - 4, size - 4, 4);
-			g.drawRoundRect(3, 3, size - 6, size - 6, 4);
-			g.endFill();
+			g.drawRoundRectBorder(
+				2, 2, size - 4, size - 4, 2, color.getColor(), color.getAlpha(), 1);
 		}
 		
 		bd.draw(shape);

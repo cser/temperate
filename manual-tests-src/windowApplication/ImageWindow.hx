@@ -29,8 +29,10 @@ class ImageWindow extends AMWindow<Dynamic>
 		_savedPrimitivesLength = 0;
 		_editorState = editorState;
 		
-		_skin.addHeadButton(_skin.maximizeButton).addEventListener(Event.CHANGE, onMaximizeChange);
-		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
+		_skin.addHeadButton(_skin.getMaximizeButton())
+			.addEventListener(Event.CHANGE, onMaximizeChange);
+		_skin.addHeadButton(_skin.getCloseButton())
+			.addEventListener(MouseEvent.CLICK, onCloseClick);
 		resizable = true;
 		
 		_pane = new MScrollPane();
@@ -38,8 +40,6 @@ class ImageWindow extends AMWindow<Dynamic>
 		_main.add(_pane).setPercents(100, 100);
 		
 		_toolCursor = MCursorManager.newHover( -1).setTarget(image);
-		
-		addTypedListener(CWindowEvent.CLOSE, onClose);
 	}
 	
 	function updateTitle()
@@ -138,7 +138,7 @@ class ImageWindow extends AMWindow<Dynamic>
 	
 	function onMaximizeChange(event:Event)
 	{
-		maximized = _skin.maximizeButton.selected;
+		maximized = _skin.getMaximizeButton().selected;
 	}
 	
 	function onCloseClick(event:MouseEvent)
@@ -162,7 +162,7 @@ class ImageWindow extends AMWindow<Dynamic>
 		var state = _editorState.tool;
 		if (state != null)
 		{
-			var cursorView = new Bitmap(Type.createInstance(state.icon, []));
+			var cursorView = new Bitmap(state.icon);
 			var cursor = new CCursor();
 			if (Std.is(state, PencilDrawState))
 			{
@@ -178,15 +178,6 @@ class ImageWindow extends AMWindow<Dynamic>
 		else
 		{
 			_toolCursor.value = null;
-		}
-	}
-	
-	function onClose(event:CWindowEvent<Dynamic>)
-	{
-		if (!_skin.view.dispatchEvent(
-			new ImageWindowEvent(ImageWindowEvent.CLOSE, this, event.continuePrevented)))
-		{
-			event.preventDefault();
 		}
 	}
 }

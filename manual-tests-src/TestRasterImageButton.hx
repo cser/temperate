@@ -10,6 +10,7 @@ import temperate.components.CRasterToolButton;
 import temperate.components.CSpacer;
 import temperate.containers.CHBox;
 import temperate.containers.CVBox;
+import temperate.core.CGraphicsUtil;
 import temperate.core.CSprite;
 import temperate.docks.CRightDock;
 import temperate.minimal.graphics.MCommonBdFactory;
@@ -40,25 +41,25 @@ class TestRasterImageButton extends Sprite
 			var button = newButton();
 			button.text = "Image button";
 			button.getImage(CButtonState.UP).setImage(newImage(50, 30, 0xa0a0a0));
-			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT);
-			button.getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.OVER).setColorTransform(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.DOWN).setColorTransform(MFilterFactory.LIGHT);
 			line.add(button);
 			
 			var button = newButton();
 			button.text = "Image button\n(selected)";
 			button.getImage(CButtonState.UP).setImage(newImage(50, 30, 0xa0a0a0));
-			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT);
-			button.getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
-			button.getImage(CButtonState.OVER_SELECTED).setFilters(MFilterFactory.LIGHT);
-			button.getImage(CButtonState.DOWN_SELECTED).setFilters(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.OVER).setColorTransform(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.DOWN).setColorTransform(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.OVER_SELECTED).setColorTransform(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.DOWN_SELECTED).setColorTransform(MFilterFactory.LIGHT);
 			button.selected = true;
 			line.add(button);
 			
 			var button = newButton();
 			button.text = "Image button\n(selected with\nother image)";
 			button.getImage(CButtonState.UP).setImage(newImage(50, 30, 0xa0a0a0));
-			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT);
-			button.getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.OVER).setColorTransform(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.DOWN).setColorTransform(MFilterFactory.LIGHT);
 			button.getImage(CButtonState.UP_SELECTED).setImage(newImage(50, 30, 0x8090ff));
 			button.selected = true;
 			line.add(button);
@@ -66,9 +67,9 @@ class TestRasterImageButton extends Sprite
 			var button = newButton();
 			button.text = "Image button\n(with offsets)";
 			button.getImage(CButtonState.UP).setImage(newImage(50, 30, 0xa0a0a0));
-			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT)
+			button.getImage(CButtonState.OVER).setColorTransform(MFilterFactory.LIGHT)
 				.setOffset(-1, -1);
-			button.getImage(CButtonState.DOWN).setFilters(MFilterFactory.LIGHT);
+			button.getImage(CButtonState.DOWN).setColorTransform(MFilterFactory.LIGHT);
 			line.add(button);
 		}
 		
@@ -168,7 +169,7 @@ class TestRasterImageButton extends Sprite
 			var button = newToolButton();
 			button.setImageIndents(5, 5, 5, 5);
 			button.getImage(CButtonState.UP).setImage(newImage(20, 10, 0x800000));
-			button.getImage(CButtonState.OVER).setFilters(MFilterFactory.LIGHT_AMPLIFIED);
+			button.getImage(CButtonState.OVER).setColorTransform(MFilterFactory.LIGHT_AMPLIFIED);
 			button.getImage(CButtonState.DOWN).setOffset(0, 1);
 			line.add(button);
 			
@@ -215,12 +216,12 @@ class TestRasterImageButton extends Sprite
 			;
 		button.getState(CButtonState.OVER)
 			.setBitmapData(MCommonBdFactory.getButtonBgUp())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			;
 		button.getState(CButtonState.DOWN)
 			.setBitmapData(MCommonBdFactory.getButtonBgDown())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setTextOffset(1, 1)
 			.setBgOffset(1, 1, 1, 1)
@@ -235,12 +236,12 @@ class TestRasterImageButton extends Sprite
 			;
 		button.getState(CButtonState.OVER_SELECTED)
 			.setBitmapData(MCommonBdFactory.getButtonBgUpSelected())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			;
 		button.getState(CButtonState.DOWN_SELECTED)
 			.setBitmapData(MCommonBdFactory.getButtonBgDownSelected())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			.setFormat(MFormatFactory.BUTTON_OVER)
 			.setTextOffset(1, 1)
 			.setBgOffset(1, 1, 1, 1)
@@ -258,10 +259,15 @@ class TestRasterImageButton extends Sprite
 	{
 		var image = new Shape();
 		var g = image.graphics;
-		g.lineStyle(0, 0x000000);
-		g.beginFill(color);
-		g.drawRect(0, 0, width, height);
+		
+		g.beginFill(0x000000);
+		CGraphicsUtil.drawRectBorder(g, 0, 0, width, height, 1);
 		g.endFill();
+		
+		g.beginFill(color);
+		g.drawRect(1, 1, width - 2, height - 2);
+		g.endFill();
+		
 		return image;
 	}
 	

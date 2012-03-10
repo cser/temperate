@@ -249,16 +249,6 @@ class CInputField extends CSprite
 		return _isCorrect;
 	}
 	
-	public var restrict(get_restrict, set_restrict):String;
-	function get_restrict()
-	{
-		return _tf.restrict;
-	}
-	function set_restrict(value)
-	{
-		return _tf.restrict = value;
-	}
-	
 	public var displayAsPassword(get_displayAsPassword, set_displayAsPassword):Bool;
 	function get_displayAsPassword()
 	{

@@ -1,0 +1,55 @@
+Bugs of nme cpp for windows:
+- exe failing on using blend mode for figures with border, on masks too
+- not dispatched Event.ENTER_FRAME event for childs that not added to stage (may be future?)
+- not throws flash.errors.ArgumentError on removing missing child from Sprite
+- incorrect shapes drawing -don't cut intersections (may be don't metter):
+	var g = shape.graphics;
+	g.beginFill(0xff0000);
+	g.drawRoundRect(0, 0, 100, 100, 10);
+	g.drawRoundRect(10, 10, 80, 80, 10);
+	g.endFill();// No hole in rect, on flash it exists
+- ColorTransform don't work for filling of BitmapData
+- Overloading method called if another method called
+	public function addChildAt(child:DisplayObject, index:Int):DisplayObject
+	{	
+		addChild(child);
+		setChildIndex(child, index);
+		
+		return child;
+	}
+	
+	Typical problem:
+	
+	override public function addChild(child:DisplayObject):DisplayObject
+	{
+		super.addChild(child);
+		_layout.add(child);
+		return child;
+	}
+	
+	public function addChildAt(child:DisplayObject, index:Int):DisplayObject
+	{
+		super.addChildAt(child, index);
+		_layout.add(child);
+	}
+	
+	_layout.add(child); called 2 times on addChildAt !
+- Bitmap is not transparent for mouse
+- Filing on getting size of DisplayObject with drawing
+	var shape = new Shape();
+	var g = shape.graphics;
+	g.lineStyle(0, 0x000000);// important
+	g.beginFill(0x0000ff);
+	g.drawRect(0, 0, 100, 100);
+	g.endFill();
+	var x = shape.width;//<-- failing if it line exists
+- Hangs on scaleX = scaleY = 0 in specific cases
+- Failing BitmapData::draw on shape with lines
+- Sign of MouseEvent.MOUSE_WHEEL delta is inverted?
+- Bubbling not works for custom events
+- SimpleButton is not out from state OVER to state UP
+- Timer: setting delay is not change interval untill start called (flashplayer do it)
+
+Bugs of cpp:
+- Float is init by 0 insteard of Math.NaN
+- Don't work equal operator for 2 elements from different typed arrays

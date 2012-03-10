@@ -5,7 +5,7 @@ import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
 import flash.events.KeyboardEvent;
-import flash.utils.TypedDictionary;
+import temperate.collections.CObjectHash;
 import temperate.core.ICArea;
 using temperate.core.ArrayUtil;
 
@@ -28,7 +28,7 @@ class CWindowManager extends EventDispatcher, implements ICArea
 		areaWidth = 100;
 		areaHeight = 100;
 		_popUps = [];
-		_isModal = new TypedDictionary();
+		_isModal = new CObjectHash();
 		modal = false;
 		updateOnMove = false;
 	}
@@ -69,7 +69,7 @@ class CWindowManager extends EventDispatcher, implements ICArea
 	}
 	
 	var _popUps:Array<ICWindow>;
-	var _isModal:TypedDictionary<ICWindow, Bool>;
+	var _isModal:CObjectHash<ICWindow, Bool>;
 	
 	public function add(popUp:ICWindow, modal:Bool, fast:Bool = false)
 	{

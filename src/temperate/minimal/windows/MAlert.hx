@@ -2,7 +2,7 @@ package temperate.minimal.windows;
 import flash.display.DisplayObject;
 import flash.events.MouseEvent;
 import flash.text.TextField;
-import flash.utils.TypedDictionary;
+import temperate.collections.CObjectHash;
 import temperate.containers.CHBox;
 import temperate.minimal.MButton;
 import temperate.minimal.MFormatFactory;
@@ -59,7 +59,7 @@ class MAlert< TData > extends AMWindow<TData>
 		var line = new CHBox();
 		_main.add(line).setAlign(.5);
 		
-		_dataByButton = new TypedDictionary();
+		_dataByButton = new CObjectHash();
 		for (info in buttons)
 		{
 			var button = new MButton();
@@ -75,7 +75,7 @@ class MAlert< TData > extends AMWindow<TData>
 		}
 		if (crossShow)
 		{
-			var button = _skin.closeButton;
+			var button = _skin.getCloseButton();
 			_skin.addHeadButton(button);
 			_dataByButton.set(button, crossData);
 			button.addEventListener(MouseEvent.CLICK, onButtonClick);
@@ -83,7 +83,7 @@ class MAlert< TData > extends AMWindow<TData>
 	}
 	
 	var _tf:TextField;
-	var _dataByButton:TypedDictionary<Dynamic, TData>;
+	var _dataByButton:CObjectHash<Dynamic, TData>;
 	
 	public var selectable(get_selectable, set_selectable):Bool;
 	function get_selectable()

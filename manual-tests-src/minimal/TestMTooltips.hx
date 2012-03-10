@@ -12,8 +12,8 @@ import temperate.minimal.MButton;
 import temperate.minimal.MTooltipFactory;
 import temperate.minimal.renderers.MTextTooltip;
 import temperate.minimal.renderers.MTooltipBg;
-import temperate.tooltips.tooltipers.CTargetTooltiper;
 import temperate.tooltips.renderers.ACTooltip;
+import temperate.tooltips.tooltipers.CTargetTooltiper;
 
 class TestMTooltips extends Sprite
 {
@@ -35,11 +35,11 @@ class TestMTooltips extends Sprite
 			var hBox = new CHBox();
 			vBox.addChild(hBox);
 			
-			var button = new MButton().setText("Target tooltip 1");
+			var button = new MButton().setText("Target tooltip 0");
 			hBox.add(button).setPercents(100, 100);
 			MTooltipFactory.newText(button, "Target tooltip 0");
 				
-			var button = new MButton().setText("Target tooltip 0");
+			var button = new MButton().setText("Target tooltip 1");
 			hBox.add(button).setPercents(100, 100);
 			MTooltipFactory.newText(button, "Target tooltip 1");
 			

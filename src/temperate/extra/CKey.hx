@@ -4,6 +4,7 @@ import flash.events.KeyboardEvent;
 import flash.Lib;
 
 /**
+ * Need manual initialization!
  * Uses for checking key downed in concrete moment
  * (ActionScript3 API is not provide it, insteard of ActionScript1/2 API)
  */
@@ -29,7 +30,7 @@ class CKey
 		_hash = new IntHash();
 	}
 	
-	function init(eventSource:IEventDispatcher):Void
+	public function init(eventSource:IEventDispatcher):Void
 	{
 		eventSource.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown, false, INT_MAX_VALUE);
 		eventSource.addEventListener(KeyboardEvent.KEY_UP, onKeyUp, false, INT_MAX_VALUE);
@@ -48,10 +49,5 @@ class CKey
 	function onKeyUp(event:KeyboardEvent):Void
 	{
 		_hash.remove(event.keyCode);
-	}
-	
-	static function __init__():Void
-	{
-		getInstance().init(Lib.current.stage);
 	}
 }

@@ -65,8 +65,10 @@ class OpenWindow extends AMWindow<OpenWindowData>
 		button.addEventListener(MouseEvent.CLICK, onCancelClick);
 		buttonBox.add(button);
 		
-		_skin.addHeadButton(_skin.maximizeButton).addEventListener(Event.CHANGE, onMaximizeChange);
-		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCancelClick);
+		_skin.addHeadButton(_skin.getMaximizeButton())
+			.addEventListener(Event.CHANGE, onMaximizeChange);
+		_skin.addHeadButton(_skin.getCloseButton())
+			.addEventListener(MouseEvent.CLICK, onCancelClick);
 		innerDispatcher.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		
 		resizable = true;
@@ -103,7 +105,7 @@ class OpenWindow extends AMWindow<OpenWindowData>
 	
 	function onMaximizeChange(event:Event)
 	{
-		maximized = _skin.maximizeButton.selected;
+		maximized = _skin.getMaximizeButton().selected;
 	}
 	
 	function onKeyDown(event:KeyboardEvent)

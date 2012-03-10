@@ -19,6 +19,8 @@ class CChildWrapper
 		_minHeight = 0;
 		_maxWidth = CMath.INT_MAX_VALUE;
 		_maxHeight = CMath.INT_MAX_VALUE;
+		widthPortion = Math.NaN;
+		heightPortion = Math.NaN;
 	}
 	
 	var _child:DisplayObject;

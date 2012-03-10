@@ -10,7 +10,7 @@ class FakeTimerFactoryTest
 	{
 	}
 	
-	var _log:Array<Dynamic>;
+	var _log:Array<FakeTimer>;
 	var _factory:FakeTimerFactory;
 	
 	@Before

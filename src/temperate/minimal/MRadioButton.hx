@@ -15,11 +15,11 @@ class MRadioButton extends CRasterFixedButton
 			;
 		getState(CButtonState.OVER)
 			.setBitmapData(MCommonBdFactory.getRadioButtonBgUp())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DOWN)
 			.setBitmapData(MCommonBdFactory.getRadioButtonBgDown())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DISABLED)
 			.setBitmapData(MCommonBdFactory.getRadioButtonBgUp())
@@ -31,11 +31,11 @@ class MRadioButton extends CRasterFixedButton
 			;
 		getState(CButtonState.OVER_SELECTED)
 			.setBitmapData(MCommonBdFactory.getRadioButtonBgUpSelected())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DOWN_SELECTED)
 			.setBitmapData(MCommonBdFactory.getRadioButtonBgDownSelected())
-			.setFilters(MFilterFactory.LIGHT)
+			.setColorTransform(MFilterFactory.LIGHT)
 			;
 		getState(CButtonState.DISABLED_SELECTED)
 			.setBitmapData(MCommonBdFactory.getRadioButtonBgUpSelected())

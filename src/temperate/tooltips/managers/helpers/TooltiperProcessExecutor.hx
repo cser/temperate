@@ -1,12 +1,12 @@
 package temperate.tooltips.managers.helpers;
 import flash.events.TimerEvent;
 import flash.utils.Timer;
-import flash.utils.TypedDictionary;
+import temperate.collections.CObjectHash;
 import temperate.tooltips.tooltipers.ICTooltiper;
 
 class TooltiperProcessExecutor
 {
-	var _processes:TypedDictionary<ICTooltiper, TooltiperProcess>;
+	var _processes:CObjectHash<ICTooltiper, TooltiperProcess>;
 	var _secondShowTimer:Timer;
 	var _newTimer:Void->Timer;
 	var _fastDelayMode:Bool;
@@ -20,7 +20,7 @@ class TooltiperProcessExecutor
 		hideDelay = 50;
 		secondShowTimeout = 200;
 		
-		_processes = new TypedDictionary();
+		_processes = new CObjectHash();
 		_secondShowTimer = newTimer();
 		_secondShowTimer.addEventListener(TimerEvent.TIMER, onSecondShowTimer);
 		
@@ -97,7 +97,7 @@ class TooltiperProcessExecutor
 	function onDelayedShow(process:TooltiperProcess)
 	{
 		var hashFastHide = false;
-		for (key in _processes)
+		for (key in _processes.keys())
 		{
 			var processI = _processes.get(key);
 			if (processI != process)
@@ -148,7 +148,7 @@ class TooltiperProcessExecutor
 	
 	function fastDelayOff(tooltiper:ICTooltiper)
 	{
-		for (key in _processes)
+		for (key in _processes.keys())
 		{
 			var processI = _processes.get(key);
 			if (processI.state != TooltiperProcessState.EMPTY)

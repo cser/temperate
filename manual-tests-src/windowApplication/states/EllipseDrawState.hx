@@ -1,5 +1,5 @@
 package windowApplication.states;
-import windowApplication.assets.Ellipse;
+import windowApplication.BdFactory;
 import windowApplication.Primitive;
 
 class EllipseDrawState extends ADrawState
@@ -8,7 +8,7 @@ class EllipseDrawState extends ADrawState
 	{
 		super();
 		
-		icon = Ellipse;
+		icon = BdFactory.getEllipse();
 	}
 	
 	var _x:Float;

@@ -214,7 +214,8 @@ class CSlider extends CSprite, implements ICSlider
 		var delta = event.delta;
 		var sign = delta > 0 ? -1 : 1;
 		setValue(
-			_value - _mouseWheelStep * CMouseWheelUtil.getDimDelta(event.delta, mouseWheelDimRatio),
+			_value -
+			_mouseWheelStep * CMouseWheelUtil.getFixedDimDelta(event.delta, mouseWheelDimRatio),
 			true);
 	}
 	

@@ -1,11 +1,10 @@
 package temperate.minimal.renderers;
-import flash.display.BlendMode;
 import flash.display.Graphics;
 import flash.display.Shape;
 import flash.display.Sprite;
 import flash.geom.Rectangle;
-import temperate.tooltips.CGeomUtil;
-using temperate.core.CMath;
+import temperate.core.CGeomUtil;
+import temperate.core.CMath;
 
 class MTooltipBg extends Sprite
 {
@@ -13,34 +12,13 @@ class MTooltipBg extends Sprite
 	{
 		super();
 		
-		borderRadius = 8;
+		borderRadius = 4;
 		borderThickness = 1;
 		tailIndent = -4;
 		tailHalfWidth = 6;
 		fillColor = 0xffffffe0;
 		borderColor = 0xff808080;
-		
-		blendMode = BlendMode.LAYER;
-		
-		_mask = new Shape();
-		_mask.blendMode = BlendMode.ERASE;
-		addChild(_mask);
-		
-		_top = new Sprite();
-		_top.blendMode = BlendMode.LAYER;
-		addChild(_top);
-		
-		_topRect = new Shape();
-		_top.addChild(_topRect);
-		
-		_topTail = new Shape();
-		_top.addChild(_topTail);
 	}
-	
-	var _mask:Shape;
-	var _top:Sprite;
-	var _topRect:Shape;
-	var _topTail:Shape;
 	
 	public var borderRadius:Int;
 	
@@ -90,51 +68,118 @@ class MTooltipBg extends Sprite
 		_tailEndX = CGeomUtil.crossX;
 		_tailEndY = CGeomUtil.crossY;
 		
-		drawShape(graphics, graphics, borderColor, true, true);
-		drawShape(_mask.graphics, _mask.graphics, 0xffffff, false, false);
-		drawShape(_topRect.graphics, _topTail.graphics, fillColor, false, false);
-		_top.alpha = fillColor.getAlpha();
+		drawShape();
 	}
 	
-	function drawShape(rect:Graphics, tail:Graphics, color:UInt, needDrawBorder:Bool, useAlpha:Bool)
+	function drawShape()
 	{
-		tail.clear();
-		if (needDrawBorder)
-		{
-			tail.lineStyle(
-				borderThickness * 2, color.getColor(), color.getAlpha());
-		}
-		
 		var dx = _tailEndX - _tailBeginX;
 		var dy = _tailEndY - _tailBeginY;
 		var a = Math.sqrt(dx * dx + dy * dy);
 		
+		var tail = null;
 		if (a > 1)
 		{
 			var cos = dx / a;
 			var sin = dy / a;
-			tail.moveTo(_tailBeginX - tailHalfWidth * sin, _tailBeginY + tailHalfWidth * cos);
-			tail.beginFill(color.getColor(), useAlpha ? color.getAlpha() : 1);
-			tail.lineTo(_tailEndX, _tailEndY);
-			tail.lineTo(_tailBeginX + tailHalfWidth * sin, _tailBeginY - tailHalfWidth * cos);
-			tail.endFill();
+			tail = [
+				_tailBeginX - tailHalfWidth * sin, _tailBeginY + tailHalfWidth * cos,
+				_tailEndX, _tailEndY,
+				_tailBeginX + tailHalfWidth * sin, _tailBeginY - tailHalfWidth * cos];
 		}
 		
-		if (rect != tail)
+		var x0 = borderThickness;
+		var y0 = borderThickness;
+		var x1 = _width - borderThickness * 2;
+		var y1 = _height - borderThickness * 2;
+		var rect:Array<Float>;
+		if (borderRadius > 0)
 		{
-			rect.clear();
-			if (needDrawBorder)
-			{
-				rect.lineStyle(borderThickness * 2, color.getColor(), color.getAlpha());
-			}
+			rect = [];
+			var i = 0;
+			
+			rect[i++] = x0 + borderRadius;
+			rect[i++] = y0;
+			rect[i++] = x1 - borderRadius;
+			rect[i++] = y0;
+			
+			i = addArcPoints(
+				rect, i, x1 - borderRadius, y0 + borderRadius, -Math.PI * .5, 0);
+			
+			rect[i++] = x1;
+			rect[i++] = y0 + borderRadius;
+			rect[i++] = x1;
+			rect[i++] = y1 - borderRadius;
+			
+			i = addArcPoints(
+				rect, i, x1 - borderRadius, y1 - borderRadius, 0, Math.PI * .5);
+			
+			rect[i++] = x1 - borderRadius;
+			rect[i++] = y1;
+			rect[i++] = x0 + borderRadius;
+			rect[i++] = y1;
+			
+			i = addArcPoints(
+				rect, i, x0 + borderRadius, y1 - borderRadius, Math.PI * .5, Math.PI);
+			
+			rect[i++] = x0;
+			rect[i++] = y1 - borderRadius;
+			rect[i++] = x0;
+			rect[i++] = y0 + borderRadius;
+			
+			i = addArcPoints(
+				rect, i, x0 + borderRadius, y0 + borderRadius, -Math.PI, -Math.PI * .5);
 		}
-		rect.beginFill(color.getColor(), useAlpha ? color.getAlpha() : 1);
-		rect.drawRoundRect(
-			borderThickness, borderThickness,
-			_width - borderThickness * 2,_height - borderThickness * 2,
-			borderRadius * 2
-		);
-		rect.endFill();
+		else
+		{
+			rect = [x0, y0, x1, y0, x1, y1, x0, y1];
+		}
+		var poligon = tail != null ? CGeomUtil.getUnionOfConvexPoligons(rect, tail, 100) : rect;
+		
+		
+		var g = graphics;
+		g.clear();
+		if (CMath.getAlpha(borderColor) != 0)
+		{
+			g.lineStyle(
+				borderThickness, CMath.getColor(borderColor), CMath.getAlpha(borderColor), true);
+		}
+		g.beginFill(CMath.getColor(fillColor), CMath.getAlpha(fillColor));
+		
+		var i = 0;
+		var x0 = poligon[i];
+		var y0 = poligon[i + 1];
+		g.moveTo(x0, y0);
+		i += 2;
+		while (i < poligon.length)
+		{
+			var x = poligon[i];
+			var y = poligon[i + 1];
+			g.lineTo(x, y);
+			i += 2;
+		}
+		g.lineTo(x0, y0);
+		
+		g.endFill();
+	}
+	
+	function addArcPoints(
+		coords:Array<Float>, startIndex:Int, x0:Float, y0:Float, begin:Float, end:Float):Int
+	{
+		var count:Int = Std.int(borderRadius * .3);
+		if (count < 1)
+		{
+			count = 1;
+		}
+		var step = (end - begin) / (count + 1);
+		var angle = begin + step;
+		while (angle < end - .00001)
+		{
+			coords[startIndex++] = x0 + Math.cos(angle) * borderRadius;
+			coords[startIndex++] = y0 + Math.sin(angle) * borderRadius;
+			angle += step;
+		}
+		return startIndex;
 	}
 	
 	function getMinPositive(k0:Float, k1:Float, k2:Float, k3:Float)

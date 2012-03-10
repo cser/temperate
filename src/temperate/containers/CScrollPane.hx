@@ -116,7 +116,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	{
 		setVScrollValue(
 			_vScrollValue -
-			_vScrollStep * CMouseWheelUtil.getDimDelta(event.delta, _mouseWheelDimRatio));
+			_vScrollStep * CMouseWheelUtil.getFixedDimDelta(event.delta, _mouseWheelDimRatio));
 	}
 	
 	var _scrollRect:Rectangle;
@@ -281,7 +281,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	}
 	override function set_hScrollValue(value:Int)
 	{
-		validateSize();
+		__validateSize();
 		setHScrollValue(value);
 		return _hScrollValue;
 	}
@@ -293,7 +293,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	}
 	override function set_vScrollValue(value:Int)
 	{
-		validateSize();
+		__validateSize();
 		setVScrollValue(value);
 		return _vScrollValue;
 	}
@@ -305,13 +305,13 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	
 	override function get_hMaxScrollValue()
 	{
-		validateSize();
+		__validateSize();
 		return _hMaxScrollValue;
 	}
 	
 	override function get_vMaxScrollValue()
 	{
-		validateSize();
+		__validateSize();
 		return _vMaxScrollValue;
 	}
 	

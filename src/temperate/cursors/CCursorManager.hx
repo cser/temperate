@@ -4,10 +4,13 @@ import flash.events.Event;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import flash.ui.Mouse;
-import flash.ui.MouseCursorData;
 import temperate.collections.CValueStack;
 import temperate.collections.ICValueSwitcher;
 import temperate.core.CMath;
+
+#if flash10_2
+import flash.ui.MouseCursorData;
+#end
 
 class CCursorManager 
 {	
@@ -132,7 +135,10 @@ class CCursorManager
 		if (_cursor != null && _owner != null)
 		{
 			updateViewPosition();
-			event.updateAfterEvent();
+			if (_cursor.updateOnMove)
+			{
+				event.updateAfterEvent();
+			}
 		}
 	}
 	

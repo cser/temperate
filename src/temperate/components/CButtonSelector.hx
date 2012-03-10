@@ -2,7 +2,7 @@ package temperate.components;
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.MouseEvent;
-import flash.utils.TypedDictionary;
+import temperate.collections.CObjectHash;
 
 /**
  * Events:
@@ -17,11 +17,11 @@ class CButtonSelector< T > extends EventDispatcher
 		super();
 		
 		_useMouseDown = useMouseDown;
-		_values = new TypedDictionary();
+		_values = new CObjectHash();
 		_value = value;
 	}
 	
-	private var _values:TypedDictionary<ICButton, T>;
+	private var _values:CObjectHash<ICButton, T>;
 	
 	public function add(button:ICButton, value:T)
 	{
@@ -64,7 +64,7 @@ class CButtonSelector< T > extends EventDispatcher
 	
 	function updateValue()
 	{
-		for (button in _values)
+		for (button in _values.keys())
 		{
 			button.selected = _values.get(button) == _value;
 		}

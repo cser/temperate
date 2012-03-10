@@ -1,4 +1,10 @@
-v.0.-?
+v.0.8
+- Show text for custom plots of DebugMonitor
+- Add colorTransform to text format and buttons parameters
+- Fix GeomUtil duplication (now all in core)
+- CSignal now works on cpp
+- works on nme/cpp/windows
+- Add EventDispatcherUtil for check listener type on subscribe and unsubscribe
 v.0.7
 - CSignal moved to temperate.extra
 - CKey added for downed key checking (is not using in temperate)

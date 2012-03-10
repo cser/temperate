@@ -7,6 +7,8 @@ import temperate.windows.ICWindow;
 
 class MWindowScaleAnimator extends ACWindowComponent
 {
+	static var MIN_SCALE = .1;
+	
 	var _showDuration:Int;
 	var _hideDuration:Int;
 	
@@ -19,8 +21,8 @@ class MWindowScaleAnimator extends ACWindowComponent
 		
 		_hideVars = cast { };
 		_hideVars.alpha = 0;
-		_hideVars.scaleX = 0;
-		_hideVars.scaleY = 0;
+		_hideVars.scaleX = MIN_SCALE;
+		_hideVars.scaleY = MIN_SCALE;
 		
 		_showVars = cast { };
 		_showVars.alpha = 1;
@@ -46,8 +48,8 @@ class MWindowScaleAnimator extends ACWindowComponent
 		var height = getHeight();
 		var x = getX();
 		var y = getY();
-		_hideVars.x = x + width * .5;
-		_hideVars.y = y + height * .5;
+		_hideVars.x = x + width * .5 * (1 - MIN_SCALE);
+		_hideVars.y = y + height * .5 * (1 - MIN_SCALE);
 		_showVars.x = x;
 		_showVars.y = y;
 		MTween.apply(_view, _hideVars);
@@ -72,8 +74,8 @@ class MWindowScaleAnimator extends ACWindowComponent
 		var height = getHeight();
 		var x = getX();
 		var y = getY();
-		_hideVars.x = x + width * .5;
-		_hideVars.y = y + height * .5;
+		_hideVars.x = x + width * .5 * (1 - MIN_SCALE);
+		_hideVars.y = y + height * .5 * (1 - MIN_SCALE);
 		if (fast)
 		{
 			MTween.apply(_view, _hideVars);
