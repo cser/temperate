@@ -48,12 +48,12 @@ class CppTestMain
 		var test = new TestRasterImageButton();
 		var test = new TestMCursorManager();
 		var test = new TestKey();
+		var test = new TestWindows();
 		var test = new TestNumericStepper();// TODO исправить медленное изменение при зажатии
 		var test = new TestSimpleButtonWrapper();// TODO исправить медленное изменение при зажатии, rollOut не отлипает
 		
 		var test = new NmeTestCurrent();
-		var test = new TestWindows();// Окно не двигается и не закрывается
-		var test = new TestWindowApplication();// Окно не двигается и не закрывается, текст не работает
+		var test = new TestWindowApplication();// Текст не работает
 		Lib.current.addChild(test);
 		test.init();
 	}

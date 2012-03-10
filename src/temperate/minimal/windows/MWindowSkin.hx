@@ -120,7 +120,7 @@ class MWindowSkin extends ACWindowSkin
 				MFormatFactory.WINDOW_TITLE : MFormatFactory.WINDOW_TITLE_DISABLED;
 			format.applyTo(_titleTF);
 			
-			var g = _head.graphics;
+			var g = graphics;
 			g.clear();
 			var bd;
 			if (_isEnabled)
@@ -132,10 +132,14 @@ class MWindowSkin extends ACWindowSkin
 				bd = MWindowBdFactory.getLockedTop();
 			}
 			{
+				var hIndent = 1;
+				var vIndent = 1;
+				var matrix = new Matrix();
 				var w = bd.width;
 				var w2 = bd.width >> 1;
 				g.beginBitmapFill(bd);
-				g.drawRoundRectComplexStepByStep(2, 2, w - 2, _lineTop - 4, 5, 0, 0, 0);
+				g.drawRoundRectComplexStepByStep(
+					hIndent, vIndent, w - hIndent, _lineTop - vIndent * 2, 5, 0, 0, 0);
 				g.endFill();
 				var x0 = w;
 				var x1 = _width - w2;
@@ -143,26 +147,37 @@ class MWindowSkin extends ACWindowSkin
 				var i = lastI;
 				if (x1 - x0 - i * w > 0)
 				{
-					g.beginBitmapFill(bd, new Matrix(1, 0, 0, 1, x0 + i * w), false);
-					g.drawRect(x0 + i * w, 2, x1 - x0 - i * w, _lineTop - 4);
+					matrix.tx = x0 + i * w;
+					g.beginBitmapFill(bd, matrix, false);
+					g.drawRect(x0 + i * w, vIndent, x1 - x0 - i * w, _lineTop - vIndent * 2);
 					g.endFill();
 				}
 				while (i-- > 0)
 				{
-					g.beginBitmapFill(bd, new Matrix(1, 0, 0, 1, x0 + i * w), false);
-					g.drawRect(x0 + i * w, 2, w, _lineTop - 4);
+					matrix.tx = x0 + i * w;
+					g.beginBitmapFill(bd, matrix, false);
+					g.drawRect(x0 + i * w, vIndent, w, _lineTop - vIndent * 2);
 					g.endFill();
 				}
 				var offset = Std.int((_width - w2 - x0 - lastI * w) / w2) * w2;
-				g.beginBitmapFill(bd, new Matrix(1, 0, 0, 1, x0 + lastI * w + offset), false);
-				g.drawRoundRectComplexStepByStep(_width - w2, 2, w2 - 2, _lineTop - 4, 0, 5, 0, 0);
+				matrix.tx = x0 + lastI * w + offset;
+				g.beginBitmapFill(bd, matrix, false);
+				g.drawRoundRectComplexStepByStep(
+					_width - w2, vIndent, w2 - hIndent, _lineTop - vIndent * 2, 0, 5, 0, 0);
 				g.endFill();
 			}
 			
-			graphics.clear();
+			{
+				var headG = _head.graphics;
+				headG.clear();
+				headG.beginFill(0xffffff, .1);
+				headG.drawRoundRectComplexStepByStep(1, 1, _width - 2, _lineTop - 2, 5, 5, 0, 0);
+				headG.endFill();
+			}
+			
 			_drawer.setBounds(
 				0, 0, Std.int(_width + 2), Std.int(_height + 2), _lineTop + CENTER_TOP_OFFSET);
-			_drawer.draw(graphics);
+			_drawer.draw(g);
 		}
 		if (!_view_headButtonsValid)
 		{
