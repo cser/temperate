@@ -9,7 +9,6 @@ class MainTestSuite extends TestSuite
 		super();
 		add(ArrayAssertTest);
 		add(FakeTimerFactoryTest);
-		add(temperate.collections.CDoubleDictionaryTest);
 		add(temperate.collections.CObjectHashTest);
 		add(temperate.collections.CObjectSetTest);
 		add(temperate.collections.CPriorityListTest);
