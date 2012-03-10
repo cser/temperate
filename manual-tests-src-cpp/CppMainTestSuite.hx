@@ -27,6 +27,7 @@ class CppMainTestSuite extends TestSuite
 		add(temperate.extra.CSignalActionInListenerTest);
 		add(temperate.extra.CSignalActionInVoidListenerTest);
 		add(temperate.extra.CSignalVoidListenersTest);
+		add(temperate.extra.EventDispatcherUtilTest);
 		add(temperate.docks.RightDockTest);
 		add(temperate.text.CTextFormatTest);
 		add(temperate.minimal.charts.MChartTest);

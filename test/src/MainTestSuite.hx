@@ -32,6 +32,7 @@ class MainTestSuite extends TestSuite
 		add(temperate.extra.CSignalActionInVoidListenerTest);
 		add(temperate.extra.CSignalTest);
 		add(temperate.extra.CSignalVoidListenersTest);
+		add(temperate.extra.EventDispatcherUtilTest);
 		add(temperate.layouts.CScrollLayoutTest);
 		add(temperate.minimal.charts.MChartTest);
 		add(temperate.text.CInputFieldTest);
