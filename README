@@ -1,6 +1,8 @@
 Temperate is lightweigth (what framework is not lightweight today?) UI library for flashplayer 9+,
 writen by haXe.
 
+Works on nme/cpp/windows (on neko is not compile, other not tested)
+
 Current version is 0.7;
 For more info see src/readme.txt
 Examples see in expamples/
