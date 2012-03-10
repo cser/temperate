@@ -47,6 +47,8 @@ Bugs of nme cpp for windows:
 - Failing BitmapData::draw on shape with lines
 - Sign of MouseEvent.MOUSE_WHEEL delta is inverted?
 - Bubbling not works for custom events
+- SimpleButton is not out from state OVER to state UP
+- Timer: setting delay is not change interval untill start called (flashplayer do it)
 
 Bugs of cpp:
 - Float is init by 0 insteard of Math.NaN

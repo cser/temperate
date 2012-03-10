@@ -44,13 +44,17 @@ class CTimerChanger implements ICTimerChanger
 	function increaseValueHandler(event:TimerEvent)
 	{
 		onIncrease();
+		_timer.stop();
 		_timer.delay = secondDelay;
+		_timer.start();
 	}
 	
 	function decreaseValueHandler(event:TimerEvent)
 	{
 		onDecrease();
+		_timer.stop();
 		_timer.delay = secondDelay;
+		_timer.start();
 	}
 	
 	public var firstDelay(default, null):Int;

@@ -49,11 +49,11 @@ class CppTestMain
 		var test = new TestMCursorManager();
 		var test = new TestKey();
 		var test = new TestWindows();
-		var test = new TestNumericStepper();// TODO исправить медленное изменение при зажатии
-		var test = new TestSimpleButtonWrapper();// TODO исправить медленное изменение при зажатии, rollOut не отлипает
+		var test = new TestNumericStepper();
+		var test = new TestSimpleButtonWrapper();
 		
 		var test = new NmeTestCurrent();
-		var test = new TestWindowApplication();// Текст не работает
+		var test = new TestWindowApplication();
 		Lib.current.addChild(test);
 		test.init();
 	}
