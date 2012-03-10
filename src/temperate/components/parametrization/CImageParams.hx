@@ -2,12 +2,22 @@ package temperate.components.parametrization;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
+import flash.geom.ColorTransform;
 import temperate.components.CButtonState;
 
 class CImageParams 
 {
+	private static var _nullColorTransform:ColorTransform = new ColorTransform();
+	
+	public static function clearTransforms(object:DisplayObject):Void
+	{
+		object.filters = null;
+		object.transform.colorTransform = _nullColorTransform;
+	}
+	
 	public function new() 
 	{
+		alpha = Math.NaN;
 	}
 	
 	public var image:DisplayObject;
@@ -32,6 +42,14 @@ class CImageParams
 		return this;
 	}
 	
+	public var colorTransform:ColorTransform;
+	
+	public function setColorTransform(colorTransform:ColorTransform):CImageParams
+	{
+		this.colorTransform = colorTransform;
+		return this;
+	}
+	
 	public var offsetX:Int;
 	public var offsetY:Int;
 	
@@ -48,6 +66,23 @@ class CImageParams
 	{
 		this.alpha = alpha;
 		return this;
+	}
+	
+	public function applyTransforms(object:DisplayObject):Void
+	{
+		object.filters = filters;
+		if (colorTransform != null)
+		{
+			object.transform.colorTransform = colorTransform;
+		}
+		else
+		{
+			object.transform.colorTransform = _nullColorTransform;
+		}
+		if (!Math.isNaN(alpha))
+		{
+			object.alpha = alpha;
+		}
 	}
 	
 	public static function getImage(

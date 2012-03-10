@@ -1,11 +1,11 @@
 package temperate.minimal.animators;
 import flash.display.DisplayObject;
 import flash.geom.Rectangle;
+import temperate.core.CGeomUtil;
 import temperate.minimal.easing.MBack;
 import temperate.minimal.MTween;
 import temperate.tooltips.animators.CAnimatorState;
 import temperate.tooltips.animators.ICTooltipAnimator;
-import temperate.tooltips.CGeomUtil;
 import temperate.tooltips.renderers.ICTooltip;
 
 class MScaleAnimator< T > implements ICTooltipAnimator<T>
@@ -23,6 +23,10 @@ class MScaleAnimator< T > implements ICTooltipAnimator<T>
 		_state = CAnimatorState.HIDED;
 		_hideVars = { };
 		_showVars = { };
+		_x = 0;
+		_y = 0;
+		_width = 0;
+		_height = 0;
 	}
 	
 	public function setTooltip(tooltip:ICTooltip<T>)
@@ -55,11 +59,12 @@ class MScaleAnimator< T > implements ICTooltipAnimator<T>
 			target.x, target.y, target.width, target.height, 0
 		);
 		
+		var minScale = .1;// if set to 0 - failing on nme
 		_hideVars.alpha = 0;
-		_hideVars.scaleX = 0;
-		_hideVars.scaleY = 0;
-		_hideVars.x = _x + CGeomUtil.crossX;
-		_hideVars.y = _y + CGeomUtil.crossY;
+		_hideVars.scaleX = minScale;
+		_hideVars.scaleY = minScale;
+		_hideVars.x = _x + CGeomUtil.crossX - .5 * _width * minScale;
+		_hideVars.y = _y + CGeomUtil.crossY - .5 * _height * minScale;
 		
 		_showVars.alpha = 1;
 		_showVars.scaleX = 1;

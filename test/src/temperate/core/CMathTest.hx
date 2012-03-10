@@ -92,4 +92,17 @@ class CMathTest
 		Assert.areEqual(3, CMath.intMax3(1, 3, 2));
 		Assert.areEqual(3, CMath.intMax3(3, 1, 2));
 	}
+	
+	@Test
+	public function toString16Cases()
+	{
+		Assert.areEqual("0", CMath.toHex(0));
+		Assert.areEqual("1", CMath.toHex(1));
+		Assert.areEqual("a", CMath.toHex(10));
+		Assert.areEqual("ff", CMath.toHex(0xff));
+		Assert.areEqual("abcdef", CMath.toHex(0xabcdef));
+		Assert.areEqual("a1b2c3", CMath.toHex(0xa1b2c3));
+		Assert.areEqual("1023456", CMath.toHex(0x1023456));
+		Assert.areEqual("789", CMath.toHex(0x789));
+	}
 }

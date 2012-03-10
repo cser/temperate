@@ -18,6 +18,7 @@
     <class path="src" />
     <class path="manual-tests-src-cpp" />
     <class path="test\src" />
+    <class path="manual-tests-src" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -25,11 +26,11 @@
     <option flashStrict="False" />
     <option mainClass="CppTestMain" />
     <option enabledebug="False" />
-    <option additional="" />
+    <option additional="--remap flash:nme" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
-    <!-- example: <library name="..." /> -->
+    <library name="nme" />
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
@@ -45,9 +46,9 @@
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
   <options>
-    <option showHiddenPaths="False" />
+    <option showHiddenPaths="True" />
     <option testMovie="Custom" />
-    <option testMovieCommand="run-cpp.bat" />
+    <option testMovieCommand="cpp_build_nmml.bat" />
   </options>
   <!-- Plugin storage -->
   <storage />

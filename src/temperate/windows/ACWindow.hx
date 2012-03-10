@@ -370,8 +370,10 @@ class ACWindow< TData > extends CTypedDispatcher<CWindowEvent<TData>>, implement
 	{
 		if (manager != null)
 		{
-			if (dispatchTyped(
-				new CWindowEvent(CWindowEvent.CLOSE, this, data, fast, onPreventedCloseContinue)))
+			var dispatchedEvent =
+				new CWindowEvent(CWindowEvent.CLOSE, this, data, fast, onPreventedCloseContinue);
+			dispatchTyped(dispatchedEvent);
+			if (!dispatchedEvent.isWindowPrevented())
 			{
 				manager.remove(this, fast);
 			}

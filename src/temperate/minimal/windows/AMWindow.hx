@@ -45,7 +45,7 @@ class AMWindow< TData > extends ACWindow<TData>
 	
 	public function addCloseButton():Void
 	{
-		var button = _skin.closeButton;
+		var button = _skin.getCloseButton();
 		if (!_skin.existsHeadButton(button))
 		{
 			_skin.addHeadButton(button).addEventListener(MouseEvent.CLICK, onHelpedCloseClick);
@@ -54,7 +54,7 @@ class AMWindow< TData > extends ACWindow<TData>
 	
 	public function addMaximizeButton():Void
 	{
-		var button = _skin.maximizeButton;
+		var button = _skin.getMaximizeButton();
 		if (!_skin.existsHeadButton(button))
 		{
 			_skin.addHeadButton(button).addEventListener(Event.CHANGE, onHelpedMaximizeChange);
@@ -68,6 +68,6 @@ class AMWindow< TData > extends ACWindow<TData>
 	
 	function onHelpedMaximizeChange(event:Event)
 	{
-		maximized = _skin.maximizeButton.selected;
+		maximized = _skin.getMaximizeButton().selected;
 	}
 }

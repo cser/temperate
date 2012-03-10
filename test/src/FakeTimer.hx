@@ -3,16 +3,22 @@ import flash.events.TimerEvent;
 import flash.utils.Timer;
 
 class FakeTimer extends Timer
-{	
+{
 	public function new(delay:Int, repeat:Int = 0) 
 	{
 		super(delay, repeat);
 		
+		#if nme
+		repeatCount = repeat;
+		running = false;
+		#else
 		_repeatCount = repeat;
-		_remainsRepeats = repeatCount;
 		_running = false;
+		#end
+		_remainsRepeats = repeatCount;
 	}
 	
+	#if !nme
 	var _running:Bool;
 	
 	@:getter(running)
@@ -35,6 +41,7 @@ class FakeTimer extends Timer
 		_repeatCount = value;
 		_remainsRepeats = repeatCount;
 	}
+	#end
 	
 	var _remainsRepeats:Int;
 	var _timeToNextDispatch:Int;
@@ -42,23 +49,36 @@ class FakeTimer extends Timer
 	override public function start()
 	{
 		_timeToNextDispatch = Std.int(delay);
+		#if nme
+		running = true;
+		#else
 		_running = true;
+		#end
 	}
 	
 	override public function reset()
 	{
+		#if nme
+		_remainsRepeats = repeatCount;
+		running = false;
+		#else
 		_remainsRepeats = _repeatCount;
 		_running = false;
+		#end
 	}
 	
 	override public function stop()
 	{
+		#if nme
+		running = false;
+		#else
 		_running = false;
+		#end
 	}
 	
 	public function tick()
 	{
-		if (!_running)
+		if (!(#if nme running #else _running #end))
 		{
 			return;
 		}
@@ -68,7 +88,11 @@ class FakeTimer extends Timer
 			dispatchEvent(new TimerEvent(TimerEvent.TIMER));
 			if (_remainsRepeats <= 0)
 			{
+				#if nme
+				running = false;
+				#else
 				_running = false;
+				#end
 			}
 		}
 		else
@@ -81,7 +105,11 @@ class FakeTimer extends Timer
 				_timeToNextDispatch = Std.int(delay);
 				if (repeatCount != 0 && _remainsRepeats <= 0)
 				{
+					#if nme
+					running = false;
+					#else
 					_running = false;
+					#end
 				}
 			}
 		}

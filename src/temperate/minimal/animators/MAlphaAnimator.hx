@@ -22,6 +22,11 @@ class MAlphaAnimator< T > implements ICTooltipAnimator<T>
 	
 	public function arrange(x:Float, y:Float, width:Float, height:Float, target:Rectangle):Void
 	{
+		if (tooltip == null)
+		{
+			// nme is triying to be original
+			return;
+		}
 		tooltip.view.x = x;
 		tooltip.view.y = y;
 		tooltip.setTailTarget(target);

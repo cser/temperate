@@ -1,14 +1,18 @@
 package windowApplication.events;
 import flash.events.Event;
+import temperate.windows.events.ACWindowEvent;
+import temperate.windows.events.CWindowEventContext;
 import windowApplication.ImageWindow;
 
-class ImageWindowEvent extends Event
+class ImageWindowEvent extends ACWindowEvent
 {
 	public static var CLOSE:String = "imageWindow.close";
 	
-	public function new(type:String, window:ImageWindow, continuePrevented:Void->Void)
+	public function new(
+		type:String, window:ImageWindow, continuePrevented:Void->Void,
+		context:CWindowEventContext = null)
 	{
-		super(type, true, true);
+		super(type, true, true, context);
 		this.window = window;
 		this.continuePrevented = continuePrevented;
 	}
@@ -19,6 +23,6 @@ class ImageWindowEvent extends Event
 	
 	override public function clone():Event
 	{
-		return new ImageWindowEvent(type, window, continuePrevented);
+		return new ImageWindowEvent(type, window, continuePrevented, _context);
 	}
 }

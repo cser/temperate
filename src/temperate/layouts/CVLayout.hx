@@ -45,10 +45,6 @@ class CVLayout extends ACLineLayout
 			_sizeB = horizontal ? height : width;
 		}
 		
-		/*
-		"WidthForHeight" isn't supported, only "HeightForWidth", like Qt. Or it's mistake
-		and Qt has "WidthForHeight"?
-		*/
 		if (horizontal)
 		{
 			calculateA(horizontal, gap, gapSize);

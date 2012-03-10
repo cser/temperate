@@ -9,7 +9,7 @@
     <movie width="800" />
     <movie height="600" />
     <movie version="10" />
-    <movie minorVersion="2" />
+    <movie minorVersion="1" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
   </output>
@@ -26,7 +26,7 @@
     <option flashStrict="True" />
     <option mainClass="TestMain" />
     <option enabledebug="True" />
-    <option additional="-cp test/src/&#xA;-lib munit&#xA;--no-inline&#xA;-swf-version 10.2" />
+    <option additional="-cp test/src/&#xA;-lib munit&#xA;--no-inline" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

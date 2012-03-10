@@ -75,7 +75,7 @@ class CMath
 		return (Std.int(0xff * alphaPart) << 24) | (0x00ffffff & colorPart);
 	}
 	
-	inline public static function toFixed(x:Float, fractionDigits:UInt):String
+	public static function toFixed(x:Float, fractionDigits:UInt):String
 	{
 		#if flash9
 		return untyped x.toFixed(fractionDigits);
@@ -109,18 +109,51 @@ class CMath
 		#end
 	}
 	
-	inline public static function toLimitDigits(x:Float, maxDigits:UInt):String
+	public static function toLimitDigits(x:Float, maxDigits:UInt):String
 	{
 		var k = Math.round(Math.pow(10, maxDigits));
 		return Std.string(Math.round(x * k) / k);
 	}
 	
-	inline public static function toString(x:Float, radix:Int = 10):String
+	public static function toHex(x:UInt):String
 	{
 		#if flash9
-		return untyped x.toString(radix);
+		return untyped x.toString(16);
 		#else
-		return Std.string(x);
+		var text = "";
+		var begin = false;
+		for (i in 0 ... 8)
+		{
+			var digit = (x & 0xf0000000) >>> 28;
+			if (digit != 0)
+			{
+				begin = true;
+			}
+			if (begin)
+			{
+				switch (digit)
+				{
+					case 0: text += "0";
+					case 1: text += "1";
+					case 2: text += "2";
+					case 3: text += "3";
+					case 4: text += "4";
+					case 5: text += "5";
+					case 6: text += "6";
+					case 7: text += "7";
+					case 8: text += "8";
+					case 9: text += "9";
+					case 10: text += "a";
+					case 11: text += "b";
+					case 12: text += "c";
+					case 13: text += "d";
+					case 14: text += "e";
+					case 15: text += "f";
+				};
+			}
+			x <<= 4;
+		}
+		return text != "" ? text : "0";
 		#end
 	}
 }

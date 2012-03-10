@@ -1,6 +1,7 @@
 package temperate.core;
 import flash.events.Event;
 import flash.events.IEventDispatcher;
+import flash.Lib;
 
 class CValidator
 {
@@ -15,6 +16,9 @@ class CValidator
 				new ACValidatable(null), new ACValidatable(null),
 				new ACValidatable(null), new ACValidatable(null)
 			);
+			#if nme
+			Lib.current.stage.addChild(_instance._sizeHead);
+			#end
 		}
 		return _instance;
 	}

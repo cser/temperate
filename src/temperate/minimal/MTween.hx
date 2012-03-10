@@ -2,7 +2,7 @@ package temperate.minimal;
 import flash.display.Shape;
 import flash.events.Event;
 import flash.Lib;
-import flash.utils.TypedDictionary;
+import temperate.collections.CObjectHash;
 import temperate.minimal.easing.MEaseMethod;
 import temperate.minimal.easing.MPower;
 
@@ -19,13 +19,13 @@ class MTween< T >
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	static var _tweenSet:TypedDictionary<Dynamic, MTween<Dynamic>>;
+	static var _tweenSet:CObjectHash<Dynamic, MTween<Dynamic>>;
 	
 	static function register(target:Dynamic, tween:MTween<Dynamic>):Void
 	{
 		if (_tweenSet == null)
 		{
-			_tweenSet = new TypedDictionary();
+			_tweenSet = new CObjectHash();
 		}
 		var oldTween = _tweenSet.get(target);
 		if (oldTween != null)
@@ -110,7 +110,11 @@ class MTween< T >
 		
 		if (_enterFrameDispatcher == null)
 		{
-			_enterFrameDispatcher = new Shape();
+			var shape = new Shape();
+			_enterFrameDispatcher = shape;
+			#if nme
+			Lib.current.stage.addChild(shape);
+			#end
 		}
 		_startTime = Lib.getTimer();
 		_elapsedTime = 0;

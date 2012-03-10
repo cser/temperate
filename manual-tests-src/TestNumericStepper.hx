@@ -87,25 +87,25 @@ class TestNumericStepper extends Sprite
 			main.addChild(box);
 			
 			var stepper = new MNumericStepper();
-			stepper.setValueTranslators("\\-0-9cm", cmTranslator, smParser, smIsCorrect);
+			stepper.setValueTranslators(cmTranslator, smParser, smIsCorrect);
 			MTooltipFactory.newText(stepper, "MNumericStepper with sm");
 			box.add(stepper);
 			
 			var stepper = new MNumericStepper();
 			stepper.timerChanger = new CSmoothTimerChanger().setDelays(1000, 500, 10, .5);
-			stepper.setValueTranslators("\\-0-9cm", cmTranslator, smParser, smIsCorrect);
+			stepper.setValueTranslators(cmTranslator, smParser, smIsCorrect);
 			MTooltipFactory.newText(stepper, "MNumericStepper with firstDelay = 1000");
 			box.add(stepper);
 			
 			var stepper = new MNumericStepper();
 			stepper.timerChanger = new CTimerChanger().setDelays(300, 10);
-			stepper.setValueTranslators("\\-0-9cm", cmTranslator, smParser, smIsCorrect);
+			stepper.setValueTranslators(cmTranslator, smParser, smIsCorrect);
 			MTooltipFactory.newText(stepper, "MNumericStepper with simple timer changer");
 			box.add(stepper);
 			
 			var stepper = new MNumericStepper();
 			stepper.timerChanger = new CSmoothTimerChanger().setDelays(500, 200, 100, .5);
-			stepper.setValueTranslators("\\-0-9cm", cmTranslator, smParser, smIsCorrect);
+			stepper.setValueTranslators(cmTranslator, smParser, smIsCorrect);
 			MTooltipFactory.newText(stepper, "MNumericStepper with minDelay=100");
 			box.add(stepper);
 		}

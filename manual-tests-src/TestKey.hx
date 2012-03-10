@@ -22,6 +22,7 @@ class TestKey extends Sprite
 	public function init()
 	{
 		_key = CKey.getInstance();
+		_key.init(stage);
 		
 		var main = new CVBox().addTo(this, 20, 15);
 		new MButton().setText("Check space down").addClickHandler(onCheckSpaceDownClick)

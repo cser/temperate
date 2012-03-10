@@ -1,5 +1,6 @@
 package temperate.components;
 import flash.display.Bitmap;
+import temperate.components.parametrization.CRasterParams;
 import temperate.docks.ICDock;
 import temperate.docks.CRightDock;
 
@@ -105,14 +106,12 @@ class CRasterFixedButton extends ACRasterTextButton
 			if (params != null)
 			{
 				_bitmap.bitmapData = params.bitmapData;
-				_bitmap.filters = params.filters;
-				_bitmap.alpha = Math.isNaN(params.alpha) ? 1 : params.alpha;
+				params.applyTransforms(_bitmap);
 			}
 			else
 			{
 				_bitmap.bitmapData = null;
-				_bitmap.filters = null;
-				_bitmap.alpha = 1;
+				CRasterParams.clearTransforms(_bitmap);
 			}
 			
 			_bitmap.x = _textDock.mainX + (params != null ? params.bgOffsetLeft : 0);

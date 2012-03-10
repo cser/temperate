@@ -1,5 +1,8 @@
 v.0.-?
 - Show text for custom plots of DebugMonitor
+- Add colorTransform to text format and buttons parameters
+- Fix GeomUtil duplication (now all in core)
+- CSignal now works on cpp, or rather mast works - only unit tests was runned :)
 v.0.7
 - CSignal moved to temperate.extra
 - CKey added for downed key checking (is not using in temperate)

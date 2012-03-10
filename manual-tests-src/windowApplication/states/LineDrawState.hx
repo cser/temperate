@@ -1,5 +1,5 @@
 package windowApplication.states;
-import windowApplication.assets.Line;
+import windowApplication.BdFactory;
 
 class LineDrawState extends ADrawState
 {
@@ -7,7 +7,7 @@ class LineDrawState extends ADrawState
 	{
 		super();
 		
-		icon = Line;
+		icon = BdFactory.getLine();
 	}
 	
 	var _x:Float;

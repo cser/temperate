@@ -1,5 +1,5 @@
 package windowApplication.states;
-import windowApplication.assets.Pencil;
+import windowApplication.BdFactory;
 
 class PencilDrawState extends ADrawState
 {
@@ -7,7 +7,7 @@ class PencilDrawState extends ADrawState
 	{
 		super();
 		
-		icon = Pencil;
+		icon = BdFactory.getPencil();
 	}
 	
 	override function doStart()

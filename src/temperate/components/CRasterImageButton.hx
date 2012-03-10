@@ -2,6 +2,7 @@ package temperate.components;
 import flash.display.DisplayObject;
 import flash.display.Shape;
 import temperate.components.parametrization.CImageParams;
+import temperate.components.parametrization.CRasterParams;
 import temperate.core.CMath;
 import temperate.docks.CRightDock;
 import temperate.docks.ICDock;
@@ -101,14 +102,12 @@ class CRasterImageButton extends ACRasterTextButton
 					Std.int(_height) - params.bgOffsetTop + params.bgOffsetBottom)
 					.setBitmapData(params.bitmapData)
 					.redraw();
-				_bg.filters = params.filters;
-				_bg.alpha = Math.isNaN(params.alpha) ? 1 : params.alpha;
+				params.applyTransforms(_bg);
 			}
 			else
 			{
 				_bg.graphics.clear();
-				_bg.filters = null;
-				_bg.alpha = 1;
+				CRasterParams.clearTransforms(_bg);
 			}
 			
 			var newImage = getStateImage();
@@ -135,16 +134,13 @@ class CRasterImageButton extends ACRasterTextButton
 				}
 				if (imageParams != null)
 				{
-					_currentImage.filters = imageParams.filters;
-					_currentImage.alpha = Math.isNaN(imageParams.alpha) ?
-						1 : imageParams.alpha;
+					imageParams.applyTransforms(_currentImage);
 					imageOffsetX = imageParams.offsetX;
 					imageOffsetY = imageParams.offsetY;
 				}
 				else
 				{
-					_currentImage.filters = null;
-					_currentImage.alpha = 1;
+					CImageParams.clearTransforms(_currentImage);
 				}
 			}
 			

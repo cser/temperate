@@ -1,2 +1,4 @@
 bin/*
 test/bin/*
+nmml-export/*
+nmml-export-tests/*

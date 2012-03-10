@@ -5,9 +5,11 @@ import flash.display.DisplayObject;
 import flash.events.IEventDispatcher;
 import flash.events.MouseEvent;
 import flash.ui.Mouse;
-import flash.ui.MouseCursor;
 import temperate.cursors.ICCursor;
 import temperate.minimal.graphics.MCommonBdFactory;
+#if flash10
+import flash.ui.MouseCursor;
+#end
 
 class CRasterPressCursor implements ICCursor
 {
@@ -18,7 +20,7 @@ class CRasterPressCursor implements ICCursor
 	}
 	
 	var _hideSystem:Bool;
-	var _system:MouseCursor;
+	var _system:CMouseCursor;
 	
 	var _up:BitmapData;
 	var _down:BitmapData;
@@ -58,7 +60,7 @@ class CRasterPressCursor implements ICCursor
 	/**
 	 * For once call only
 	 */
-	public function setSystem(system:MouseCursor)
+	public function setSystem(system:CMouseCursor)
 	{
 		_system = system;
 		return this;
@@ -90,7 +92,7 @@ class CRasterPressCursor implements ICCursor
 		{
 			Mouse.hide();
 		}
-		#if flash_10
+		#if flash10
 		if (_system != null)
 		{
 			Mouse.cursor = _system;
@@ -107,7 +109,7 @@ class CRasterPressCursor implements ICCursor
 		{
 			Mouse.show();
 		}
-		#if flash_10
+		#if flash10
 		if (_system != null)
 		{
 			Mouse.cursor = MouseCursor.AUTO;

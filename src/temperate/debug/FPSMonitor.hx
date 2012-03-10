@@ -209,8 +209,13 @@ class FPSMonitor extends Sprite
 		_memoryPlot.scroll();
 		
 		_tfFps.text = "FPS: " + digitFps + " / " + frameRate;
-		_tfMemory.text = (untyped (memory * MEMORY_MULTIPLIER).toFixed(3)) + " Mb / " +
-			(untyped (_maxMemory * MEMORY_MULTIPLIER).toFixed(3)) + " Mb";
+		_tfMemory.text = toFixed3(memory * MEMORY_MULTIPLIER) + " Mb / " +
+			toFixed3(_maxMemory * MEMORY_MULTIPLIER) + " Mb";
+	}
+	
+	private function toFixed3(value:Float):String
+	{
+		return Std.string(Std.int(value * 1000) * .001);
 	}
 	
 	public function move(x:Float, y:Float)

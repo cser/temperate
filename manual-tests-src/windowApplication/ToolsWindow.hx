@@ -64,7 +64,7 @@ class ToolsWindow extends AMWindow<Dynamic>
 				}
 				var state = states[i];
 				var button = new MToolButton();
-				button.getImage(CButtonState.UP).setBitmapData(Type.createInstance(state.icon, []));
+				button.getImage(CButtonState.UP).setBitmapData(state.icon);
 				line.add(button);
 				_tools.add(button, state);
 				i++;

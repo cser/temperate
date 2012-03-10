@@ -9,7 +9,7 @@ import temperate.minimal.MInputField;
 import temperate.minimal.windows.MWindowedContainer;
 import temperate.minimal.windows.MWindowManager;
 import temperate.windows.events.CWindowEvent;
-import windowApplication.assets.Text;
+import windowApplication.BdFactory;
 import windowApplication.Primitive;
 
 class TextDrawState extends ADrawState
@@ -18,7 +18,7 @@ class TextDrawState extends ADrawState
 	{
 		super();
 		
-		icon = Text;
+		icon = BdFactory.getText();
 	}
 	
 	var _x:Float;

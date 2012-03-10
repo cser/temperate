@@ -1,6 +1,7 @@
 package temperate.minimal.graphics;
 import flash.display.BitmapData;
 using temperate.core.CMath;
+using temperate.core.CGraphicsUtil;
 
 class MLineBdFactory 
 {
@@ -53,19 +54,15 @@ class MLineBdFactory
 		
 		var g = shape.graphics;
 		g.clear();
-
 		g.beginFill(fillColor.getColor(), fillColor.getAlpha());
 		g.drawRoundRect(0, 0, width, height, 4);
 		g.endFill();
-		g.beginFill(borderLightColor.getColor(), borderLightColor.getAlpha());
-		g.drawRoundRect(0, 0, width, height, 4);
-		g.drawRoundRect(0, 0, width - 1, height - 1, 4);
-		g.endFill();
-		g.beginFill(borderColor.getColor(), borderColor.getAlpha());
-		g.drawRoundRect(0, 0, width, height, 4);
-		g.drawRoundRect(1, 1, width - 1, height - 1, 4);
-		g.endFill();
-		
+		g.drawBottomRightBorder(
+			0, 0, width, height, 2,
+			borderLightColor.getColor(), borderLightColor.getAlpha(), 1, true);
+		g.drawTopLeftBorder(
+			0, 0, width, height, 2,
+			borderColor.getColor(), borderColor.getAlpha(), 1, true);
 		bd.draw(shape);
 		
 		MBdFactoryUtil.qualityOff();

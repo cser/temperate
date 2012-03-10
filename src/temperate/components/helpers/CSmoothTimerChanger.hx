@@ -47,13 +47,19 @@ class CSmoothTimerChanger implements ICTimerChanger
 	function increaseValueHandler(event:TimerEvent)
 	{
 		onIncrease();
+		
+		_timer.stop();
 		_timer.delay = getNextDelay(_timer.delay);
+		_timer.start();
 	}
 	
 	function decreaseValueHandler(event:TimerEvent)
 	{
 		onDecrease();
+		
+		_timer.stop();
 		_timer.delay = getNextDelay(_timer.delay);
+		_timer.start();
 	}
 	
 	public var minDelay(default, null):Int;

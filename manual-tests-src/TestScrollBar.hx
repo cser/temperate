@@ -73,7 +73,7 @@ class TestScrollBar extends Sprite
 		var scrollBar = new MScrollBar(false).addTo(this, 760, 100);
 		scrollBar.isEnabled = false;
 		
-		if (Std.string(stage.quality).toLowerCase() != Std.string(StageQuality.LOW))
+		if (Std.string(stage.quality).toLowerCase() != Std.string(StageQuality.LOW).toLowerCase())
 		{
 			throw new Error("Quality mast steel be low");
 		}

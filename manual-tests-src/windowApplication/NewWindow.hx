@@ -31,7 +31,8 @@ class NewWindow extends AMWindow<Point>
 		box.add(_heightNs).setAlign(1);
 		_main.add(box).setPercents(100);
 		
-		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
+		_skin.addHeadButton(_skin.getCloseButton())
+			.addEventListener(MouseEvent.CLICK, onCloseClick);
 		
 		_widthNs.setValues(1, 1000, 600);
 		_heightNs.setValues(1, 1000, 400);

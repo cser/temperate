@@ -5,6 +5,7 @@ import flash.geom.Matrix;
 import flash.geom.Rectangle;
 import temperate.components.CButtonState;
 using temperate.core.CMath;
+using temperate.core.CGraphicsUtil;
 
 class MScrollBarBdFactory 
 {
@@ -445,16 +446,12 @@ class MScrollBarBdFactory
 			var enabled = state != CButtonState.DISABLED;
 			
 			var color = enabled ? params.bgBottomRightColor : params.bgBottomRightDisabledColor;
-			g.beginFill(color.getColor(), color.getAlpha());
-			g.drawRoundRect(0, 0, arrowSize, arrowSize, 6);
-			g.drawRoundRect(0, 0, arrowSize - 1, arrowSize - 1, 6);
-			g.endFill();
+			g.drawBottomRightBorder(
+				0, 0, arrowSize, arrowSize, 3, color.getColor(), color.getAlpha(), 1, true);
 			
 			var color = enabled ? params.bgTopLeftColor : params.bgTopLeftDisabledColor;
-			g.beginFill(color.getColor(), color.getAlpha());
-			g.drawRoundRect(0, 0, arrowSize, arrowSize, 6);
-			g.drawRoundRect(1, 1, arrowSize - 1, arrowSize - 1, 6);
-			g.endFill();
+			g.drawTopLeftBorder(
+				0, 0, arrowSize, arrowSize, 3, color.getColor(), color.getAlpha(), 1, true);
 			
 			{
 				var boxHeight = 20;
@@ -489,24 +486,19 @@ class MScrollBarBdFactory
 			}
 			
 			var color = params.bgInnerTopLeftColor;
-			g.beginFill(color.getColor(), color.getAlpha());
-			g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 4);
-			g.drawRoundRect(2, 2, arrowSize - 3, arrowSize - 3, 4);
-			g.endFill();
+			g.drawTopLeftBorder(
+				1, 1, arrowSize - 2, arrowSize - 2, 2, color.getColor(), color.getAlpha(), 1, true);
 			
 			var color = params.bgInnerBottomRightColor;
-			g.beginFill(color.getColor(), color.getAlpha());
-			g.drawRoundRect(1, 1, arrowSize - 2, arrowSize - 2, 4);
-			g.drawRoundRect(1, 1, arrowSize - 3, arrowSize - 3, 4);
-			g.endFill();
+			g.drawBottomRightBorder(
+				1, 1, arrowSize - 2, arrowSize - 2, 2, color.getColor(), color.getAlpha(), 1, true);
 			
 			if (state == CButtonState.DOWN)
 			{
 				var color = params.bgInnerDownColor;
-				g.beginFill(color.getColor(), color.getAlpha());
-				g.drawRoundRect(2, 2, arrowSize - 4, arrowSize - 4, 4);
-				g.drawRoundRect(3, 3, arrowSize - 6, arrowSize - 6, 4);
-				g.endFill();
+				g.drawRoundRectBorder(
+					2, 2, arrowSize - 4, arrowSize - 4, 2,
+					color.getColor(), color.getAlpha(), 1);
 			}
 			
 			bd.draw(shape);
@@ -747,16 +739,14 @@ class MScrollBarBdFactory
 		var diameter2 = 6;
 		
 		var color = enabled ? params.bgBottomRightColor : params.bgBottomRightDisabledColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(downOffsetX, downOffsetY, width, height, diameter1);
-		g.drawRoundRect(downOffsetX, downOffsetY, width - 1, height - 1, diameter1);
-		g.endFill();
+		g.drawBottomRightBorder(
+			downOffsetX, downOffsetY, width, height, diameter1 >> 1,
+			color.getColor(), color.getAlpha(), 1, true);
 		
 		var color = enabled ? params.bgTopLeftColor : params.bgTopLeftDisabledColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(downOffsetX, downOffsetY, width, height, diameter1);
-		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 1, height - 1, diameter1);
-		g.endFill();
+		g.drawTopLeftBorder(
+			downOffsetX, downOffsetY, width, height, diameter1 >> 1,
+			color.getColor(), color.getAlpha(), 1, true);
 		
 		{
 			var boxHeight = 12;
@@ -788,16 +778,14 @@ class MScrollBarBdFactory
 		}
 		
 		var color = params.bgInnerTopLeftColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2);
-		g.drawRoundRect(downOffsetX + 2, downOffsetY + 2, width - 3, height - 3, diameter2);
-		g.endFill();
+		g.drawTopLeftBorder(
+			downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2 >> 1,
+			color.getColor(), color.getAlpha(), 1, true);
 		
 		var color = params.bgInnerBottomRightColor;
-		g.beginFill(color.getColor(), color.getAlpha());
-		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2);
-		g.drawRoundRect(downOffsetX + 1, downOffsetY + 1, width - 3, height - 3, diameter2);
-		g.endFill();
+		g.drawBottomRightBorder(
+			downOffsetX + 1, downOffsetY + 1, width - 2, height - 2, diameter2 >> 1,
+			color.getColor(), color.getAlpha(), 1, true);
 		
 		bd.draw(shape);
 		

@@ -1,7 +1,7 @@
 package temperate.containers;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
-import flash.utils.TypedDictionary;
+import temperate.collections.CObjectHash;
 import temperate.core.CMath;
 import temperate.core.CSprite;
 import temperate.layouts.ICLineLayout;
@@ -13,7 +13,7 @@ class ACLineBox extends CSprite, implements ICInvalidateClient
 	{
 		super();
 		_layout = layout;
-		_wrapperByChild = new TypedDictionary();
+		_wrapperByChild = new CObjectHash();
 		_indentLeft = 0;
 		_indentRight = 0;
 		_indentTop = 0;
@@ -22,7 +22,7 @@ class ACLineBox extends CSprite, implements ICInvalidateClient
 	
 	var _layout:ICLineLayout;
 	
-	var _wrapperByChild:TypedDictionary<DisplayObject, CChildWrapper>;
+	var _wrapperByChild:CObjectHash<DisplayObject, CChildWrapper>;
 	
 	public function add(child:DisplayObject):CChildWrapper
 	{

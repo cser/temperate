@@ -1,5 +1,6 @@
 package temperate.minimal.charts;
 import flash.text.TextField;
+import temperate.core.CGraphicsUtil;
 import temperate.core.CMath;
 import temperate.text.CTextFormat;
 using temperate.core.CMath;
@@ -69,8 +70,8 @@ class MPieChart extends AMChart
 		for(i in 0 ... _values.length)
 		{
 			var percent = _values[i] / total;
-			var end = begin + Math.PI * 2 * percent;
-			drawArc(begin, end, radius, getColorByIndex(i));
+			var end = begin + CMath.max(0, Math.PI * 2 * percent);
+			drawSegment(begin, end, radius, getColorByIndex(i));
 			if (_showValueLabels)
 			{
 				var label = _labelFormat.newAutoSized(false, getLabelText(i));
@@ -96,27 +97,13 @@ class MPieChart extends AMChart
 		label.y = rY * Math.sin(angle) - halfH;
 	}
 	
-	function drawArc(begin:Float, end:Float, radius:Float, color:UInt)
+	function drawSegment(begin:Float, end:Float, radius:Float, color:UInt)
 	{
 		var g = _chartOwner.graphics;
 		g.beginFill(color.getColor(), color.getAlpha());
 		g.moveTo(0, 0);
-		
-		var numSegments = Math.ceil((end - begin) * 4 / Math.PI);
-		var deltaAngle = (end - begin) / numSegments;
-		var externalRadius = radius / Math.cos(deltaAngle * .5);
 		g.lineTo(Math.cos(begin) * radius, Math.sin(begin) * radius);
-		for (i in 0 ... numSegments)
-		{
-			var angle = begin + (i + 1) * deltaAngle;
-			var halfAngle = begin + (i + .5) * deltaAngle;
-			var x1 = Math.cos(halfAngle) * externalRadius;
-			var y1 = Math.sin(halfAngle) * externalRadius;
-			var x2 = Math.cos(angle) * radius;
-			var y2 = Math.sin(angle) * radius;
-			g.curveTo(x1, y1, x2, y2);
-		}
-		
+		CGraphicsUtil.drawArc(g, 0, 0, radius, begin, end);
 		g.lineTo(0, 0);
 		g.endFill();
 	}

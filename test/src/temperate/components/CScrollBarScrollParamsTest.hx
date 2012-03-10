@@ -73,7 +73,7 @@ class CScrollBarScrollParamsTest
 			}
 			catch (error:ArgumentError)
 			{
-				Assert.isTrue(Std.string(error.message).indexOf("mast be finite") != -1);
+				Assert.isTrue(Std.string(error).indexOf("mast be finite") != -1);
 				Assert.areEqual(1, sb.step);
 			}
 			
@@ -86,7 +86,7 @@ class CScrollBarScrollParamsTest
 				}
 				catch (error:ArgumentError)
 				{
-					Assert.isTrue(Std.string(error.message).indexOf("mast be positive") != -1);
+					Assert.isTrue(Std.string(error).indexOf("mast be positive") != -1);
 					Assert.areEqual(1, sb.step);
 				}
 			}
@@ -142,7 +142,7 @@ class CScrollBarScrollParamsTest
 				}
 				catch (error:ArgumentError)
 				{
-					var text = Std.string(error.message);
+					var text = Std.string(error);
 					Assert.isTrue(
 						text.indexOf("mast be positive") != -1 && text.indexOf("NaN") != -1
 					);
@@ -194,7 +194,7 @@ class CScrollBarScrollParamsTest
 				}
 				catch (error:ArgumentError)
 				{
-					var text = Std.string(error.message);
+					var text = Std.string(error);
 					Assert.isTrue(
 						text.indexOf("mast be positive") != -1 && text.indexOf("NaN") != -1
 					);

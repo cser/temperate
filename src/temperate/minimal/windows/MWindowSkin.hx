@@ -1,5 +1,6 @@
 package temperate.minimal.windows;
 import flash.display.Sprite;
+import flash.geom.Matrix;
 import flash.text.TextField;
 import temperate.components.ICButton;
 import temperate.core.CMath;
@@ -11,6 +12,7 @@ import temperate.minimal.windows.MMaximizeButton;
 import temperate.raster.CVScale12GridDrawer;
 import temperate.windows.skins.ACWindowSkin;
 using temperate.core.ArrayUtil;
+using temperate.core.CGraphicsUtil;
 
 class MWindowSkin extends ACWindowSkin
 {
@@ -120,29 +122,62 @@ class MWindowSkin extends ACWindowSkin
 			
 			var g = graphics;
 			g.clear();
-			
-			g.lineStyle();
-			var bd = if (_isEnabled)
+			var bd;
+			if (_isEnabled)
 			{
-				_isActive ? MWindowBdFactory.getActiveTop() : MWindowBdFactory.getDefaultTop();
+				bd = _isActive ? MWindowBdFactory.getActiveTop() : MWindowBdFactory.getDefaultTop();
 			}
 			else
 			{
-				MWindowBdFactory.getLockedTop();
+				bd = MWindowBdFactory.getLockedTop();
 			}
-			g.beginBitmapFill(bd);
-			g.drawRoundRectComplex(1, 1, width - 2, _lineTop - 1, 5, 5, 0, 0);
-			g.endFill();
+			{
+				var hIndent = 1;
+				var vIndent = 1;
+				var matrix = new Matrix();
+				var w = bd.width;
+				var w2 = bd.width >> 1;
+				g.beginBitmapFill(bd);
+				g.drawRoundRectComplexStepByStep(
+					hIndent, vIndent, w - hIndent, _lineTop - vIndent * 2, 5, 0, 0, 0);
+				g.endFill();
+				var x0 = w;
+				var x1 = _width - w2;
+				var lastI = Std.int((x1 - x0) / w);
+				var i = lastI;
+				if (x1 - x0 - i * w > 0)
+				{
+					matrix.tx = x0 + i * w;
+					g.beginBitmapFill(bd, matrix, false);
+					g.drawRect(x0 + i * w, vIndent, x1 - x0 - i * w, _lineTop - vIndent * 2);
+					g.endFill();
+				}
+				while (i-- > 0)
+				{
+					matrix.tx = x0 + i * w;
+					g.beginBitmapFill(bd, matrix, false);
+					g.drawRect(x0 + i * w, vIndent, w, _lineTop - vIndent * 2);
+					g.endFill();
+				}
+				var offset = Std.int((_width - w2 - x0 - lastI * w) / w2) * w2;
+				matrix.tx = x0 + lastI * w + offset;
+				g.beginBitmapFill(bd, matrix, false);
+				g.drawRoundRectComplexStepByStep(
+					_width - w2, vIndent, w2 - hIndent, _lineTop - vIndent * 2, 0, 5, 0, 0);
+				g.endFill();
+			}
+			
+			{
+				var headG = _head.graphics;
+				headG.clear();
+				headG.beginFill(0xffffff, .1);
+				headG.drawRoundRectComplexStepByStep(1, 1, _width - 2, _lineTop - 2, 5, 5, 0, 0);
+				headG.endFill();
+			}
 			
 			_drawer.setBounds(
 				0, 0, Std.int(_width + 2), Std.int(_height + 2), _lineTop + CENTER_TOP_OFFSET);
 			_drawer.draw(g);
-			
-			var g = _head.graphics;
-			g.clear();
-			g.beginFill(0xffffff, 0);
-			g.drawRect(0, 0, width, _lineTop);
-			g.endFill();
 		}
 		if (!_view_headButtonsValid)
 		{
@@ -212,9 +247,9 @@ class MWindowSkin extends ACWindowSkin
 		return _headButtons.exists(button);
 	}
 	
-	public var closeButton(get_closeButton, null):ICButton;
 	var _closeButton:ICButton;
-	function get_closeButton()
+	
+	public function getCloseButton():ICButton
 	{
 		if (_closeButton == null)
 		{
@@ -223,9 +258,9 @@ class MWindowSkin extends ACWindowSkin
 		return _closeButton;
 	}
 	
-	public var maximizeButton(get_maximizeButton, null):ICButton;
 	var _maximizeButton:MMaximizeButton;
-	function get_maximizeButton()
+	
+	public function getMaximizeButton():ICButton
 	{
 		if (_maximizeButton == null)
 		{

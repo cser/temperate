@@ -9,9 +9,10 @@ class MMaximizedWindow extends AMWindow<Dynamic>
 		super();
 		
 		_baseSkin.title = "Maximized window";
-		_skin.addHeadButton(_skin.maximizeButton)
+		_skin.addHeadButton(_skin.getMaximizeButton())
 			.addEventListener(MouseEvent.CLICK, onMaximizeClick);
-		_skin.addHeadButton(_skin.closeButton).addEventListener(MouseEvent.CLICK, onCloseClick);
+		_skin.addHeadButton(_skin.getCloseButton())
+			.addEventListener(MouseEvent.CLICK, onCloseClick);
 	}
 	
 	function onCloseClick(event:MouseEvent)
@@ -21,6 +22,6 @@ class MMaximizedWindow extends AMWindow<Dynamic>
 	
 	function onMaximizeClick(event:MouseEvent)
 	{
-		maximized = _skin.maximizeButton.selected;
+		maximized = _skin.getMaximizeButton().selected;
 	}
 }

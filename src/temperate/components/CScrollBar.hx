@@ -353,7 +353,8 @@ class CScrollBar extends CSprite, implements ICSlider
 	function onMouseWheel(event:MouseEvent)
 	{
 		setValue(
-			_value - _step * CMouseWheelUtil.getDimDelta(event.delta, mouseWheelDimRatio), true);
+			_value -
+			_step * CMouseWheelUtil.getFixedDimDelta(event.delta, mouseWheelDimRatio), true);
 	}
 	
 	override function doValidateSize()

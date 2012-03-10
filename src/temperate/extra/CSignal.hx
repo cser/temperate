@@ -1,71 +1,106 @@
 package temperate.extra;
-import flash.utils.Dictionary;
 
 class CSignal< TListener >
 {
 	public function new() 
 	{
-		dispatch = cast privateDispatch;
+		dispatch = Reflect.makeVarArgs(privateDispatch);
+		_listeners = [];
+		_length = 0;
+		_voidListeners = [];
+		_voidLength = 0;
 	}
 	
-	var _listeners:Dictionary;
+	var _listeners:Array<TListener>;
+	var _length:Int;
 	
 	public function add(listener:TListener):Void
 	{
-		if (_listeners == null)
+		for (i in 0 ... _length)
 		{
-			_listeners = new Dictionary();
+			if (_listeners[i] == listener)
+			{
+				return;
+			}
 		}
-		untyped _listeners[listener] = listener;
+		_listeners[_length++] = listener;
 	}
 	
 	public function remove(listener:TListener):Void
 	{
-		if (_listeners != null)
+		for (i in 0 ... _length)
 		{
-			untyped __delete__(_listeners, listener);
+			if (_listeners[i] == listener)
+			{
+				_listeners[i] = _listeners[_length - 1];
+				_listeners[_length - 1] = null;
+				_length--;
+				break;
+			}
 		}
 	}
 	
-	var _voidListeners:Dictionary;
+	var _voidListeners:Array < Void->Dynamic > ;
+	var _voidLength:Int;
 	
 	public function addVoid(listener:Void->Dynamic):Void
 	{
-		if (_voidListeners == null)
+		for (i in 0 ... _voidLength)
 		{
-			_voidListeners = new Dictionary();
+			if (_voidListeners[i] == listener)
+			{
+				return;
+			}
 		}
-		untyped _voidListeners[listener] = listener;
+		_voidListeners[_voidLength++] = listener;
 	}
 	
 	public function removeVoid(listener:Void->Dynamic):Void
 	{
-		if (_voidListeners != null)
+		for (i in 0 ... _voidLength)
 		{
-			untyped __delete__(_voidListeners, listener);
+			if (_voidListeners[i] == listener)
+			{
+				_voidListeners[i] = _voidListeners[_voidLength - 1];
+				_voidListeners[_voidLength - 1] = null;
+				_voidLength--;
+				break;
+			}
 		}
 	}
 	
 	public var dispatch(default, null):TListener;
 	
-	function privateDispatch(__arguments__):Void
+	function privateDispatch(args:Array<Dynamic>):Void
 	{
-		var voidKeys:Array < Void->Dynamic > = null;
-		if (_voidListeners != null)
+		var voidListeners:Array < Void->Dynamic > = null;
+		if (_voidLength > 0)
 		{
-			voidKeys = untyped __keys__(_voidListeners);
-		}
-		if (_listeners != null)
-		{
-			var keys:Array<TListener> = untyped __keys__(_listeners);
-			for (listener in keys)
+			voidListeners = [];
+			for (i in 0 ... _voidLength)
 			{
-				Reflect.callMethod(null, listener, __arguments__);
+				voidListeners[i] = _voidListeners[i];
 			}
 		}
-		if (_voidListeners != null)
+		var listeners:Array<TListener> = null;
+		if (_length > 0)
 		{
-			for (listener in voidKeys)
+			listeners = [];
+			for (i in 0 ... _length)
+			{
+				listeners[i] = _listeners[i];
+			}
+		}
+		if (listeners != null)
+		{
+			for (listener in listeners)
+			{
+				Reflect.callMethod(null, listener, args);
+			}
+		}
+		if (voidListeners != null)
+		{
+			for (listener in voidListeners)
 			{
 				listener();
 			}

@@ -1,4 +1,5 @@
 package ;
+import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -9,6 +10,7 @@ import flash.Lib;
 import flash.utils.Timer;
 import temperate.components.ACButton;
 import temperate.containers.CHBox;
+import temperate.core.CGeomUtil;
 import temperate.minimal.MButton;
 import temperate.minimal.renderers.MTextTooltip;
 import temperate.tooltips.CTooltipOwner;
@@ -118,6 +120,36 @@ class TestTooltipsOld extends Sprite
 		addChild(_owner.container);
 		
 		drawMTooltipRenderers();
+		
+		{
+			var xys = {
+				var xys0 = [0., 0, 100, 0, 100, 100, 0, 100];
+				var xys1 = [50., 50, 150, 50, 150, 150, 50, 150];
+				CGeomUtil.getUnionOfConvexPoligons(xys0, xys1);
+			}
+			var shape = new Shape();
+			shape.x = 400;
+			shape.y = 150;
+			addChild(shape);
+			var g = shape.graphics;
+			g.lineStyle(2, 0xff0000);
+			var length = xys.length;
+			var i = length - 2;
+			var x0 = xys[i];
+			var y0 = xys[i + 1];
+			i = 0;
+			while (i < length)
+			{
+				var x1 = xys[i];
+				var y1 = xys[i + 1];
+				g.moveTo(x0, y0);
+				g.lineTo(x1, y1);
+				g.drawCircle(x1, y1, 2);
+				x0 = x1;
+				y0 = y1;
+				i += 2;
+			}
+		}
 	}
 	
 	var _forsedTargetTooltipButton:ACButton;

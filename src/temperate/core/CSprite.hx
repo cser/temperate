@@ -1,5 +1,7 @@
 package temperate.core;
+import flash.display.DisplayObject;
 import flash.display.Sprite;
+import flash.errors.ArgumentError;
 import flash.events.Event;
 
 class CSprite extends ACValidatable
@@ -23,6 +25,55 @@ class CSprite extends ACValidatable
 	*/
 	var _settedWidth:Float;
 	var _settedHeight:Float;
+	
+	#if nme
+	
+	override function nmeGetWidth():Float
+	{
+		__validateSize();
+		return _width;
+	}
+	override function nmeSetWidth(value:Float):Float
+	{	
+		if (_settedWidth != value)
+		{
+			_settedWidth = value;
+			_width = value;
+			_size_valid = false;
+			postponeSize();
+		}
+		return value;
+	}
+	
+	override function nmeGetHeight():Float
+	{
+		__validateSize();
+		return _height;
+	}
+	override function nmeSetHeight(value:Float):Float
+	{
+		if (_settedHeight != value)
+		{
+			_settedHeight = value;
+			_height = value;
+			_size_valid = false;
+			postponeSize();
+		}
+		return value;
+	}
+	
+	override public function removeChild(child:DisplayObject):DisplayObject
+	{
+		// flash do it, then nme mast to
+		if (child.parent != this)
+		{
+			throw new ArgumentError("Child mast exists in container");
+		}
+		super.removeChild(child);
+		return child;
+	}
+	
+	#else
 	
 	@:getter(width)
 	function get_width():Float
@@ -61,6 +112,8 @@ class CSprite extends ACValidatable
 			postponeSize();
 		}
 	}
+	
+	#end
 	
 	inline function postponeSize():Void
 	{

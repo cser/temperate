@@ -1,9 +1,11 @@
 package ;
+import bitmaps.BitmapDataInlineSuite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.Lib;
 import haxe.Log;
 import haxe.PosInfos;
+import minimal.TestMBdFactory;
 import minimal.TestMButton;
 import minimal.TestMCharts;
 import minimal.TestMCheckBox;
@@ -51,12 +53,15 @@ class TestMain
 		
 		var test = new TestWindows();
 		var test = new TestValidationBug();
+		var test = new TestGeomUtil();
+		var test = new BitmapDataInlineSuite();
+		var test = new TestMBdFactory();
 		var test = new TestWindowApplication();
 		Lib.current.addChild(test);
 		test.init();
 	}
 	
-	public static function trace( v : Dynamic, ?infos : PosInfos )
+	public static function trace(v:Dynamic, ?infos:PosInfos)
 	{
 		Lib.trace(
 			"src/" + ~/\./g.replace(infos.className, "/") + ".hx:" + infos.lineNumber + ": " + v);
