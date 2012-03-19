@@ -1,0 +1,2 @@
+- not showing text for android
+- failing on "new" click of TestWindowApplication for android
