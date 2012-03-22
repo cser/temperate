@@ -1,5 +1,4 @@
 package temperate.collections;
-
 import flash.geom.Point;
 import massive.munit.Assert;
 
@@ -7,6 +6,18 @@ class CHashTest
 {
 	public function new()
 	{
+	}
+	
+	@Test
+	public function nullKeyIsIgnoring():Void
+	{
+		var hash = new CHash<Point, String>();
+		hash.set(null, "a");
+		Assert.areEqual(null, hash.get(null));
+		
+		var hash = new CHash<String, String>();
+		hash.set(null, "a");
+		Assert.areEqual(null, hash.get(null));
 	}
 	
 	@Test
@@ -179,5 +190,80 @@ class CHashTest
 		hash.delete("point1");
 		Assert.areEqual(false, hash.exists("point1"));
 		Assert.areEqual("default", hash.get("point1"));
+	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Int keys
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	@Test
+	public function int_getAndSet():Void
+	{
+		var hash = new CHash<Int, String>();
+		hash.set(1, "a");
+		Assert.areEqual("a", hash.get(1));
+	}
+	
+	@Test
+	public function int_getAndSetSeveral():Void
+	{
+		var hash = new CHash<Int, String>();
+		
+		hash.set(1, "a");
+		Assert.areEqual("a", hash.get(1));
+		Assert.areEqual(null, hash.get(2));
+		
+		hash.set(2, "b");
+		Assert.areEqual("a", hash.get(1));
+		Assert.areEqual("b", hash.get(2));
+	}
+	
+	@Test
+	public function int_iterators():Void
+	{
+		var hash = new CHash<Int, String>();
+		hash.set(1, "a");
+		hash.set(2, "b");
+		hash.set(3, "c");
+		hash.set(4, "d");
+		ArrayAssert.equalToArrayIgnoringOrder([1, 2, 3, 4], hash.keys());
+		ArrayAssert.equalToArrayIgnoringOrder(["a", "b", "c", "d"], hash.values());
+	}
+	
+	@Test
+	public function int_defaultValue():Void
+	{
+		var hash = new CHash<Int, Int>(-1);
+		
+		Assert.areEqual( -1, hash.get(10));
+		
+		hash.set(10, 0);
+		Assert.areEqual(0, hash.get(10));
+		
+		hash.set(10, 1);
+		Assert.areEqual(1, hash.get(10));
+		
+		hash.delete(10);
+		Assert.areEqual(-1, hash.get(10));
+	}
+	
+	@Test
+	public function int_exists():Void
+	{
+		var hash = new CHash < Int, String > ("default");
+		
+		hash.set(0, "value");
+		Assert.areEqual(true, hash.exists(0));
+		Assert.areEqual("value", hash.get(0));
+		
+		hash.set(1, null);
+		Assert.areEqual(true, hash.exists(1));
+		Assert.areEqual(null, hash.get(1));
+		
+		hash.delete(1);
+		Assert.areEqual(false, hash.exists(1));
+		Assert.areEqual("default", hash.get(1));
 	}
 }

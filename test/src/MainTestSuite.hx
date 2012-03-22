@@ -10,6 +10,7 @@ class MainTestSuite extends TestSuite
 		add(ArrayAssertTest);
 		add(FakeTimerFactoryTest);
 		add(temperate.collections.CHashTest);
+		add(temperate.collections.CObjectHashStringTest);
 		add(temperate.collections.CObjectHashTest);
 		add(temperate.collections.CObjectSetTest);
 		add(temperate.collections.CPriorityListTest);
