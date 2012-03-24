@@ -266,4 +266,80 @@ class CHashTest
 		Assert.areEqual(false, hash.exists(1));
 		Assert.areEqual("default", hash.get(1));
 	}
+	
+	//----------------------------------------------------------------------------------------------
+	//
+	//  Float
+	//
+	//----------------------------------------------------------------------------------------------
+	
+	@Test
+	public function float_getAndSet():Void
+	{
+		var hash = new CHash<Float, String>();
+		hash.set(1.1, "a");
+		Assert.areEqual("a", hash.get(1.1));
+		Assert.areEqual(null, hash.get(1));
+	}
+	
+	@Test
+	public function float_getAndSetSeveral():Void
+	{
+		var hash = new CHash<Float, String>();
+		
+		hash.set(1.1, "a");
+		Assert.areEqual("a", hash.get(1.1));
+		Assert.areEqual(null, hash.get(2));
+		
+		hash.set(1.9, "b");
+		Assert.areEqual("a", hash.get(1.1));
+		Assert.areEqual("b", hash.get(1.9));
+	}
+	
+	@Test
+	public function float_iterators():Void
+	{
+		var hash = new CHash<Float, String>();
+		hash.set(1.1, "a");
+		hash.set(2.5, "b");
+		hash.set(3.6, "c");
+		hash.set(4.7, "d");
+		ArrayAssert.equalToArrayIgnoringOrder([1.1, 2.5, 3.6, 4.7], hash.keys());
+		ArrayAssert.equalToArrayIgnoringOrder(["a", "b", "c", "d"], hash.values());
+	}
+	
+	@Test
+	public function float_defaultValue():Void
+	{
+		var hash = new CHash<Float, Int>(-1);
+		
+		Assert.areEqual( -1, hash.get(10.1));
+		
+		hash.set(10.1, 0);
+		Assert.areEqual(0, hash.get(10.1));
+		
+		hash.set(10.1, 1);
+		Assert.areEqual(1, hash.get(10.1));
+		
+		hash.delete(10.1);
+		Assert.areEqual(-1, hash.get(10.1));
+	}
+	
+	@Test
+	public function float_exists():Void
+	{
+		var hash = new CHash < Float, String > ("default");
+		
+		hash.set(0, "value");
+		Assert.areEqual(true, hash.exists(0));
+		Assert.areEqual("value", hash.get(0));
+		
+		hash.set(.1, null);
+		Assert.areEqual(true, hash.exists(.1));
+		Assert.areEqual(null, hash.get(.1));
+		
+		hash.delete(.1);
+		Assert.areEqual(false, hash.exists(.1));
+		Assert.areEqual("default", hash.get(.1));
+	}
 }

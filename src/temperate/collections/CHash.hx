@@ -6,7 +6,10 @@ import flash.utils.Dictionary;
 
 /**
  * Allows String and Int keys
- * Works slowly than CObjectHash becouse perform type checking
+ * Works more slowly than CObjectHash becouse perform type checking
+ * and convertion Int/Float keys to String
+ * 
+ * Writen for universalization (don't recommended to use, where it's not needed)
  */
 class CHash< K, T >
 {
@@ -25,12 +28,11 @@ class CHash< K, T >
 	private var _values:IntHash<T>;
 	private var _keys:IntHash<K>;
 	private var _hash:Hash<T>;
-	private var _intHash:IntHash<T>;
 	
 	private static var MODE_UNKNOWN:Int = 0;
 	private static var MODE_OBJECT:Int = 1;
 	private static var MODE_STRING:Int = 2;
-	private static var MODE_INT:Int = 3;
+	private static var MODE_FLOAT:Int = 3;
 	private var _mode:Int;
 	#else
 	private var _dictionary:Dictionary;
@@ -46,12 +48,9 @@ class CHash< K, T >
 			case MODE_OBJECT:
 				var id = getId(k);
 				return _values.exists(id) ? _values.get(id) : _defaultValue;
-			case MODE_STRING:
-				var key:String = cast k;
-				return _hash.exists(key) ? _hash.get(key) : _defaultValue;
-			/*case MODE_INT:
-				var key:Int = cast k;
-				return _intHash.exists(key) ? _intHash.get(key) : _defaultValue;*/
+			case MODE_STRING, MODE_FLOAT:
+				var stringK = Std.string(k);
+				return _hash.exists(stringK) ? _hash.get(stringK) : _defaultValue;
 			default:
 				return _defaultValue;
 		}
@@ -79,12 +78,8 @@ class CHash< K, T >
 		{
 			case MODE_OBJECT:
 				return _values.exists(getId(k));
-			case MODE_STRING:
-				var key:String = cast k;
-				return _hash.exists(key);
-			/*case MODE_INT:
-				var key:Int = cast k;
-				return _intHash.exists(key);*/
+			case MODE_STRING, MODE_FLOAT:
+				return _hash.exists(Std.string(k));
 			default:
 				return false;
 		}
@@ -102,10 +97,8 @@ class CHash< K, T >
 				var id = getId(k);
 				_values.remove(id);
 				_keys.remove(id);
-			case MODE_STRING:
-				_hash.remove(cast k);
-			/*case MODE_INT:
-				_intHash.remove(cast k);*/
+			case MODE_STRING, MODE_FLOAT:
+				_hash.remove(Std.string(k));
 			default:
 		}
 		#else
@@ -141,11 +134,11 @@ class CHash< K, T >
 				_mode = MODE_STRING;
 				_hash = new Hash();
 			}
-			/*else if (Std.is(k, Int))
+			else if (Std.is(k, Float))
 			{
-				_mode = MODE_INT;
-				_intHash = new IntHash();
-			}*/
+				_mode = MODE_FLOAT;
+				_hash = new Hash();
+			}
 			else
 			{
 				_mode = MODE_OBJECT;
@@ -161,7 +154,7 @@ class CHash< K, T >
 		}
 		else
 		{
-			_hash.set(cast k, v);
+			_hash.set(Std.string(k), v);
 		}
 	}
 	
@@ -182,11 +175,12 @@ class CHash< K, T >
 				{
 					array[i++] = cast k;
 				}
-			case MODE_INT:
+			case MODE_FLOAT:
 				var i = 0;
-				for (k in _intHash.keys())
+				for (k in _hash.keys())
 				{
-					array[i++] = cast k;
+					var floatK:Float = Std.parseFloat(k);
+					array[i++] = cast floatK;
 				}
 			default:
 		}
@@ -204,15 +198,9 @@ class CHash< K, T >
 				{
 					array[i++] = v;
 				}
-			case MODE_STRING:
+			case MODE_STRING, MODE_FLOAT:
 				var i = 0;
 				for (v in _hash)
-				{
-					array[i++] = v;
-				}
-			case MODE_INT:
-				var i = 0;
-				for (v in _intHash)
 				{
 					array[i++] = v;
 				}
