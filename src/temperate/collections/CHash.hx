@@ -10,6 +10,7 @@ import flash.utils.Dictionary;
  * and convertion Int/Float keys to String
  * 
  * Writen for universalization (don't recommended to use, where it's not needed)
+ * Not allowed functions and bools
  */
 class CHash< K, T >
 {
