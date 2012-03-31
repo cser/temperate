@@ -8,6 +8,7 @@ class CppMainTestSuite extends TestSuite
 		super();
 		add(temperate.core.CMathTest);
 		add(temperate.core.ArrayUtilTest);
+		add(temperate.collections.CHashTest);
 		add(temperate.collections.CObjectHashTest);
 		add(temperate.collections.CObjectSetTest);
 		add(temperate.collections.CPriorityListTest);
