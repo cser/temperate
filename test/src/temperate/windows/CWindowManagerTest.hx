@@ -334,14 +334,14 @@ class CWindowManagerTest
 		
 		_manager.add(popUp0, true);
 		1.areEqual(_manager.numWindows);
-		popUp0.areEqual(_manager.getWindowAt(0));
+		Assert.isTrue(popUp0 == _manager.getWindowAt(0));
 		assertWindowIteration([popUp0]);
 		
 		_manager.add(popUp1, true);
 		_manager.add(popUp2, true);
 		3.areEqual(_manager.numWindows);
-		popUp1.areEqual(_manager.getWindowAt(1));
-		popUp2.areEqual(_manager.getWindowAt(2));
+		Assert.isTrue(popUp1 == _manager.getWindowAt(1));
+		Assert.isTrue(popUp2 == _manager.getWindowAt(2));
 		assertWindowIteration([popUp0, popUp1, popUp2]);
 	}
 	
@@ -371,18 +371,18 @@ class CWindowManagerTest
 		
 		_log = [];
 		_manager.add(popUp0, false);
-		Assert.areEqual(popUp0, _manager.topWindow);
+		Assert.isTrue(popUp0 == _manager.topWindow);
 		ArrayAssert.equalToArray([Event.SELECT], _log);
 		
 		_log = [];
 		_manager.remove(popUp0);
-		Assert.areEqual(null, _manager.topWindow);
+		Assert.isNull(_manager.topWindow);
 		ArrayAssert.equalToArray([Event.SELECT], _log);
 		
 		_log = [];
 		_manager.add(popUp0, false);
 		_manager.add(popUp1, false);
-		Assert.areEqual(popUp1, _manager.topWindow);
+		Assert.isTrue(popUp1 == _manager.topWindow);
 	}
 	
 	function onManagerSelect(event:Event)

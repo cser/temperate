@@ -1,8 +1,6 @@
 package temperate.core;
 import flash.display.DisplayObject;
-import flash.display.Sprite;
 import flash.errors.ArgumentError;
-import flash.events.Event;
 
 class CSprite extends ACValidatable
 {
@@ -60,17 +58,6 @@ class CSprite extends ACValidatable
 			postponeSize();
 		}
 		return value;
-	}
-	
-	override public function removeChild(child:DisplayObject):DisplayObject
-	{
-		// flash do it, then nme mast to
-		if (child.parent != this)
-		{
-			throw new ArgumentError("Child mast exists in container");
-		}
-		super.removeChild(child);
-		return child;
 	}
 	
 	#else
@@ -136,14 +123,14 @@ class CSprite extends ACValidatable
 	
 	public var isCompactWidth(get_isCompactWidth, null):Bool;
 	var _isCompactWidth:Bool;
-	function get_isCompactWidth()
+	function get_isCompactWidth():Bool
 	{
 		return _isCompactWidth;
 	}
 	
 	public var isCompactHeight(get_isCompactHeight, null):Bool;
 	var _isCompactHeight:Bool;
-	function get_isCompactHeight()
+	function get_isCompactHeight():Bool
 	{
 		return _isCompactHeight;
 	}
@@ -158,11 +145,11 @@ class CSprite extends ACValidatable
 	
 	public var isEnabled(get_isEnabled, set_isEnabled):Bool;
 	var _isEnabled:Bool;
-	function get_isEnabled()
+	function get_isEnabled():Bool
 	{
 		return _isEnabled;
 	}
-	function set_isEnabled(value)
+	function set_isEnabled(value:Bool):Bool
 	{
 		_isEnabled = value;
 		return _isEnabled;

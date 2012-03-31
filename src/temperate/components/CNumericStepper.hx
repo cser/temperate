@@ -78,7 +78,7 @@ class CNumericStepper extends CSprite
 	
 	var _view_formatValid:Bool;
 	
-	function addChaldAt0(child:DisplayObject)
+	function addChaldAt0(child:DisplayObject):Void
 	{
 		addChildAt(child, 0);
 	}
@@ -104,7 +104,7 @@ class CNumericStepper extends CSprite
 	
 	public var timerChanger(get_timerChanger, set_timerChanger):ICTimerChanger;
 	var _timerChanger:ICTimerChanger;
-	function get_timerChanger()
+	function get_timerChanger():ICTimerChanger
 	{
 		if (_timerChanger == null)
 		{
@@ -112,7 +112,7 @@ class CNumericStepper extends CSprite
 		}
 		return _timerChanger;
 	}
-	function set_timerChanger(value:ICTimerChanger)
+	function set_timerChanger(value:ICTimerChanger):ICTimerChanger
 	{
 		if (_timerChanger != value)
 		{
@@ -138,7 +138,7 @@ class CNumericStepper extends CSprite
 	
 	public function setValueTranslators(
 		translator:Int->String, parser:String->Int, isCorrect:String->Bool
-	)
+	):Void
 	{
 		valueTranslator = translator;
 		valueParser = parser;
@@ -153,11 +153,11 @@ class CNumericStepper extends CSprite
 	
 	public var step(get_step, set_step):Int;
 	var _step:Int;
-	function get_step()
+	function get_step():Int
 	{
 		return _step;
 	}
-	function set_step(value)
+	function set_step(value:Int):Int
 	{
 		_step = value;
 		return _step;
@@ -165,7 +165,7 @@ class CNumericStepper extends CSprite
 		
 	public var value(get_value, set_value):Int;
 	var _value:Int;
-	function set_value(value)
+	function set_value(value:Int):Int
 	{
 		var newValue = correctedValue(value);
 		if (_value != newValue)
@@ -181,18 +181,18 @@ class CNumericStepper extends CSprite
 		}
 		return _value;
 	}
-	function get_value()
+	function get_value():Int
 	{
 		return _value;
 	}
 	
 	public var minValue(get_minValue, set_minValue):Int;
 	var _minValue:Int;
-	function get_minValue()
+	function get_minValue():Int
 	{
 		return _minValue;
 	}
-	function set_minValue(value)
+	function set_minValue(value:Int):Int
 	{
 		if (value != _minValue)
 		{
@@ -209,11 +209,11 @@ class CNumericStepper extends CSprite
 	
 	public var maxValue(get_maxValue, set_maxValue):Int;
 	var _maxValue:Int;
-	function get_maxValue()
+	function get_maxValue():Int
 	{
 		return _maxValue;
 	}
-	public function set_maxValue(value)
+	public function set_maxValue(value:Int):Int
 	{
 		if (value != _maxValue)
 		{
@@ -228,7 +228,7 @@ class CNumericStepper extends CSprite
 		return _maxValue;
 	}
 	
-	function updateValueConstraints()
+	function updateValueConstraints():Void
 	{
 		var newValue = correctedValue(_value);
 		if (_value != newValue)
@@ -244,7 +244,7 @@ class CNumericStepper extends CSprite
 		updateControlsEnabled();
 	}
 	
-	override function set_isEnabled(value)
+	override function set_isEnabled(value:Bool):Bool
 	{
 		if (_isEnabled != value)
 		{
@@ -259,7 +259,7 @@ class CNumericStepper extends CSprite
 		return _isEnabled;
 	}
 	
-	function updateEnabled()
+	function updateEnabled():Void
 	{
 		if (_isEnabled)
 		{
@@ -281,7 +281,7 @@ class CNumericStepper extends CSprite
 	
 	public var editable(get_editable, set_editable):Bool;
 	var _editable:Bool;
-	function set_editable(value)
+	function set_editable(value:Bool):Bool
 	{
 		if (value != _editable)
 		{
@@ -291,17 +291,17 @@ class CNumericStepper extends CSprite
 		}
 		return _editable;
 	}
-	function get_editable()
+	function get_editable():Bool
 	{
 		return _editable;
 	}
 	
 	public var selectable(get_selectable, set_selectable):Bool;
-	function get_selectable()
+	function get_selectable():Bool
 	{
 		return _tf.selectable;
 	}
-	function set_selectable(value)
+	function set_selectable(value:Bool):Bool
 	{
 		_tf.selectable = value;
 		return value;
@@ -309,11 +309,11 @@ class CNumericStepper extends CSprite
 	
 	public var format(get_format, set_format):CTextFormat;
 	var _format:CTextFormat;
-	function get_format()
+	function get_format():CTextFormat
 	{
 		return _format;
 	}
-	function set_format(value)
+	function set_format(value:CTextFormat):CTextFormat
 	{
 		if (value != _format)
 		{
@@ -329,11 +329,11 @@ class CNumericStepper extends CSprite
 	
 	public var formatError(get_formatError, set_formatError):CTextFormat;
 	var _formatError:CTextFormat;
-	function get_formatError()
+	function get_formatError():CTextFormat
 	{
 		return _formatError;
 	}
-	function set_formatError(value)
+	function set_formatError(value:CTextFormat):CTextFormat
 	{
 		if (value != _formatError)
 		{
@@ -347,11 +347,11 @@ class CNumericStepper extends CSprite
 	
 	public var formatDisabled(get_formatDisabled, set_formatDisabled):CTextFormat;
 	var _formatDisabled:CTextFormat;
-	function get_formatDisabled()
+	function get_formatDisabled():CTextFormat
 	{
 		return _formatDisabled;
 	}
-	function set_formatDisabled(value)
+	function set_formatDisabled(value:CTextFormat):CTextFormat
 	{
 		if (value != _formatDisabled)
 		{
@@ -366,13 +366,13 @@ class CNumericStepper extends CSprite
 	var _useHandCursor:Bool;
 	
 	@:getter(useHandCursor)
-	function get_useHandCursor()
+	function get_useHandCursor():Bool
 	{
 		return _useHandCursor;
 	}
 	
 	@:setter(useHandCursor)
-	function set_useHandCursor(value)
+	function set_useHandCursor(value:Bool):Void
 	{
 		if (_useHandCursor != value)
 		{
@@ -380,7 +380,7 @@ class CNumericStepper extends CSprite
 		}
 	}
 	
-	function setUseHandCursor(value:Bool)
+	function setUseHandCursor(value:Bool):Void
 	{
 		_useHandCursor = value;
 		_up.setUseHandCursor(_useHandCursor);
@@ -389,11 +389,11 @@ class CNumericStepper extends CSprite
 	
 	public var mouseWheelDimRatio(get_mouseWheelDimRatio, set_mouseWheelDimRatio):Int;
 	var _mouseWheelDimRatio:Int;
-	function get_mouseWheelDimRatio()
+	function get_mouseWheelDimRatio():Int
 	{
 		return _mouseWheelDimRatio;
 	}
-	function set_mouseWheelDimRatio(value:Int)
+	function set_mouseWheelDimRatio(value:Int):Int
 	{
 		_mouseWheelDimRatio = value;
 		return _mouseWheelDimRatio;
@@ -405,14 +405,14 @@ class CNumericStepper extends CSprite
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	function updateTextType()
+	function updateTextType():Void
 	{
 		_tf.type = _isEnabled && _editable && _maxValue > _minValue ?
 			_tf.type = TextFieldType.INPUT :
 			_tf.type = TextFieldType.DYNAMIC;
 	}
 	
-	function updateControlsEnabled()
+	function updateControlsEnabled():Void
 	{
 		_up.isEnabled = _value < _maxValue && _isEnabled;
 		_down.isEnabled = _value > _minValue && _isEnabled;
@@ -426,12 +426,12 @@ class CNumericStepper extends CSprite
 		}
 	}
 	
-	function correctedValue(value:Int)
+	function correctedValue(value:Int):Int
 	{
 		return CMath.intMax(CMath.intMin(value, _maxValue), _minValue);
 	}
 	
-	function dispatchChange()
+	function dispatchChange():Void
 	{
 		dispatchEvent(new Event(Event.CHANGE));
 	}
@@ -448,7 +448,7 @@ class CNumericStepper extends CSprite
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	function onTfChange(event:Event)
+	function onTfChange(event:Event):Void
 	{
 		event.stopImmediatePropagation();
 		event.stopPropagation();
@@ -464,7 +464,7 @@ class CNumericStepper extends CSprite
 		postponeView();
 	}
 	
-	function setValueWithDispatching(newValue:Int)
+	function setValueWithDispatching(newValue:Int):Void
 	{
 		newValue = correctedValue(newValue);
 		if (_value != newValue)
@@ -479,13 +479,13 @@ class CNumericStepper extends CSprite
 		}
 	}
 	
-	function onTfFocusIn(event:FocusEvent)
+	function onTfFocusIn(event:FocusEvent):Void
 	{
 		_tf.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		_tf.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 	}
 	
-	function onTfFocusOut(event:FocusEvent)
+	function onTfFocusOut(event:FocusEvent):Void
 	{
 		_tf.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		_tf.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
@@ -493,7 +493,7 @@ class CNumericStepper extends CSprite
 		correctTextByValue();
 	}
 	
-	function correctTextByValue()
+	function correctTextByValue():Void
 	{
 		var text = _tf.text;
 		if (valueIsCorrect(text))
@@ -510,12 +510,12 @@ class CNumericStepper extends CSprite
 		postponeView();
 	}
 	
-	function onMouseWheel(event:MouseEvent)
+	function onMouseWheel(event:MouseEvent):Void
 	{
 		value += _step * CMouseWheelUtil.getDimDelta(event.delta, _mouseWheelDimRatio);
 	}
 	
-	function onKeyDown(event:KeyboardEvent)
+	function onKeyDown(event:KeyboardEvent):Void
 	{
 		switch (event.keyCode)
 		{
@@ -528,7 +528,7 @@ class CNumericStepper extends CSprite
 		}
 	}
 	
-	function onKeyUp(event:KeyboardEvent)
+	function onKeyUp(event:KeyboardEvent):Void
 	{
 		switch (event.keyCode)
 		{
@@ -537,39 +537,39 @@ class CNumericStepper extends CSprite
 		}
 	}
 	
-	function onUpMouseDown(event:MouseEvent)
+	function onUpMouseDown(event:MouseEvent):Void
 	{
 		stage.focus = _tf;
 		doUpMouseDown();
 	}
 	
-	function onDownMouseDown(event:MouseEvent)
+	function onDownMouseDown(event:MouseEvent):Void
 	{
 		stage.focus = _tf;
 		doDownMouseDown();
 	}
 	
-	function doUpMouseDown()
+	function doUpMouseDown():Void
 	{
 		timerChanger.increaseDown(false);
 	}
 	
-	function doDownMouseDown()
+	function doDownMouseDown():Void
 	{
 		timerChanger.decreaseDown(false);
 	}
 	
-	function onIncrease()
+	function onIncrease():Void
 	{
 		value += _step;
 	}
 	
-	function onDecrease()
+	function onDecrease():Void
 	{
 		value -= _step;
 	}
 	
-	function buttonStopTimerHandler(event:MouseEvent = null)
+	function buttonStopTimerHandler(event:MouseEvent = null):Void
 	{
 		timerChanger.up();
 	}
@@ -582,7 +582,7 @@ class CNumericStepper extends CSprite
 	
 	var _measuringTf:TextField;
 	
-	override function doValidateSize()
+	override function doValidateSize():Void
 	{
 		if (!_size_tfMinSizeValid)
 		{
@@ -608,7 +608,7 @@ class CNumericStepper extends CSprite
 		}
 	}
 	
-	override function doValidateView()
+	override function doValidateView():Void
 	{
 		if (!_view_formatValid)
 		{
@@ -625,9 +625,9 @@ class CNumericStepper extends CSprite
 		}
 	}
 	
-	static var TEXT_INDENT = 2;
+	static var TEXT_INDENT:Int = 2;
 	
-	function updateSize()
+	function updateSize():Void
 	{
 		var minWidth = _tfMinWidth + Math.max(_up.view.width, _down.view.width) + TEXT_INDENT * 2;
 		_height = _tfMinHeight + TEXT_INDENT * 2;
@@ -641,7 +641,7 @@ class CNumericStepper extends CSprite
 		}
 	}
 	
-	function updateArrange()
+	function updateArrange():Void
 	{
 		var centerY:Int = Std.int(_height * .5);
 		
@@ -661,7 +661,7 @@ class CNumericStepper extends CSprite
 	
 	var _currentFormat:CTextFormat;
 	
-	function updateFormat()
+	function updateFormat():Void
 	{
 		var newFormat = null;
 		if (_isEnabled)
@@ -699,7 +699,8 @@ class CNumericStepper extends CSprite
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	public function setValues(minValue:Int, maxValue:Int = CMath.INT_MAX_VALUE, value:Int = 0)
+	public function setValues(
+		minValue:Int, maxValue:Int = CMath.INT_MAX_VALUE, value:Int = 0):CNumericStepper
 	{
 		this.minValue = minValue;
 		this.maxValue = maxValue;
@@ -707,13 +708,13 @@ class CNumericStepper extends CSprite
 		return this;
 	}
 	
-	public function addChangeHandler(handler:Event->Dynamic)
+	public function addChangeHandler(handler:Event->Dynamic):CNumericStepper
 	{
 		addEventListener(Event.CHANGE, handler);
 		return this;
 	}
 	
-	public function addTo(parent:DisplayObjectContainer, x:Float = 0, y:Float = 0)
+	public function addTo(parent:DisplayObjectContainer, x:Float = 0, y:Float = 0):CNumericStepper
 	{
 		this.x = x;
 		this.y = y;
