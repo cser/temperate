@@ -11,19 +11,4 @@ class CMouseWheelUtil
 		var correctDimRatio = dimRatio > 0 ? dimRatio : 1;
 		return sign * CMath.intMax(1, Math.round(CMath.intAbs(delta) / correctDimRatio));
 	}
-	
-	/**
-	 * nme so nme
-	 * @param	delta
-	 * @param	dimRatio
-	 * @return
-	 */
-	public static function getFixedDimDelta(delta:Int, dimRatio:Int):Int
-	{
-		#if nme
-		return getDimDelta( -delta, dimRatio);
-		#else
-		return getDimDelta(delta, dimRatio);
-		#end
-	}
 }

@@ -116,7 +116,7 @@ class CScrollPane extends ACScrollPane, implements ICInvalidateClient
 	{
 		setVScrollValue(
 			_vScrollValue -
-			_vScrollStep * CMouseWheelUtil.getFixedDimDelta(event.delta, _mouseWheelDimRatio));
+			_vScrollStep * CMouseWheelUtil.getDimDelta(event.delta, _mouseWheelDimRatio));
 	}
 	
 	var _scrollRect:Rectangle;

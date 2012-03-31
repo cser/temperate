@@ -512,7 +512,7 @@ class CNumericStepper extends CSprite
 	
 	function onMouseWheel(event:MouseEvent)
 	{
-		value += _step * CMouseWheelUtil.getFixedDimDelta(event.delta, _mouseWheelDimRatio);
+		value += _step * CMouseWheelUtil.getDimDelta(event.delta, _mouseWheelDimRatio);
 	}
 	
 	function onKeyDown(event:KeyboardEvent)

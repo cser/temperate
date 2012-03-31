@@ -14,7 +14,7 @@ class CppMainTestSuite extends TestSuite
 		add(temperate.collections.CPriorityListTest);
 		add(temperate.collections.CValueStackTest);
 		add(temperate.containers.CVContainerTest);
-		//add(temperate.containers.CVContainerChangeLayoutByChildManagmentTest);// nme override bug
+		add(temperate.containers.CVContainerChangeLayoutByChildManagmentTest);
 		add(temperate.containers.CHContainerChildManagmentTest);
 		add(temperate.extra.CSignalTest);
 		add(ArrayAssertTest);

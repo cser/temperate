@@ -1,3 +1,6 @@
+v.0.8.?
+- update for using with nme 3.3
+- add CHash (more universal that object hash, but not allow function and bool keys)
 v.0.8
 - Show text for custom plots of DebugMonitor
 - Add colorTransform to text format and buttons parameters
