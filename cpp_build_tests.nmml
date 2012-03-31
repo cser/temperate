@@ -4,7 +4,7 @@
 		package="org.example.myproject" version="1.0.0" 
 		company="NME" />
  
-	<window width="640" height="480" fps="30" orientation="portrait" resizable="true" />
+	<window width="800" height="480" fps="30" orientation="portrait" resizable="true" />
  
 	<set name="BUILD_DIR" value="nmml-export-tests" />
  

@@ -36,7 +36,7 @@ class CppMainTestSuite extends TestSuite
 		add(temperate.tooltips.docks.CVTooltipDockTest);
 		add(temperate.tooltips.managers.CTooltipManagerTest);
 		add(temperate.windows.CWindowManagerTest);
-		//add(temperate.components.CNumericStepperTest);
+		add(temperate.components.CNumericStepperTest);
 		//add(temperate.components.CSliderTest);
 		//add(temperate.components.CScrollBarScrollParamsTest);// Выключается
 		//add(temperate.layouts.CScrollLayoutTest);

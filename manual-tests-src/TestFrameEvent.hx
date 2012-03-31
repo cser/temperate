@@ -22,6 +22,5 @@ class TestFrameEvent extends Sprite
 	function onEvent(event:Event)
 	{
 		stage.invalidate();
-		trace(event.type);
 	}
 }
