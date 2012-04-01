@@ -1,5 +1,5 @@
 v.0.8.1
-- update for using with nme 3.3
+- remove MouseWheel fix becouse it fsuperfluous for nme 3.3
 - add CHash (more universal that object hash, but not allow function and bool keys)
 - changed Tahoma font to Arial and stop up nme format setting bug for buttons
 v.0.8

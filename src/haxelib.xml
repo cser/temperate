@@ -4,5 +4,5 @@
 	<tag v="gui"/>
 	<tag v="nme"/>
 	<description>Simple customizable GUI for flashplayer9+. Includes cursors and tooltips separated systems</description>
-	<version name="0.8">Works on nme/cpp/windows now</version>
+	<version name="0.8.1">Update to work with nme 3.3</version>
 </project>
