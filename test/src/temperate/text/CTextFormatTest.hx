@@ -16,9 +16,9 @@ class CTextFormatTest
 		{
 			Assert.areEqual("simple text", CTextFormat.getHtml(format, "simple text"));
 			
-			format.font = "Tahoma";
+			format.font = "Arial";
 			Assert.areEqual(
-				"<font face=\"Tahoma\">text</font>", CTextFormat.getHtml(format, "text"));
+				"<font face=\"Arial\">text</font>", CTextFormat.getHtml(format, "text"));
 				
 			format.font = null;
 			format.color = 0xff0000;

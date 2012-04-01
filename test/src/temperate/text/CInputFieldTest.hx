@@ -29,7 +29,7 @@ class CInputFieldTest
 		}
 		
 		{
-			var format = new CTextFormat("Tahoma", 30);
+			var format = new CTextFormat("Arial", 30);
 			var measuredTf = format.newAutoSized(false, "text");
 			_input.format = format;
 			Assert.areEqual(

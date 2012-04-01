@@ -589,7 +589,7 @@ class CNumericStepper extends CSprite
 			_size_tfMinSizeValid = true;
 			
 			CTextFormat.setNullFormat(_measuringTf);
-			_format.applyTo(_measuringTf);
+			_format.applyTo(_measuringTf, true);
 			
 			_measuringTf.text = valueTranslator(_minValue);
 			_tfMinWidth = Std.int(_measuringTf.width);
@@ -689,7 +689,7 @@ class CNumericStepper extends CSprite
 			_currentFormat = newFormat;
 			
 			CTextFormat.setNullFormat(_tf);
-			newFormat.applyTo(_tf);
+			newFormat.applyTo(_tf, true);
 		}
 	}
 	

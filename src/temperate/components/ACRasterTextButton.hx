@@ -94,7 +94,7 @@ class ACRasterTextButton extends ACButton
 			{
 				format = CDefaultFormatFactory.getDefaultFormat();
 			}
-			format.applyTo(_measuringTf);
+			format.applyTo(_measuringTf, true);
 			
 			_tfWidth = Std.int(_measuringTf.width);
 			_tfHeight = Std.int(_measuringTf.height);

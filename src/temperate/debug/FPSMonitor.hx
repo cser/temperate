@@ -111,7 +111,7 @@ class FPSMonitor extends Sprite
 		_tfFps = new TextField();
 		_tfFps.width = _width;
 		_tfFps.height = TEXT_HEIGHT;
-		_tfFps.defaultTextFormat = new TextFormat("Tahoma", TEXT_SIZE, _fpsColor);
+		_tfFps.defaultTextFormat = new TextFormat("Arial", TEXT_SIZE, _fpsColor);
 		_tfFps.mouseEnabled = false;
 		_tfFps.selectable = false;
 		addChild(_tfFps);
@@ -119,7 +119,7 @@ class FPSMonitor extends Sprite
 		_tfMemory = new TextField();
 		_tfMemory.width = _width;
 		_tfMemory.height = TEXT_HEIGHT;
-		_tfMemory.defaultTextFormat = new TextFormat("Tahoma", TEXT_SIZE, _memoryColor);
+		_tfMemory.defaultTextFormat = new TextFormat("Arial", TEXT_SIZE, _memoryColor);
 		_tfMemory.y = _height - TEXT_HEIGHT;
 		_tfMemory.mouseEnabled = false;
 		_tfMemory.selectable = false;

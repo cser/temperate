@@ -4,7 +4,7 @@ import temperate.text.CTextFormat;
 
 class MFormatFactory 
 {
-	static var DEFAULT_FONT:String = "Tahoma";
+	static var DEFAULT_FONT:String = "Arial";
 	
 	static var BUTTON_BASE:CTextFormat = new CTextFormat(DEFAULT_FONT, 12);
 	

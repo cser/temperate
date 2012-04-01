@@ -157,5 +157,12 @@ Bugs of cpp:
 For copypaste:
 nme 3.2.0, target: windows, OS: Windows XP
 
+----------------------------------------------------------------------------------------------------
+New
+----------------------------------------------------------------------------------------------------
+
+- TextField/TextFormat bug: Font and font style is not uppliying until text is not changed
+(or equals text value is not setted)
+
 TODO
 Проверить диспетчер вообще - есть подозрение, что он неправильные булевы значения возвращает

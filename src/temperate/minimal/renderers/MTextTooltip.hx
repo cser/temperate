@@ -92,7 +92,7 @@ class MTextTooltip extends ACTooltip<String>
 	{
 		if (_defaultFormat == null)
 		{
-			_defaultFormat = new CTextFormat("Tahoma", 12);
+			_defaultFormat = new CTextFormat("Arial", 12);
 		}
 		return _defaultFormat;
 	}

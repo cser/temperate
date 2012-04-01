@@ -369,8 +369,8 @@ class ObjectMother
 {
 	public function new()
 	{
-		format = new CTextFormat("Tahoma", 16);
-		bigFormat = new CTextFormat("Tahoma", 20);
+		format = new CTextFormat("Arial", 16);
+		bigFormat = new CTextFormat("Arial", 20);
 	}
 	
 	public var format(default, null):CTextFormat;

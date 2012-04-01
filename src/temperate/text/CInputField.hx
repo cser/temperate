@@ -170,7 +170,7 @@ class CInputField extends CSprite
 			_currentFormat = newFormat;
 			
 			CTextFormat.setNullFormat(_tf);
-			newFormat.applyTo(_tf);
+			newFormat.applyTo(_tf, true);
 		}
 	}
 	

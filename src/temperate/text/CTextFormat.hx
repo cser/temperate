@@ -25,44 +25,44 @@ class CTextFormat extends TextFormat
 	
 	public var filters:Array<Dynamic>;
 	
-	public function setFont(font:String, embedFonts:Bool = false)
+	public function setFont(font:String, embedFonts:Bool = false):CTextFormat
 	{
 		this.font = font;
 		this.embedFonts = embedFonts;
 		return this;
 	}
 	
-	public function setSize(size:Int)
+	public function setSize(size:Int):CTextFormat
 	{
 		this.size = size;
 		return this;
 	}
 	
-	public function setColor(color:UInt)
+	public function setColor(color:UInt):CTextFormat
 	{
 		this.color = color;
 		return this;
 	}
 	
-	public function setBold(bold:Bool)
+	public function setBold(bold:Bool):CTextFormat
 	{
 		this.bold = bold;
 		return this;
 	}
 	
-	public function setItalic(italic:Bool)
+	public function setItalic(italic:Bool):CTextFormat
 	{
 		this.italic = italic;
 		return this;
 	}
 	
-	public function setUnderline(underline:Bool)
+	public function setUnderline(underline:Bool):CTextFormat
 	{
 		this.underline = underline;
 		return this;
 	}
 	
-	public function setFilters(filters:Array<Dynamic>)
+	public function setFilters(filters:Array<Dynamic>):CTextFormat
 	{
 		this.filters = filters;
 		return this;
@@ -70,7 +70,7 @@ class CTextFormat extends TextFormat
 	
 	public var alpha:Float;
 	
-	public function setAlpha(alpha:Float)
+	public function setAlpha(alpha:Float):CTextFormat
 	{
 		this.alpha = alpha;
 		return this;
@@ -78,13 +78,13 @@ class CTextFormat extends TextFormat
 	
 	public var colorTransform:ColorTransform;
 	
-	public function setColorTransform(colorTransform:ColorTransform)
+	public function setColorTransform(colorTransform:ColorTransform):CTextFormat
 	{
 		this.colorTransform = colorTransform;
 		return this;
 	}
 	
-	public function clone()
+	public function clone():CTextFormat
 	{
 		var format = new CTextFormat(
 			font, size, color, bold, italic, underline, url, target, align, leftMargin,
@@ -105,7 +105,7 @@ class CTextFormat extends TextFormat
 		return format;
 	}
 	
-	public function applyTo(textField:TextField)
+	public function applyTo(textField:TextField, shakePlainTextForNme:Bool = false):Void
 	{
 		textField.setTextFormat(this);
 		textField.defaultTextFormat = this;
@@ -123,9 +123,15 @@ class CTextFormat extends TextFormat
 		{
 			textField.alpha = Math.isNaN(alpha) ? 1 : alpha;
 		}
+		#if nme
+		if (shakePlainTextForNme)
+		{
+			textField.appendText("");
+		}
+		#end
 	}
 	
-	public function newFixed(selectable:Bool = false, text:String = null)
+	public function newFixed(selectable:Bool = false, text:String = null):TextField
 	{
 		var textField:TextField = new TextField();
 		textField.selectable = selectable;
@@ -137,7 +143,7 @@ class CTextFormat extends TextFormat
 		return textField;
 	}
 	
-	public function newAutoSized(selectable:Bool = false, text:String = null)
+	public function newAutoSized(selectable:Bool = false, text:String = null):TextField
 	{
 		var textField:TextField = new TextField();
 		textField.autoSize = TextFieldAutoSize.LEFT;
@@ -150,14 +156,14 @@ class CTextFormat extends TextFormat
 		return textField;
 	}
 	
-	public function toHtml(text:String)
+	public function toHtml(text:String):String
 	{
 		return getHtml(this, text);
 	}
 	
 	static var _nullFormat:CTextFormat;
 	
-	public static function setNullFormat(tf:TextField)
+	public static function setNullFormat(tf:TextField):Void
 	{
 		if (_nullFormat == null)
 		{
@@ -186,7 +192,7 @@ class CTextFormat extends TextFormat
 		_nullFormat.applyTo(tf);
 	}
 	
-	public static function getHtml(format:TextFormat, text:String)
+	public static function getHtml(format:TextFormat, text:String):String
 	{
 		var fontTagText = null;
 		

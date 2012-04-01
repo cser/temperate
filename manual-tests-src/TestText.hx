@@ -30,21 +30,21 @@ class TestText extends Sprite
 		_main.addTo(this, 20, 10);
 		
 		{
-			var tf = new CTextFormat("Tahoma", 12, 0xffffff, true).setFilters([new GlowFilter()])
+			var tf = new CTextFormat("Arial", 12, 0xffffff, true).setFilters([new GlowFilter()])
 				.newAutoSized();
 			tf.text = "TextField with CTextFormat";
 			_main.addChild(tf);
 		}
 		
 		{
-			var tf = new CTextFormat("Tahoma", 12, 0xff0080, true)
+			var tf = new CTextFormat("Arial", 12, 0xff0080, true)
 				.setAlpha(.5)
 				.newAutoSized();
 			tf.text = "TextField with CTextFormat alpha = .5";
 			tf.x = 200;
 			addChild(tf);
 			
-			var tf = new CTextFormat("Tahoma", 12, 0xff0080, true)
+			var tf = new CTextFormat("Arial", 12, 0xff0080, true)
 				.setColorTransform(new ColorTransform(0, 0, 2, .4, 0, 0, 0, 0))
 				.newAutoSized();
 			tf.text = "TextField with CTextFormat no alpha, colorTransform with alpha = .4";
@@ -52,7 +52,7 @@ class TestText extends Sprite
 			tf.y = 20;
 			addChild(tf);
 			
-			var tf = new CTextFormat("Tahoma", 12, 0xff0080, true)
+			var tf = new CTextFormat("Arial", 12, 0xff0080, true)
 				.setAlpha(.5)
 				.setColorTransform(new ColorTransform(0, 0, 2, .4, 0, 0, 0, 0))
 				.newAutoSized();
@@ -63,7 +63,7 @@ class TestText extends Sprite
 		}
 		
 		{
-			var format = new CTextFormat("Tahoma", 14);
+			var format = new CTextFormat("Arial", 14);
 			
 			var label = new CLabel().setText("CLabel").addTo(_main);
 			label.format = format;
@@ -236,7 +236,7 @@ class TestText extends Sprite
 				
 				var label = new CLabel().setHtmlText(
 					"CLabel, " +
-					new CTextFormat("Tahoma", 14, 0x0000ff).toHtml("HTML") + " by format");
+					new CTextFormat("Arial", 14, 0x0000ff).toHtml("HTML") + " by format");
 				column.add(label);
 			}
 		}
