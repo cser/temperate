@@ -1,3 +1,8 @@
+v.0.8.1
+- remove MouseWheel fix becouse it fsuperfluous for nme 3.3
+- add CHash (more universal that object hash, but not allow function and bool keys)
+- changed Tahoma font to Arial and stop up nme format setting bug for buttons
+- rename EventDispatcherUtil to CEventDispatcherUtil
 v.0.8
 - Show text for custom plots of DebugMonitor
 - Add colorTransform to text format and buttons parameters

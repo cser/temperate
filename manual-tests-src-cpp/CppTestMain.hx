@@ -22,6 +22,7 @@ class CppTestMain
 		Only one test runs at one time.
 		But at least _all_ tests compilationable checked on any test run
 		*/
+		
 		var test = new NmeTestText();
 		
 		var test = new TestDebugMonitor();

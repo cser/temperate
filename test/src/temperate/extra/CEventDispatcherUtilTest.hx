@@ -3,9 +3,9 @@ package temperate.extra;
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.MouseEvent;
-using temperate.extra.EventDispatcherUtil;
+using temperate.extra.CEventDispatcherUtil;
 
-class EventDispatcherUtilTest
+class CEventDispatcherUtilTest
 {
 	public function new()
 	{

@@ -9,6 +9,8 @@ class MainTestSuite extends TestSuite
 		super();
 		add(ArrayAssertTest);
 		add(FakeTimerFactoryTest);
+		add(temperate.collections.CHashTest);
+		add(temperate.collections.CObjectHashStringTest);
 		add(temperate.collections.CObjectHashTest);
 		add(temperate.collections.CObjectSetTest);
 		add(temperate.collections.CPriorityListTest);
@@ -28,11 +30,11 @@ class MainTestSuite extends TestSuite
 		add(temperate.core.CMouseWheelUtilTest);
 		add(temperate.core.CValidatorTest);
 		add(temperate.docks.RightDockTest);
+		add(temperate.extra.CEventDispatcherUtilTest);
 		add(temperate.extra.CSignalActionInListenerTest);
 		add(temperate.extra.CSignalActionInVoidListenerTest);
 		add(temperate.extra.CSignalTest);
 		add(temperate.extra.CSignalVoidListenersTest);
-		add(temperate.extra.EventDispatcherUtilTest);
 		add(temperate.layouts.CScrollLayoutTest);
 		add(temperate.minimal.charts.MChartTest);
 		add(temperate.text.CInputFieldTest);

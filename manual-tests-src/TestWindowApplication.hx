@@ -255,7 +255,6 @@ class TestWindowApplication extends Sprite
 	function onImageWindowClose(event:ImageWindowEvent)
 	{
 		var window = event.window;
-		trace("window.isChanged = " + window.isChanged);
 		if (window.isChanged)
 		{
 			event.windowPrevent();

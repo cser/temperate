@@ -10,7 +10,7 @@ import haxe.macro.Expr;
  *     sprite._(--MouseEvent.CLICK, onMouseClick);// unsubscribe
  * Make compilation error if MouseEvent is not cast to onMouseClick parameter type
  */
-class EventDispatcherUtil 
+class CEventDispatcherUtil 
 {
 	@:macro public static function _(
 		dispatcher:Expr,

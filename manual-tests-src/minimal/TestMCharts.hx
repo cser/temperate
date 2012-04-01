@@ -125,7 +125,7 @@ class TestMCharts extends Sprite
 	function newLineChart()
 	{
 		var chart = new MLineChart(
-			new CTextFormat().setFont("Tahoma").setBold(true).setColor(0xff0000).setAlpha(.5));
+			new CTextFormat().setFont("Arial").setBold(true).setColor(0xff0000).setAlpha(.5));
 		chart.setValues(
 			[1.5, 1, 8, 2, 4, 5],
 			["First", "Second", "Third", "Fourth", "Fifth", "Sixth"]);

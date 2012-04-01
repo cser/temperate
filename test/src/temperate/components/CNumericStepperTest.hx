@@ -149,9 +149,9 @@ class ExtendedTestNumericStepper extends CNumericStepper
 {
 	public function new()
 	{
+		super(new FakeEmptyButton(), new FakeEmptyButton(), new CRaster9GridRectSkin());
 		eventLog = [];
 		addEventListener(Event.CHANGE, onChange);
-		super(new FakeEmptyButton(), new FakeEmptyButton(), new CRaster9GridRectSkin());
 	}
 	
 	public var eventLog:Array<String>;

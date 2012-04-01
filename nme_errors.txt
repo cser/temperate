@@ -1,55 +1,168 @@
 Bugs of nme cpp for windows:
-- exe failing on using blend mode for figures with border, on masks too
-- not dispatched Event.ENTER_FRAME event for childs that not added to stage (may be future?)
+
+- exe failing on using blend mode (or mask) for figures with lines
+var shape = new Shape();
+shape.blendMode = BlendMode.INVERT;
+addChild(shape);
+var g = shape.graphics;
+g.lineStyle(1, 0x000000);//<-- if remove it - works
+g.beginFill(0x0000ff);
+g.drawRect(0, 0, 100, 100);
+g.endFill();
+
+- Childs that not added to stage is not dispatch Event.ENTER_FRAME (I don't assured that it mast be fixed)
+
 - not throws flash.errors.ArgumentError on removing missing child from Sprite
+var container = new Sprite();
+var child = new Sprite();
+container.removeChild(child);// Nothing throws
+
 - incorrect shapes drawing -don't cut intersections (may be don't metter):
 	var g = shape.graphics;
 	g.beginFill(0xff0000);
 	g.drawRoundRect(0, 0, 100, 100, 10);
 	g.drawRoundRect(10, 10, 80, 80, 10);
 	g.endFill();// No hole in rect, on flash it exists
-- ColorTransform don't work for filling of BitmapData
+
+- !!![may be bug in another, can't reproduce in small code] ColorTransform don't work for filling of BitmapData
+
 - Overloading method called if another method called
-	public function addChildAt(child:DisplayObject, index:Int):DisplayObject
-	{	
-		addChild(child);
-		setChildIndex(child, index);
-		
-		return child;
-	}
+public function addChildAt(child:DisplayObject, index:Int):DisplayObject
+{	
+	addChild(child);
+	setChildIndex(child, index);
 	
-	Typical problem:
+	return child;
+}
+
+Typical problem:
+
+override public function addChild(child:DisplayObject):DisplayObject
+{
+	super.addChild(child);
+	_layout.add(child);
+	return child;
+}
+
+public function addChildAt(child:DisplayObject, index:Int):DisplayObject
+{
+	super.addChildAt(child, index);
+	_layout.add(child);
+}
 	
-	override public function addChild(child:DisplayObject):DisplayObject
-	{
-		super.addChild(child);
-		_layout.add(child);
-		return child;
-	}
-	
-	public function addChildAt(child:DisplayObject, index:Int):DisplayObject
-	{
-		super.addChildAt(child, index);
-		_layout.add(child);
-	}
-	
-	_layout.add(child); called 2 times on addChildAt !
+_layout.add(child); called 2 times on addChildAt !
+
 - Bitmap is not transparent for mouse
+
+var sprite = new Sprite();
+sprite.graphics.beginFill(0xff0000);
+sprite.graphics.drawRect(10, 10, 80, 80);
+sprite.graphics.endFill();
+addChild(sprite);
+
+var bitmap = new Bitmap(new BitmapData(100, 100, false, 0xff808080));
+bitmap.alpha = .5;
+addChild(bitmap);
+
+sprite.addEventListener(MouseEvent.CLICK, onClick);
+
+function onClick(event:MouseEvent):Void
+{
+	trace("CLICKED");
+}
+
+Expected: "CLICKED" tracing on mouse click on rectangle center
+Getted: none
+(in flash bitmaps is not dispatch mouse events and is transparent for mouse)
+
 - Filing on getting size of DisplayObject with drawing
-	var shape = new Shape();
-	var g = shape.graphics;
-	g.lineStyle(0, 0x000000);// important
-	g.beginFill(0x0000ff);
-	g.drawRect(0, 0, 100, 100);
-	g.endFill();
-	var x = shape.width;//<-- failing if it line exists
-- Hangs on scaleX = scaleY = 0 in specific cases
+var shape = new Shape();
+var g = shape.graphics;
+g.lineStyle(0, 0x000000);// important
+g.beginFill(0x0000ff);
+g.drawRect(0, 0, 100, 100);
+g.endFill();
+var x = shape.width;//<-- failing if it line exists
+
+- [hard to reproduce] Hangs on scaleX = scaleY = 0 in specific cases
+
 - Failing BitmapData::draw on shape with lines
-- Sign of MouseEvent.MOUSE_WHEEL delta is inverted?
-- Bubbling not works for custom events
+var sprite = new Sprite();
+sprite.graphics.lineStyle(1, 0x000000);//<--if remove this line - works
+sprite.graphics.beginFill(0xff0000);
+sprite.graphics.drawRect(10, 10, 80, 80);
+sprite.graphics.endFill();
+var bd = new BitmapData(100, 100, true, 0x00000000);
+bd.draw(sprite);
+
+- Sign of MouseEvent.MOUSE_WHEEL delta is inverted
+var sprite = new Sprite();
+sprite.graphics.beginFill(0xff0000);
+sprite.graphics.drawRect(0, 0, 100, 100);
+sprite.graphics.endFill();
+sprite.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+addChild(sprite);
+
+function onMouseWheel(event:MouseEvent)
+{
+	trace(event.delta);
+}
+Result:
+1 - scrolling wheel to self
+-1 - scrolling wheel from self
+Expected (like in flash):
+-1 - scrolling wheel to self
+1 - scrolling wheel from self
+
+- Bubbling on display objects don't works for custom events
+var container = new Sprite();
+container.addEventListener(Event.CHANGE, onChange);
+addChild(container);
+var child = new Sprite();
+container.addChild(child);
+child.dispatchEvent(new Event(Event.CHANGE, true));
+	
+function onChange(event:Event)
+{
+	trace("CHANGED");
+}
+Expected: "CHANGED" tracing
+Getted: none
+
 - SimpleButton is not out from state OVER to state UP
+var button = new SimpleButton();
+addChild(button);
+
+var shape = new Shape();
+var g = shape.graphics;
+g.beginFill(0x000000);
+g.drawRect(0, 0, 100, 100);
+g.endFill();
+button.upState = shape;
+
+var shape = new Shape();
+var g = shape.graphics;
+g.beginFill(0xff0000);
+g.drawRect(0, 0, 100, 100);
+g.endFill();
+button.overState = shape;
+button.hitTestState = shape;
+
 - Timer: setting delay is not change interval untill start called (flashplayer do it)
 
 Bugs of cpp:
 - Float is init by 0 insteard of Math.NaN
 - Don't work equal operator for 2 elements from different typed arrays
+
+For copypaste:
+nme 3.2.0, target: windows, OS: Windows XP
+
+----------------------------------------------------------------------------------------------------
+New
+----------------------------------------------------------------------------------------------------
+
+- TextField/TextFormat bug: Font and font style is not uppliying until text is not changed
+(or equals text value is not setted)
+
+TODO
+Проверить диспетчер вообще - есть подозрение, что он неправильные булевы значения возвращает

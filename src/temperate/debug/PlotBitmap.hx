@@ -88,7 +88,7 @@ class PlotBitmap extends Bitmap
 		textColor = color;
 		if (_tf != null)
 		{
-			_tf.defaultTextFormat = new TextFormat("Tahoma", TEXT_SIZE, textColor);
+			_tf.defaultTextFormat = new TextFormat("Arial", TEXT_SIZE, textColor);
 		}
 	}
 	
@@ -99,7 +99,7 @@ class PlotBitmap extends Bitmap
 		{
 			_tf = new TextField();
 			_tf.autoSize = TextFieldAutoSize.LEFT;
-			_tf.defaultTextFormat = new TextFormat("Tahoma", TEXT_SIZE, textColor);
+			_tf.defaultTextFormat = new TextFormat("Arial", TEXT_SIZE, textColor);
 			_tf.mouseEnabled = false;
 			_tf.selectable = false;
 		}

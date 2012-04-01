@@ -8,12 +8,13 @@ class CppMainTestSuite extends TestSuite
 		super();
 		add(temperate.core.CMathTest);
 		add(temperate.core.ArrayUtilTest);
+		add(temperate.collections.CHashTest);
 		add(temperate.collections.CObjectHashTest);
 		add(temperate.collections.CObjectSetTest);
 		add(temperate.collections.CPriorityListTest);
 		add(temperate.collections.CValueStackTest);
 		add(temperate.containers.CVContainerTest);
-		//add(temperate.containers.CVContainerChangeLayoutByChildManagmentTest);// nme override bug
+		add(temperate.containers.CVContainerChangeLayoutByChildManagmentTest);
 		add(temperate.containers.CHContainerChildManagmentTest);
 		add(temperate.extra.CSignalTest);
 		add(ArrayAssertTest);
@@ -27,16 +28,16 @@ class CppMainTestSuite extends TestSuite
 		add(temperate.extra.CSignalActionInListenerTest);
 		add(temperate.extra.CSignalActionInVoidListenerTest);
 		add(temperate.extra.CSignalVoidListenersTest);
-		add(temperate.extra.EventDispatcherUtilTest);
+		add(temperate.extra.CEventDispatcherUtilTest);
 		add(temperate.docks.RightDockTest);
 		add(temperate.text.CTextFormatTest);
 		add(temperate.minimal.charts.MChartTest);
 		add(temperate.tooltips.docks.CHTooltipDockTest);
 		add(temperate.tooltips.docks.CVTooltipDockTest);
 		add(temperate.tooltips.managers.CTooltipManagerTest);
-		//add(temperate.windows.CWindowManagerTest);
-		//add(temperate.components.CNumericStepperTest);
-		//add(temperate.components.CSliderTest);
+		add(temperate.windows.CWindowManagerTest);
+		add(temperate.components.CNumericStepperTest);
+		add(temperate.components.CSliderTest);
 		//add(temperate.components.CScrollBarScrollParamsTest);// Выключается
 		//add(temperate.layouts.CScrollLayoutTest);
 		//add(temperate.text.CInputFieldTest);// Minor errors

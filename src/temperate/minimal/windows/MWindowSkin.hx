@@ -118,7 +118,7 @@ class MWindowSkin extends ACWindowSkin
 			
 			var format = _isEnabled ?
 				MFormatFactory.WINDOW_TITLE : MFormatFactory.WINDOW_TITLE_DISABLED;
-			format.applyTo(_titleTF);
+			format.applyTo(_titleTF, true);
 			
 			var g = graphics;
 			g.clear();

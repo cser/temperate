@@ -101,7 +101,7 @@ class CRasterFixedButton extends ACRasterTextButton
 			}
 			
 			var format = getCurrentFormat(params, upParams);
-			format.applyTo(_tf);
+			format.applyTo(_tf, true);
 			
 			if (params != null)
 			{

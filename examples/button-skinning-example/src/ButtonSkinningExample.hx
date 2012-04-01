@@ -44,7 +44,7 @@ class ButtonSkinningExample
 	
 	static function newButton()
 	{
-		var format = new CTextFormat("Tahoma", 14);
+		var format = new CTextFormat("Arial", 14);
 		var overFormat = format.clone().setFilters([ new GlowFilter(0xffff00, 1, 2, 2, 2) ]);
 		var disabledFormat = format.clone().setAlpha(.5).setFilters([ new BlurFilter(2, 2) ]);
 		var button = new CRasterScaledButton();
