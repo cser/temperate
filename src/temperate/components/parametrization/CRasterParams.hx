@@ -1,6 +1,7 @@
 package temperate.components.parametrization;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
+import flash.filters.BitmapFilter;
 import flash.geom.ColorTransform;
 import temperate.text.CTextFormat;
 
@@ -35,9 +36,9 @@ class CRasterParams
 		return this;
 	}
 	
-	public var filters:Array<Dynamic>;
+	public var filters:Array<BitmapFilter>;
 	
-	public function setFilters(filters:Array<Dynamic>):CRasterParams
+	public function setFilters(filters:Array<BitmapFilter>):CRasterParams
 	{
 		this.filters = filters;
 		return this;

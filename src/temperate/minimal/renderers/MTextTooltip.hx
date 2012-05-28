@@ -142,7 +142,7 @@ class MTextTooltip extends ACTooltip<String>
 		
 		_width = _textField.width + textBorder * 2;
 		_height = _textField.height + textBorder * 2;
-		onResize(Std.int(_width), Std.int(_height));
+		dispatchResize(Std.int(_width), Std.int(_height));
 	}
 	
 	override public function setTailTarget(target:Rectangle):Void

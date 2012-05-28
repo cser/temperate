@@ -119,7 +119,7 @@ class TestTooltip extends ACTooltip<BitmapData>
 		_bitmap.y = 10;
 		_width = _bitmap.width + 20;
 		_height = _bitmap.height + 20;
-		onResize(Std.int(_width), Std.int(_height));
+		dispatchResize(Std.int(_width), Std.int(_height));
 	}
 	
 	override public function setTailTarget(target:Rectangle)

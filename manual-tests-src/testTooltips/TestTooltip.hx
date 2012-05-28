@@ -34,7 +34,7 @@ class TestTooltip extends ACTooltip<String>
 		_width = _tf.width + 10;
 		_height = _tf.height + 10;
 		
-		onResize(Std.int(_width), Std.int(_height));
+		dispatchResize(Std.int(_width), Std.int(_height));
 	}
 	
 	override public function setTailTarget(target:Rectangle):Void

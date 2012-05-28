@@ -2,6 +2,7 @@ package windowApplication;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
+import flash.filters.BitmapFilter;
 import flash.filters.GlowFilter;
 import flash.ui.Keyboard;
 import temperate.components.CButtonSelector;
@@ -27,7 +28,7 @@ class ColorsWindow extends AMWindow<Dynamic>
 		
 		_colors = new CButtonSelector(editorState.color, true);
 		_colors.addEventListener(Event.CHANGE, onColorChange);
-		var glow = [ new GlowFilter(0xffffff, 1, 4, 4, 10, 1, true) ];
+		var glow:Array<BitmapFilter> = [ new GlowFilter(0xffffff, 1, 4, 4, 10, 1, true) ];
 		var colors:Array<UInt> = [
 			0xeeeeee, 0x000000, 0xff0000, 0x00ff00, 0x0000ff,
 			0xffff00, 0x00ffff, 0x808080, 0x800000, 0x008000,

@@ -1,4 +1,5 @@
 package temperate.text;
+import flash.filters.BitmapFilter;
 import flash.geom.ColorTransform;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
@@ -23,7 +24,7 @@ class CTextFormat extends TextFormat
 	
 	public var embedFonts:Bool;
 	
-	public var filters:Array<Dynamic>;
+	public var filters:Array<BitmapFilter>;
 	
 	public function setFont(font:String, embedFonts:Bool = false):CTextFormat
 	{
@@ -62,7 +63,7 @@ class CTextFormat extends TextFormat
 		return this;
 	}
 	
-	public function setFilters(filters:Array<Dynamic>):CTextFormat
+	public function setFilters(filters:Array<BitmapFilter>):CTextFormat
 	{
 		this.filters = filters;
 		return this;
