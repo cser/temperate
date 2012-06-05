@@ -54,7 +54,7 @@ class CppTestMain
 		var test = new TestSimpleButtonWrapper();
 		
 		var test = new NmeTestCurrent();
-		var test = new TestWindowApplication();
+		var test = new TestWindowApplication();var test = new TestMCursorManager();
 		Lib.current.addChild(test);
 		test.init();
 	}
