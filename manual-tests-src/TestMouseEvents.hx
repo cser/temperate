@@ -1,7 +1,7 @@
 package ;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
-import nme.display.Shape;
+import flash.display.Shape;
 import temperate.core.CMath;
 import temperate.minimal.MTween;
 
@@ -25,7 +25,11 @@ class TestMouseEvents extends Sprite
 		drawRect(sprite.graphics, 0x80ff0000, 100, 100, 200, 200);
 		
 		var shape = new Shape();
-		addChild(shape);
+		var sprite = new Sprite();
+		sprite.mouseEnabled = false;
+		sprite.mouseChildren = false;
+		addChild(sprite);
+		sprite.addChild(shape);
 		drawRect(shape.graphics, 0x800000ff, 100, 0, 100, 100);
 	}
 	

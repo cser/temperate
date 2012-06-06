@@ -5,9 +5,12 @@ import flash.display.DisplayObjectContainer;
 import flash.display.InteractiveObject;
 import flash.display.Sprite;
 import flash.events.IEventDispatcher;
+import flash.geom.Matrix;
 import flash.Lib;
 import flash.ui.Mouse;
 import flash.display.Shape;
+import flash.display.BitmapData;
+import temperate.core.CMath;
 
 #if !nme
 import flash.ui.MouseCursor;
@@ -29,8 +32,6 @@ class CCursor implements ICCursor
 	
 	private var _hideSystem:Bool;
 	private var _system:String;
-	private var _container:Sprite;
-	private var _containerView:DisplayObject;
 	
 	//----------------------------------------------------------------------------------------------
 	//
@@ -46,20 +47,32 @@ class CCursor implements ICCursor
 	public function setView(
 		view:DisplayObject, updateOnMove:Bool = false, viewOffsetX:Int = 0, viewOffsetY:Int = 0)
 	{
-		// For nme
-		if (Std.is(view, Bitmap) || Std.is(view, Shape))
+		// Mouse transparent for nme hack
+		if (Std.is(view, Bitmap))
 		{
-			view.x = 0;
-			view.y = 0;
-			_containerView = view;
-			_container = new Sprite();
-			_container.addChild(_containerView);
-			view = _container;
+			var bd = cast(view, Bitmap).bitmapData;
+			var proxy = new Sprite();
+			var g = proxy.graphics;
+			g.clear();
+			g.beginBitmapFill(bd);
+			g.drawRect(0, 0, bd.width, bd.height);
+			g.endFill();
+			view = proxy;
 		}
-		else
+		else if (Std.is(view, Shape))
 		{
-			_container = null;
-			_containerView = null;
+			// Are getBounds() works in nme? Another hack
+			var w = CMath.intMax(1, Std.int(view.width));
+			var h = CMath.intMax(1, Std.int(view.height));
+			var bd = new BitmapData(w << 1, h << 1, true, 0x00000000);
+			bd.draw(view, new Matrix(1, 0, 0, 1, w, h));
+			var proxy = new Sprite();
+			var g = proxy.graphics;
+			g.clear();
+			g.beginBitmapFill(bd, new Matrix(1, 0, 0, 1, -w, -h));
+			g.drawRect(-w, -h, w << 1, h << 1);
+			g.endFill();
+			view = proxy;
 		}
 		
 		this.view = view;
@@ -114,11 +127,6 @@ class CCursor implements ICCursor
 		if (_hideSystem)
 		{
 			Mouse.hide();
-		}
-		if (_container != null && _containerView != null && _containerView.parent != _container)
-		{
-			// For allow equals cursor views on nme
-			_container.addChild(_containerView);
 		}
 		#if flash10
 		if (_system != null)
