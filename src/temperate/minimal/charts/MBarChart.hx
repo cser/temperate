@@ -5,7 +5,7 @@ using temperate.core.CMath;
 class MBarChart extends AMBoundableChart
 {
 	var _spacing:Float;
-	var _barColor:UInt;
+	var _barColor:Int;
 	
 	public function new(labelFormat:CTextFormat = null)
 	{
@@ -100,7 +100,7 @@ class MBarChart extends AMBoundableChart
 		}
 	}
 	
-	function getColorByIndex(index:UInt):UInt
+	function getColorByIndex(index:Int):Int
 	{
 		var result = null;
 		if (_colors != null)
@@ -136,8 +136,8 @@ class MBarChart extends AMBoundableChart
 		return _spacing;
 	}
 	
-	public var barColor(get_barColor, set_barColor):UInt;
-	function set_barColor(value:UInt)
+	public var barColor(get_barColor, set_barColor):Int;
+	function set_barColor(value:Int)
 	{
 		if (_barColor != value)
 		{
@@ -147,21 +147,21 @@ class MBarChart extends AMBoundableChart
 		}
 		return _barColor;
 	}
-	function get_barColor():UInt
+	function get_barColor():Int
 	{
 		return _barColor;
 	}
 	
-	public var colors(get_colors, set_colors):Array<UInt>;
-	var _colors:Array<Null<UInt>>;
-	function set_colors(value:Array<UInt>)
+	public var colors(get_colors, set_colors):Array<Int>;
+	var _colors:Array<Null<Int>>;
+	function set_colors(value:Array<Int>)
 	{
 		_colors = value;
 		_view_valid = false;
 		postponeView();
 		return _colors;
 	}
-	function get_colors():Array<UInt>
+	function get_colors():Array<Int>
 	{
 		return _colors;
 	}

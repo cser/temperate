@@ -12,8 +12,8 @@ class EditorState
 	
 	public var colorChanged(default, null):CSignal < Void->Void > ;
 	
-	public var color(get_color, set_color):UInt;
-	var _color:UInt;
+	public var color(get_color, set_color):Int;
+	var _color:Int;
 	function get_color()
 	{
 		return _color;

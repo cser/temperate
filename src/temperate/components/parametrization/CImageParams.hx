@@ -2,6 +2,7 @@ package temperate.components.parametrization;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.DisplayObject;
+import flash.filters.BitmapFilter;
 import flash.geom.ColorTransform;
 import temperate.components.CButtonState;
 
@@ -34,9 +35,9 @@ class CImageParams
 		return this;
 	}
 	
-	public var filters:Array<Dynamic>;
+	public var filters:Array<BitmapFilter>;
 	
-	public function setFilters(filters:Array<Dynamic>):CImageParams
+	public function setFilters(filters:Array<BitmapFilter>):CImageParams
 	{
 		this.filters = filters;
 		return this;

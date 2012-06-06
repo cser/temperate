@@ -3,7 +3,7 @@ import flash.display.BitmapData;
 
 class MArrowBdFactory 
 {
-	public static function newUpArrow(color:UInt)
+	public static function newUpArrow(color:Int)
 	{
 		var bd = new BitmapData(10, 6, true, 0x00000000);
 		

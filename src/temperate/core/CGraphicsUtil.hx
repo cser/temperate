@@ -26,7 +26,7 @@ class CGraphicsUtil
 	
 	public static function drawRoundRectBorder(
 		g:Graphics,
-		x:Float, y:Float, width:Float, height:Float, radius:Float, color:UInt, alpha:Float,
+		x:Float, y:Float, width:Float, height:Float, radius:Float, color:Int, alpha:Float,
 		thickness:Int):Void
 	{
 		var x1 = x + width;
@@ -63,7 +63,7 @@ class CGraphicsUtil
 	
 	public static function drawBottomRightBorder(
 		g:Graphics,
-		x:Float, y:Float, width:Float, height:Float, radius:Float, color:UInt, alpha:Float,
+		x:Float, y:Float, width:Float, height:Float, radius:Float, color:Int, alpha:Float,
 		thickness:Int, inner:Bool):Void
 	{
 		var x1 = x + width;
@@ -111,7 +111,7 @@ class CGraphicsUtil
 	
 	public static function drawTopLeftBorder(
 		g:Graphics,
-		x:Float, y:Float, width:Float, height:Float, radius:Float, color:UInt, alpha:Float,
+		x:Float, y:Float, width:Float, height:Float, radius:Float, color:Int, alpha:Float,
 		thickness:Int, inner:Bool):Void
 	{
 		var x1 = x + width;
@@ -151,7 +151,7 @@ class CGraphicsUtil
 	public static function drawCircleBorder(
 		g:Graphics,
 		x:Float, y:Float, radius:Float, thickness:Int,
-		color:UInt, alpha:Float):Void
+		color:Int, alpha:Float):Void
 	{
 		g.beginFill(color, alpha);
 		draw1per8SegmentBorder(g, 0, 4, x, y, radius, thickness);
@@ -164,7 +164,7 @@ class CGraphicsUtil
 	public static function drawCircleGradientBorder(
 		g:Graphics,
 		x:Float, y:Float, radius:Float, thickness:Int,
-		colors:Array<UInt>, alphas:Array<Float>, ratios:Array<UInt>, matrix:Matrix):Void
+		colors:Array<Int>, alphas:Array<Float>, ratios:Array<Int>, matrix:Matrix):Void
 	{
 		g.beginGradientFill(GradientType.LINEAR, colors, alphas, ratios, matrix);
 		draw1per8SegmentBorder(g, 0, 4, x, y, radius, thickness);

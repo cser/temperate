@@ -3,7 +3,7 @@ import flash.display.BitmapData;
 
 class MBdInlineUtil 
 {
-	public static function decode(source:Array<UInt>):BitmapData
+	public static function decode(source:Array<Int>):BitmapData
 	{
 		var length = source.length;
 		var i = 0;

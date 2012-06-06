@@ -41,14 +41,14 @@
     <!-- example: <hidden path="..." /> -->
   </hiddenPaths>
   <!-- Executed before build -->
-  <preBuildCommand />
+  <preBuildCommand>cpp_build_nmml.bat</preBuildCommand>
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="True" />
     <option testMovie="Custom" />
-    <option testMovieCommand="cpp_build_nmml.bat" />
+    <option testMovieCommand="" />
   </options>
   <!-- Plugin storage -->
   <storage />

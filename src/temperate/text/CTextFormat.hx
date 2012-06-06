@@ -1,4 +1,5 @@
 package temperate.text;
+import flash.filters.BitmapFilter;
 import flash.geom.ColorTransform;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
@@ -9,7 +10,7 @@ import temperate.core.CMath;
 class CTextFormat extends TextFormat
 {
 	public function new(
-		?font:String, ?size:Float, ?color:UInt, ?bold:Bool, ?italic:Bool, ?underline:Bool,
+		?font:String, ?size:Float, ?color:Int, ?bold:Bool, ?italic:Bool, ?underline:Bool,
 		?url:String, ?target:String, ?align:CTextFormatAlign, ?leftMargin:Float, ?rightMargin:Float,
 		?indent:Float, ?leading:Float
 	)
@@ -23,7 +24,7 @@ class CTextFormat extends TextFormat
 	
 	public var embedFonts:Bool;
 	
-	public var filters:Array<Dynamic>;
+	public var filters:Array<BitmapFilter>;
 	
 	public function setFont(font:String, embedFonts:Bool = false):CTextFormat
 	{
@@ -38,7 +39,7 @@ class CTextFormat extends TextFormat
 		return this;
 	}
 	
-	public function setColor(color:UInt):CTextFormat
+	public function setColor(color:Int):CTextFormat
 	{
 		this.color = color;
 		return this;
@@ -62,7 +63,7 @@ class CTextFormat extends TextFormat
 		return this;
 	}
 	
-	public function setFilters(filters:Array<Dynamic>):CTextFormat
+	public function setFilters(filters:Array<BitmapFilter>):CTextFormat
 	{
 		this.filters = filters;
 		return this;

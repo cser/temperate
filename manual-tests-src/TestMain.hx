@@ -56,6 +56,7 @@ class TestMain
 		var test = new TestGeomUtil();
 		var test = new BitmapDataInlineSuite();
 		var test = new TestMBdFactory();
+		var test = new TestMouseEvents();
 		var test = new TestWindowApplication();
 		Lib.current.addChild(test);
 		test.init();

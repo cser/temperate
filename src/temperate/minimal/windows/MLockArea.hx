@@ -43,9 +43,9 @@ class MLockArea extends Sprite, implements ICArea
 		redraw();
 	}
 	
-	public var color(default, null):UInt;
+	public var color(default, null):Int;
 	
-	public function setColor(color:UInt):MLockArea
+	public function setColor(color:Int):MLockArea
 	{
 		this.color = color;
 		redraw();

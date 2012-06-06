@@ -22,17 +22,17 @@ class MScrollBarBdFactory
 	
 	public static var arrowSize = 17;
 	
-	public static var arrowUpColor:UInt = 0xff305000;
-	public static var arrowOverColor:UInt = 0xff508020;
-	public static var arrowDisabledColor:UInt = 0x75808080;
+	public static var arrowUpColor:Int = 0xff305000;
+	public static var arrowOverColor:Int = 0xff508020;
+	public static var arrowDisabledColor:Int = 0x75808080;
 	
-	public static var thumbCenterLightColor:UInt = 0xccffffff;
-	public static var thumbCenterDarkColor:UInt = 0x80305010;
+	public static var thumbCenterLightColor:Int = 0xccffffff;
+	public static var thumbCenterDarkColor:Int = 0x80305010;
 	
-	public static var scrollBgDownColor:UInt = 0xffcccccc;
-	public static var scrollBgUpColor:UInt = 0xffeeeeee;
-	public static var scrollBgDarkColor:UInt = 0xffd0d0d0;
-	public static var scrollBgLightColor:UInt = 0xffffffff;
+	public static var scrollBgDownColor:Int = 0xffcccccc;
+	public static var scrollBgUpColor:Int = 0xffeeeeee;
+	public static var scrollBgDarkColor:Int = 0xffd0d0d0;
+	public static var scrollBgLightColor:Int = 0xffffffff;
 	
 	//----------------------------------------------------------------------------------------------
 	//

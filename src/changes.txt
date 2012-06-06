@@ -1,3 +1,6 @@
+v.0.8.2
+- fix for haxe 2.09 and nme 3.3.3
+- remove UInt
 v.0.8.1
 - remove MouseWheel fix becouse it fsuperfluous for nme 3.3
 - add CHash (more universal that object hash, but not allow function and bool keys)

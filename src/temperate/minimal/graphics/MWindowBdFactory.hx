@@ -15,16 +15,16 @@ class MWindowBdFactory
 	public static inline var FRAME_CENTER_TOP = 30;
 	
 	public static var gradientHeight = 24;
-	public static var striaeColor:UInt = 0x80ffffff;
-	public static var striaeBgColor:UInt = 0x00ffffff;
-	public static var headTopColor:UInt = 0xf8407015;
-	public static var headBottomColor:UInt = 0xe080c030;
-	public static var headTopActiveColor:UInt = 0xf8508000;
-	public static var headBottomActiveColor:UInt = 0xe0a0e020;
-	public static var headTopLockedColor:UInt = 0xf0808080;
-	public static var headBottomLockedColor:UInt = 0xf0cccccc;
+	public static var striaeColor:Int = 0x80ffffff;
+	public static var striaeBgColor:Int = 0x00ffffff;
+	public static var headTopColor:Int = 0xf8407015;
+	public static var headBottomColor:Int = 0xe080c030;
+	public static var headTopActiveColor:Int = 0xf8508000;
+	public static var headBottomActiveColor:Int = 0xe0a0e020;
+	public static var headTopLockedColor:Int = 0xf0808080;
+	public static var headBottomLockedColor:Int = 0xf0cccccc;
 	
-	static function newStriae(color:UInt, bgColor:UInt, space:Int, size:Int)
+	static function newStriae(color:Int, bgColor:Int, space:Int, size:Int)
 	{
 		MBdFactoryUtil.qualityOn();
 		var shape = MBdFactoryUtil.getShape();
@@ -90,7 +90,7 @@ class MWindowBdFactory
 		return bd;
 	}
 	
-	static function newTop(striae:BitmapData, topColor:UInt, bottomColor:UInt)
+	static function newTop(striae:BitmapData, topColor:Int, bottomColor:Int)
 	{
 		MBdFactoryUtil.qualityOn();
 		var shape = MBdFactoryUtil.getShape();

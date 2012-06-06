@@ -83,7 +83,7 @@ class MTween< T >
 		killTargetTween(target);
 		for (field in Reflect.fields(vars))
 		{
-			Reflect.setField(target, field, Reflect.field(vars, field));
+			Reflect.setProperty(target, field, Reflect.getProperty(vars, field));
 		}
 	}
 	
@@ -102,7 +102,7 @@ class MTween< T >
 		_startVars = { };
 		for (field in Reflect.fields(_vars))
 		{
-			Reflect.setField(_startVars, field, Reflect.field(target, field));
+			Reflect.setProperty(_startVars, field, Reflect.getProperty(target, field));
 		}
 		_duration = duration;
 		_ease = MPower.quad.easeOut;
@@ -185,8 +185,8 @@ class MTween< T >
 		{
 			for (field in Reflect.fields(_vars))
 			{
-				var endValue:Float = Reflect.field(_vars, field);
-				Reflect.setField(target, field, endValue);
+				var endValue:Float = Reflect.getProperty(_vars, field);
+				Reflect.setProperty(target, field, endValue);
 			}
 			if (_onUpdate != null)
 			{
@@ -202,10 +202,10 @@ class MTween< T >
 		{
 			for (field in Reflect.fields(_vars))
 			{
-				var startValue:Float = Reflect.field(_startVars, field);
-				var endValue:Float = Reflect.field(_vars, field);
+				var startValue:Float = Reflect.getProperty(_startVars, field);
+				var endValue:Float = Reflect.getProperty(_vars, field);
 				var value = _ease(_elapsedTime, startValue, endValue - startValue, _duration);
-				Reflect.setField(target, field, value);
+				Reflect.setProperty(target, field, value);
 			}
 			if (_onUpdate != null)
 			{

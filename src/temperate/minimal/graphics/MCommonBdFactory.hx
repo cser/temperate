@@ -29,31 +29,31 @@ class MCommonBdFactory
 	static var BOX_WIDTH = 20;
 	static var BOX_HEIGHT = 14;
 	
-	public static var buttonBgColors:Array<UInt> =
+	public static var buttonBgColors:Array<Int> =
 		[ 0xff80e000, 0xff70a010, 0xff307000, 0xff50a000 ];
-	public static var buttonBgSelectedColors:Array<UInt> =
+	public static var buttonBgSelectedColors:Array<Int> =
 		[ 0xfff09000, 0xffa09010, 0xff706000, 0xffa09000 ];
 	public static var buttonBgRatios:Array<Int> = [ 0, 50, 51, 255 ];
 	public static var buttonBgSelectedRatios:Array<Int> = [ 0, 50, 51, 255 ];
-	public static var buttonShadowColor:UInt = 0x45000000;
-	public static var buttonInnerBorderColor:UInt = 0x80ffffff;
-	public static var buttonBorderColor:UInt = 0xaa105000;
+	public static var buttonShadowColor:Int = 0x45000000;
+	public static var buttonInnerBorderColor:Int = 0x80ffffff;
+	public static var buttonBorderColor:Int = 0xaa105000;
 	
-	public static var roundBorderColors:Array<UInt> = [ 0xff000000, 0xff808080 ];
-	public static var roundBorderRatios:Array<UInt> = [ 0, 255 ];
-	public static var roundColorsUp:Array<UInt> = [ 0xffffffff, 0xffc0c0c0 ];
-	public static var roundColorsDown:Array<UInt> = [ 0xffc0c0c0, 0xffffffff ];
-	public static var roundRatiosUp:Array<UInt> = [ 0, 255 ];
-	public static var roundRatiosDown:Array<UInt> = [ 0, 200 ];
-	public static var roundBgColor:UInt = 0xff808080;
-	public static var roundInnerLineColor:UInt = 0xd0ffffff;
+	public static var roundBorderColors:Array<Int> = [ 0xff000000, 0xff808080 ];
+	public static var roundBorderRatios:Array<Int> = [ 0, 255 ];
+	public static var roundColorsUp:Array<Int> = [ 0xffffffff, 0xffc0c0c0 ];
+	public static var roundColorsDown:Array<Int> = [ 0xffc0c0c0, 0xffffffff ];
+	public static var roundRatiosUp:Array<Int> = [ 0, 255 ];
+	public static var roundRatiosDown:Array<Int> = [ 0, 200 ];
+	public static var roundBgColor:Int = 0xff808080;
+	public static var roundInnerLineColor:Int = 0xd0ffffff;
 	
-	public static var textBgColor:UInt = 0xffffffff;
-	public static var textBgColorInactive:UInt = 0xffeeeeee;
-	public static var textBorderColor:UInt = 0xff808080;
+	public static var textBgColor:Int = 0xffffffff;
+	public static var textBgColorInactive:Int = 0xffeeeeee;
+	public static var textBorderColor:Int = 0xff808080;
 	
-	public static var arrowColorUp:UInt = 0xff308000;
-	public static var arrowColorOver:UInt = 0xff50c000;
+	public static var arrowColorUp:Int = 0xff308000;
+	public static var arrowColorOver:Int = 0xff50c000;
 	
 	//----------------------------------------------------------------------------------------------
 	//
@@ -287,7 +287,7 @@ class MCommonBdFactory
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	static function newArrow(horizontal:Bool, left:Bool, color:UInt)
+	static function newArrow(horizontal:Bool, left:Bool, color:Int)
 	{
 		var arrow = MArrowBdFactory.newUpArrow(color);
 		
@@ -324,7 +324,7 @@ class MCommonBdFactory
 		return bitmapData;
 	}
 	
-	static function newSimpleBg(fillColor:UInt, borderColor:UInt)
+	static function newSimpleBg(fillColor:Int, borderColor:Int)
 	{
 		MBdFactoryUtil.qualityOn();
 		var shape = MBdFactoryUtil.getShape();
@@ -345,7 +345,7 @@ class MCommonBdFactory
 		return bitmapData;
 	}
 	
-	static function newGradientBg(colors:Array<UInt>, ratios:Array<Int>, shadow:Bool)
+	static function newGradientBg(colors:Array<Int>, ratios:Array<Int>, shadow:Bool)
 	{
 		MBdFactoryUtil.qualityOn();
 		var shape = MBdFactoryUtil.getShape();
@@ -460,7 +460,7 @@ class MCommonBdFactory
 	static function drawCircleRectBorder(
 		g:Graphics,
 		x:Float, y:Float, width:Float, height:Float,
-		colors:Array<UInt>, alphas:Array<Float>, ratios:Array<UInt>, matrix:Matrix,
+		colors:Array<Int>, alphas:Array<Float>, ratios:Array<Int>, matrix:Matrix,
 		thickness:Int):Void
 	{
 		var r = height * .5;

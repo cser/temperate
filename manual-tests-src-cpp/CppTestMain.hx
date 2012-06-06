@@ -54,6 +54,7 @@ class CppTestMain
 		var test = new TestSimpleButtonWrapper();
 		
 		var test = new NmeTestCurrent();
+		var test = new TestMouseEvents();
 		var test = new TestWindowApplication();
 		Lib.current.addChild(test);
 		test.init();

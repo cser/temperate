@@ -4,7 +4,7 @@ import massive.munit.Assert;
 
 class ExtendedAssert 
 {
-	public static function areUIntEqual(expected:UInt, actual:UInt, ?info:PosInfos)
+	public static function areUIntEqual(expected:Int, actual:Int, ?info:PosInfos)
 	{
 		Assert.assertionCount++;
 		if (actual != expected)

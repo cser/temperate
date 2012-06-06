@@ -40,7 +40,13 @@ class ACTooltip< T > extends CSprite, implements ICTooltip<T>
 	{
 	}
 	
-	public dynamic function onResize(width:Int, height:Int)
+	function dispatchResize(width:Int, height:Int):Void
 	{
+		if (onResize != null)
+		{
+			onResize(width, height);
+		}
 	}
+	
+	public var onResize:Int->Int->Void;
 }
