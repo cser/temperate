@@ -255,7 +255,7 @@ class TestRasterImageButton extends Sprite
 		return button;
 	}
 	
-	function newImage(width:Int, height:Int, color:UInt):DisplayObject
+	function newImage(width:Int, height:Int, color:Int):DisplayObject
 	{
 		var image = new Shape();
 		var g = image.graphics;

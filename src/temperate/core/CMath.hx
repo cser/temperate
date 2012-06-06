@@ -60,22 +60,22 @@ class CMath
 		return x > 0 ? x : -x;
 	}
 	
-	inline public static function getAlpha(color:UInt):Float
+	inline public static function getAlpha(color:Int):Float
 	{
 		return (color >>> 24) / 0xff;
 	}
 	
-	inline public static function getColor(color:UInt):UInt
+	inline public static function getColor(color:Int):Int
 	{
 		return color & 0x00ffffff;
 	}
 	
-	inline public static function applyAlpha(colorPart:UInt, alphaPart:Float):UInt
+	inline public static function applyAlpha(colorPart:Int, alphaPart:Float):Int
 	{
 		return (Std.int(0xff * alphaPart) << 24) | (0x00ffffff & colorPart);
 	}
 	
-	public static function toFixed(x:Float, fractionDigits:UInt):String
+	public static function toFixed(x:Float, fractionDigits:Int):String
 	{
 		#if flash9
 		return untyped x.toFixed(fractionDigits);
@@ -109,13 +109,13 @@ class CMath
 		#end
 	}
 	
-	public static function toLimitDigits(x:Float, maxDigits:UInt):String
+	public static function toLimitDigits(x:Float, maxDigits:Int):String
 	{
 		var k = Math.round(Math.pow(10, maxDigits));
 		return Std.string(Math.round(x * k) / k);
 	}
 	
-	public static function toHex(x:UInt):String
+	public static function toHex(x:Int):String
 	{
 		#if flash9
 		return untyped x.toString(16);

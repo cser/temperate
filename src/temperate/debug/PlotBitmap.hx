@@ -68,7 +68,7 @@ class PlotBitmap extends Bitmap
 	
 	var _endRect:Rectangle;
 	
-	public function plot(value:Float, color:UInt)
+	public function plot(value:Float, color:Int)
 	{
 		_bd.setPixel32(_width - 1, Std.int(_height * (1 - value / _maxValue)), color);
 	}
@@ -76,14 +76,14 @@ class PlotBitmap extends Bitmap
 	public var onTextChange:PlotBitmap->TextField->Void;
 	
 	public var text(default, null):String;
-	public var textColor(default, null):UInt;
+	public var textColor(default, null):Int;
 	
 	public var textAlignX:Float;
 	public var textAlignY:Float;
 	
 	var _tf:TextField;
 	
-	public function setTextColor(color:UInt)
+	public function setTextColor(color:Int)
 	{
 		textColor = color;
 		if (_tf != null)

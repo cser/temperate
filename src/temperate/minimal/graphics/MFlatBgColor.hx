@@ -11,19 +11,19 @@ class MFlatBgColor
 	public var bgRatiosDown:Array<Int>;
 	public var bgRatiosDisabled:Array<Int>;
 	
-	public var bgColorsUp:Array<UInt>;
-	public var bgColorsOver:Array<UInt>;
-	public var bgColorsDown:Array<UInt>;
-	public var bgColorsDisabled:Array<UInt>;
+	public var bgColorsUp:Array<Int>;
+	public var bgColorsOver:Array<Int>;
+	public var bgColorsDown:Array<Int>;
+	public var bgColorsDisabled:Array<Int>;
 	
-	public var bgBottomRightColor:UInt;
-	public var bgBottomRightDisabledColor:UInt;
+	public var bgBottomRightColor:Int;
+	public var bgBottomRightDisabledColor:Int;
 	
-	public var bgTopLeftColor:UInt;
-	public var bgTopLeftDisabledColor:UInt;
+	public var bgTopLeftColor:Int;
+	public var bgTopLeftDisabledColor:Int;
 	
-	public var bgInnerTopLeftColor:UInt;
-	public var bgInnerBottomRightColor:UInt;
+	public var bgInnerTopLeftColor:Int;
+	public var bgInnerBottomRightColor:Int;
 	
-	public var bgInnerDownColor:UInt;
+	public var bgInnerDownColor:Int;
 }

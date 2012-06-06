@@ -39,7 +39,7 @@ class MBdFactoryUtil
 	}
 	
 	public static function getColorsAndAlphas(
-		source:Array<UInt>, outColors:Array<UInt>, outAlphas:Array<Float>)
+		source:Array<Int>, outColors:Array<Int>, outAlphas:Array<Float>)
 	{
 		for (i in 0 ... source.length)
 		{

@@ -97,7 +97,7 @@ class MPieChart extends AMChart
 		label.y = rY * Math.sin(angle) - halfH;
 	}
 	
-	function drawSegment(begin:Float, end:Float, radius:Float, color:UInt)
+	function drawSegment(begin:Float, end:Float, radius:Float, color:Int)
 	{
 		var g = _chartOwner.graphics;
 		g.beginFill(color.getColor(), color.getAlpha());
@@ -108,7 +108,7 @@ class MPieChart extends AMChart
 		g.endFill();
 	}
 	
-	function getColorByIndex(index:UInt):UInt
+	function getColorByIndex(index:Int):Int
 	{
 		if(_colors[index] != null)
 		{
@@ -167,9 +167,9 @@ class MPieChart extends AMChart
 		return _chartRotation;
 	}
 	
-	public var colors(get_colors, set_colors):Array<UInt>;
-	var _colors:Array<Null<UInt>>;
-	function set_colors(value:Array<UInt>)
+	public var colors(get_colors, set_colors):Array<Int>;
+	var _colors:Array<Null<Int>>;
+	function set_colors(value:Array<Int>)
 	{
 		if (_colors != value)
 		{
@@ -179,7 +179,7 @@ class MPieChart extends AMChart
 		}		
 		return _colors;
 	}
-	function get_colors():Array<UInt>
+	function get_colors():Array<Int>
 	{
 		return _colors;
 	}

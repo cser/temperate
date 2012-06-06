@@ -10,7 +10,7 @@ import temperate.core.CMath;
 class CTextFormat extends TextFormat
 {
 	public function new(
-		?font:String, ?size:Float, ?color:UInt, ?bold:Bool, ?italic:Bool, ?underline:Bool,
+		?font:String, ?size:Float, ?color:Int, ?bold:Bool, ?italic:Bool, ?underline:Bool,
 		?url:String, ?target:String, ?align:CTextFormatAlign, ?leftMargin:Float, ?rightMargin:Float,
 		?indent:Float, ?leading:Float
 	)
@@ -39,7 +39,7 @@ class CTextFormat extends TextFormat
 		return this;
 	}
 	
-	public function setColor(color:UInt):CTextFormat
+	public function setColor(color:Int):CTextFormat
 	{
 		this.color = color;
 		return this;

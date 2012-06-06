@@ -12,8 +12,8 @@ class MSeparator extends CSeparator
 		shadowColor = 0xff808080;
 	}
 	
-	public var lightColor:UInt;
-	public var shadowColor:UInt;
+	public var lightColor:Int;
+	public var shadowColor:Int;
 	
 	override function getLineWidth()
 	{

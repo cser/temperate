@@ -178,7 +178,7 @@ class AMChart extends CSprite
 		}
 	}
 	
-	function getLabelText(index:UInt):String
+	function getLabelText(index:Int):String
 	{
 		var result = null;
 		if (_labels != null)
@@ -366,8 +366,8 @@ class AMChart extends CSprite
 		postponeSize();
 	}
 	
-	public var lineColor(get_lineColor, set_lineColor):UInt;
-	var _lineColor:UInt;
+	public var lineColor(get_lineColor, set_lineColor):Int;
+	var _lineColor:Int;
 	function get_lineColor()
 	{
 		return _lineColor;
@@ -417,8 +417,8 @@ class AMChart extends CSprite
 		return _bgColor;
 	}	
 	
-	public var borderColor(get_borderColor, set_borderColor):UInt;
-	var _borderColor:UInt;
+	public var borderColor(get_borderColor, set_borderColor):Int;
+	var _borderColor:Int;
 	function get_borderColor()
 	{
 		return _borderColor;

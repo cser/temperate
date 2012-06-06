@@ -28,9 +28,9 @@ class MTooltipBg extends Sprite
 	
 	public var tailHalfWidth:Int;
 	
-	public var fillColor:UInt;
+	public var fillColor:Int;
 	
-	public var borderColor:UInt;
+	public var borderColor:Int;
 	
 	var _tailBeginX:Float;
 	var _tailBeginY:Float;

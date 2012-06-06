@@ -54,7 +54,7 @@ class BitmapDataInlineSuite extends Sprite
 		addChild(bitmap);
 	}
 	
-	private function sourceToString(source:Array<UInt>):String
+	private function sourceToString(source:Array<Int>):String
 	{
 		var text = "[";
 		var first = true;

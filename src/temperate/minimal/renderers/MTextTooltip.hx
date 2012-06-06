@@ -64,7 +64,7 @@ class MTextTooltip extends ACTooltip<String>
 		return _bg.tailHalfWidth = value;
 	}
 	
-	public var fillColor(get_fillColor, set_fillColor):UInt;
+	public var fillColor(get_fillColor, set_fillColor):Int;
 	function get_fillColor()
 	{
 		return _bg.fillColor;
@@ -74,7 +74,7 @@ class MTextTooltip extends ACTooltip<String>
 		return _bg.fillColor = value;
 	}
 	
-	public var borderColor(get_borderColor, set_borderColor):UInt;
+	public var borderColor(get_borderColor, set_borderColor):Int;
 	function get_borderColor()
 	{
 		return _bg.borderColor;

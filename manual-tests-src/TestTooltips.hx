@@ -232,7 +232,7 @@ class TestTooltips extends Sprite
 		return block;
 	}
 	
-	function newBlock(x:Int, y:Int, width:Int, height:Int, color:UInt):Sprite
+	function newBlock(x:Int, y:Int, width:Int, height:Int, color:Int):Sprite
 	{
 		var block = new Sprite();
 		block.x = x;

@@ -14,7 +14,7 @@ class FPSMonitor extends Sprite
 	static var TEXT_HEIGHT = 18;
 	static var UPDATE_DELAY = 100;
 	static var MEMORY_MULTIPLIER = 1 / (1024 * 1024);
-	static var MAX_MEMORY_STOCK:UInt = 100 * 1024;
+	static var MAX_MEMORY_STOCK:Int = 100 * 1024;
 	
 	var _width:Int;
 	var _height:Int;
@@ -57,11 +57,11 @@ class FPSMonitor extends Sprite
 	var _tfFps:TextField;
 	var _memoryPlot:PlotBitmap;
 	var _fpsPlot:PlotBitmap;
-	var _bgColor:UInt;
-	var _memoryColor:UInt;
-	var _fpsColor:UInt;
+	var _bgColor:Int;
+	var _memoryColor:Int;
+	var _fpsColor:Int;
 	
-	public function setColors(bgColor:UInt, memoryColor:UInt, fpsColor:UInt)
+	public function setColors(bgColor:Int, memoryColor:Int, fpsColor:Int)
 	{
 		_bgColor = bgColor;
 		_memoryColor = memoryColor;
@@ -69,9 +69,9 @@ class FPSMonitor extends Sprite
 		return this;
 	}
 	
-	var _settedFpsColor:UInt;
+	var _settedFpsColor:Int;
 	
-	public function setSettedFpsColor(settedFpsColor:UInt)
+	public function setSettedFpsColor(settedFpsColor:Int)
 	{
 		_settedFpsColor = settedFpsColor;
 		return this;
@@ -160,7 +160,7 @@ class FPSMonitor extends Sprite
 	
 	var _framePlotTimes:Array<Int>;
 	var _frameDigitTimes:Array<Int>;
-	var _maxMemory:UInt;
+	var _maxMemory:Int;
 	
 	function calculateFps(time:Int, times:Array<Int>, framesBase:Int)
 	{

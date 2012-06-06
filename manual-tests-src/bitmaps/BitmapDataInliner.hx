@@ -3,9 +3,9 @@ import flash.display.BitmapData;
 
 class BitmapDataInliner 
 {
-	public static function encode(bd:BitmapData):Array<UInt>
+	public static function encode(bd:BitmapData):Array<Int>
 	{
-		var array:Array<UInt> = [];
+		var array:Array<Int> = [];
 		var width = bd.width;
 		var height = bd.height;
 		var i = 0;
@@ -17,14 +17,14 @@ class BitmapDataInliner
 			}
 		}
 		var i = 0;
-		var result:Array<UInt> = [];
+		var result:Array<Int> = [];
 		result[i++] = width;
 		result[i++] = height;
 		var isSummState = false;
 		var countIndex = 0;
 		var j = 0;
 		var length = array.length;
-		var oldColor:UInt = 0x000000;
+		var oldColor:Int = 0x000000;
 		while (true)
 		{
 			if (isSummState)

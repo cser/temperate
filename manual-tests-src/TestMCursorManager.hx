@@ -220,7 +220,7 @@ class TestMCursorManager extends Sprite
 	//
 	//----------------------------------------------------------------------------------------------
 	
-	function newTorus(color:UInt = 0x808080)
+	function newTorus(color:Int = 0x808080)
 	{
 		var torus = new Shape();
 		var g = torus.graphics;
@@ -316,7 +316,7 @@ class PriorityBlock extends CVBox
 		}
 	}
 	
-	function newCircle(color:UInt = 0x808080)
+	function newCircle(color:Int = 0x808080)
 	{
 		var shape = new Shape();
 		var g = shape.graphics;
